@@ -20,13 +20,3 @@ a.tag:hover {
     background-color: rgba(var(--bg-color, var(--color)), 0.5) !important;
     color: rgb(var(--color)) !important;
 }
-
-/* TODO MAKE THIS A SETTING */
-/*!* Hides the # from the kanban view. Mind you, they still have to be typed out! *!*/
-/*!*      If you want to remove all of them in obsidian, *!*/
-/*!*      just delete the div part of the selectors *!*/
-/*div[data-type="kanban"] a.tag>span,*/
-/*div[data-type="kanban"] .cm-hashtag-begin {*/
-/*    visibility: hidden;*/
-/*    position: absolute;*/
-/*}*/

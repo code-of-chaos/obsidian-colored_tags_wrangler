@@ -10,6 +10,8 @@ import * as fs from "fs";
 export class Styler{
     plugin: MyPlugin;
     styleEL: HTMLStyleElement;
+    styleKanbanEL: HTMLStyleElement;
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor
@@ -17,6 +19,7 @@ export class Styler{
     constructor(plugin: MyPlugin) {
         this.plugin = plugin;
         this.styleEL = document.createElement('style');
+        this.styleKanbanEL = document.createElement('style');
     }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -41,6 +44,23 @@ export class Styler{
     // -----------------------------------------------------------------------------------------------------------------
     removeTagStyles() {
         this.styleEL?.parentNode?.removeChild(this.styleEL);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    applyKanbanStyles() {
+        this.styleKanbanEL.appendChild(document.createTextNode(
+            `div[data-type="kanban"] a.tag>span,
+                  div[data-type="kanban"] .cm-hashtag-begin {
+                      visibility: hidden;
+                      position: absolute;
+                  }`
+        ));
+        document.head.appendChild(this.styleKanbanEL);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    removeKanbanStyles() {
+        this.styleKanbanEL?.parentNode?.removeChild(this.styleKanbanEL);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

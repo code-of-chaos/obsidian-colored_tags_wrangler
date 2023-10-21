@@ -48,6 +48,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 		// whenever settings are saved, also run this.
 		//		This way we know it is always run when needed
 		this.styler.applyTagStyles();
+
 	}
 
 }
