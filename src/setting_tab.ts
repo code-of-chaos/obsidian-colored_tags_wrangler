@@ -52,6 +52,16 @@ export class SettingTab extends PluginSettingTab {
                             this.display()
                         ]);
                     })
+            ).addButton((button) =>
+                button
+                    .setButtonText("Add New Tag")
+                    .onClick(async () => {
+                        this.plugin.settings.customTagColors[NEW_TAG_NAME] = NEW_DEFAULT_COLOR; // Default color
+                        await Promise.all([
+                            this.plugin.saveSettings(),
+                            this.display()
+                        ]);
+                    })
             );
 
 		// Create the amount of tags already stored in the settings
@@ -61,8 +71,6 @@ export class SettingTab extends PluginSettingTab {
             }
         }
 
-        containerEl.appendChild(document.createElement('br'));
-        settings.settingEl.appendChild(await this.createAddTagButton());
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -120,19 +128,4 @@ export class SettingTab extends PluginSettingTab {
         containerEl.appendChild(new_setting.settingEl);
         containerEl.appendChild(document.createElement('br'));
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    async createAddTagButton() {
-        const addTagButton = document.createElement('button');
-        addTagButton.textContent = 'Add Tag';
-        addTagButton.addEventListener('click', async () => {
-            this.plugin.settings.customTagColors[NEW_TAG_NAME] = NEW_DEFAULT_COLOR; // Default color
-            await Promise.all([
-                this.plugin.saveSettings(),
-                this.display()
-            ]);
-        });
-        return addTagButton;
-    }
-
 }
