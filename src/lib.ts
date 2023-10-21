@@ -14,9 +14,6 @@ export const hexToRgb = (hexColor:string) : RGB => ({
 })
 // ---------------------------------------------------------------------------------------------------------------------
 export const rgbToHex = (rgb: RGB): string => {
-    const toHex = (c: number) => {
-        const hex = c.toString(16);
-        return hex.length === 1 ? '0' + hex : hex;
-    };
+    const toHex = (c: number) => c.toString(16).padStart(2, "0");
     return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`;
 };
