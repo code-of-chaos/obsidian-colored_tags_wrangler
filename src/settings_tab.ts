@@ -38,31 +38,48 @@ export class SettingsTab extends PluginSettingTab {
             }
         }
 
-        const addTagButton = this.createAddTagButton();
-        settings.settingEl.appendChild(addTagButton);
+        containerEl.appendChild(document.createElement('br'));
+        settings.settingEl.appendChild(this.createAddTagButton());
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
     createTagColorSetting(settings: Setting, tagName: string, color: RGB) {
-        const setting = new Setting(settings.settingEl);
-        setting.addText((text) =>
-            text
-                .setPlaceholder('Tag name')
-                .setValue(tagName)
-                .onChange((value) => {
-                    // Handle user-defined tag colors here
-                    this.plugin.settings.customTagColors[value] = color;
-                    this.plugin.saveSettings();
-                })
-        ).addColorPicker((colorPicker) =>
-            colorPicker
-                .setValueRgb(color)
-                .onChange((value) => {
-                    // value is a HEX string, erg -> needs to be decoded
-                    this.plugin.settings.customTagColors[tagName] = hexToRGB(value);
-                    this.plugin.saveSettings();
-                })
+        const {containerEl} = this;
+        let new_tag_name = tagName; // Initialize newTagName with the existing tag name
+        let new_color = color; // Initialize newColor with the existing color
 
+        const new_setting = new Setting(containerEl)
+            .addText((text) =>
+                text
+                    .setPlaceholder('Tag name')
+                    .setValue(tagName)
+                    .onChange((value) => {
+                        // Handle user-defined tag name changes here
+                        new_tag_name = value; // Update newTagName as the user changes the tag name
+                    })
+            )
+            .addColorPicker((colorPicker) =>
+                colorPicker
+                    .setValueRgb(color)
+                    .onChange((value) => {
+                        // Handle user-defined tag colors here
+                        new_color = hexToRGB(value); // Update newColor as the user changes the color
+                    })
+            )
+
+        new_setting.addButton((button) =>
+            button
+                .setButtonText('Save')
+                .onClick(() => {
+                    // Clear out the old one
+                    delete this.plugin.settings.customTagColors[tagName];
+
+                    // Add the updated tag and color
+                    this.plugin.settings.customTagColors[new_tag_name] = new_color;
+
+                    // Save the updated settings
+                    this.plugin.saveSettings();
+                })
         ).addButton((button) =>
             button
                 .setButtonText('Remove')
@@ -75,8 +92,8 @@ export class SettingsTab extends PluginSettingTab {
         );
 
         // Add a line break after each setting
-        settings.settingEl.appendChild(document.createElement('br'));
-
+        containerEl.appendChild(new_setting.settingEl);
+        containerEl.appendChild(document.createElement('br'));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
