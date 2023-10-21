@@ -14,11 +14,9 @@ import {Styler}
 // ---------------------------------------------------------------------------------------------------------------------
 export default class ColoredTagWranglerPlugin extends Plugin {
 	settings: IColoredTagWranglerSettings;
-	styleElement: HTMLStyleElement | null = null;
 	styler:Styler
 
 	async onload() {
-
 		try {
 			await this.loadSettings();
 			this.styler = new Styler(this);
@@ -28,9 +26,6 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 			console.error("Error loading settings:", error);
 			return;
 		}
-
-		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		// this.registerInterval(window.setInterval(this.applyTagStyles, 100));
 	}
 
 	onunload() {
