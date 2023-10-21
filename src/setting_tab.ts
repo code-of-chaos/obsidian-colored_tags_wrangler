@@ -1,10 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App, PluginSettingTab, RGB, Setting} from "obsidian";
-import MyPlugin from "./main";
+import {App, PluginSettingTab, RGB, Setting}
+    from "obsidian";
 import {hexToRgb,rgbToHex}
     from "./lib";
+import ColoredTagWranglerPlugin
+    from "./main";
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,14 +16,14 @@ const NEW_DEFAULT_COLOR:RGB = { r: 0, g: 0, b: 0 };
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class SettingsTab extends PluginSettingTab {
-	plugin: MyPlugin;
+export class SettingTab extends PluginSettingTab {
+	plugin: ColoredTagWranglerPlugin;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor
     // -----------------------------------------------------------------------------------------------------------------
-    constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
+    constructor(plugin: ColoredTagWranglerPlugin) {
+		super(plugin.app, plugin);
 		this.plugin = plugin;
 	}
 
@@ -34,7 +36,7 @@ export class SettingsTab extends PluginSettingTab {
 		containerEl.empty();
 
 		const settings = new Setting(containerEl)
-			// .setDesc("Define custom colors for tags")
+			.setDesc("Define custom colors for tags")
             .addButton((button) =>
                 button
                     .setButtonText('DEBUG PRINT AS WARN')

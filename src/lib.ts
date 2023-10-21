@@ -1,26 +1,22 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {RGB} from "obsidian";
+import {RGB}
+    from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export const hexToRgb = (hexColor:string) : RGB => {
-    const red = parseInt(hexColor.slice(1, 3), 16);
-    const green = parseInt(hexColor.slice(3, 5), 16);
-    const blue = parseInt(hexColor.slice(5, 7), 16);
-    return {
-        r:red,
-        g:green,
-        b:blue
-    }
-}
+export const hexToRgb = (hexColor:string) : RGB => ({
+    r: parseInt(hexColor.slice(1, 3), 16),
+    g: parseInt(hexColor.slice(3, 5), 16),
+    b: parseInt(hexColor.slice(5, 7), 16)
+})
+// ---------------------------------------------------------------------------------------------------------------------
 export const rgbToHex = (rgb: RGB): string => {
-    const { r, g, b } = rgb;
     const toHex = (c: number) => {
         const hex = c.toString(16);
         return hex.length === 1 ? '0' + hex : hex;
     };
-    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`;
 };
