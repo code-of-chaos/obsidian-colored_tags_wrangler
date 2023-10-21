@@ -30,7 +30,7 @@ export class SettingTab extends PluginSettingTab {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-	display(): void {
+	async display() {
         // Refresh the Element container
 		const {containerEl} = this;
 		containerEl.empty();
@@ -44,27 +44,29 @@ export class SettingTab extends PluginSettingTab {
             ).addButton((button) =>
                 button
                     .setButtonText('DELETE ALL')
-                    .onClick(() => {
+                    .onClick(async () => {
                         Object.keys(this.plugin.settings.customTagColors)
-                            .forEach((key_name) =>delete this.plugin.settings.customTagColors[key_name]);
-                        this.plugin.saveSettings();
-                        this.display()
+                            .forEach((key_name) => delete this.plugin.settings.customTagColors[key_name]);
+                        await Promise.all([
+                            this.plugin.saveSettings(),
+                            this.display()
+                        ]);
                     })
             );
 
 		// Create the amount of tags already stored in the settings
         for (const tagName in this.plugin.settings.customTagColors) {
             if (this.plugin.settings.customTagColors.hasOwnProperty(tagName)) {
-                this.createTagColorSetting(settings, tagName, this.plugin.settings.customTagColors[tagName]);
+                this.createTagColorSetting(tagName, this.plugin.settings.customTagColors[tagName]);
             }
         }
 
         containerEl.appendChild(document.createElement('br'));
-        settings.settingEl.appendChild(this.createAddTagButton());
+        settings.settingEl.appendChild(await this.createAddTagButton());
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-    createTagColorSetting(settings: Setting, tagName: string, color: RGB) {
+    createTagColorSetting(tagName: string, color: RGB) {
         let {containerEl} = this;
         let new_tag_name = tagName; // Initialize newTagName with the existing tag name
         let new_color = color; // Initialize newColor with the existing color
@@ -88,7 +90,7 @@ export class SettingTab extends PluginSettingTab {
             ).addButton((button) =>
                 button
                     .setButtonText('Save')
-                    .onClick(() => {
+                    .onClick(async () => {
                         // Clear out the old one
                         delete this.plugin.settings.customTagColors[tagName];
 
@@ -96,16 +98,21 @@ export class SettingTab extends PluginSettingTab {
                         this.plugin.settings.customTagColors[new_tag_name] = new_color;
 
                         // Save the updated settings
-                        this.plugin.saveSettings();
+                        await Promise.all([
+                            this.plugin.saveSettings(),
+                            this.display()
+                        ]);
                     })
             ).addButton((button) =>
                 button
                     .setButtonText('Remove')
-                    .onClick(() => {
+                    .onClick(async () => {
                         // Remove the tag and color
                         delete this.plugin.settings.customTagColors[tagName];
-                        this.plugin.saveSettings();
-                        this.display();
+                        await Promise.all([
+                            this.plugin.saveSettings(),
+                            this.display()
+                        ]);
                     })
             );
 
@@ -115,13 +122,15 @@ export class SettingTab extends PluginSettingTab {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    createAddTagButton() {
+    async createAddTagButton() {
         const addTagButton = document.createElement('button');
         addTagButton.textContent = 'Add Tag';
-        addTagButton.addEventListener('click', () => {
+        addTagButton.addEventListener('click', async () => {
             this.plugin.settings.customTagColors[NEW_TAG_NAME] = NEW_DEFAULT_COLOR; // Default color
-            this.plugin.saveSettings();
-            this.display();
+            await Promise.all([
+                this.plugin.saveSettings(),
+                this.display()
+            ]);
         });
         return addTagButton;
     }

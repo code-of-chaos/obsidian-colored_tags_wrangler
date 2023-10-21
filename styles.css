@@ -12,8 +12,8 @@ a.tag,
     background-color: rgba(var(--bg-color, var(--color)), var(--bg-alpha, 0.2)) !important;
     color: rgb(var(--color)) !important;
     transition: all 0.5s ease;
-    padding-top: 2px !important;
-    padding-bottom: 2px !important;
+    /*padding-top: 2px !important;*/ /* TODO MAKE THIS A SETTING */
+    /*padding-bottom: 2px !important;*/ /* TODO MAKE THIS A SETTING */
 }
 a.tag:hover {
     /*noinspection CssUnresolvedCustomProperty*/
@@ -21,6 +21,7 @@ a.tag:hover {
     color: rgb(var(--color)) !important;
 }
 
+/* TODO MAKE THIS A SETTING */
 /*!* Hides the # from the kanban view. Mind you, they still have to be typed out! *!*/
 /*!*      If you want to remove all of them in obsidian, *!*/
 /*!*      just delete the div part of the selectors *!*/

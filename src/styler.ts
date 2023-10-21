@@ -1,18 +1,15 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App, DataAdapter, normalizePath, RGB}
-    from "obsidian";
-import MyPlugin
-    from "./main";
-import * as fs
-    from "fs";
+import {normalizePath, RGB, Vault} from "obsidian";
+import MyPlugin from "./main";
+import * as fs from "fs";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class Styler{
     plugin: MyPlugin;
-    styleEL: HTMLStyleElement ;
+    styleEL: HTMLStyleElement;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor
@@ -25,39 +22,40 @@ export class Styler{
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private _assembleCSS():string {
-        const css : string =  Object.keys(this.plugin.settings?.customTagColors)
+        return Object.keys(this.plugin.settings?.customTagColors)
             .map(tagName => {
-                const color : RGB = this.plugin.settings.customTagColors[tagName];
+                const color: RGB = this.plugin.settings.customTagColors[tagName];
                 // This only works because of the style.css of the project
+                //  TODO either filter the `#` here or in the setting_tab, but I need to do it somewhere.
                 return `.tag[href="#${tagName}"], .cm-tag-${tagName} { --color: ${color.r}, ${color.g}, ${color.b}; }`;
             }).join('\n');
-        console.log({css})
-        return css;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     applyTagStyles() {
-        this.addCustomStyles(this._assembleCSS());
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    addCustomStyles(css: string) {
-        this.removeCustomStyles();
-        this.styleEL.appendChild(document.createTextNode(css));
+        this.removeTagStyles();
+        this.styleEL.appendChild(document.createTextNode(this._assembleCSS()));
         document.head.appendChild(this.styleEL);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    removeCustomStyles() {
+    removeTagStyles() {
         this.styleEL?.parentNode?.removeChild(this.styleEL);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     writeToCSSFile():void {
+        // This method is currently unused, and that is by "design" for now.
+        //  At some later point in the development of this plugin, this might be useful to make an export to Publish.
+
+        const vault:Vault = this.plugin.app.vault;
+
         // Write the CSS to a file in the snippets folder
         //      I don't know why `adapter.basePath` is giving an error in my IDE, but it works ... ? why ?
-        //      @ts-ignore ( well, now it isn't giving an error anymore...)
-        const cssFilePath = normalizePath(`${this.plugin.app.vault.adapter.basePath}/${this.plugin.app.vault.configDir}/snippets/tags-append.css`);
+        const cssFilePath:string = normalizePath(
+        //      @ts-ignore ( well, now it isn't giving an error anymore sure because it is suppressed,
+        //                 but it is still weird...)
+            `${vault.adapter.basePath}/${vault.configDir}/snippets/tags-append.css`);
 
         try {
             fs.writeFileSync(cssFilePath, this._assembleCSS());

@@ -22,19 +22,18 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 	async onload() {
 		try {
 			await this.loadSettings();
-			this.styler = new Styler(this);
-			this.addSettingTab(new SettingTab(this));
-
-			this.styler.applyTagStyles();
 		} catch (error) {
-			console.error("Error loading settings:", error);
+			console.error("Error loading settings for obsidian-colored_tags_wrangler:", error);
 			return;
 		}
+		this.styler = new Styler(this);
+		this.addSettingTab(new SettingTab(this));
+		this.styler.applyTagStyles();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	onunload() {
-		this.styler.removeCustomStyles();
+		this.styler.removeTagStyles();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -46,7 +45,9 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 	// -----------------------------------------------------------------------------------------------------------------
 	async saveSettings() {
 		await this.saveData(this.settings);
-		this.styler.applyTagStyles(); // whenever settings
+		// whenever settings are saved, also run this.
+		//		This way we know it is always run when needed
+		this.styler.applyTagStyles();
 	}
 
 }
