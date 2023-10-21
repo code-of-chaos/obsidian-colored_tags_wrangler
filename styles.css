@@ -21,7 +21,7 @@ a.tag:hover {
     color: rgb(var(--color)) !important;
 }
 
-/*!* Hides the # from the kanban view. Mind you, they still have t be typed out! *!*/
+/*!* Hides the # from the kanban view. Mind you, they still have to be typed out! *!*/
 /*!*      If you want to remove all of them in obsidian, *!*/
 /*!*      just delete the div part of the selectors *!*/
 /*div[data-type="kanban"] a.tag>span,*/
