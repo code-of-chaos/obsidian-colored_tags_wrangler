@@ -71,7 +71,6 @@ export class SettingTab extends PluginSettingTab {
                 button
                     .setButtonText('Clear')
                     .onClick(async () => {
-                        console.error("FFFFFFFFFFFFFFF")
                         Object.keys(this.plugin.settings.customTagColors)
                             .forEach((key_name) => delete this.plugin.settings.customTagColors[key_name]);
                         await Promise.all([
@@ -89,15 +88,15 @@ export class SettingTab extends PluginSettingTab {
             .setName("Omit '#' in Kanban plugin ")
             .setDesc("Hides the # from the kanban view. Mind you, they still have to be typed out")
             .addToggle(component => {
-                     component
-                        .setValue(this.plugin.settings.enableKanban)
-                        .onChange(async state => {
-                            state
-                                ? this.plugin.styler.applyKanbanStyles()
-                                : this.plugin.styler.removeKanbanStyles()
-                            this.plugin.settings.enableKanban = state;
-                            await this.plugin.saveSettings();
-                        })
+                component
+                    .setValue(this.plugin.settings.enableKanban)
+                    .onChange(async state => {
+                        state
+                            ? this.plugin.styler.applyKanbanStyles()
+                            : this.plugin.styler.removeKanbanStyles()
+                        this.plugin.settings.enableKanban = state;
+                    await this.plugin.saveSettings();
+                    })
                 }
             );
 

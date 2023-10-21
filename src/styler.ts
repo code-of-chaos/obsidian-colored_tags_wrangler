@@ -49,11 +49,11 @@ export class Styler{
     // -----------------------------------------------------------------------------------------------------------------
     applyKanbanStyles() {
         this.styleKanbanEL.appendChild(document.createTextNode(
-            `div[data-type="kanban"] a.tag>span,
-                  div[data-type="kanban"] .cm-hashtag-begin {
-                      visibility: hidden;
-                      position: absolute;
-                  }`
+        `div[data-type="kanban"] a.tag>span,
+            div[data-type="kanban"] .cm-hashtag-begin {
+                visibility: hidden;
+                position: absolute;
+            }`
         ));
         document.head.appendChild(this.styleKanbanEL);
     }
