@@ -7,21 +7,23 @@ import {IColoredTagWranglerSettings, DEFAULT_SETTINGS}
 	from "src/settings";
 import {SettingsTab}
 	from "src/settings_tab";
-import {applyTagStyles,removeCustomStyles}
-	from "./style";
+import {Styler}
+	from "./styler";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export default class ColoredTagWranglerPlugin extends Plugin {
 	settings: IColoredTagWranglerSettings;
 	styleElement: HTMLStyleElement | null = null;
+	styler:Styler
 
 	async onload() {
 
 		try {
 			await this.loadSettings();
+			this.styler = new Styler(this);
 			this.addSettingTab(new SettingsTab(this.app, this));
-			applyTagStyles(this);
+			this.styler.applyTagStyles();
 		} catch (error) {
 			console.error("Error loading settings:", error);
 			return;
@@ -32,7 +34,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 	}
 
 	onunload() {
-		removeCustomStyles(this);
+		this.styler.removeCustomStyles();
 	}
 
 	async loadSettings() {
@@ -41,7 +43,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 
 	async saveSettings() {
 		await this.saveData(this.settings);
-		applyTagStyles(this);
+		this.styler.applyTagStyles();
 	}
 
 }

@@ -5,13 +5,11 @@ import {App, PluginSettingTab, RGB, Setting} from "obsidian";
 import MyPlugin from "./main";
 import {hexToRgb,rgbToHex}
     from "./lib";
-
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
 const NEW_TAG_NAME:string = "New Tag";
-const NEW_DEFAULT_COLOR:RGB = { r: 255, g: 0, b: 0 };
+const NEW_DEFAULT_COLOR:RGB = { r: 0, g: 0, b: 0 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -19,11 +17,16 @@ const NEW_DEFAULT_COLOR:RGB = { r: 255, g: 0, b: 0 };
 export class SettingsTab extends PluginSettingTab {
 	plugin: MyPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructor
+    // -----------------------------------------------------------------------------------------------------------------
+    constructor(app: App, plugin: MyPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
     // -----------------------------------------------------------------------------------------------------------------
 	display(): void {
         // Refresh the Element container
