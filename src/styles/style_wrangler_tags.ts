@@ -24,9 +24,14 @@ export class StyleWranglerTags extends StyleWrangler {
 		return Object.keys(this.plugin.settings?.customTagColors)
 			.map(tagName => {
 				const color: RGB = this.plugin.settings.customTagColors[tagName];
-				// This only works because of the style.css of the project
-				//  TODO either filter the `#` here or in the setting_tab, but I need to do it somewhere.
-				return `.tag[href="#${tagName}"], .cm-tag-${tagName} { --color: ${color.r}, ${color.g}, ${color.b}; }`;
+				// noinspection CssInvalidFunction
+				return `
+					.tag[href="#${tagName}"], .cm-tag-${tagName} { 
+						--color: rgb(${color.r}, ${color.g}, ${color.b});
+						--color-hover: var(--color);
+						--background: rgba(${color.r}, ${color.g}, ${color.b}, 0.2);
+						--background-hover: rgba(${color.r}, ${color.g}, ${color.b}, 0.1);
+					}`;
 			}).join('\n');
 	}
 

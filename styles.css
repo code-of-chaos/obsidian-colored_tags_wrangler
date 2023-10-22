@@ -4,19 +4,23 @@
 
 /* Custom tag colors */
 /* ------------------------------------------------------------------------- */
+/*noinspection ALL*/
 a.tag,
 .cm-hashtag {
-    --color: 139, 108, 239; /* default obsidian color in rgb format*/
+    --color: var(--tag-color);
+    --color-hover: var(--tag-color-hover);
+    --background: var(--tag-background);
+    --background-hover: var(--tag-background-hover);
 
     /*noinspection CssUnresolvedCustomProperty*/
-    background-color: rgba(var(--bg-color, var(--color)), var(--bg-alpha, 0.2)) !important;
-    color: rgb(var(--color)) !important;
+    background-color: var(--background) !important;
+    color: var(--color) !important;
     transition: all 0.5s ease;
     /*padding-top: 2px !important;*/ /* TODO MAKE THIS A SETTING */
     /*padding-bottom: 2px !important;*/ /* TODO MAKE THIS A SETTING */
 }
 a.tag:hover {
     /*noinspection CssUnresolvedCustomProperty*/
-    background-color: rgba(var(--bg-color, var(--color)), 0.5) !important;
-    color: rgb(var(--color)) !important;
+    background-color: var(--background-hover) !important;
+    color: var(--color-hover) !important;
 }
