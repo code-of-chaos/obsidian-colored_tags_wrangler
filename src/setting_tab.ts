@@ -21,6 +21,7 @@ export class SettingTab extends PluginSettingTab {
     settings_CCT:Setting;
     settings_Delete:Setting;
     settings_Kanban:Setting;
+    settings_KanbanCards:Setting;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor
@@ -91,14 +92,25 @@ export class SettingTab extends PluginSettingTab {
                 component
                     .setValue(this.plugin.settings.enableKanban)
                     .onChange(async state => {
-                        state
-                            ? this.plugin.style_manager.wrangler_kanban.apply_styles()
-                            : this.plugin.style_manager.wrangler_kanban.remove_styles()
                         this.plugin.settings.enableKanban = state;
                     await this.plugin.saveSettings();
                     })
                 }
             );
+
+		// --- KANBAN CARDS ADDITION ---
+		this.settings_Kanban = new Setting(containerEl)
+			.setName("Apply Tag color to Kanban Card")
+			.setDesc("Applies the tag color, of the tag within the card, to the background color of the card")
+			.addToggle(component => {
+					component
+						.setValue(this.plugin.settings.enableKanbanCards)
+						.onChange(async state => {
+							this.plugin.settings.enableKanbanCards = state;
+							await this.plugin.saveSettings();
+						})
+				}
+			);
 
     }
 
