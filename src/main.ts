@@ -29,11 +29,14 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 		this.styler = new Styler(this);
 		this.addSettingTab(new SettingTab(this));
 		this.styler.applyTagStyles();
+
+		this.settings.enableKanban ? this.styler.applyKanbanStyles() : this.styler.removeKanbanStyles();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	onunload() {
 		this.styler.removeTagStyles();
+		this.styler.removeKanbanStyles();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
