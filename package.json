@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-colored_tags_wrangler",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "A plugin to color specific tags with custom colors.",
 	"main": "main.js",
 	"scripts": {

@@ -1,9 +1,9 @@
 {
 	"id": "obsidian-colored_tags_wrangler",
 	"name": "Colored Tags Wrangler",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"minAppVersion": "0.15.0",
-	"description": "This is a small plugin to color specific tags with custom colors.",
+	"description": "This is a small plugin to color specific tags with custom colors. Also has some settings to apply to the Kanban plugin.",
 	"author": "AndreasSasDev",
 	"authorUrl": "https://github.com/AndreasSas",
 	"fundingUrl": "https://ko-fi.com/andreassasdev",

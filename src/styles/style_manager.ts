@@ -11,6 +11,7 @@ import {IStyleWrangler}
 	from "./style_wrangler";
 import {StyleWranglerKanbanCards}
 	from "./style_wrangler_kanban_cards";
+import {StyleWranglerKanbanTitles} from "./style_wrangler_kanban_titles";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -19,6 +20,7 @@ export class StyleManager{
 	wrangler_tags: StyleWranglerTags;
 	wrangler_kanban: StyleWranglerKanban;
 	wrangler_kanban_cards: StyleWranglerKanbanCards;
+	wrangler_kanban_titles: StyleWranglerKanbanTitles;
 
 	private _style_wranglers: Array<IStyleWrangler>;
 
@@ -31,11 +33,13 @@ export class StyleManager{
 		this.wrangler_tags = new StyleWranglerTags(plugin)
 		this.wrangler_kanban = new StyleWranglerKanban(plugin)
 		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin)
+		this.wrangler_kanban_titles = new StyleWranglerKanbanTitles(plugin)
 
 		this._style_wranglers = new Array<IStyleWrangler>(
 			this.wrangler_tags,
 			this.wrangler_kanban,
-			this.wrangler_kanban_cards
+			this.wrangler_kanban_cards,
+			this.wrangler_kanban_titles,
 		)
 
 	}
@@ -54,6 +58,10 @@ export class StyleManager{
 		this.plugin.settings.enableKanbanCards
 			? this.wrangler_kanban_cards.apply_styles()
 			: this.wrangler_kanban_cards.remove_styles() ;
+
+		this.plugin.settings.enableKanbanTitles
+			? this.wrangler_kanban_titles.apply_styles()
+			: this.wrangler_kanban_titles.remove_styles() ;
 	}
 
 	applyAllStyles():void {

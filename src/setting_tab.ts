@@ -39,10 +39,13 @@ export class SettingTab extends PluginSettingTab {
 		const {containerEl} = this;
 		containerEl.empty();
 
-        // --- CUSTOM COLOR TAGS ---
+		// -------------------------------------------------------------------------------------------------------------
+		containerEl.createEl('h2', {text: "Tag Settings"});
+
+		// --- CUSTOM COLOR TAGS ---
 		this.settings_CCT = new Setting(containerEl)
             .setName("Custom Color Tags")
-			.setDesc("Define custom colors for tags")
+			.setDesc("Define custom colors for tags. Don't add the `#` before the tag, and keep everything in lowercase. This should be sanitized in code as well.")
             .addButton((button) =>
                 button
                     .setButtonText("Add New Tag")
@@ -84,6 +87,10 @@ export class SettingTab extends PluginSettingTab {
                     .setDisabled(Object.keys(this.plugin.settings.customTagColors).length == 0)
             );
 
+		// -------------------------------------------------------------------------------------------------------------
+		containerEl.createEl('br');
+		containerEl.createEl('h2', {text: "KanBan Plugin Settings"})
+
         // --- KANBAN ADDITION ---
         this.settings_Kanban = new Setting(containerEl)
             .setName("Omit '#' in Kanban plugin ")
@@ -112,6 +119,20 @@ export class SettingTab extends PluginSettingTab {
 				}
 			);
 
+		// --- KANBAN TITLES ADDITION ---
+		this.settings_Kanban = new Setting(containerEl)
+			.setName("Apply Tag color to Kanban List")
+			.setDesc("Applies the tag color, of the tag within the titles, to the background color of the list")
+			.addToggle(component => {
+					component
+						.setValue(this.plugin.settings.enableKanbanTitles)
+						.onChange(async state => {
+							this.plugin.settings.enableKanbanTitles = state;
+							await this.plugin.saveSettings();
+						})
+				}
+			);
+
     }
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -126,6 +147,9 @@ export class SettingTab extends PluginSettingTab {
                     .setPlaceholder(NEW_TAG_NAME)
                     .setValue(tagName)
                     .onChange(async (value) => {
+						// Cleanup the value
+						value = value.replace("#","");
+						value = value.toLowerCase();
 
 						// delete the "old" tag name, before the edit
 						delete this.plugin.settings.customTagColors[new_tag_name];
@@ -141,29 +165,17 @@ export class SettingTab extends PluginSettingTab {
             ).addColorPicker((colorPicker) =>
                 colorPicker
                     .setValueRgb(color)
-                    .onChange((value) => {
-                        // Handle user-defined tag colors here
-                        new_color = hexToRgb(value); // Update newColor as the user changes the color
-                    })
-            // ).addButton((button) =>
-            //     button
-            //         .setButtonText('Save')
-            //         .onClick(async () => {
-            //             // Clear out the old one
-			// 			delete this.plugin.settings.customTagColors[tagName];
-			//
-			// 			// Add the updated tag and color
-			// 			this.plugin.settings.customTagColors[new_tag_name] = new_color;
-			//
-			// 			// Save the updated settings
-			// 			await Promise.all([
-			// 				this.plugin.saveSettings(),
-			// 				this.display()
-			// 			]);
-            //         })
+                    .onChange(async (value) => {
+						// Handle user-defined tag colors here
+						new_color = hexToRgb(value); // Update newColor as the user changes the color
+						// Add the updated tag and color
+						this.plugin.settings.customTagColors[new_tag_name] = new_color;
+						await this.plugin.saveSettings();
+
+					})
             ).addButton((button) =>
                 button
-                    .setButtonText('Remove')
+                    .setButtonText('-')
                     .onClick(async () => {
                         // Remove the tag and color
                         delete this.plugin.settings.customTagColors[tagName];

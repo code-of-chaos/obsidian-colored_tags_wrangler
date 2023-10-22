@@ -24,3 +24,9 @@ a.tag:hover {
     background-color: var(--background-hover) !important;
     color: var(--color-hover) !important;
 }
+
+.colored_tags_wrangler-settings-kanban,
+.colored_tags_wrangler-settings-tags{
+	font-weight: bold;
+	font-size: larger;
+}
