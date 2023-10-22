@@ -113,10 +113,19 @@ export class SettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(NEW_TAG_NAME)
                     .setValue(tagName)
-                    .onChange((value) => {
-                        // Handle user-defined tag name changes here
-                        new_tag_name = value; // Update newTagName as the user changes the tag name
-                    })
+                    .onChange(async (value) => {
+
+						// delete the "old" tag name, before the edit
+						delete this.plugin.settings.customTagColors[new_tag_name];
+
+						// Add the updated tag and color
+						this.plugin.settings.customTagColors[value] = new_color;
+						await this.plugin.saveSettings();
+
+						// Handle user-defined tag name changes here
+						new_tag_name = value; // Update newTagName as the user changes the tag name
+
+					})
             ).addColorPicker((colorPicker) =>
                 colorPicker
                     .setValueRgb(color)
@@ -124,22 +133,22 @@ export class SettingTab extends PluginSettingTab {
                         // Handle user-defined tag colors here
                         new_color = hexToRgb(value); // Update newColor as the user changes the color
                     })
-            ).addButton((button) =>
-                button
-                    .setButtonText('Save')
-                    .onClick(async () => {
-                        // Clear out the old one
-                        delete this.plugin.settings.customTagColors[tagName];
-
-                        // Add the updated tag and color
-                        this.plugin.settings.customTagColors[new_tag_name] = new_color;
-
-                        // Save the updated settings
-                        await Promise.all([
-                            this.plugin.saveSettings(),
-                            this.display()
-                        ]);
-                    })
+            // ).addButton((button) =>
+            //     button
+            //         .setButtonText('Save')
+            //         .onClick(async () => {
+            //             // Clear out the old one
+			// 			delete this.plugin.settings.customTagColors[tagName];
+			//
+			// 			// Add the updated tag and color
+			// 			this.plugin.settings.customTagColors[new_tag_name] = new_color;
+			//
+			// 			// Save the updated settings
+			// 			await Promise.all([
+			// 				this.plugin.saveSettings(),
+			// 				this.display()
+			// 			]);
+            //         })
             ).addButton((button) =>
                 button
                     .setButtonText('Remove')

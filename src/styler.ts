@@ -4,6 +4,7 @@
 import {normalizePath, RGB, Vault} from "obsidian";
 import MyPlugin from "./main";
 import * as fs from "fs";
+import {removeById} from "./lib";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -19,7 +20,9 @@ export class Styler{
     constructor(plugin: MyPlugin) {
         this.plugin = plugin;
         this.styleEL = document.createElement('style');
-        this.styleKanbanEL = document.createElement('style');
+		this.styleEL.id = "styleEL";
+		this.styleKanbanEL = document.createElement('style');
+		this.styleKanbanEL.id = "styleKanbanEL";
     }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -37,13 +40,16 @@ export class Styler{
     // -----------------------------------------------------------------------------------------------------------------
     applyTagStyles() {
         this.removeTagStyles();
-        this.styleEL.appendChild(document.createTextNode(this._assembleCSS()));
-        document.head.appendChild(this.styleEL);
+        this.styleEL.innerText = this._assembleCSS();
+		this.removeTagStyles();
+		document.head.appendChild(this.styleEL);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     removeTagStyles() {
         this.styleEL?.parentNode?.removeChild(this.styleEL);
+		 // Use the same ID to find the existing element
+		removeById("#styleEL")
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -62,6 +68,7 @@ export class Styler{
     // -----------------------------------------------------------------------------------------------------------------
     removeKanbanStyles() {
         this.styleKanbanEL?.parentNode?.removeChild(this.styleKanbanEL);
+		removeById("#styleKanbanEL")
     }
 
     // -----------------------------------------------------------------------------------------------------------------

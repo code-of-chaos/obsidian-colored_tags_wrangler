@@ -9,6 +9,7 @@ import {SettingTab}
 	from "src/setting_tab";
 import {Styler}
 	from "./styler";
+import {Obj} from "tern";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -50,8 +51,9 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 		await this.saveData(this.settings);
 		// whenever settings are saved, also run this.
 		//		This way we know it is always run when needed
-		this.styler.applyTagStyles();
 
+		Object.keys(this.settings.customTagColors).length != 0 ? this.styler.applyTagStyles() : this.styler.removeTagStyles();
+		this.settings.enableKanban ? this.styler.applyKanbanStyles() : this.styler.removeKanbanStyles();
 	}
 
 }
