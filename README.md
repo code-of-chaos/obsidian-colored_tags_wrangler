@@ -1,6 +1,14 @@
 # Obsidian - Colored Tag Wrangler
+This plugin allows the user to apply different colors to different tags.
+The tags are applied in the "Settings Tab" of the plugin.
 
-**Note by Dev during early development**
-> I'm working on my first plugin for Obsidian. It is meant to be a small one that allows you to define a tag that has a specific color you choose.
-It's currently very early days (like literally built the MVP now) so a lot of it is still to change. Currently you go through the settings to change the tags, but I hope to learn to do it through a side panel and have actual settings in the settings tab.
-I'll leave a link to the repo here, but as I said, it is VERY early days
+## Features
+- The ability to define a tag with a unique color.
+- Integration with the [Kanban](https://github.com/mgmeyers/obsidian-kanban) plugin.
+  - Setting to apply a tag color to a Kanban card which has that tag.
+  - Setting to apply a tag color to a Kanban list, when a tag is present in the title.
+  - Setting to ommit the `#` from tags in the Kanban view
+
+## Support
+If you like the plugin, and would like to support its development. You can support me on [twitch](https://www.twitch.tv/andreassasdev) or donate on [Ko-fi](https://www.twitch.tv/andreassasdev).
+All donations are welcome, but never feel pressured to give.
