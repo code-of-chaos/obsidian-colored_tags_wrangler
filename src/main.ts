@@ -1,21 +1,20 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App, Editor, MarkdownView, Modal, Notice, Plugin}
+import {Plugin}
 	from "obsidian";
 import {IColoredTagWranglerSettings, DEFAULT_SETTINGS}
 	from "src/default_settings";
 import {SettingTab}
 	from "src/setting_tab";
-import {Styler}
-	from "./styler";
-import {Obj} from "tern";
+import {StyleManager}
+	from "./styles/style_manager";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export default class ColoredTagWranglerPlugin extends Plugin {
 	settings: IColoredTagWranglerSettings;
-	styler:Styler
+	style_manager:StyleManager
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
@@ -27,17 +26,16 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 			console.error("Error loading settings for obsidian-colored_tags_wrangler:", error);
 			return;
 		}
-		this.styler = new Styler(this);
-		this.addSettingTab(new SettingTab(this));
-		this.styler.applyTagStyles();
 
-		this.settings.enableKanban ? this.styler.applyKanbanStyles() : this.styler.removeKanbanStyles();
+		this.style_manager = new StyleManager(this);
+		this.addSettingTab(new SettingTab(this));
+
+		this.style_manager.switchAllStyles();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	onunload() {
-		this.styler.removeTagStyles();
-		this.styler.removeKanbanStyles();
+		this.style_manager.removeAllStyles()
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -51,9 +49,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 		await this.saveData(this.settings);
 		// whenever settings are saved, also run this.
 		//		This way we know it is always run when needed
-
-		Object.keys(this.settings.customTagColors).length != 0 ? this.styler.applyTagStyles() : this.styler.removeTagStyles();
-		this.settings.enableKanban ? this.styler.applyKanbanStyles() : this.styler.removeKanbanStyles();
+		this.style_manager.switchAllStyles();
 	}
 
 }

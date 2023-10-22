@@ -92,8 +92,8 @@ export class SettingTab extends PluginSettingTab {
                     .setValue(this.plugin.settings.enableKanban)
                     .onChange(async state => {
                         state
-                            ? this.plugin.styler.applyKanbanStyles()
-                            : this.plugin.styler.removeKanbanStyles()
+                            ? this.plugin.style_manager.wrangler_kanban.apply_styles()
+                            : this.plugin.style_manager.wrangler_kanban.remove_styles()
                         this.plugin.settings.enableKanban = state;
                     await this.plugin.saveSettings();
                     })
