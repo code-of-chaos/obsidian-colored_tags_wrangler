@@ -22,7 +22,7 @@ export class SettingTab extends PluginSettingTab {
     settings_Delete:Setting;
     settings_Kanban:Setting;
     settings_KanbanCards:Setting;
-    settings_KanbanTitles:Setting;
+    settings_KanbanLists:Setting;
     settings_ReloadCSS:Setting;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -122,14 +122,14 @@ export class SettingTab extends PluginSettingTab {
 			);
 
 		// --- KANBAN TITLES ADDITION ---
-		this.settings_KanbanTitles = new Setting(containerEl)
+		this.settings_KanbanLists = new Setting(containerEl)
 			.setName("Apply Tag color to Kanban List")
-			.setDesc("Applies the tag color, of the tag within the titles, to the background color of the list")
+			.setDesc("Applies the tag color, of the tag within the list's title, to the background color of the list")
 			.addToggle(component => {
 					component
-						.setValue(this.plugin.settings.enableKanbanTitles)
+						.setValue(this.plugin.settings.enableKanbanLists)
 						.onChange(async state => {
-							this.plugin.settings.enableKanbanTitles = state;
+							this.plugin.settings.enableKanbanLists = state;
 							await this.plugin.saveSettings();
 						})
 				}
