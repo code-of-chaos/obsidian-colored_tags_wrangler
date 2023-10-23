@@ -10,6 +10,13 @@ export interface IColoredTagWranglerSettings {
     enableKanban:boolean;
 	enableKanbanCards:boolean;
 	enableKanbanLists:boolean;
+
+	// The following settings still have to be assigned to logic
+	kanbanCardBackgroundOpacity:number;
+	kanbanCardBorderOpacity:number;
+	kanbanListBackgroundOpacity:number;
+	kanbanListBorderOpacity:number;
+
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -19,4 +26,12 @@ export const DEFAULT_SETTINGS: IColoredTagWranglerSettings = {
     enableKanban:false,
 	enableKanbanCards:false,
 	enableKanbanLists:false,
+
+	// The following settings still have to be assigned to logic
+	kanbanCardBackgroundOpacity:0.2,
+	kanbanCardBorderOpacity:0.3,
+	kanbanListBackgroundOpacity:0.2,
+	kanbanListBorderOpacity:0.3,
+
+
 }

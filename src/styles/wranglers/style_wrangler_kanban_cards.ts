@@ -27,10 +27,10 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `
 					div.kanban-plugin__item.has-tag-${tagName.toLowerCase()} div.kanban-plugin__item-title-wrapper { 
-						background: rgba(${color.r}, ${color.g}, ${color.b}, 0.2) !important;
+						background: rgba(${color.r}, ${color.g}, ${color.b}, ${this.plugin.settings.kanbanCardBackgroundOpacity}) !important;
 					}
 					div.kanban-plugin__item.has-tag-${tagName.toLowerCase()}{ 
-						border-color: rgba(${color.r}, ${color.g}, ${color.b}, 0.3) !important;
+						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${this.plugin.settings.kanbanCardBorderOpacity}) !important;
 					}
 				`;
 			}).join('\n');
