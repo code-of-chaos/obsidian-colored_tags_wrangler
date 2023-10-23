@@ -3,7 +3,7 @@
 	"name": "Colored Tags Wrangler",
 	"version": "0.2.2",
 	"minAppVersion": "0.15.0",
-	"description": "This is a small plugin to color specific tags with custom colors. Also has some settings to apply to the Kanban plugin.",
+	"description": "Assign colors to tags. Has integration with the Kanban Plugin.",
 	"author": "AndreasSasDev",
 	"authorUrl": "https://github.com/AndreasSas",
 	"fundingUrl": "https://ko-fi.com/andreassasdev",
