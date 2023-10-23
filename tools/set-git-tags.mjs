@@ -4,6 +4,7 @@
 import { promises as fsPromises } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
+import {fileURLToPath} from "url";
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,7 +21,7 @@ async function readManifestVersion(filepath) {
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-const dirname = path.dirname(new URL(import.meta.url).pathname);
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 const manifestJsonPath = path.join(dirname, '../manifest.json');
 
 (async () => {
