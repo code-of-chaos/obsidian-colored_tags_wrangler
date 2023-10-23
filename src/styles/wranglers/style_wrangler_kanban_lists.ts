@@ -24,7 +24,7 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 		return Object.keys(this.plugin.settings?.customTagColors)
 			.map(tagName => {
 				const color: RGB = this.plugin.settings.customTagColors[tagName];
-				
+
 				const rgb:string = `${color.r}, ${color.g}, ${color.b}`;
 				const opacity_background:string = this.plugin.settings.kanbanListBackgroundOpacity.toString();
 				const opacity_border:string = this.plugin.settings.kanbanListBorderOpacity.toString();
