@@ -3,15 +3,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import MyPlugin
 	from "src/main";
-import {StyleWranglerTags}
-	from "./style_wrangler_tags";
-import {StyleWranglerKanban}
-	from "./style_wrangler_kanban";
-import {IStyleWrangler}
-	from "./style_wrangler";
-import {StyleWranglerKanbanCards}
-	from "./style_wrangler_kanban_cards";
-import {StyleWranglerKanbanTitles} from "./style_wrangler_kanban_titles";
+import {
+	IStyleWrangler,
+	StyleWranglerKanban,
+	StyleWranglerKanbanCards,
+	StyleWranglerKanbanTitles,
+	StyleWranglerTags
+} from "./wranglers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

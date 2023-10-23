@@ -3,18 +3,18 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
 	from "./style_wrangler";
+import ColoredTagWranglerPlugin from "../../main";
 import {RGB} from "obsidian";
-import ColoredTagWranglerPlugin from "../main";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleWranglerTags extends StyleWrangler {
+export class StyleWranglerKanbanTitles extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleTagsEl", plugin)
+		super("#styleKanbanTitlesEl", plugin)
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -24,15 +24,16 @@ export class StyleWranglerTags extends StyleWrangler {
 		return Object.keys(this.plugin.settings?.customTagColors)
 			.map(tagName => {
 				const color: RGB = this.plugin.settings.customTagColors[tagName];
-				// noinspection CssInvalidFunction
+				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `
-					.tag[href="#${tagName}"], .cm-tag-${tagName} { 
-						--color: rgb(${color.r}, ${color.g}, ${color.b});
-						--color-hover: var(--color);
-						--background: rgba(${color.r}, ${color.g}, ${color.b}, 0.2);
-						--background-hover: rgba(${color.r}, ${color.g}, ${color.b}, 0.1);
-					}`;
+					div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tagName.toLowerCase()}"]){
+						background : rgba(${color.r}, ${color.g}, ${color.b}, 0.2) !important;
+						border-color: rgba(${color.r}, ${color.g}, ${color.b}, 0.3) !important;
+					}
+					div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tagName.toLowerCase()}"]){
+						border-color: rgba(${color.r}, ${color.g}, ${color.b}, 0.3) !important;
+					}
+				`;
 			}).join('\n');
 	}
-
 }

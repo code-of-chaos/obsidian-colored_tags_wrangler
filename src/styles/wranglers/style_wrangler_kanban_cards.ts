@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
 	from "./style_wrangler";
-import ColoredTagWranglerPlugin from "../main";
+import ColoredTagWranglerPlugin from "../../main";
 import {RGB} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export const removeById = (id:string) :void => {
+export function remove_by_id (id:string) :void {
 	if (!id.startsWith("#")){
 		throw new DOMException("id did not start with a '#' ")
 	}
@@ -14,4 +14,3 @@ export const removeById = (id:string) :void => {
 		existingStyle.remove();
 	}
 }
-
