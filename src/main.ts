@@ -6,7 +6,7 @@ import {Plugin}
 import {IColoredTagWranglerSettings, DEFAULT_SETTINGS}
 	from "src/default_settings";
 import {SettingTab}
-	from "src/settings/setting_tab";
+	from "src/setting_tab/setting_tab";
 import {StyleManager}
 	from "./styles/style_manager";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 		try {
 			await this.loadSettings();
 		} catch (error) {
-			console.error("Error loading settings for obsidian-colored_tags_wrangler:", error);
+			console.error("Error loading setting_tab for obsidian-colored_tags_wrangler:", error);
 			return;
 		}
 
@@ -37,13 +37,13 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	async loadSettings() {
-		// Retrieve settings from stored data.json file
+		// Retrieve setting_tab from stored data.json file
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	async saveSettings() {
 		await this.saveData(this.settings);
-		// whenever settings are saved, also run this.
+		// whenever setting_tab are saved, also run this.
 		//		This way we know it is always run when needed
 		this.style_manager.switchAllStyles();
 	}
