@@ -24,7 +24,7 @@ export class ComponentDebug extends SettingsTabComponent{
 			.setName("Enable debug options")
 			.setDesc(`
 				Allows you to view and use some extra debug option. 
-				Don't use these if you don't know what you are doing
+				Don't use these if you don't know what you are doing.
 			`).addToggle(component => {
 					component
 						.setValue(this.plugin.settings.enableDebugSettings)

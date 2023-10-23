@@ -30,8 +30,8 @@ export class ComponentTags extends SettingsTabComponent{
 			.setName("Custom color tags")
 			.setDesc(`
 				Define custom colors for tags.
-				Don't add the '#' before the tag, and keep everything in lowercase.
-				This should be sanitized in code as well.
+				Don't add the '#' before the tag, and write everything in lowercase without spaces.
+				This is sanitized in code as well, resulting in the tag being edited when you reload this setting tab.
 			`)
 			.addButton((button) =>
 				button

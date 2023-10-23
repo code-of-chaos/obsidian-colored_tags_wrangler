@@ -22,8 +22,11 @@ export class ComponentDebugReloadCSS extends SettingsTabComponent{
 	public create_component(): Setting {
 		return new Setting(this.containerEL)
 			.setName("Refresh CSS styling")
-			.setDesc("Reloads the styling elements of this plugin")
-			.addButton((button) =>
+			.setDesc(`
+				Reloads the styling elements of this plugin. 
+				Warning: Might change order of tags in CSS and therefor chances to alter the look of certain things, 
+					like the kanban boards. 
+			`).addButton((button) =>
 				button
 					.setButtonText("Refresh")
 					.onClick(async () => {

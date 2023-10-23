@@ -22,8 +22,10 @@ export class ComponentKanbanCards extends SettingsTabComponent{
 	public create_component(): Setting {
 		return new Setting(this.containerEL)
 			.setName("Apply tag color to kanban card")
-			.setDesc("Applies the tag color, of the tag within the card, to the background color of the card")
-			.addToggle(component => {
+			.setDesc(`
+				Applies the tag color, of the tag within the card, to the background color of the card. 
+				Known issue: When a card has multiple tags, the color of the card is randomly chosen.
+			`).addToggle(component => {
 					component
 						.setValue(this.plugin.settings.enableKanbanCards)
 						.onChange(async state => {

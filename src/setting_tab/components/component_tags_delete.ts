@@ -23,7 +23,7 @@ export class ComponentTagsDelete extends SettingsTabComponent{
 	public create_component(): Setting {
 		return new Setting(this.containerEL)
 			.setName("Clear all tag colors")
-			.setDesc("Removes the colors tied to tags. Does not delete the tags in your notes")
+			.setDesc("Removes the colors tied to tags. Does not delete the tags in your notes.")
 			.addButton((button) =>
 				button
 					.setButtonText('Clear')
