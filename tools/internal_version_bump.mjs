@@ -3,7 +3,56 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import * as fs from 'fs';
 import * as path from 'path';
-import { fileURLToPath } from 'url';
+import {fileURLToPath} from 'url';
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Support Code
+// ---------------------------------------------------------------------------------------------------------------------
+function process_file(filepath, new_version=null){
+	fs.readFile(filepath, 'utf8', (err, fileData) => {
+		if (err) {
+			console.error(`Error reading ${filepath}:`, err);
+			process.exit(1);
+		}
+		try {
+			const jsonData = JSON.parse(fileData);
+			if (new_version === null){
+				const versionParts = jsonData.version.split('.').map(Number);
+
+				switch (versionBumpType) {
+					case 'full':
+						versionParts[0]++; // Increment major version
+						versionParts[1] = 0; // Reset minor version
+						versionParts[2] = 0; // Reset patch version
+						break;
+					case 'change':
+						versionParts[1]++; // Increment minor version
+						versionParts[2] = 0; // Reset patch version
+						break;
+					case 'fix':
+						versionParts[2]++; // Increment patch version
+						break;
+				}
+
+				new_version = versionParts.join('.');
+			}
+
+			jsonData.version = new_version
+
+			fs.writeFile(filepath, JSON.stringify(jsonData, null, 2), (err) => {
+				if (err) {
+					console.error('Error writing package.json:', err);
+					process.exit(1);
+				}
+			});
+
+		} catch (packageParseError) {
+			console.error('Error parsing package.json:', packageParseError);
+			process.exit(1);
+		}
+	})
+	return new_version
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -21,75 +70,9 @@ if (!['full', 'change', 'fix'].includes(versionBumpType)) {
 	process.exit(1);
 }
 
-// Read the package.json file
-fs.readFile(packageJsonPath, 'utf8', (err, packageData) => {
-	if (err) {
-		console.error('Error reading package.json:', err);
-		process.exit(1);
-	}
+let new_version = null;
 
-	try {
-		const packageJson = JSON.parse(packageData);
+new_version = process_file(packageJsonPath, new_version);
+new_version =process_file(manifestJsonPath, new_version);
 
-		// Read the manifest.json file
-		fs.readFile(manifestJsonPath, 'utf8', (err, manifestData) => {
-			if (err) {
-				console.error('Error reading manifest.json:', err);
-				process.exit(1);
-			}
-
-			try {
-				const manifestJson = JSON.parse(manifestData);
-
-				// Split the current version into major, minor, and patch parts
-				const versionParts = packageJson.version.split('.').map(Number);
-
-				switch (versionBumpType) {
-					case 'full':
-						versionParts[0]++; // Increment major version
-						versionParts[1] = 0; // Reset minor version
-						versionParts[2] = 0; // Reset patch version
-						break;
-					case 'change':
-						versionParts[1]++; // Increment minor version
-						versionParts[2] = 0; // Reset patch version
-						break;
-					case 'fix':
-						versionParts[2]++; // Increment patch version
-						break;
-				}
-
-				const newVersion = versionParts.join('.');
-
-				// Update the version in package.json
-				packageJson.version = newVersion;
-
-				// Update the version in manifest.json
-				manifestJson.version = newVersion;
-
-				// Write the updated package.json back to the file
-				fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2), (err) => {
-					if (err) {
-						console.error('Error writing package.json:', err);
-						process.exit(1);
-					}
-
-					// Write the updated manifest.json back to the file
-					fs.writeFile(manifestJsonPath, JSON.stringify(manifestJson, null, 2), (err) => {
-						if (err) {
-							console.error('Error writing manifest.json:', err);
-							process.exit(1);
-						}
-						console.log(`Version bumped to ${newVersion}`);
-					});
-				});
-			} catch (manifestParseError) {
-				console.error('Error parsing manifest.json:', manifestParseError);
-				process.exit(1);
-			}
-		});
-	} catch (packageParseError) {
-		console.error('Error parsing package.json:', packageParseError);
-		process.exit(1);
-	}
-});
+console.log(`Version bumped to ${newVersion}`);
