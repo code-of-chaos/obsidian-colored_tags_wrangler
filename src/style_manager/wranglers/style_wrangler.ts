@@ -2,9 +2,9 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {remove_by_id}
-	from "../../lib";
+	from "src/lib";
 import ColoredTagWranglerPlugin
-	from "../../main";
+	from "src/main";
 import {normalizePath, Vault}
 	from "obsidian";
 import * as fs
@@ -73,9 +73,9 @@ export abstract class StyleWrangler implements IStyleWrangler{
 
 		try {
 			fs.writeFileSync(cssFilePath, this.assemble_css());
-			console.log('Custom styles file written successfully:', cssFilePath);
+			console.log('Custom style_manager file written successfully:', cssFilePath);
 		} catch (error) {
-			console.error('Error writing custom styles file:', error);
+			console.error('Error writing custom style_manager file:', error);
 		}
 	}
 

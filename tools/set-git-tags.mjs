@@ -24,9 +24,11 @@ async function readManifestVersion(filepath) {
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const manifestJsonPath = path.join(dirname, '../manifest.json');
 
+// Asynchronously read the version from the manifest.json file
 (async () => {
 	const version = await readManifestVersion(manifestJsonPath);
 
+	// Create a Git tag with the obtained version
 	exec(`git tag -a ${version} -m "Version ${version}"`, (error, stdout, stderr) => {
 		if (error) {
 			console.error(`Error creating Git tag: ${error}`);
@@ -35,6 +37,8 @@ const manifestJsonPath = path.join(dirname, '../manifest.json');
 			console.log(`Git tag ${version} created successfully.`);
 		}
 	});
+
+	// Push the Git tag to the remote repository
 	exec(`git push --tags`,(error, stdout, stderr) => {
 		if (error) {
 			console.error(`Error Pushing Git tag: ${error}`);
