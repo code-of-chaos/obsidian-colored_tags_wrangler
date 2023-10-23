@@ -8,7 +8,7 @@ import {IColoredTagWranglerSettings, DEFAULT_SETTINGS}
 import {SettingTab}
 	from "src/setting_tab/setting_tab";
 import {StyleManager}
-	from "./style_manager/style_manager";
+	from "src/style_manager/style_manager";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

@@ -2,9 +2,9 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {remove_by_id}
-	from "../../lib";
+	from "src/lib";
 import ColoredTagWranglerPlugin
-	from "../../main";
+	from "src/main";
 import {normalizePath, Vault}
 	from "obsidian";
 import * as fs
