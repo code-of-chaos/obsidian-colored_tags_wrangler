@@ -42,15 +42,15 @@ export class SettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		// -------------------------------------------------------------------------------------------------------------
-		containerEl.createEl('h2', {text: "Obsidian Tags"});
+		containerEl.createEl('h2', {text: "Obsidian tags"});
 
 		// --- CUSTOM COLOR TAGS ---
 		this.settings_CCT = new Setting(containerEl)
-            .setName("Custom Color Tags")
+            .setName("Custom color tags")
 			.setDesc("Define custom colors for tags. Don't add the `#` before the tag, and keep everything in lowercase. This should be sanitized in code as well.")
             .addButton((button) =>
                 button
-                    .setButtonText("Add New Tag")
+                    .setButtonText("Add new tag")
                     .onClick(async () => {
                         this.plugin.settings.customTagColors[NEW_TAG_NAME] = NEW_DEFAULT_COLOR; // Default color
                         await Promise.all([
@@ -71,7 +71,7 @@ export class SettingTab extends PluginSettingTab {
 
         // --- DELETE TAGS ---
         this.settings_Delete = new Setting(containerEl)
-            .setName("Clear All Tag Colors")
+            .setName("Clear all tag colors")
             .setDesc("Removes the colors tied to tags. Does not delete the tags in your notes")
             .addButton((button) =>
                 button
@@ -91,11 +91,11 @@ export class SettingTab extends PluginSettingTab {
 
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
-		containerEl.createEl('h2', {text: "KanBan Plugin Integration"})
+		containerEl.createEl('h2', {text: "Kanban plugin integration"})
 
         // --- KANBAN ADDITION ---
         this.settings_Kanban = new Setting(containerEl)
-            .setName("Omit '#' in Kanban plugin ")
+            .setName("Omit '#' in kanban plugin ")
             .setDesc("Hides the # from the kanban view. Mind you, they still have to be typed out")
             .addToggle(component => {
                 component
@@ -109,7 +109,7 @@ export class SettingTab extends PluginSettingTab {
 
 		// --- KANBAN CARDS ADDITION ---
 		this.settings_KanbanCards = new Setting(containerEl)
-			.setName("Apply Tag color to Kanban Card")
+			.setName("Apply tag color to kanban card")
 			.setDesc("Applies the tag color, of the tag within the card, to the background color of the card")
 			.addToggle(component => {
 					component
@@ -123,7 +123,7 @@ export class SettingTab extends PluginSettingTab {
 
 		// --- KANBAN TITLES ADDITION ---
 		this.settings_KanbanLists = new Setting(containerEl)
-			.setName("Apply Tag color to Kanban List")
+			.setName("Apply tag color to kanban list")
 			.setDesc("Applies the tag color, of the tag within the list's title, to the background color of the list")
 			.addToggle(component => {
 					component
@@ -137,10 +137,10 @@ export class SettingTab extends PluginSettingTab {
 
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
-		containerEl.createEl('h2', {text: "Debug Options"})
+		containerEl.createEl('h2', {text: "Debug options"})
 
 		this.settings_ReloadCSS = new Setting(containerEl)
-			.setName("Refresh CSS Styling")
+			.setName("Refresh CSS styling")
 			.setDesc("Reloads the styling of this plugin")
 			.addButton((button) =>
 				button

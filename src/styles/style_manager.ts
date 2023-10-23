@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import MyPlugin
+import ColoredTagWranglerPlugin
 	from "src/main";
 import {
 	IStyleWrangler,
@@ -14,7 +14,7 @@ import {
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class StyleManager{
-	plugin: MyPlugin;
+	plugin: ColoredTagWranglerPlugin;
 	wrangler_tags: StyleWranglerTags;
 	wrangler_kanban: StyleWranglerKanban;
 	wrangler_kanban_cards: StyleWranglerKanbanCards;
@@ -24,7 +24,7 @@ export class StyleManager{
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin: MyPlugin) {
+	constructor(plugin: ColoredTagWranglerPlugin) {
 		this.plugin = plugin;
 		this.wrangler_tags = new StyleWranglerTags(plugin)
 		this.wrangler_kanban = new StyleWranglerKanban(plugin)
