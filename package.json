@@ -1,7 +1,7 @@
 {
 	"name": "colored-tags-wrangler",
 	"version": "0.2.3",
-	"description": "Assign colors to tags. Has integration with the Kanban Plugin.",
+	"description": "Assign colors to tags. Has integrations with other plugins, like Kanban.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
