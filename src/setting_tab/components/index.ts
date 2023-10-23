@@ -1,3 +1,6 @@
+// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
 export * from 'src/setting_tab/components/component';
 export * from 'src/setting_tab/components/component_debug';
 export * from 'src/setting_tab/components/component_debug_reloadcss';
