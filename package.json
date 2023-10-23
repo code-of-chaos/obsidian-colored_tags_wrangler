@@ -1,24 +1,27 @@
 {
-	"name": "colored-tags-wrangler",
-	"version": "0.2.5",
-	"description": "Assign colors to tags. Has integrations with other plugins, like Kanban.",
-	"main": "main.js",
-	"scripts": {
-		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json"
-	},
-	"keywords": [],
-	"author": "AndreasSasDev",
-	"license": "GPL-3.0",
-	"devDependencies": {
-		"@types/node": "^16.11.6",
-		"@typescript-eslint/eslint-plugin": "5.29.0",
-		"@typescript-eslint/parser": "5.29.0",
-		"builtin-modules": "3.3.0",
-		"esbuild": "0.17.3",
-		"obsidian": "latest",
-		"tslib": "2.4.0",
-		"typescript": "4.7.4"
-	}
+  "name": "colored-tags-wrangler",
+  "version": "0.2.7",
+  "description": "Assign colors to tags. Has integrations with other plugins, like Kanban.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "version": "node version-bump.mjs && git add manifest.json versions.json",
+    "internal_version_bump-full": "npx ts-node tools/internal_version_bump.mjs full && git add package.json",
+    "internal_version_bump-change": "npx ts-node tools/internal_version_bump.mjs change && git add package.json",
+    "internal_version_bump-fix": "npx ts-node tools/internal_version_bump.mjs fix && git add package.json"
+  },
+  "keywords": [],
+  "author": "AndreasSasDev",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@typescript-eslint/eslint-plugin": "5.29.0",
+    "@typescript-eslint/parser": "5.29.0",
+    "builtin-modules": "3.3.0",
+    "esbuild": "0.17.3",
+    "obsidian": "latest",
+    "tslib": "2.4.0",
+    "typescript": "4.7.4"
+  }
 }
