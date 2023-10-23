@@ -13,7 +13,6 @@ export function hexToRgb(hexColor:string) : RGB{
 		b: parseInt(hexColor.slice(5, 7), 16)
 	}
 }
-
 // ---------------------------------------------------------------------------------------------------------------------
 export function rgbToHex(rgb: RGB): string {
 	const toHex = (c: number) => c.toString(16).padStart(2, "0");

@@ -21,8 +21,6 @@ export class StyleManager{
 	wrangler_kanban_titles: StyleWranglerKanbanTitles;
 
 	private _style_wranglers: Array<IStyleWrangler>;
-
-
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
@@ -39,7 +37,6 @@ export class StyleManager{
 			this.wrangler_kanban_cards,
 			this.wrangler_kanban_titles,
 		)
-
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

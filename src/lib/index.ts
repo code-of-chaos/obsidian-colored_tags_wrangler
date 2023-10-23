@@ -5,4 +5,3 @@ export {remove_by_id}
 	from "./remove_by_id";
 export {hexToRgb, rgbToHex}
 	from "./convert_colors";
-

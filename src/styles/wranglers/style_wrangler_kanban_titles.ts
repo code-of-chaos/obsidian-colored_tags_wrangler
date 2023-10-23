@@ -3,9 +3,10 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
 	from "./style_wrangler";
-import ColoredTagWranglerPlugin from "../../main";
-import {RGB} from "obsidian";
-
+import ColoredTagWranglerPlugin
+	from "../../main";
+import {RGB}
+	from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -16,7 +17,6 @@ export class StyleWranglerKanbanTitles extends StyleWrangler {
 	constructor(plugin:ColoredTagWranglerPlugin) {
 		super("#styleKanbanTitlesEl", plugin)
 	}
-
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------

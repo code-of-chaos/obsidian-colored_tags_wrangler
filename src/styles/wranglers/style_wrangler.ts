@@ -30,7 +30,6 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	plugin:ColoredTagWranglerPlugin;
 
 	abstract assemble_css(): string;
-
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
@@ -43,7 +42,6 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		this.styleEL = document.createElement('style');
 		this.styleEL.id = this.id;
 	}
-
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------

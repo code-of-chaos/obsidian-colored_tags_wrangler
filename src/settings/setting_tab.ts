@@ -1,9 +1,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App, PluginSettingTab, RGB, Setting}
+import {PluginSettingTab, RGB, Setting}
     from "obsidian";
-import {hexToRgb,rgbToHex}
+import {hexToRgb}
     from "../lib";
 import ColoredTagWranglerPlugin
     from "../main";

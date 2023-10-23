@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 export {type IStyleWrangler , StyleWrangler}
 	from "./style_wrangler"
-
 export {StyleWranglerKanban}
 	from "./style_wrangler_kanban"
 export {StyleWranglerKanbanCards}
