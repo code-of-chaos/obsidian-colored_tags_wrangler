@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {removeById}
-	from "../lib";
+	from "../lib/remove_by_id";
 import ColoredTagWranglerPlugin
 	from "../main";
 import {normalizePath, Vault}

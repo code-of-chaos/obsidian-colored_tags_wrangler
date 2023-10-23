@@ -6,7 +6,7 @@ import {Plugin}
 import {IColoredTagWranglerSettings, DEFAULT_SETTINGS}
 	from "src/default_settings";
 import {SettingTab}
-	from "src/setting_tab";
+	from "src/settings/setting_tab";
 import {StyleManager}
 	from "./styles/style_manager";
 // ---------------------------------------------------------------------------------------------------------------------

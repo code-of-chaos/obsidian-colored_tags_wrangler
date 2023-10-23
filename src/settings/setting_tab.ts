@@ -4,9 +4,9 @@
 import {App, PluginSettingTab, RGB, Setting}
     from "obsidian";
 import {hexToRgb,rgbToHex}
-    from "./lib";
+    from "../lib/convert_colors";
 import ColoredTagWranglerPlugin
-    from "./main";
+    from "../main";
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
