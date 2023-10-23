@@ -11,9 +11,9 @@ The tags are applied in the "Settings Tab" of the plugin.
 
 ### Feature Examples
 
-| Feature            | Image                                                                                                                                     |
-|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| colored tags       | ![tags_example.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/tags_example.png)        |
+| Feature            | Image                                                                                                                                  |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| colored tags       | ![tags_example.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/tags_example.png)     |
 | Kanban Integration | ![kanban_example.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/kanban_example.png) |
 
 
