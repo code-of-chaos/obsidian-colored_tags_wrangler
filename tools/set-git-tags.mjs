@@ -27,12 +27,12 @@ const manifestJsonPath = path.join(dirname, '../manifest.json');
 (async () => {
 	const version = await readManifestVersion(manifestJsonPath);
 
-	exec(`git tag -a v${version} -m "Version ${version}"`, (error, stdout, stderr) => {
+	exec(`git tag -a ${version} -m "Version ${version}"`, (error, stdout, stderr) => {
 		if (error) {
 			console.error(`Error creating Git tag: ${error}`);
 			process.exit(1);
 		} else {
-			console.log(`Git tag v${version} created successfully.`);
+			console.log(`Git tag ${version} created successfully.`);
 		}
 	});
 })();
