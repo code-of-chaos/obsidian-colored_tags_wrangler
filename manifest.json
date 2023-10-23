@@ -1,7 +1,7 @@
 {
 	"id": "colored-tags-wrangler",
 	"name": "Colored Tags Wrangler",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"minAppVersion": "0.15.0",
 	"description": "This is a small plugin to color specific tags with custom colors. Also has some settings to apply to the Kanban plugin.",
 	"author": "AndreasSasDev",

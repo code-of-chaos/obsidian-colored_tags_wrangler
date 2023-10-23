@@ -10,8 +10,8 @@ import ColoredTagWranglerPlugin
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
-const NEW_TAG_NAME:string = "New Tag";
-const NEW_DEFAULT_COLOR:RGB = { r: 0, g: 0, b: 0 };
+const NEW_TAG_NAME:string = "new-tag";
+const NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -22,6 +22,8 @@ export class SettingTab extends PluginSettingTab {
     settings_Delete:Setting;
     settings_Kanban:Setting;
     settings_KanbanCards:Setting;
+    settings_KanbanTitles:Setting;
+    settings_ReloadCSS:Setting;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor
@@ -40,7 +42,7 @@ export class SettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		// -------------------------------------------------------------------------------------------------------------
-		containerEl.createEl('h2', {text: "Tag Settings"});
+		containerEl.createEl('h2', {text: "Obsidian Tags"});
 
 		// --- CUSTOM COLOR TAGS ---
 		this.settings_CCT = new Setting(containerEl)
@@ -89,7 +91,7 @@ export class SettingTab extends PluginSettingTab {
 
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
-		containerEl.createEl('h2', {text: "KanBan Plugin Settings"})
+		containerEl.createEl('h2', {text: "KanBan Plugin Integration"})
 
         // --- KANBAN ADDITION ---
         this.settings_Kanban = new Setting(containerEl)
@@ -106,7 +108,7 @@ export class SettingTab extends PluginSettingTab {
             );
 
 		// --- KANBAN CARDS ADDITION ---
-		this.settings_Kanban = new Setting(containerEl)
+		this.settings_KanbanCards = new Setting(containerEl)
 			.setName("Apply Tag color to Kanban Card")
 			.setDesc("Applies the tag color, of the tag within the card, to the background color of the card")
 			.addToggle(component => {
@@ -120,7 +122,7 @@ export class SettingTab extends PluginSettingTab {
 			);
 
 		// --- KANBAN TITLES ADDITION ---
-		this.settings_Kanban = new Setting(containerEl)
+		this.settings_KanbanTitles = new Setting(containerEl)
 			.setName("Apply Tag color to Kanban List")
 			.setDesc("Applies the tag color, of the tag within the titles, to the background color of the list")
 			.addToggle(component => {
@@ -133,6 +135,20 @@ export class SettingTab extends PluginSettingTab {
 				}
 			);
 
+		// -------------------------------------------------------------------------------------------------------------
+		containerEl.createEl('br');
+		containerEl.createEl('h2', {text: "Debug Options"})
+
+		this.settings_ReloadCSS = new Setting(containerEl)
+			.setName("Refresh CSS Styling")
+			.setDesc("Reloads the styling of this plugin")
+			.addButton((button) =>
+				button
+					.setButtonText("Refresh")
+					.onClick(async () => {
+						this.plugin.style_manager.switchAllStyles();
+					})
+			);
     }
 
 	// -----------------------------------------------------------------------------------------------------------------
