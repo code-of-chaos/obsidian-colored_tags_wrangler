@@ -35,4 +35,12 @@ const manifestJsonPath = path.join(dirname, '../manifest.json');
 			console.log(`Git tag ${version} created successfully.`);
 		}
 	});
+	exec(`git push --tags`,(error, stdout, stderr) => {
+		if (error) {
+			console.error(`Error Pushing Git tag: ${error}`);
+			process.exit(1);
+		} else {
+			console.log(`Git tag pushed successfully.`);
+		}
+	});
 })();
