@@ -75,4 +75,4 @@ let new_version = null;
 new_version = process_file(packageJsonPath, new_version);
 new_version =process_file(manifestJsonPath, new_version);
 
-console.log(`Version bumped to ${newVersion}`);
+console.log(`Version bumped to ${new_version}`);
