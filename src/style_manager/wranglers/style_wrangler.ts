@@ -57,27 +57,4 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		this.styleEL?.parentNode?.removeChild(this.styleEL);
 		remove_by_id(this.id)
 	};
-
-	// -----------------------------------------------------------------------------------------------------------------
-	// This method is currently unused, and that is by "design" for now.
-	//  At some later point in the development of this plugin, this might be useful to make an export to Publish.
-	private _writeToCSSFile():void {
-		const vault:Vault = this.plugin.app.vault;
-
-		// Write the CSS to a file in the snippets folder
-		//      I don't know why `adapter.basePath` is giving an error in my IDE, but it works ... ? why ?
-		const cssFilePath:string = normalizePath(
-			//      @ts-ignore ( well, now it isn't giving an error anymore sure because it is suppressed,
-			//                 but it is still weird...)
-			`${vault.adapter.basePath}/${vault.configDir}/snippets/tags-append.css`);
-
-		try {
-			fs.writeFileSync(cssFilePath, this.assemble_css());
-			console.log('Custom style_manager file written successfully:', cssFilePath);
-		} catch (error) {
-			console.error('Error writing custom style_manager file:', error);
-		}
-	}
-
-
 }
