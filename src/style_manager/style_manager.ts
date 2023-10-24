@@ -36,6 +36,7 @@ export class StyleManager{
 
 		this._style_wranglers = new Array<IStyleWrangler>(
 			this.wrangler_tags,
+			this.wrangler_tags_canvas,
 			this.wrangler_kanban,
 			this.wrangler_kanban_cards,
 			this.wrangler_kanban_lists,

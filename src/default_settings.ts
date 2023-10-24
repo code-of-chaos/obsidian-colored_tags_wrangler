@@ -18,6 +18,9 @@ export interface IColoredTagWranglerSettings {
 	kanbanCardBorderOpacity:number;
 	kanbanListBackgroundOpacity:number;
 	kanbanListBorderOpacity:number;
+
+	CanvasCardBorderOpacity:number;
+	CanvasCardBackgroundLuminanceOffset:number;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -35,4 +38,7 @@ export const DEFAULT_SETTINGS: IColoredTagWranglerSettings = {
 	kanbanCardBorderOpacity:0.3,
 	kanbanListBackgroundOpacity:0.2,
 	kanbanListBorderOpacity:0.3,
+
+	CanvasCardBorderOpacity:0.3,
+	CanvasCardBackgroundLuminanceOffset:0.35,
 }

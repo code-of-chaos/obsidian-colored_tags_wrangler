@@ -3,10 +3,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
 	from "src/style_manager/wranglers/style_wrangler";
-import {RGB}
+import {RGB, HSL}
 	from "obsidian";
 import ColoredTagWranglerPlugin
 	from "src/main";
+import {hslToRgb, rgbToHsl} from "src/lib/convert_colors";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -25,16 +26,18 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 			.map(tagName => {
 				const color: RGB = this.plugin.settings.customTagColors[tagName];
 
+				const opacity_border:string = this.plugin.settings.CanvasCardBorderOpacity.toString();
 
-				const rgb:string = `${color.r}, ${color.g}, ${color.b}`;
-				const opacity_background:string = this.plugin.settings.kanbanCardBackgroundOpacity.toString();
-				const opacity_border:string = this.plugin.settings.kanbanCardBorderOpacity.toString();
+				const hsl:HSL = rgbToHsl(color);
+				hsl.l -= this.plugin.settings.CanvasCardBackgroundLuminanceOffset;
+				const color2 = hslToRgb(hsl);
+				const rgb:string = `${color2.r}, ${color2.g}, ${color2.b}`;
 
 				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `
 					div.canvas-node-container:has(div.markdown-embed-content a[href="#${tagName}"]) {
-						background : rgba(${rgb}, ${opacity_background}) !important;
-						border-color: rgba(${rgb}, ${opacity_border}) !important;
+						background : rgb(${rgb}) !important;
+						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
 					}`;
 			}).join('\n');
 	}
