@@ -11,7 +11,9 @@ import {
 	ComponentKanban,
 	ComponentKanbanCards,
 	ComponentKanbanLists,
-	ComponentDebugReloadCSS, ComponentDebug
+	ComponentDebugReloadCSS,
+	ComponentDebug,
+	ComponentTagsCanvas
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -41,6 +43,7 @@ export class SettingTab extends PluginSettingTab {
 
 		new ComponentTags(this.plugin,this,containerEl).create_component();
         new ComponentTagsDelete(this.plugin,this,containerEl).create_component();
+		new ComponentTagsCanvas(this.plugin,this,containerEl).create_component();
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------
