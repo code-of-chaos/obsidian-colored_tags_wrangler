@@ -46,6 +46,26 @@ export class ComponentTags extends SettingsTabComponent{
 					.setClass("mod-cta")
 			);
 
+		// Only when Debug settings are on, allow the "Clear all" button to appear
+		if(this.plugin.settings.enableDebugSettings){
+			setting.addButton((button) =>
+				button
+					.setButtonText('Clear all')
+					.onClick(async () => {
+							Object.keys(this.plugin.settings.customTagColors)
+								.forEach((key_name) => delete this.plugin.settings.customTagColors[key_name]);
+							await Promise.all([
+								this.plugin.saveSettings(),
+								this.settings_tab.display()
+							]);
+						}
+					)
+					.setClass('mod-warning')
+					.setDisabled(Object.keys(this.plugin.settings.customTagColors).length == 0)
+			);
+		}
+
+
 		// Create the amount of tags already stored in the setting_tab
 		for (const tagName in this.plugin.settings.customTagColors) {
 			if (!this.plugin.settings.customTagColors.hasOwnProperty(tagName)) {
@@ -63,7 +83,7 @@ export class ComponentTags extends SettingsTabComponent{
 		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
 		let new_color = color; // Initialize newColor with the existing color
 
-		const new_setting = new Setting(containerEL)
+		const setting = new Setting(containerEL)
 			.addText((text) =>
 				text
 					.setPlaceholder(this._NEW_TAG_NAME)
@@ -108,7 +128,7 @@ export class ComponentTags extends SettingsTabComponent{
 					})
 			);
 
-		this.containerEL.appendChild(new_setting.settingEl);
+		this.containerEL.appendChild(setting.settingEl);
 	}
 }
 

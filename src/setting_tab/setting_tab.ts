@@ -7,7 +7,6 @@ import ColoredTagWranglerPlugin
     from "src/main";
 import {
 	ComponentTags,
-	ComponentTagsDelete,
 	ComponentKanban,
 	ComponentKanbanCards,
 	ComponentKanbanLists,
@@ -42,7 +41,6 @@ export class SettingTab extends PluginSettingTab {
 		containerEl.createEl('h2', {text: "Obsidian tags"});
 
 		new ComponentTags(this.plugin,this,containerEl).create_component();
-        new ComponentTagsDelete(this.plugin,this,containerEl).create_component();
 		new ComponentTagsCanvas(this.plugin,this,containerEl).create_component();
 
 		// Kanban Settings
