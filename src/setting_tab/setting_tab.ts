@@ -62,7 +62,4 @@ export class SettingTab extends PluginSettingTab {
 			new ComponentDebugReloadCSS(this.plugin,this,containerEl).create_component();
 		}
     }
-
-	// -----------------------------------------------------------------------------------------------------------------
-
 }
