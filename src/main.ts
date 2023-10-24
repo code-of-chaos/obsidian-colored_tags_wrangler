@@ -14,7 +14,7 @@ import {StyleManager}
 // ---------------------------------------------------------------------------------------------------------------------
 export default class ColoredTagWranglerPlugin extends Plugin {
 	settings: IColoredTagWranglerSettings;
-	style_manager:StyleManager
+	style_manager:StyleManager;
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	onunload() {
-		this.style_manager.removeAllStyles()
+		this.style_manager.removeAllStyles();
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	async loadSettings() {

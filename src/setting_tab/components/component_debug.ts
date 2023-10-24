@@ -31,7 +31,7 @@ export class ComponentDebug extends SettingsTabComponent{
 						.onChange(async state => {
 							this.plugin.settings.enableDebugSettings = state;
 							await this.plugin.saveSettings();
-							this.settings_tab.display()
+							this.settings_tab.display();
 						})
 				}
 			);

@@ -45,7 +45,7 @@ export class SettingTab extends PluginSettingTab {
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
-		containerEl.createEl('h2', {text: "Kanban plugin integration"})
+		containerEl.createEl('h2', {text: "Kanban plugin integration"});
 
         new ComponentKanban(this.plugin,this,containerEl).create_component();
 		new ComponentKanbanCards(this.plugin,this,containerEl).create_component();
@@ -54,12 +54,12 @@ export class SettingTab extends PluginSettingTab {
 		// Debug Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
-		containerEl.createEl('h2', {text: "Debug options"})
+		containerEl.createEl('h2', {text: "Debug options"});
 
-		new ComponentDebug(this.plugin,this,containerEl).create_component()
+		new ComponentDebug(this.plugin,this,containerEl).create_component();
 
 		if (this.plugin.settings.enableDebugSettings){
-			new ComponentDebugReloadCSS(this.plugin,this,containerEl).create_component()
+			new ComponentDebugReloadCSS(this.plugin,this,containerEl).create_component();
 		}
     }
 

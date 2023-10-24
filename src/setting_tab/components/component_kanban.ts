@@ -22,8 +22,10 @@ export class ComponentKanban extends SettingsTabComponent{
 	public create_component(): Setting {
 		return new Setting(this.containerEL)
 			.setName("Omit '#' in kanban boards")
-			.setDesc("Hides the '#' from the kanban view, though they still have to be typed out within the used areas.")
-			.addToggle(component => {
+			.setDesc(`
+				Hides the '#' from the kanban view, 
+					though they still have to be typed out within the used areas.
+			`).addToggle(component => {
 					component
 						.setValue(this.plugin.settings.enableKanban)
 						.onChange(async state => {

@@ -26,10 +26,10 @@ export class StyleManager{
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin: ColoredTagWranglerPlugin) {
 		this.plugin = plugin;
-		this.wrangler_tags = new StyleWranglerTags(plugin)
-		this.wrangler_kanban = new StyleWranglerKanban(plugin)
-		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin)
-		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin)
+		this.wrangler_tags = new StyleWranglerTags(plugin);
+		this.wrangler_kanban = new StyleWranglerKanban(plugin);
+		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
+		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
 
 		this._style_wranglers = new Array<IStyleWrangler>(
 			this.wrangler_tags,
@@ -60,10 +60,10 @@ export class StyleManager{
 	}
 
 	applyAllStyles():void {
-		this._style_wranglers.forEach(value => {value.apply_styles()})
+		this._style_wranglers.forEach(value => {value.apply_styles()});
 	}
 
 	removeAllStyles():void {
-		this._style_wranglers.forEach(value => {value.remove_styles()})
+		this._style_wranglers.forEach(value => {value.remove_styles()});
 	}
 }

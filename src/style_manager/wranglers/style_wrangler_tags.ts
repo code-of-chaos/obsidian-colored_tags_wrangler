@@ -15,7 +15,7 @@ export class StyleWranglerTags extends StyleWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleTagsEl", plugin)
+		super("#styleTagsEl", plugin);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

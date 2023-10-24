@@ -15,7 +15,7 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleKanbanCardsEl", plugin)
+		super("#styleKanbanCardsEl", plugin);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

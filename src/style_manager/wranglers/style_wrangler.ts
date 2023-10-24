@@ -5,10 +5,6 @@ import {remove_by_id}
 	from "src/lib";
 import ColoredTagWranglerPlugin
 	from "src/main";
-import {normalizePath, Vault}
-	from "obsidian";
-import * as fs
-	from "fs";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
@@ -55,6 +51,6 @@ export abstract class StyleWrangler implements IStyleWrangler{
 
 	remove_styles(): void{
 		this.styleEL?.parentNode?.removeChild(this.styleEL);
-		remove_by_id(this.id)
+		remove_by_id(this.id);
 	};
 }
