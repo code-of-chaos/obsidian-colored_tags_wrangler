@@ -12,7 +12,7 @@ import {
 	ComponentKanbanLists,
 	ComponentDebugReloadCSS,
 	ComponentDebug,
-	ComponentTagsCanvas
+	ComponentTagsCanvas, ComponentTagsSemanticColors
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -41,7 +41,11 @@ export class SettingTab extends PluginSettingTab {
 		containerEl.createEl('h2', {text: "Obsidian tags"});
 
 		new ComponentTags(this.plugin,this,containerEl).create_component();
+
+		new ComponentTagsSemanticColors(this.plugin, this, containerEl).create_component();
+
 		new ComponentTagsCanvas(this.plugin,this,containerEl).create_component();
+
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------
