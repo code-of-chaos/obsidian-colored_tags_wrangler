@@ -54,8 +54,8 @@ export class StyleManager{
 			: this.wrangler_tags.remove_styles() ;
 
 		Object.keys(this.plugin.settings.TagSemanticColors).length != 0
-			? this.wrangler_tags.apply_styles()
-			: this.wrangler_tags.remove_styles() ;
+			? this.wrangler_tags_semantic_colors.apply_styles()
+			: this.wrangler_tags_semantic_colors.remove_styles() ;
 
 		this.plugin.settings.enableKanban
 			? this.wrangler_kanban.apply_styles()

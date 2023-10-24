@@ -14,7 +14,7 @@ import {ObsidianSemanticColors}
 // ---------------------------------------------------------------------------------------------------------------------
 export class ComponentTagsSemanticColors extends SettingsTabComponent{
 	private _NEW_TAG_NAME:string = "new-tag";
-	private _NEW_DEFAULT_COLOR:string = ObsidianSemanticColors.text_accent;
+	private _NEW_DEFAULT_COLOR:string = ObsidianSemanticColors.text_accent.valueOf();
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
@@ -83,6 +83,8 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
 		let new_css_var = css_var; // Initialize newColor with the existing color
 
+		console.warn(this.plugin.settings.TagSemanticColors);
+
 		const setting = new Setting(containerEL)
 			.addText((text) =>
 				text
@@ -107,9 +109,15 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 			).addDropdown(
 				(component)=> {
 					component
-						.setValue(new_css_var)
 						.addOptions(ObsidianSemanticColors)
-						.onChange(value => this.plugin.settings.TagSemanticColors[new_tag_name] = value)
+						.setValue(new_css_var) // Make sure new_css_var corresponds to a key in ObsidianSemanticColors
+						.onChange(async value => {
+							new_css_var = value;
+							this.plugin.settings.TagSemanticColors[new_tag_name] = new_css_var.valueOf();
+							await Promise.all([
+								this.plugin.saveSettings()
+							]);
+						});
 				}
 			).addButton((button) =>
 				button

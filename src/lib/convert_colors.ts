@@ -7,10 +7,11 @@ import {RGB, HSL}
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export function hexToRgb(hexColor:string) : RGB{
+	const hex = hexColor.replace("#", "");
 	return {
-		r: parseInt(hexColor.slice(1, 3), 16),
-		g: parseInt(hexColor.slice(3, 5), 16),
-		b: parseInt(hexColor.slice(5, 7), 16)
+		r: parseInt(hex.slice(1, 3), 16),
+		g: parseInt(hex.slice(3, 5), 16),
+		b: parseInt(hex.slice(5, 7), 16)
 	}
 }
 // ---------------------------------------------------------------------------------------------------------------------
@@ -94,3 +95,54 @@ export function hslToRgb(hsl: { h: number; s: number; l: number }): RGB {
 
 	return { r, g, b };
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+export function hexToRGBA(hex:string, alpha:number):string {
+	// Remove the hash (#) from the beginning of the HEX string
+	hex = hex.replace(/^#/, '');
+
+	// Ensure the alpha value is between 0 and 1
+	if (alpha < 0) alpha = 0;
+	if (alpha > 1) alpha = 1;
+
+	// Parse the HEX values into separate red, green, and blue components
+	const r = parseInt(hex.substring(0, 2), 16);
+	const g = parseInt(hex.substring(2, 4), 16);
+	const b = parseInt(hex.substring(4, 6), 16);
+
+	// Convert the RGB values and alpha to the rgba format
+	return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+export function stringToHsl(txt:string):HSL{
+	const hslArray = txt
+		.replace("hsl(", "")
+		.replace(")", "")
+		.split(",")
+		.map(v=> v.trim())
+	return {
+		h:Number(hslArray[0]),
+		s:hslArray[1].endsWith("%")
+			? (Number(hslArray[1].replace("%", "")) / 100)
+			: (Number(hslArray[1])),
+		l:hslArray[2].endsWith("%")
+			? (Number(hslArray[2].replace("%", "")) / 100)
+			: (Number(hslArray[2])),
+	}
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+export function stringToRgb(txt:string):RGB{
+	const hslArray = txt
+		.replace("rgb(", "")
+		.replace(")", "")
+		.split(",")
+		.map(v=> v.trim())
+	return {
+		r:Number(hslArray[0]),
+		g:Number(hslArray[1]),
+		b:Number(hslArray[2]),
+	}
+}
+

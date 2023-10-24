@@ -44,3 +44,7 @@ export enum ObsidianSemanticColors {
 	text_highlight_bg =					"--text-highlight-bg"
 
 }
+
+export interface IObsidianSemanticColorsIndex{
+	[key: string]: ObsidianSemanticColors;
+}
