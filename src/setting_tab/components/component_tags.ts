@@ -1,12 +1,10 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {PluginSettingTab, RGB, Setting}
+import {RGB, Setting}
 	from "obsidian";
 import {hexToRgb}
 	from "src/lib";
-import ColoredTagWranglerPlugin
-	from "src/main";
 import {SettingsTabComponent}
 	from "src/setting_tab/components/component";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -17,16 +15,10 @@ export class ComponentTags extends SettingsTabComponent{
 	private _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// Constructor
-	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin,settings_tab:PluginSettingTab, containerEL:HTMLElement) {
-		super(plugin,settings_tab,containerEL);
-	}
-	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(): Setting {
-		let setting = new Setting(this.containerEL)
+	public create_component(containerEL:HTMLElement): Setting {
+		let setting = new Setting(containerEL)
 			.setName("Custom color tags")
 			.setDesc(`
 				Define custom colors for tags.
@@ -71,15 +63,14 @@ export class ComponentTags extends SettingsTabComponent{
 			if (!this.plugin.settings.customTagColors.hasOwnProperty(tagName)) {
 				continue;
 			}
-			this._createTagColorSetting(tagName, this.plugin.settings.customTagColors[tagName]);
+			this._createTagColorSetting(tagName, this.plugin.settings.customTagColors[tagName], containerEL);
 		}
 
 		return setting
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _createTagColorSetting(tagName: string, color: RGB) {
-		let {containerEL} = this;
+	private _createTagColorSetting(tagName: string, color: RGB, containerEL:HTMLElement) {
 		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
 		let new_color = color; // Initialize newColor with the existing color
 
@@ -128,7 +119,7 @@ export class ComponentTags extends SettingsTabComponent{
 					})
 			);
 
-		this.containerEL.appendChild(setting.settingEl);
+		containerEL.appendChild(setting.settingEl);
 	}
 }
 

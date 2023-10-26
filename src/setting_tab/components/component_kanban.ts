@@ -11,16 +11,10 @@ import {SettingsTabComponent} from "src/setting_tab/components/component";
 // ---------------------------------------------------------------------------------------------------------------------
 export class ComponentKanban extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
-	// Constructor
-	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin,settings_tab:PluginSettingTab, containerEL:HTMLElement) {
-		super(plugin,settings_tab,containerEL);
-	}
-	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(): Setting {
-		return new Setting(this.containerEL)
+	public create_component(containerEL:HTMLElement): Setting {
+		return new Setting(containerEL)
 			.setName("Omit '#' in kanban boards")
 			.setDesc(`
 				Hides the '#' from the kanban view, 
