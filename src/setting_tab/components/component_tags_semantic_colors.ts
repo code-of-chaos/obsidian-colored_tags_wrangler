@@ -1,10 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {PluginSettingTab, Setting}
+import {Setting}
 	from "obsidian";
-import ColoredTagWranglerPlugin
-	from "src/main";
 import {SettingsTabComponent}
 	from "src/setting_tab/components/component";
 import {ObsidianSemanticColors}
@@ -17,16 +15,10 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 	private _NEW_DEFAULT_COLOR:string = ObsidianSemanticColors.text_accent.valueOf();
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// Constructor
-	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin,settings_tab:PluginSettingTab, containerEL:HTMLElement) {
-		super(plugin,settings_tab,containerEL);
-	}
-	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(): Setting {
-		let setting = new Setting(this.containerEL)
+	public create_component(containerEL:HTMLElement): Setting {
+		let setting = new Setting(containerEL)
 			.setName("Color tags by Obsidian semmantic")
 			.setDesc(`
 				Define custom colors for tags.
@@ -71,15 +63,14 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 			if (!this.plugin.settings.TagSemanticColors.hasOwnProperty(tagName)) {
 				continue;
 			}
-			this._createTagColorSetting(tagName, this.plugin.settings.TagSemanticColors[tagName]);
+			this._createTagColorSetting(tagName, this.plugin.settings.TagSemanticColors[tagName],containerEL);
 		}
 
 		return setting
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _createTagColorSetting(tagName: string, css_var: string) {
-		let {containerEL} = this;
+	private _createTagColorSetting(tagName: string, css_var: string, containerEL:HTMLElement) {
 		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
 		let new_css_var = css_var; // Initialize newColor with the existing color
 
@@ -132,7 +123,7 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 					})
 			);
 
-		this.containerEL.appendChild(setting.settingEl);
+		containerEL.appendChild(setting.settingEl);
 	}
 }
 
