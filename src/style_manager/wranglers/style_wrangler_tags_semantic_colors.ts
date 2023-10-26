@@ -7,7 +7,7 @@ import ColoredTagWranglerPlugin
 	from "src/main";
 import {IObsidianSemanticColorsIndex, ObsidianSemanticColors}
 	from "src/lib/obsidian_semantic_colors";
-import {hexToRgb, hexToRGBA, rgbToHsl, stringToHsl, stringToRgb} from "src/lib/convert_colors";
+import {hexToRgb, rgbToHsl, stringToHsl, stringToRgb} from "src/lib/convert_colors";
 import {HSL} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -41,8 +41,10 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 					colorFormat = "rgb";
 				} else if (found_value.startsWith("#")) {
 					colorFormat = "hex";
+				} else {
+					console.error("Unknown color format:", found_value);
+					return;
 				}
-
 
 				let convertedColor : HSL;
 
@@ -62,8 +64,12 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 						return;
 				}
 
-				const new_color = {...convertedColor, l:convertedColor.l-0.175}
+				const new_color = {...convertedColor, l:convertedColor.l-0.35}
 				const new_css = `hsl(${new_color.h}, ${new_color.s*100}%, ${new_color.l*100}%)`;
+
+				console.warn({found_value})
+				console.warn({convertedColor})
+				console.warn({new_color})
 
 				console.warn(found_value)
 				console.warn(colorFormat)
