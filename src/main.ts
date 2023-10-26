@@ -30,6 +30,15 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 		this.addSettingTab(new SettingTab(this));
 
 		this.style_manager.switchAllStyles();
+
+
+		// this.registerMarkdownPostProcessor((element, context) => {
+		// 	const codeblocks = element.findAll('.metadata-property[data-property-key="tags"]');
+		//
+		// 	console.error(codeblocks)
+		//
+		// });
+
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	onunload() {

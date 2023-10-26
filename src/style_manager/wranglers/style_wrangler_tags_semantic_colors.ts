@@ -67,17 +67,6 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 				const new_color = {...convertedColor, l:convertedColor.l-0.35}
 				const new_css = `hsl(${new_color.h}, ${new_color.s*100}%, ${new_color.l*100}%)`;
 
-				console.warn({found_value})
-				console.warn({convertedColor})
-				console.warn({new_color})
-
-				console.warn(found_value)
-				console.warn(colorFormat)
-				console.warn(convertedColor)
-				console.warn(new_color)
-				console.warn(`hsl(${new_color.h}, ${new_color.s*100}%, ${new_color.l*100}%)`)
-				console.warn(new_css)
-
 				// noinspection CssInvalidFunction
 				return `
 					.tag[href="#${tagName}"], .cm-tag-${tagName} { 
