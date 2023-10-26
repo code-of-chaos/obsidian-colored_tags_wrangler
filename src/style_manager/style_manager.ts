@@ -9,7 +9,7 @@ import {
 	StyleWranglerKanbanCards,
 	StyleWranglerKanbanLists,
 	StyleWranglerTags,
-	StyleWranglerTagsCanvas
+	StyleWranglerTagsCanvas, StyleWranglerTagsSemanticColors
 } from "src/style_manager/wranglers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -18,6 +18,7 @@ export class StyleManager{
 	plugin: ColoredTagWranglerPlugin;
 	wrangler_tags: StyleWranglerTags;
 	wrangler_tags_canvas: StyleWranglerTagsCanvas;
+	wrangler_tags_semantic_colors: StyleWranglerTagsSemanticColors;
 	wrangler_kanban: StyleWranglerKanban;
 	wrangler_kanban_cards: StyleWranglerKanbanCards;
 	wrangler_kanban_lists: StyleWranglerKanbanLists;
@@ -30,6 +31,7 @@ export class StyleManager{
 		this.plugin = plugin;
 		this.wrangler_tags = new StyleWranglerTags(plugin);
 		this.wrangler_tags_canvas = new StyleWranglerTagsCanvas(plugin);
+		this.wrangler_tags_semantic_colors = new StyleWranglerTagsSemanticColors(plugin);
 		this.wrangler_kanban = new StyleWranglerKanban(plugin);
 		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
 		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
@@ -40,6 +42,7 @@ export class StyleManager{
 			this.wrangler_kanban,
 			this.wrangler_kanban_cards,
 			this.wrangler_kanban_lists,
+			this.wrangler_tags_semantic_colors
 		)
 	}
 	// -----------------------------------------------------------------------------------------------------------------
@@ -49,6 +52,10 @@ export class StyleManager{
 		Object.keys(this.plugin.settings.customTagColors).length != 0
 			? this.wrangler_tags.apply_styles()
 			: this.wrangler_tags.remove_styles() ;
+
+		Object.keys(this.plugin.settings.TagSemanticColors).length != 0
+			? this.wrangler_tags_semantic_colors.apply_styles()
+			: this.wrangler_tags_semantic_colors.remove_styles() ;
 
 		this.plugin.settings.enableKanban
 			? this.wrangler_kanban.apply_styles()

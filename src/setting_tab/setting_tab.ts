@@ -12,7 +12,9 @@ import {
 	ComponentKanbanLists,
 	ComponentDebugReloadCSS,
 	ComponentDebug,
-	ComponentTagsCanvas, SettingsTabComponent
+	ComponentTagsSemanticColors,
+	ComponentTagsCanvas, 
+	SettingsTabComponent,
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -22,6 +24,7 @@ export class SettingTab extends PluginSettingTab {
 	_components: {
 		comp_tags: SettingsTabComponent,
 		comp_tags_canvas:SettingsTabComponent,
+		comp_tags_semantic:SettingsTabComponent,
 		comp_kanban:SettingsTabComponent,
 		comp_kanban_cards:SettingsTabComponent,
 		comp_kanban_lists:SettingsTabComponent,
@@ -35,6 +38,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components = {
 			comp_tags: 				new ComponentTags(plugin, this),
 			comp_tags_canvas:		new ComponentTagsCanvas(plugin, this),
+			comp_tags_semantic:		new ComponentTagsSemanticColors(plugin, this),
 			comp_kanban: 			new ComponentKanban(plugin,this),
 			comp_kanban_cards:		new ComponentKanbanCards(plugin,this),
 			comp_kanban_lists:		new ComponentKanbanLists(plugin,this),
@@ -50,9 +54,11 @@ export class SettingTab extends PluginSettingTab {
 		// Tags Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('h2', {text: "Obsidian tags"});
-
+		
 		this._components.comp_tags.create_component(containerEl);
 		this._components.comp_tags_canvas.create_component(containerEl);
+		this._components.comp_tags_semantic.create_component(containerEl);
+
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------
