@@ -12,17 +12,10 @@ import {SettingsTabComponent}
 // ---------------------------------------------------------------------------------------------------------------------
 export class ComponentTagsCanvas extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
-	// Constructor
-	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin: ColoredTagWranglerPlugin, settings_tab: PluginSettingTab, containerEL: HTMLElement) {
-		super(plugin, settings_tab, containerEL);
-	}
-
-	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(): Setting {
-		let setting = new Setting(this.containerEL)
+	public create_component(containerEL:HTMLElement): Setting {
+		let setting = new Setting(containerEL)
 			.setName("Apply tag color to canvas card")
 			.setDesc(`
 				Applies the tag color, of the tag within the canvas's card, to the background color of the canvas card. 

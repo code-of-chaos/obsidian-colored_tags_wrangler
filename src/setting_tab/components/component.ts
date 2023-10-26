@@ -9,26 +9,23 @@ import {PluginSettingTab, Setting} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 export interface ISettingsTabComponent{
 	plugin:ColoredTagWranglerPlugin;
-	containerEL:HTMLElement;
 	settings_tab:PluginSettingTab;
 
-	create_component():Setting;
+	create_component(containerEL:HTMLElement):Setting;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export abstract class SettingsTabComponent implements ISettingsTabComponent{
 	plugin:ColoredTagWranglerPlugin;
-	containerEL:HTMLElement;
 	settings_tab:PluginSettingTab;
 
-	abstract create_component(): Setting;
+	abstract create_component(containerEL:HTMLElement): Setting;
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	protected constructor(plugin:ColoredTagWranglerPlugin,settings_tab:PluginSettingTab, containerEL:HTMLElement) {
+	public constructor(plugin:ColoredTagWranglerPlugin,settings_tab:PluginSettingTab) {
 		this.plugin = plugin;
-		this.containerEL = containerEL;
 		this.settings_tab = settings_tab;
 	}
 }

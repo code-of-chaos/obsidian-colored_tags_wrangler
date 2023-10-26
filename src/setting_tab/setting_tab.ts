@@ -12,25 +12,36 @@ import {
 	ComponentKanbanLists,
 	ComponentDebugReloadCSS,
 	ComponentDebug,
-	ComponentTagsCanvas
+	ComponentTagsCanvas, SettingsTabComponent
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTab extends PluginSettingTab {
 	plugin: ColoredTagWranglerPlugin;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Constructor
-    // -----------------------------------------------------------------------------------------------------------------
-    constructor(plugin: ColoredTagWranglerPlugin) {
-		super(plugin.app, plugin);
-		this.plugin = plugin;
+	_components: {
+		comp_tags: SettingsTabComponent,
+		comp_tags_canvas:SettingsTabComponent,
+		comp_kanban:SettingsTabComponent,
+		comp_kanban_cards:SettingsTabComponent,
+		comp_kanban_lists:SettingsTabComponent,
+		comp_debug:SettingsTabComponent,
+		comp_debug_reloadcss:SettingsTabComponent,
 	}
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
+	constructor(plugin: ColoredTagWranglerPlugin) {
+		super(plugin.app, plugin);
+		this.plugin = plugin;
+		this._components = {
+			comp_tags: 				new ComponentTags(plugin, this),
+			comp_tags_canvas:		new ComponentTagsCanvas(plugin, this),
+			comp_kanban: 			new ComponentKanban(plugin,this),
+			comp_kanban_cards:		new ComponentKanbanCards(plugin,this),
+			comp_kanban_lists:		new ComponentKanbanLists(plugin,this),
+			comp_debug:				new ComponentDebug(plugin,this),
+			comp_debug_reloadcss:	new ComponentDebugReloadCSS(plugin,this),
+		}
+	}
 	async display() {
         // Refresh the Element container
 		const {containerEl} = this;
@@ -40,27 +51,27 @@ export class SettingTab extends PluginSettingTab {
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('h2', {text: "Obsidian tags"});
 
-		new ComponentTags(this.plugin,this,containerEl).create_component();
-		new ComponentTagsCanvas(this.plugin,this,containerEl).create_component();
+		this._components.comp_tags.create_component(containerEl);
+		this._components.comp_tags_canvas.create_component(containerEl);
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
 		containerEl.createEl('h2', {text: "Kanban plugin integration"});
 
-        new ComponentKanban(this.plugin,this,containerEl).create_component();
-		new ComponentKanbanCards(this.plugin,this,containerEl).create_component();
-		new ComponentKanbanLists(this.plugin,this,containerEl).create_component();
+        this._components.comp_kanban.create_component(containerEl);
+		this._components.comp_kanban_cards.create_component(containerEl);
+		this._components.comp_kanban_lists.create_component(containerEl);
 
 		// Debug Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
 		containerEl.createEl('h2', {text: "Debug options"});
 
-		new ComponentDebug(this.plugin,this,containerEl).create_component();
+		this._components.comp_debug.create_component(containerEl);
 
 		if (this.plugin.settings.enableDebugSettings){
-			new ComponentDebugReloadCSS(this.plugin,this,containerEl).create_component();
-		}
-    }
+			this._components.comp_debug_reloadcss.create_component(containerEl);
+    	}
+	}
 }
