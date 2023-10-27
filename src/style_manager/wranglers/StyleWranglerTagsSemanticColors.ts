@@ -22,7 +22,7 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleTagsEl", plugin);
+		super("#styleTagsSemanticColorsEl", plugin);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
