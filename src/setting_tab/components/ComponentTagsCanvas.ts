@@ -1,10 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {PluginSettingTab, Setting, SliderComponent, TextComponent}
+import {Setting, SliderComponent, TextComponent}
 	from "obsidian";
-import ColoredTagWranglerPlugin
-	from "src/main";
 import {SettingsTabComponent}
 	from "src/setting_tab/SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
