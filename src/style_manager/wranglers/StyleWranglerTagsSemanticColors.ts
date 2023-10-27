@@ -40,6 +40,10 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 				let colorFormat = "unknown";
 
 				const found_value:string = getComputedStyle(document.body).getPropertyValue(css_key).trim();
+				if (found_value === "" || found_value === null){
+					return;
+				}
+
 				if (found_value.startsWith("hsl(")) {
 					colorFormat = "hsl";
 				} else if (found_value.startsWith("rgb(")) {
