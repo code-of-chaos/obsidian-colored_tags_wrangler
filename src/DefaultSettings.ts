@@ -9,7 +9,7 @@ export interface IColoredTagWranglerSettings {
 	TagColors:{
 		ColorPicker: Record<string, { r: number, g: number, b: number }>,
 		SemanticObsidianColors: Record<string, string>,
-		CssVars: Record<string, string>,
+		CssVars: Record<string, {color:string, background:string}>,
 	},
 
 	Kanban:{
