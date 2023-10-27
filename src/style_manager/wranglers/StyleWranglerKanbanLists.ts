@@ -2,21 +2,20 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
-	from "src/style_manager/wranglers/style_wrangler";
-import {RGB, HSL}
-	from "obsidian";
+	from "src/style_manager/wranglers/StyleWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
-import {hslToRgb, rgbToHsl} from "src/lib/convert_colors";
+import {RGB}
+	from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleWranglerTagsCanvas extends StyleWrangler {
+export class StyleWranglerKanbanLists extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleTagsCanvasEl", plugin);
+		super("#styleKanbanTitlesEl", plugin);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
@@ -26,20 +25,20 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 			.map(tagName => {
 				const color: RGB = this.plugin.settings.customTagColors[tagName];
 
-				const opacity_border:string = this.plugin.settings.CanvasCardBorderOpacity.toString();
-
-				const hsl:HSL = rgbToHsl(color);
-				hsl.l -= this.plugin.settings.CanvasCardBackgroundLuminanceOffset;
-				const color2 = hslToRgb(hsl);
-				const rgb:string = `${color2.r}, ${color2.g}, ${color2.b}`;
+				const rgb:string = `${color.r}, ${color.g}, ${color.b}`;
+				const opacity_background:string = this.plugin.settings.kanbanListBackgroundOpacity.toString();
+				const opacity_border:string = this.plugin.settings.kanbanListBorderOpacity.toString();
 
 				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `
-					div.canvas-node-container:has(div.markdown-embed-content a[href="#${tagName}"]) {
-						background : rgb(${rgb}) !important;
-						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
-					}`;
+					div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tagName.toLowerCase()}"]){
+						background : rgba(${rgb}, ${opacity_background}) !important;
+						border-color: rgba(${rgb}, ${opacity_border}) !important;
+					}
+					div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tagName.toLowerCase()}"]){
+						border-color: rgba(${rgb}, ${opacity_border}) !important;
+					}
+				`;
 			}).join('\n');
 	}
-
 }

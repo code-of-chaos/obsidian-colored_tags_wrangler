@@ -5,7 +5,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function remove_by_id (id:string) :void {
+export function removeById (id:string) :void {
 	if (!id.startsWith("#")){
 		throw new DOMException("id did not start with a '#' ");
 	}

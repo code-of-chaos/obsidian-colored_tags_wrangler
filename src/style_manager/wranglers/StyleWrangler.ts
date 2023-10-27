@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {remove_by_id}
+import {removeById}
 	from "src/lib";
 import ColoredTagWranglerPlugin
 	from "src/main";
@@ -51,6 +51,6 @@ export abstract class StyleWrangler implements IStyleWrangler{
 
 	remove_styles(): void{
 		this.styleEL?.parentNode?.removeChild(this.styleEL);
-		remove_by_id(this.id);
+		removeById(this.id);
 	};
 }

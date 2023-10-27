@@ -1,12 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-export * from 'src/setting_tab/components/component';
-export * from 'src/setting_tab/components/component_debug';
-export * from 'src/setting_tab/components/component_debug_reloadcss';
-export * from 'src/setting_tab/components/component_kanban';
-export * from 'src/setting_tab/components/component_kanban_cards';
-export * from 'src/setting_tab/components/component_kanban_lists';
-export * from 'src/setting_tab/components/component_tags';
-export * from 'src/setting_tab/components/component_tags_canvas';
-export * from 'src/setting_tab/components/component_tags_semantic_colors';
+export * from 'src/setting_tab/SettingsTabComponent';
+export * from 'src/setting_tab/components/ComponentDebug';
+export * from 'src/setting_tab/components/ComponentDebugReloadCSS';
+export * from 'src/setting_tab/components/ComponentKanban';
+export * from 'src/setting_tab/components/ComponentKanbanCards';
+export * from 'src/setting_tab/components/ComponentKanbanLists';
+export * from 'src/setting_tab/components/ComponentTags';
+export * from 'src/setting_tab/components/ComponentTagsCanvas';
+export * from 'src/setting_tab/components/ComponentTagsSemanticColors';

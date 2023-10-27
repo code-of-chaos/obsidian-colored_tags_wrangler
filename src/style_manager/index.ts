@@ -1,7 +1,4 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-export {removeById}
-	from "src/lib/RemoveById";
-export {hexToRgb, rgbToHex}
-	from "src/lib/ColorConverters";
+export * from "src/style_manager/StyleManager";

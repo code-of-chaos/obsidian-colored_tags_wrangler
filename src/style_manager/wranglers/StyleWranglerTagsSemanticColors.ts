@@ -2,17 +2,17 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
-	from "src/style_manager/wranglers/style_wrangler";
+	from "src/style_manager/wranglers/StyleWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
 import {IObsidianSemanticColorsIndex, ObsidianSemanticColors}
-	from "src/lib/obsidian_semantic_colors";
+	from "src/lib/ObsidianSemanticColors";
 import {
 	hexToRgb,
 	rgbToHsl,
 	stringToHsl,
 	stringToRgb
-} 	from "src/lib/convert_colors";
+} 	from "src/lib/ColorConverters";
 import {HSL} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

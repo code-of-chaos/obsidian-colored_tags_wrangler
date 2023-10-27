@@ -4,7 +4,7 @@
 import {Setting}
 	from "obsidian";
 import {SettingsTabComponent}
-	from "src/setting_tab/components/component";
+	from "src/setting_tab/SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

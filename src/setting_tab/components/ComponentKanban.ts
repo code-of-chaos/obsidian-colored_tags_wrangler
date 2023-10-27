@@ -1,32 +1,35 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {StyleWrangler}
-	from "src/style_manager/wranglers/style_wrangler";
+import {PluginSettingTab, Setting}
+	from "obsidian";
 import ColoredTagWranglerPlugin
 	from "src/main";
+import {SettingsTabComponent} from "src/setting_tab/SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleWranglerKanban extends StyleWrangler {
+export class ComponentKanban extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
-	// Constructor
+	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleKanbanEl", plugin);
+	public create_component(containerEL:HTMLElement): Setting {
+		return new Setting(containerEL)
+			.setName("Omit '#' in kanban boards")
+			.setDesc(`
+				Hides the '#' from the kanban view, 
+					though they still have to be typed out within the used areas.
+			`).addToggle(component => {
+					component
+						.setValue(this.plugin.settings.enableKanban)
+						.onChange(async state => {
+							this.plugin.settings.enableKanban = state;
+							await this.plugin.saveSettings();
+						})
+				}
+			);
 	}
-	// -----------------------------------------------------------------------------------------------------------------
-	// Methods
-	// -----------------------------------------------------------------------------------------------------------------
-	assemble_css(): string {
-		return `
-            div[data-type="kanban"] a.tag>span,
-            div.kanban-plugin a.tag>span,
-            div[data-type="kanban"] .cm-hashtag-begin {
-                visibility: hidden;
-                position: absolute;
-            }
-		`;
-	}
-
 }
+
+
+

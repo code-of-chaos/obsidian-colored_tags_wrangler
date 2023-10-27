@@ -3,12 +3,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {Plugin}
 	from "obsidian";
-import {IColoredTagWranglerSettings, DEFAULT_SETTINGS}
-	from "src/default_settings";
+import {IColoredTagWranglerSettings, DefaultSettings}
+	from "src/DefaultSettings";
 import {SettingTab}
-	from "src/setting_tab/setting_tab";
+	from "src/setting_tab";
 import {StyleManager}
-	from "src/style_manager/style_manager";
+	from "src/style_manager";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 	// -----------------------------------------------------------------------------------------------------------------
 	async loadSettings() {
 		// Retrieve setting_tab from stored data.json file
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.settings = Object.assign({}, DefaultSettings, await this.loadData());
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	async saveSettings() {

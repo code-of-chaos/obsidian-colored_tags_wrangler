@@ -1,25 +1,25 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Setting}
+import {RGB, Setting}
 	from "obsidian";
+import {hexToRgb}
+	from "src/lib";
 import {SettingsTabComponent}
-	from "src/setting_tab/components/component";
-import {ObsidianSemanticColors}
-	from "src/lib/obsidian_semantic_colors";
+	from "src/setting_tab/SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentTagsSemanticColors extends SettingsTabComponent{
+export class ComponentTags extends SettingsTabComponent{
 	private _NEW_TAG_NAME:string = "new-tag";
-	private _NEW_DEFAULT_COLOR:string = ObsidianSemanticColors.text_accent.valueOf();
+	private _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): Setting {
 		let setting = new Setting(containerEL)
-			.setName("Color tags by Obsidian semmantic")
+			.setName("Custom color tags")
 			.setDesc(`
 				Define custom colors for tags.
 				Don't add the '#' before the tag, and write everything in lowercase without spaces.
@@ -29,7 +29,7 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 				button
 					.setButtonText("Add new tag")
 					.onClick(async () => {
-						this.plugin.settings.TagSemanticColors[this._NEW_TAG_NAME] = this._NEW_DEFAULT_COLOR; // Default color
+						this.plugin.settings.customTagColors[this._NEW_TAG_NAME] = this._NEW_DEFAULT_COLOR; // Default color
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
@@ -44,8 +44,8 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 				button
 					.setButtonText('Clear all')
 					.onClick(async () => {
-							Object.keys(this.plugin.settings.TagSemanticColors)
-								.forEach((key_name) => delete this.plugin.settings.TagSemanticColors[key_name]);
+							Object.keys(this.plugin.settings.customTagColors)
+								.forEach((key_name) => delete this.plugin.settings.customTagColors[key_name]);
 							await Promise.all([
 								this.plugin.saveSettings(),
 								this.settings_tab.display()
@@ -53,28 +53,26 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 						}
 					)
 					.setClass('mod-warning')
-					.setDisabled(Object.keys(this.plugin.settings.TagSemanticColors).length == 0)
+					.setDisabled(Object.keys(this.plugin.settings.customTagColors).length == 0)
 			);
 		}
 
 
 		// Create the amount of tags already stored in the setting_tab
-		for (const tagName in this.plugin.settings.TagSemanticColors) {
-			if (!this.plugin.settings.TagSemanticColors.hasOwnProperty(tagName)) {
+		for (const tagName in this.plugin.settings.customTagColors) {
+			if (!this.plugin.settings.customTagColors.hasOwnProperty(tagName)) {
 				continue;
 			}
-			this._createTagColorSetting(tagName, this.plugin.settings.TagSemanticColors[tagName],containerEL);
+			this._createTagColorSetting(tagName, this.plugin.settings.customTagColors[tagName], containerEL);
 		}
 
 		return setting
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _createTagColorSetting(tagName: string, css_var: string, containerEL:HTMLElement) {
+	private _createTagColorSetting(tagName: string, color: RGB, containerEL:HTMLElement) {
 		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
-		let new_css_var = css_var; // Initialize newColor with the existing color
-
-		console.warn(this.plugin.settings.TagSemanticColors);
+		let new_color = color; // Initialize newColor with the existing color
 
 		const setting = new Setting(containerEL)
 			.addText((text) =>
@@ -87,35 +85,33 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 						value = value.toLowerCase();
 
 						// delete the "old" tag name, before the edit
-						delete this.plugin.settings.TagSemanticColors[new_tag_name];
+						delete this.plugin.settings.customTagColors[new_tag_name];
 
 						// Add the updated tag and color
-						this.plugin.settings.TagSemanticColors[value] = new_css_var;
+						this.plugin.settings.customTagColors[value] = new_color;
 						await this.plugin.saveSettings();
 
 						// Handle user-defined tag name changes here
 						new_tag_name = value; // Update newTagName as the user changes the tag name
 
 					})
-			).addDropdown(
-				(component)=> {
-					component
-						.addOptions(ObsidianSemanticColors)
-						.setValue(new_css_var) // Make sure new_css_var corresponds to a key in ObsidianSemanticColors
-						.onChange(async value => {
-							new_css_var = value;
-							this.plugin.settings.TagSemanticColors[new_tag_name] = new_css_var.valueOf();
-							await Promise.all([
-								this.plugin.saveSettings()
-							]);
-						});
-				}
+			).addColorPicker((colorPicker) =>
+				colorPicker
+					.setValueRgb(color)
+					.onChange(async (value) => {
+						// Handle user-defined tag colors here
+						new_color = hexToRgb(value); // Update newColor as the user changes the color
+						// Add the updated tag and color
+						this.plugin.settings.customTagColors[new_tag_name] = new_color;
+						await this.plugin.saveSettings();
+
+					})
 			).addButton((button) =>
 				button
 					.setButtonText('-')
 					.onClick(async () => {
 						// Remove the tag and color
-						delete this.plugin.settings.TagSemanticColors[tagName];
+						delete this.plugin.settings.customTagColors[tagName];
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()

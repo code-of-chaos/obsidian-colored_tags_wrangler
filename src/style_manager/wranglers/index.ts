@@ -1,10 +1,10 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-export * from "src/style_manager/wranglers/style_wrangler";
-export * from "src/style_manager/wranglers/style_wrangler_kanban";
-export * from "src/style_manager/wranglers/style_wrangler_kanban_cards";
-export * from "src/style_manager/wranglers/style_wrangler_kanban_lists";
-export * from "src/style_manager/wranglers/style_wrangler_tags";
-export * from "src/style_manager/wranglers/style_wrangler_tags_canvas";
-export * from "src/style_manager/wranglers/style_wrangler_tags_semantic_colors";
+export * from "src/style_manager/wranglers/StyleWrangler";
+export * from "src/style_manager/wranglers/StyleWranglerKanban";
+export * from "src/style_manager/wranglers/StyleWranglerKanbanCards";
+export * from "src/style_manager/wranglers/StyleWranglerKanbanLists";
+export * from "src/style_manager/wranglers/StyleWranglerTags";
+export * from "src/style_manager/wranglers/StyleWranglerTagsCanvas";
+export * from "src/style_manager/wranglers/StyleWranglerTagsSemanticColors";

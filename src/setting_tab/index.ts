@@ -1,7 +1,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-export {removeById}
-	from "src/lib/RemoveById";
-export {hexToRgb, rgbToHex}
-	from "src/lib/ColorConverters";
+export * from "src/setting_tab/SettingTab";
+export * from "src/setting_tab/SettingsTabComponent";
+export * from "src/setting_tab/components";

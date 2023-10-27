@@ -26,7 +26,7 @@ export interface IColoredTagWranglerSettings {
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export const DEFAULT_SETTINGS: IColoredTagWranglerSettings = {
+export const DefaultSettings: IColoredTagWranglerSettings = {
     customTagColors: {},
 	TagSemanticColors: {},
     enableKanban:false,
