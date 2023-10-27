@@ -117,7 +117,7 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 							.toLowerCase();
 
 						// Add the updated tag and color
-						this.plugin.settings.TagColors.CssVars[value] = {color:value, background:new_css_var_background};
+						this.plugin.settings.TagColors.CssVars[new_tag_name] = {color:value, background:new_css_var_background};
 						await this.plugin.saveSettings();
 
 						new_css_var_color = value
@@ -135,7 +135,7 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 							.toLowerCase();
 
 						// Add the updated tag and background
-						this.plugin.settings.TagColors.CssVars[value] = {color:new_css_var_color, background:value};
+						this.plugin.settings.TagColors.CssVars[new_tag_name] = {color:new_css_var_color, background:value};
 						await this.plugin.saveSettings();
 
 						new_css_var_background = value
