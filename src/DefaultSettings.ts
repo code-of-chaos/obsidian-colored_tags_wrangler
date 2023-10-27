@@ -10,6 +10,12 @@ export interface IColoredTagWranglerSettings {
 		ColorPicker: Record<string, { r: number, g: number, b: number }>,
 		SemanticObsidianColors: Record<string, string>,
 		CssVars: Record<string, {color:string, background:string}>,
+
+		Values:{
+			BackgroundOpacity:number,
+			BackgroundOpacityHover:number,
+			SemanticColorsLuminanceOffset:number,
+		}
 	},
 
 	Kanban:{
@@ -46,6 +52,12 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 		ColorPicker: {},
 		SemanticObsidianColors: {},
 		CssVars: {},
+
+		Values:{
+			BackgroundOpacity:0.2,
+			BackgroundOpacityHover:0.1,
+			SemanticColorsLuminanceOffset:0.35
+		}
 	},
 
 	Kanban:{

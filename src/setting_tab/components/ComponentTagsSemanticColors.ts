@@ -71,7 +71,7 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 	private _createTagColorSetting(tagName: string, css_var: string, containerEL:HTMLElement) {
 		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
 		let new_css_var = css_var; // Initialize newColor with the existing color
-		
+
 		const setting = new Setting(containerEL)
 			.addText((text) =>
 				text

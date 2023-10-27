@@ -30,6 +30,7 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 	assemble_css(): string {
 
 		const enumIndex: IObsidianSemanticColorsIndex = ObsidianSemanticColors;
+		const luminance_offset = this.plugin.settings.TagColors.Values.SemanticColorsLuminanceOffset;
 
 		return Object.keys(this.plugin.settings?.TagColors.SemanticObsidianColors)
 			.map(tagName => {
@@ -79,7 +80,7 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 						return;
 				}
 
-				const new_color = {...convertedColor, l:convertedColor.l-0.35}
+				const new_color = {...convertedColor, l:convertedColor.l-luminance_offset}
 				const new_css = `hsl(${new_color.h}, ${new_color.s*100}%, ${new_color.l*100}%)`;
 
 				// noinspection CssInvalidFunction

@@ -21,6 +21,9 @@ export class StyleWranglerTags extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
+		const background_opacity = this.plugin.settings.TagColors.Values.BackgroundOpacity;
+		const background_opacity_hover = this.plugin.settings.TagColors.Values.BackgroundOpacityHover;
+
 		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
 			.map(tagName => {
 				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
@@ -29,8 +32,8 @@ export class StyleWranglerTags extends StyleWrangler {
 					.tag[href="#${tagName}"], .cm-tag-${tagName} { 
 						--color: rgb(${color.r}, ${color.g}, ${color.b});
 						--color-hover: var(--color);
-						--background: rgba(${color.r}, ${color.g}, ${color.b}, 0.2);
-						--background-hover: rgba(${color.r}, ${color.g}, ${color.b}, 0.1);
+						--background: rgba(${color.r}, ${color.g}, ${color.b}, ${background_opacity});
+						--background-hover: rgba(${color.r}, ${color.g}, ${color.b}, ${background_opacity_hover});
 					}`;
 			}).join('\n');
 	}
