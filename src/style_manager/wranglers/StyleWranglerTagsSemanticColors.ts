@@ -31,10 +31,10 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 
 		const enumIndex: IObsidianSemanticColorsIndex = ObsidianSemanticColors;
 
-		return Object.keys(this.plugin.settings?.TagSemanticColors)
+		return Object.keys(this.plugin.settings?.TagColors.SemanticObsidianColors)
 			.map(tagName => {
 				// Iterate over the enum and find the key
-				const css_var: string = this.plugin.settings.TagSemanticColors[tagName];
+				const css_var: string = this.plugin.settings.TagColors.SemanticObsidianColors[tagName];
 				const css_key = enumIndex[css_var];
 
 				let colorFormat = "unknown";

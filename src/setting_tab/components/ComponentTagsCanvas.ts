@@ -22,9 +22,9 @@ export class ComponentTagsCanvas extends SettingsTabComponent {
 				Known issue: When a canvas card has multiple tags, the color of the canvas card is randomly chosen.
 			`).addToggle(component => {
 					component
-						.setValue(this.plugin.settings.enableCanvas)
+						.setValue(this.plugin.settings.Canvas.Enable)
 						.onChange(async state => {
-							this.plugin.settings.enableCanvas = state;
+							this.plugin.settings.Canvas.Enable = state;
 							await this.plugin.saveSettings();
 							this.settings_tab.display();
 						})
@@ -36,15 +36,15 @@ export class ComponentTagsCanvas extends SettingsTabComponent {
 		let sliderElement: SliderComponent; // Little work around to make them update together
 		let textElement: TextComponent;
 
-		if (this.plugin.settings.enableDebugSettings) {
+		if (this.plugin.settings.Debug.Enable) {
 			setting
 				.addSlider(component => {
 					component
 						.setLimits(0, .5, 0.05)
-						.setDisabled(!this.plugin.settings.enableCanvas)
-						.setValue(this.plugin.settings.CanvasCardBackgroundLuminanceOffset)
+						.setDisabled(!this.plugin.settings.Canvas.Enable)
+						.setValue(this.plugin.settings.Canvas.Values.CardBackgroundLuminanceOffset)
 						.onChange(async state => {
-							this.plugin.settings.CanvasCardBackgroundLuminanceOffset = state;
+							this.plugin.settings.Canvas.Values.CardBackgroundLuminanceOffset = state;
 							await this.plugin.saveSettings();
 
 							// Update the text component's value
@@ -54,8 +54,8 @@ export class ComponentTagsCanvas extends SettingsTabComponent {
 					}
 				).addText((text) => {
 					text
-						.setDisabled(!this.plugin.settings.enableCanvas)
-						.setValue(String(this.plugin.settings.CanvasCardBackgroundLuminanceOffset))
+						.setDisabled(!this.plugin.settings.Canvas.Enable)
+						.setValue(String(this.plugin.settings.Canvas.Values.CardBackgroundLuminanceOffset))
 						.onChange(async state => {
 							// Because this is a text component it needs to be cast to a number
 							let state_as_number = Number(state)
@@ -63,7 +63,7 @@ export class ComponentTagsCanvas extends SettingsTabComponent {
 								state_as_number = 0
 							}
 
-							this.plugin.settings.CanvasCardBackgroundLuminanceOffset = state_as_number;
+							this.plugin.settings.Canvas.Values.CardBackgroundLuminanceOffset = state_as_number;
 							await this.plugin.saveSettings();
 
 							sliderElement.setValue(state_as_number)

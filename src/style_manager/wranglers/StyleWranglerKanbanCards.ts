@@ -21,13 +21,13 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
-		return Object.keys(this.plugin.settings?.customTagColors)
+		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
 			.map(tagName => {
-				const color: RGB = this.plugin.settings.customTagColors[tagName];
+				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
 
 				const rgb:string = `${color.r}, ${color.g}, ${color.b}`;
-				const opacity_background:string = this.plugin.settings.kanbanCardBackgroundOpacity.toString();
-				const opacity_border:string = this.plugin.settings.kanbanCardBorderOpacity.toString();
+				const opacity_background:string = this.plugin.settings.Kanban.Values.CardBackgroundOpacity.toString();
+				const opacity_border:string = this.plugin.settings.Kanban.Values.CardBorderOpacity.toString();
 
 				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `

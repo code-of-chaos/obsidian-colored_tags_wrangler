@@ -21,9 +21,9 @@ export class ComponentKanbanCards extends SettingsTabComponent{
 				Known issue: When a card has multiple tags, the color of the card is randomly chosen.
 			`).addToggle(component => {
 					component
-						.setValue(this.plugin.settings.enableKanbanCards)
+						.setValue(this.plugin.settings.Kanban.EnableCards)
 						.onChange(async state => {
-							this.plugin.settings.enableKanbanCards = state;
+							this.plugin.settings.Kanban.EnableCards = state;
 							await this.plugin.saveSettings();
 						})
 				}

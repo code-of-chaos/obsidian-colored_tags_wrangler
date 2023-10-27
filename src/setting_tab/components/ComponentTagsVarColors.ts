@@ -10,7 +10,7 @@ import {hexToRgb} from "../../lib";
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ComponentTagsVarColors extends SettingsTabComponent{
-	private _NEW_TAG_NAME:string = "new-tag";
+	private _NEW_TAG_NAME:string = "new-css-var-tag";
 	private _NEW_DEFAULT_VAR:string = "--undefined";
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 				button
 					.setButtonText("Add new tag")
 					.onClick(async () => {
-						this.plugin.settings.TagVarColors[this._NEW_TAG_NAME] = this._NEW_DEFAULT_VAR; // Default color
+						this.plugin.settings.TagColors.CssVars[this._NEW_TAG_NAME] = this._NEW_DEFAULT_VAR; // Default color
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
@@ -39,13 +39,13 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 			);
 
 		// Only when Debug settings are on, allow the "Clear all" button to appear
-		if(this.plugin.settings.enableDebugSettings){
+		if(this.plugin.settings.Debug.Enable){
 			setting.addButton((button) =>
 				button
 					.setButtonText('Clear all')
 					.onClick(async () => {
-							Object.keys(this.plugin.settings.TagVarColors)
-								.forEach((key_name) => delete this.plugin.settings.TagVarColors[key_name]);
+							Object.keys(this.plugin.settings.TagColors.CssVars)
+								.forEach((key_name) => delete this.plugin.settings.TagColors.CssVars[key_name]);
 							await Promise.all([
 								this.plugin.saveSettings(),
 								this.settings_tab.display()
@@ -53,17 +53,17 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 						}
 					)
 					.setClass('mod-warning')
-					.setDisabled(Object.keys(this.plugin.settings.TagVarColors).length == 0)
+					.setDisabled(Object.keys(this.plugin.settings.TagColors.CssVars).length == 0)
 			);
 		}
 
 
 		// Create the amount of tags already stored in the setting_tab
-		for (const tagName in this.plugin.settings.TagVarColors) {
-			if (!this.plugin.settings.TagVarColors.hasOwnProperty(tagName)) {
+		for (const tagName in this.plugin.settings.TagColors.CssVars) {
+			if (!this.plugin.settings.TagColors.CssVars.hasOwnProperty(tagName)) {
 				continue;
 			}
-			this._createTagColorSetting(tagName, this.plugin.settings.TagVarColors[tagName], containerEL);
+			this._createTagColorSetting(tagName, this.plugin.settings.TagColors.CssVars[tagName], containerEL);
 		}
 
 		return setting
@@ -85,10 +85,10 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 						value = value.toLowerCase();
 
 						// delete the "old" tag name, before the edit
-						delete this.plugin.settings.TagVarColors[new_tag_name];
+						delete this.plugin.settings.TagColors.CssVars[new_tag_name];
 
 						// Add the updated tag and color
-						this.plugin.settings.TagVarColors[value] = new_css_var;
+						this.plugin.settings.TagColors.CssVars[value] = new_css_var;
 						await this.plugin.saveSettings();
 
 						// Handle user-defined tag name changes here
@@ -107,7 +107,7 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 							.toLowerCase();
 
 						// Add the updated tag and color
-						this.plugin.settings.TagVarColors[new_tag_name] = value;
+						this.plugin.settings.TagColors.CssVars[new_tag_name] = value;
 						await this.plugin.saveSettings();
 
 						new_css_var = value
@@ -118,7 +118,7 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 					.setButtonText('-')
 					.onClick(async () => {
 						// Remove the tag and color
-						delete this.plugin.settings.TagVarColors[tagName];
+						delete this.plugin.settings.TagColors.CssVars[tagName];
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()

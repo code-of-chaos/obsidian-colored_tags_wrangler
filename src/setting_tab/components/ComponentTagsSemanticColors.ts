@@ -11,7 +11,7 @@ import {ObsidianSemanticColors}
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ComponentTagsSemanticColors extends SettingsTabComponent{
-	private _NEW_TAG_NAME:string = "new-tag";
+	private _NEW_TAG_NAME:string = "new-semantic-tag";
 	private _NEW_DEFAULT_COLOR:string = ObsidianSemanticColors.text_accent.valueOf();
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 				button
 					.setButtonText("Add new tag")
 					.onClick(async () => {
-						this.plugin.settings.TagSemanticColors[this._NEW_TAG_NAME] = this._NEW_DEFAULT_COLOR; // Default color
+						this.plugin.settings.TagColors.SemanticObsidianColors[this._NEW_TAG_NAME] = this._NEW_DEFAULT_COLOR; // Default color
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
@@ -39,13 +39,13 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 			);
 
 		// Only when Debug settings are on, allow the "Clear all" button to appear
-		if(this.plugin.settings.enableDebugSettings){
+		if(this.plugin.settings.Debug.Enable){
 			setting.addButton((button) =>
 				button
 					.setButtonText('Clear all')
 					.onClick(async () => {
-							Object.keys(this.plugin.settings.TagSemanticColors)
-								.forEach((key_name) => delete this.plugin.settings.TagSemanticColors[key_name]);
+							Object.keys(this.plugin.settings.TagColors.SemanticObsidianColors)
+								.forEach((key_name) => delete this.plugin.settings.TagColors.SemanticObsidianColors[key_name]);
 							await Promise.all([
 								this.plugin.saveSettings(),
 								this.settings_tab.display()
@@ -53,17 +53,17 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 						}
 					)
 					.setClass('mod-warning')
-					.setDisabled(Object.keys(this.plugin.settings.TagSemanticColors).length == 0)
+					.setDisabled(Object.keys(this.plugin.settings.TagColors.SemanticObsidianColors).length == 0)
 			);
 		}
 
 
 		// Create the amount of tags already stored in the setting_tab
-		for (const tagName in this.plugin.settings.TagSemanticColors) {
-			if (!this.plugin.settings.TagSemanticColors.hasOwnProperty(tagName)) {
+		for (const tagName in this.plugin.settings.TagColors.SemanticObsidianColors) {
+			if (!this.plugin.settings.TagColors.SemanticObsidianColors.hasOwnProperty(tagName)) {
 				continue;
 			}
-			this._createTagColorSetting(tagName, this.plugin.settings.TagSemanticColors[tagName],containerEL);
+			this._createTagColorSetting(tagName, this.plugin.settings.TagColors.SemanticObsidianColors[tagName],containerEL);
 		}
 
 		return setting
@@ -74,7 +74,7 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
 		let new_css_var = css_var; // Initialize newColor with the existing color
 
-		console.warn(this.plugin.settings.TagSemanticColors);
+		console.warn(this.plugin.settings.TagColors.SemanticObsidianColors);
 
 		const setting = new Setting(containerEL)
 			.addText((text) =>
@@ -87,10 +87,10 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 						value = value.toLowerCase();
 
 						// delete the "old" tag name, before the edit
-						delete this.plugin.settings.TagSemanticColors[new_tag_name];
+						delete this.plugin.settings.TagColors.SemanticObsidianColors[new_tag_name];
 
 						// Add the updated tag and color
-						this.plugin.settings.TagSemanticColors[value] = new_css_var;
+						this.plugin.settings.TagColors.SemanticObsidianColors[value] = new_css_var;
 						await this.plugin.saveSettings();
 
 						// Handle user-defined tag name changes here
@@ -104,7 +104,7 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 						.setValue(new_css_var) // Make sure new_css_var corresponds to a key in ObsidianSemanticColors
 						.onChange(async value => {
 							new_css_var = value;
-							this.plugin.settings.TagSemanticColors[new_tag_name] = new_css_var.valueOf();
+							this.plugin.settings.TagColors.SemanticObsidianColors[new_tag_name] = new_css_var.valueOf();
 							await Promise.all([
 								this.plugin.saveSettings()
 							]);
@@ -115,7 +115,7 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 					.setButtonText('-')
 					.onClick(async () => {
 						// Remove the tag and color
-						delete this.plugin.settings.TagSemanticColors[tagName];
+						delete this.plugin.settings.TagColors.SemanticObsidianColors[tagName];
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()

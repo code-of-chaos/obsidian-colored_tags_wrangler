@@ -21,13 +21,13 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
-		return Object.keys(this.plugin.settings?.customTagColors)
+		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
 			.map(tagName => {
-				const color: RGB = this.plugin.settings.customTagColors[tagName];
+				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
 
 				const rgb:string = `${color.r}, ${color.g}, ${color.b}`;
-				const opacity_background:string = this.plugin.settings.kanbanListBackgroundOpacity.toString();
-				const opacity_border:string = this.plugin.settings.kanbanListBorderOpacity.toString();
+				const opacity_background:string = this.plugin.settings.Kanban.Values.ListBackgroundOpacity.toString();
+				const opacity_border:string = this.plugin.settings.Kanban.Values.ListBorderOpacity.toString();
 
 				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `

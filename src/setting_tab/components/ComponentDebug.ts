@@ -17,9 +17,9 @@ export class ComponentDebug extends SettingsTabComponent{
 				Don't use these if you don't know what you are doing.
 			`).addToggle(component => {
 					component
-						.setValue(this.plugin.settings.enableDebugSettings)
+						.setValue(this.plugin.settings.Debug.Enable)
 						.onChange(async state => {
-							this.plugin.settings.enableDebugSettings = state;
+							this.plugin.settings.Debug.Enable = state;
 							await this.plugin.saveSettings();
 							this.settings_tab.display();
 						})

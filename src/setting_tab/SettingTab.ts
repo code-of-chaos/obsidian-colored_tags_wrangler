@@ -57,11 +57,14 @@ export class SettingTab extends PluginSettingTab {
 		// Tags Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('h2', {text: "Obsidian tags"});
-		
+
+		// Tags lists and which component they should adhere to
 		this._components.comp_tags.create_component(containerEl);
-		this._components.comp_tags_canvas.create_component(containerEl);
 		this._components.comp_tags_semantic.create_component(containerEl);
 		this._components.comp_tags_var.create_component(containerEl);
+
+ 		// Below this should be boolean options for the tags
+		this._components.comp_tags_canvas.create_component(containerEl);
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------

@@ -21,9 +21,9 @@ export class StyleWranglerTags extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
-		return Object.keys(this.plugin.settings?.customTagColors)
+		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
 			.map(tagName => {
-				const color: RGB = this.plugin.settings.customTagColors[tagName];
+				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
 				// noinspection CssInvalidFunction
 				return `
 					.tag[href="#${tagName}"], .cm-tag-${tagName} { 
