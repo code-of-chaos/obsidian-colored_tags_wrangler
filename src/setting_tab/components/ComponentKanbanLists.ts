@@ -21,9 +21,9 @@ export class ComponentKanbanLists extends SettingsTabComponent{
 				Known issue: When a list has multiple tags, the color of the list is randomly chosen.
 			`).addToggle(component => {
 					component
-						.setValue(this.plugin.settings.enableKanbanLists)
+						.setValue(this.plugin.settings.Kanban.EnableLists)
 						.onChange(async state => {
-							this.plugin.settings.enableKanbanLists = state;
+							this.plugin.settings.Kanban.EnableLists = state;
 							await this.plugin.saveSettings();
 						})
 				}

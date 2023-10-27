@@ -3,5 +3,15 @@
 // ---------------------------------------------------------------------------------------------------------------------
 export {removeById}
 	from "src/lib/RemoveById";
-export {hexToRgb, rgbToHex}
-	from "src/lib/ColorConverters";
+export {
+	hexToRgb,
+	rgbToHex,
+	rgbToHsl,
+	stringToHsl,
+	stringToRgb, stringToRgba,
+	hslToRgb,
+	hexToRGBA
+} from "src/lib/ColorConverters";
+
+export type { RGBa } from "src/lib/ColorConverters";
+

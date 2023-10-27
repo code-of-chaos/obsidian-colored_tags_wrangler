@@ -21,9 +21,9 @@ export class ComponentKanban extends SettingsTabComponent{
 					though they still have to be typed out within the used areas.
 			`).addToggle(component => {
 					component
-						.setValue(this.plugin.settings.enableKanban)
+						.setValue(this.plugin.settings.Kanban.Enable)
 						.onChange(async state => {
-							this.plugin.settings.enableKanban = state;
+							this.plugin.settings.Kanban.Enable = state;
 							await this.plugin.saveSettings();
 						})
 				}

@@ -6,41 +6,71 @@
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IColoredTagWranglerSettings {
-    customTagColors: Record<string, { r: number, g: number, b: number }>;
-	TagSemanticColors: Record<string, string>;
-    enableKanban:boolean;
-	enableKanbanCards:boolean;
-	enableKanbanLists:boolean;
-	enableDebugSettings:boolean;
-	enableCanvas:boolean;
+	TagColors:{
+		ColorPicker: Record<string, { r: number, g: number, b: number }>,
+		SemanticObsidianColors: Record<string, string>,
+		CssVars: Record<string, {color:string, background:string}>,
+	},
 
-	// The following setting_tab still have to be assigned to logic
-	kanbanCardBackgroundOpacity:number;
-	kanbanCardBorderOpacity:number;
-	kanbanListBackgroundOpacity:number;
-	kanbanListBorderOpacity:number;
+	Kanban:{
+		Enable: boolean,
+		EnableCards:boolean,
+		EnableLists:boolean,
 
-	CanvasCardBorderOpacity:number;
-	CanvasCardBackgroundLuminanceOffset:number;
+		Values:{
+			CardBackgroundOpacity:number,
+			CardBorderOpacity:number,
+			ListBackgroundOpacity:number,
+			ListBorderOpacity:number,
+		},
+	},
+
+	Debug:{
+		Enable:boolean,
+	},
+
+	Canvas:{
+		Enable:boolean,
+
+		Values:{
+			CardBorderOpacity:number,
+			CardBackgroundLuminanceOffset:number,
+		},
+	}
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export const DefaultSettings: IColoredTagWranglerSettings = {
-    customTagColors: {},
-	TagSemanticColors: {},
-    enableKanban:false,
-	enableKanbanCards:false,
-	enableKanbanLists:false,
-	enableDebugSettings:false,
-	enableCanvas:false,
+	TagColors:{
+		ColorPicker: {},
+		SemanticObsidianColors: {},
+		CssVars: {},
+	},
 
-	// The following setting_tab still have to be assigned to logic
-	kanbanCardBackgroundOpacity:0.2,
-	kanbanCardBorderOpacity:0.3,
-	kanbanListBackgroundOpacity:0.2,
-	kanbanListBorderOpacity:0.3,
+	Kanban:{
+		Enable:false,
+		EnableCards:false,
+		EnableLists:false,
 
-	CanvasCardBorderOpacity:0.3,
-	CanvasCardBackgroundLuminanceOffset:0.35,
+		Values:{
+			CardBackgroundOpacity:0.2,
+			CardBorderOpacity:0.3,
+			ListBackgroundOpacity:0.2,
+			ListBorderOpacity:0.3,
+		},
+	},
+
+	Debug:{
+		Enable:false,
+	},
+
+	Canvas:{
+		Enable:false,
+
+		Values:{
+			CardBorderOpacity:0.3,
+			CardBackgroundLuminanceOffset:0.35,
+		}
+	}
 }

@@ -10,7 +10,7 @@ import {
 	StyleWranglerKanbanLists,
 	StyleWranglerTags,
 	StyleWranglerTagsCanvas,
-	StyleWranglerTagsSemanticColors,
+	StyleWranglerTagsSemanticColors, StyleWranglerTagsVarColors,
 } from "src/style_manager/wranglers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -19,6 +19,7 @@ export class StyleManager{
 	plugin: ColoredTagWranglerPlugin;
 	wrangler_tags: StyleWranglerTags;
 	wrangler_tags_canvas: StyleWranglerTagsCanvas;
+	wrangler_tags_css_vars:StyleWranglerTagsVarColors;
 	wrangler_tags_semantic_colors: StyleWranglerTagsSemanticColors;
 	wrangler_kanban: StyleWranglerKanban;
 	wrangler_kanban_cards: StyleWranglerKanbanCards;
@@ -33,6 +34,7 @@ export class StyleManager{
 		this.wrangler_tags = new StyleWranglerTags(plugin);
 		this.wrangler_tags_canvas = new StyleWranglerTagsCanvas(plugin);
 		this.wrangler_tags_semantic_colors = new StyleWranglerTagsSemanticColors(plugin);
+		this.wrangler_tags_css_vars = new StyleWranglerTagsVarColors(plugin);
 		this.wrangler_kanban = new StyleWranglerKanban(plugin);
 		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
 		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
@@ -40,6 +42,7 @@ export class StyleManager{
 		this._style_wranglers = new Array<IStyleWrangler>(
 			this.wrangler_tags,
 			this.wrangler_tags_canvas,
+			this.wrangler_kanban,
 			this.wrangler_kanban,
 			this.wrangler_kanban_cards,
 			this.wrangler_kanban_lists,
@@ -50,27 +53,36 @@ export class StyleManager{
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	switchAllStyles():void {
-		Object.keys(this.plugin.settings.customTagColors).length != 0
+		Object.keys(this.plugin.settings.TagColors.ColorPicker).length != 0
 			? this.wrangler_tags.apply_styles()
 			: this.wrangler_tags.remove_styles() ;
 
-		Object.keys(this.plugin.settings.TagSemanticColors).length != 0
+		Object.keys(this.plugin.settings.TagColors.SemanticObsidianColors).length != 0
 			? this.wrangler_tags_semantic_colors.apply_styles()
 			: this.wrangler_tags_semantic_colors.remove_styles() ;
 
-		this.plugin.settings.enableKanban
+		Object.keys(this.plugin.settings.TagColors.SemanticObsidianColors).length != 0
+			? this.wrangler_tags_semantic_colors.apply_styles()
+			: this.wrangler_tags_semantic_colors.remove_styles() ;
+
+
+		Object.keys(this.plugin.settings.TagColors.CssVars).length != 0
+			? this.wrangler_tags_css_vars.apply_styles()
+			: this.wrangler_tags_css_vars.remove_styles() ;
+
+		this.plugin.settings.Kanban.Enable
 			? this.wrangler_kanban.apply_styles()
 			: this.wrangler_kanban.remove_styles() ;
 
-		this.plugin.settings.enableKanbanCards
+		this.plugin.settings.Kanban.EnableCards
 			? this.wrangler_kanban_cards.apply_styles()
 			: this.wrangler_kanban_cards.remove_styles() ;
 
-		this.plugin.settings.enableKanbanLists
+		this.plugin.settings.Kanban.EnableLists
 			? this.wrangler_kanban_lists.apply_styles()
 			: this.wrangler_kanban_lists.remove_styles() ;
 
-		this.plugin.settings.enableCanvas
+		this.plugin.settings.Canvas.Enable
 			? this.wrangler_tags_canvas.apply_styles()
 			: this.wrangler_tags_canvas.remove_styles() ;
 	}

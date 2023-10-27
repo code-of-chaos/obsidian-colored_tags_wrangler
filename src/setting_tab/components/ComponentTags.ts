@@ -29,7 +29,7 @@ export class ComponentTags extends SettingsTabComponent{
 				button
 					.setButtonText("Add new tag")
 					.onClick(async () => {
-						this.plugin.settings.customTagColors[this._NEW_TAG_NAME] = this._NEW_DEFAULT_COLOR; // Default color
+						this.plugin.settings.TagColors.ColorPicker[this._NEW_TAG_NAME] = this._NEW_DEFAULT_COLOR; // Default color
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
@@ -39,13 +39,13 @@ export class ComponentTags extends SettingsTabComponent{
 			);
 
 		// Only when Debug settings are on, allow the "Clear all" button to appear
-		if(this.plugin.settings.enableDebugSettings){
+		if(this.plugin.settings.Debug.Enable){
 			setting.addButton((button) =>
 				button
 					.setButtonText('Clear all')
 					.onClick(async () => {
-							Object.keys(this.plugin.settings.customTagColors)
-								.forEach((key_name) => delete this.plugin.settings.customTagColors[key_name]);
+							Object.keys(this.plugin.settings.TagColors.ColorPicker)
+								.forEach((key_name) => delete this.plugin.settings.TagColors.ColorPicker[key_name]);
 							await Promise.all([
 								this.plugin.saveSettings(),
 								this.settings_tab.display()
@@ -53,17 +53,17 @@ export class ComponentTags extends SettingsTabComponent{
 						}
 					)
 					.setClass('mod-warning')
-					.setDisabled(Object.keys(this.plugin.settings.customTagColors).length == 0)
+					.setDisabled(Object.keys(this.plugin.settings.TagColors.ColorPicker).length == 0)
 			);
 		}
 
 
 		// Create the amount of tags already stored in the setting_tab
-		for (const tagName in this.plugin.settings.customTagColors) {
-			if (!this.plugin.settings.customTagColors.hasOwnProperty(tagName)) {
+		for (const tagName in this.plugin.settings.TagColors.ColorPicker) {
+			if (!this.plugin.settings.TagColors.ColorPicker.hasOwnProperty(tagName)) {
 				continue;
 			}
-			this._createTagColorSetting(tagName, this.plugin.settings.customTagColors[tagName], containerEL);
+			this._createTagColorSetting(tagName, this.plugin.settings.TagColors.ColorPicker[tagName], containerEL);
 		}
 
 		return setting
@@ -85,10 +85,10 @@ export class ComponentTags extends SettingsTabComponent{
 						value = value.toLowerCase();
 
 						// delete the "old" tag name, before the edit
-						delete this.plugin.settings.customTagColors[new_tag_name];
+						delete this.plugin.settings.TagColors.ColorPicker[new_tag_name];
 
 						// Add the updated tag and color
-						this.plugin.settings.customTagColors[value] = new_color;
+						this.plugin.settings.TagColors.ColorPicker[value] = new_color;
 						await this.plugin.saveSettings();
 
 						// Handle user-defined tag name changes here
@@ -102,7 +102,7 @@ export class ComponentTags extends SettingsTabComponent{
 						// Handle user-defined tag colors here
 						new_color = hexToRgb(value); // Update newColor as the user changes the color
 						// Add the updated tag and color
-						this.plugin.settings.customTagColors[new_tag_name] = new_color;
+						this.plugin.settings.TagColors.ColorPicker[new_tag_name] = new_color;
 						await this.plugin.saveSettings();
 
 					})
@@ -111,7 +111,7 @@ export class ComponentTags extends SettingsTabComponent{
 					.setButtonText('-')
 					.onClick(async () => {
 						// Remove the tag and color
-						delete this.plugin.settings.customTagColors[tagName];
+						delete this.plugin.settings.TagColors.ColorPicker[tagName];
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()

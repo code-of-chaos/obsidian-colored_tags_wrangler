@@ -22,14 +22,14 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
-		return Object.keys(this.plugin.settings?.customTagColors)
+		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
 			.map(tagName => {
-				const color: RGB = this.plugin.settings.customTagColors[tagName];
+				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
 
-				const opacity_border:string = this.plugin.settings.CanvasCardBorderOpacity.toString();
+				const opacity_border:string = this.plugin.settings.Canvas.Values.CardBorderOpacity.toString();
 
 				const hsl:HSL = rgbToHsl(color);
-				hsl.l -= this.plugin.settings.CanvasCardBackgroundLuminanceOffset;
+				hsl.l -= this.plugin.settings.Canvas.Values.CardBackgroundLuminanceOffset;
 				const color2 = hslToRgb(hsl);
 				const rgb:string = `${color2.r}, ${color2.g}, ${color2.b}`;
 
