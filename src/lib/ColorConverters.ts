@@ -6,6 +6,10 @@ import {RGB, HSL}
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
+export interface RGBa extends RGB {
+	a: number;
+}
+
 export function hexToRgb(hexColor:string) : RGB{
 	const hex = hexColor.replace("#", "");
 	return {
@@ -134,15 +138,28 @@ export function stringToHsl(txt:string):HSL{
 
 // ---------------------------------------------------------------------------------------------------------------------
 export function stringToRgb(txt:string):RGB{
-	const hslArray = txt
+	const textArray = txt
 		.replace("rgb(", "")
 		.replace(")", "")
 		.split(",")
 		.map(v=> v.trim())
 	return {
-		r:Number(hslArray[0]),
-		g:Number(hslArray[1]),
-		b:Number(hslArray[2]),
+		r:Number(textArray[0]),
+		g:Number(textArray[1]),
+		b:Number(textArray[2]),
 	}
 }
 
+export function stringToRgba(txt:String):RGBa{
+	const textArray = txt
+		.replace("rgba(", "")
+		.replace(")", "")
+		.split(",")
+		.map(v=> v.trim())
+	return {
+		r:Number(textArray[0]),
+		g:Number(textArray[1]),
+		b:Number(textArray[2]),
+		a:Number(textArray[3])
+	}
+}

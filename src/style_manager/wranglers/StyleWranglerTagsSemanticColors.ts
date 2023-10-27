@@ -8,11 +8,11 @@ import ColoredTagWranglerPlugin
 import {IObsidianSemanticColorsIndex, ObsidianSemanticColors}
 	from "src/lib/ObsidianSemanticColors";
 import {
-	hexToRgb,
+	hexToRgb, RGBa,
 	rgbToHsl,
 	stringToHsl,
-	stringToRgb
-} 	from "src/lib/ColorConverters";
+	stringToRgb, stringToRgba
+} from "src/lib/ColorConverters";
 import {HSL} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -44,6 +44,8 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 					colorFormat = "hsl";
 				} else if (found_value.startsWith("rgb(")) {
 					colorFormat = "rgb";
+				} else if (found_value.startsWith("rgba(")) {
+						colorFormat = "rgba";
 				} else if (found_value.startsWith("#")) {
 					colorFormat = "hex";
 				} else {
@@ -59,6 +61,10 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 						break;
 					case "rgb":
 						convertedColor = rgbToHsl(stringToRgb(found_value));
+						break;
+					case "rgba":
+						let rgba:RGBa = stringToRgba(found_value);
+						convertedColor = rgbToHsl({r:rgba.r, g:rgba.g, b:rgba.b});
 						break;
 					case "hex":
 						// HEX format is already recognized
