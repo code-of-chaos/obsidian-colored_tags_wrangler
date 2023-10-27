@@ -8,7 +8,6 @@
 export interface IColoredTagWranglerSettings {
     customTagColors: Record<string, { r: number, g: number, b: number }>;
 	TagSemanticColors: Record<string, string>;
-	enableTagsProperties:boolean,
     enableKanban:boolean;
 	enableKanbanCards:boolean;
 	enableKanbanLists:boolean;
@@ -30,7 +29,6 @@ export interface IColoredTagWranglerSettings {
 export const DEFAULT_SETTINGS: IColoredTagWranglerSettings = {
     customTagColors: {},
 	TagSemanticColors: {},
-	enableTagsProperties:false,
     enableKanban:false,
 	enableKanbanCards:false,
 	enableKanbanLists:false,

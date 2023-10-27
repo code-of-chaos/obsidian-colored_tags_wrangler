@@ -7,7 +7,12 @@ import ColoredTagWranglerPlugin
 	from "src/main";
 import {IObsidianSemanticColorsIndex, ObsidianSemanticColors}
 	from "src/lib/obsidian_semantic_colors";
-import {hexToRgb, rgbToHsl, stringToHsl, stringToRgb} from "src/lib/convert_colors";
+import {
+	hexToRgb,
+	rgbToHsl,
+	stringToHsl,
+	stringToRgb
+} 	from "src/lib/convert_colors";
 import {HSL} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

@@ -9,7 +9,8 @@ import {
 	StyleWranglerKanbanCards,
 	StyleWranglerKanbanLists,
 	StyleWranglerTags,
-	StyleWranglerTagsCanvas, StyleWranglerTagsSemanticColors
+	StyleWranglerTagsCanvas,
+	StyleWranglerTagsSemanticColors,
 } from "src/style_manager/wranglers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
