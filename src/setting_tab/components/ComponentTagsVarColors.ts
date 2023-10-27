@@ -12,7 +12,7 @@ import {hexToRgb} from "../../lib";
 export class ComponentTagsVarColors extends SettingsTabComponent{
 	private _NEW_TAG_NAME:string = "new-css-var-tag";
 	private _NEW_DEFAULT_COLOR:string = "--undefined-color";
-	private _NEW_DEFAULT_BACKGROUND:string = "--undefined-background-color";
+	private _NEW_DEFAULT_BACKGROUND:string = "--undefined-background";
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
@@ -23,8 +23,6 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 			.setDesc(`
 				Define custom colors for tags by assigning a CSS var. 
 				Make sure this var is defined in the Theme or loose snippets.
-				Don't add the '#' before the tag, and write everything in lowercase without spaces.
-				This is sanitized in code as well, resulting in the tag being edited when you reload this setting tab.
 			`)
 			.addButton((button) =>
 				button
@@ -87,7 +85,7 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 		const setting = new Setting(containerEL)
 			.addText((text) =>
 				text
-					.setPlaceholder(this._NEW_TAG_NAME)
+					.setPlaceholder("Text Color")
 					.setValue(tagName)
 					.onChange(async (value) => {
 						// Cleanup the value
@@ -107,7 +105,7 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 					})
 			).addText((text_css_var_color) =>
 				text_css_var_color
-					.setPlaceholder(this._NEW_DEFAULT_COLOR)
+					.setPlaceholder("Background Color")
 					.setValue(css_var_color)
 					.onChange(async (value) => {
 						// Cleanup the value

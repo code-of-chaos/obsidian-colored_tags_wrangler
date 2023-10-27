@@ -19,11 +19,9 @@ export class ComponentTagsSemanticColors extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): Setting {
 		let setting = new Setting(containerEL)
-			.setName("Color tags by Obsidian semmantic")
+			.setName("Color tags by Obsidian semantic")
 			.setDesc(`
 				Define custom colors for tags.
-				Don't add the '#' before the tag, and write everything in lowercase without spaces.
-				This is sanitized in code as well, resulting in the tag being edited when you reload this setting tab.
 			`)
 			.addButton((button) =>
 				button

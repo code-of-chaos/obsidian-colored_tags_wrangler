@@ -17,10 +17,8 @@ export class ComponentTagsCanvas extends SettingsTabComponent {
 	public create_component(containerEL:HTMLElement): Setting {
 		let setting = new Setting(containerEL)
 			.setName("Apply tag color to canvas card")
-			.setDesc(`
-				Applies the tag color, of the tag within the canvas's card, to the background color of the canvas card. 
-				Known issue: When a canvas card has multiple tags, the color of the canvas card is randomly chosen.
-			`).addToggle(component => {
+			.setDesc(`Applies the tag color, of the tag within the canvas's card, to the background color of the canvas card.`)
+			.addToggle(component => {
 					component
 						.setValue(this.plugin.settings.Canvas.Enable)
 						.onChange(async state => {

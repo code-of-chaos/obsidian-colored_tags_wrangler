@@ -57,6 +57,9 @@ export class SettingTab extends PluginSettingTab {
 		// Tags Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('h2', {text: "Obsidian tags"});
+		containerEl.createDiv({cls:"setting-item-description",text: `Don't add the '#' before the tag. Write everything in lowercase without spaces.`});
+		containerEl.createDiv({cls:"setting-item-description",text: `If you forget this, this done for you in code, resulting in the input being changed if you reload this page.`});
+		containerEl.createEl('br');
 
 		// Tags lists and which component they should adhere to
 		this._components.comp_tags.create_component(containerEl);
@@ -82,7 +85,7 @@ export class SettingTab extends PluginSettingTab {
 
 		this._components.comp_debug.create_component(containerEl);
 
-		if (this.plugin.settings.enableDebugSettings){
+		if (this.plugin.settings.Debug.Enable){
 			this._components.comp_debug_reloadcss.create_component(containerEl);
     	}
 	}
