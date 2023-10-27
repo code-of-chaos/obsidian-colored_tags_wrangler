@@ -50,27 +50,27 @@ export class StyleManager{
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	switchAllStyles():void {
-		Object.keys(this.plugin.settings.customTagColors).length != 0
+		Object.keys(this.plugin.settings.TagColors.ColorPicker).length != 0
 			? this.wrangler_tags.apply_styles()
 			: this.wrangler_tags.remove_styles() ;
 
-		Object.keys(this.plugin.settings.TagSemanticColors).length != 0
+		Object.keys(this.plugin.settings.TagColors.SemanticObsidianColors).length != 0
 			? this.wrangler_tags_semantic_colors.apply_styles()
 			: this.wrangler_tags_semantic_colors.remove_styles() ;
 
-		this.plugin.settings.enableKanban
+		this.plugin.settings.Kanban.Enable
 			? this.wrangler_kanban.apply_styles()
 			: this.wrangler_kanban.remove_styles() ;
 
-		this.plugin.settings.enableKanbanCards
+		this.plugin.settings.Kanban.EnableCards
 			? this.wrangler_kanban_cards.apply_styles()
 			: this.wrangler_kanban_cards.remove_styles() ;
 
-		this.plugin.settings.enableKanbanLists
+		this.plugin.settings.Kanban.EnableLists
 			? this.wrangler_kanban_lists.apply_styles()
 			: this.wrangler_kanban_lists.remove_styles() ;
 
-		this.plugin.settings.enableCanvas
+		this.plugin.settings.Canvas.Enable
 			? this.wrangler_tags_canvas.apply_styles()
 			: this.wrangler_tags_canvas.remove_styles() ;
 	}
