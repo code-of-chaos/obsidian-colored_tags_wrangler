@@ -13,8 +13,9 @@ import {
 	ComponentDebugReloadCSS,
 	ComponentDebug,
 	ComponentTagsSemanticColors,
-	ComponentTagsCanvas, 
+	ComponentTagsCanvas,
 	SettingsTabComponent,
+	ComponentTagsVarColors,
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -25,6 +26,7 @@ export class SettingTab extends PluginSettingTab {
 		comp_tags: SettingsTabComponent,
 		comp_tags_canvas:SettingsTabComponent,
 		comp_tags_semantic:SettingsTabComponent,
+		comp_tags_var:SettingsTabComponent,
 		comp_kanban:SettingsTabComponent,
 		comp_kanban_cards:SettingsTabComponent,
 		comp_kanban_lists:SettingsTabComponent,
@@ -39,6 +41,7 @@ export class SettingTab extends PluginSettingTab {
 			comp_tags: 				new ComponentTags(plugin, this),
 			comp_tags_canvas:		new ComponentTagsCanvas(plugin, this),
 			comp_tags_semantic:		new ComponentTagsSemanticColors(plugin, this),
+			comp_tags_var:			new ComponentTagsVarColors(plugin, this),
 			comp_kanban: 			new ComponentKanban(plugin,this),
 			comp_kanban_cards:		new ComponentKanbanCards(plugin,this),
 			comp_kanban_lists:		new ComponentKanbanLists(plugin,this),
@@ -58,7 +61,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components.comp_tags.create_component(containerEl);
 		this._components.comp_tags_canvas.create_component(containerEl);
 		this._components.comp_tags_semantic.create_component(containerEl);
-
+		this._components.comp_tags_var.create_component(containerEl);
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------
