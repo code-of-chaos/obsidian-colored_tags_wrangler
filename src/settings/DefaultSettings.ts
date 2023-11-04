@@ -5,9 +5,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
+import {RGB} from "obsidian";
+
 export interface IColoredTagWranglerSettings {
 	TagColors:{
-		ColorPicker: Record<string, { r: number, g: number, b: number }>,
+		ColorPicker: Record<string, {tag_name:string, color:RGB}>,
 		SemanticObsidianColors: Record<string, string>,
 		CssVars: Record<string, {color:string, background:string}>,
 
@@ -42,6 +44,9 @@ export interface IColoredTagWranglerSettings {
 			CardBorderOpacity:number,
 			CardBackgroundLuminanceOffset:number,
 		},
+	},
+	Info: {
+		SettingsVersion: number
 	}
 }
 // ---------------------------------------------------------------------------------------------------------------------
@@ -84,5 +89,8 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 			CardBorderOpacity:0.3,
 			CardBackgroundLuminanceOffset:0.35,
 		}
+	},
+	Info: {
+		SettingsVersion: 1
 	}
 }

@@ -7,6 +7,8 @@ import {hexToRgb}
 	from "src/lib";
 import {SettingsTabComponent}
 	from "src/setting_tab/SettingsTabComponent";
+import {v4 as uuid4}
+	from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -25,7 +27,7 @@ export class ComponentTags extends SettingsTabComponent{
 				button
 					.setButtonText("Add new tag")
 					.onClick(async () => {
-						this.plugin.settings.TagColors.ColorPicker[this._NEW_TAG_NAME] = this._NEW_DEFAULT_COLOR; // Default color
+						this.plugin.settings.TagColors.ColorPicker[uuid4()] = {tag_name: this._NEW_TAG_NAME, color:this._NEW_DEFAULT_COLOR}; // Default color
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
@@ -55,50 +57,44 @@ export class ComponentTags extends SettingsTabComponent{
 
 
 		// Create the amount of tags already stored in the setting_tab
-		for (const tagName in this.plugin.settings.TagColors.ColorPicker) {
-			if (!this.plugin.settings.TagColors.ColorPicker.hasOwnProperty(tagName)) {
+		for (const tagUUID in this.plugin.settings.TagColors.ColorPicker) {
+			if (!this.plugin.settings.TagColors.ColorPicker.hasOwnProperty(tagUUID)) {
 				continue;
 			}
-			this._createTagColorSetting(tagName, this.plugin.settings.TagColors.ColorPicker[tagName], containerEL);
+			this._createTagColorSetting(tagUUID, this.plugin.settings.TagColors.ColorPicker[tagUUID], containerEL);
 		}
 
 		return setting
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _createTagColorSetting(tagName: string, color: RGB, containerEL:HTMLElement) {
-		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
-		let new_color = color; // Initialize newColor with the existing color
+	private _createTagColorSetting(tagUUID: string, tag_content: {tag_name:string, color:RGB}, containerEL:HTMLElement) {
+		let tag_id = tagUUID;
+		let new_tag_content = tag_content;
 
 		const setting = new Setting(containerEL)
 			.addText((text) =>
 				text
 					.setPlaceholder(this._NEW_TAG_NAME)
-					.setValue(tagName)
+					.setValue(new_tag_content.tag_name)
 					.onChange(async (value) => {
 						// Cleanup the value
 						value = value.replace("#","");
 						value = value.toLowerCase();
 
-						// delete the "old" tag name, before the edit
-						delete this.plugin.settings.TagColors.ColorPicker[new_tag_name];
-
 						// Add the updated tag and color
-						this.plugin.settings.TagColors.ColorPicker[value] = new_color;
+						new_tag_content.tag_name = value
+						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
-
-						// Handle user-defined tag name changes here
-						new_tag_name = value; // Update newTagName as the user changes the tag name
 
 					})
 			).addColorPicker((colorPicker) =>
 				colorPicker
-					.setValueRgb(color)
+					.setValueRgb(new_tag_content.color)
 					.onChange(async (value) => {
 						// Handle user-defined tag colors here
-						new_color = hexToRgb(value); // Update newColor as the user changes the color
-						// Add the updated tag and color
-						this.plugin.settings.TagColors.ColorPicker[new_tag_name] = new_color;
+						new_tag_content.color = hexToRgb(value)
+						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
 
 					})
@@ -107,7 +103,7 @@ export class ComponentTags extends SettingsTabComponent{
 					.setButtonText('-')
 					.onClick(async () => {
 						// Remove the tag and color
-						delete this.plugin.settings.TagColors.ColorPicker[tagName];
+						delete this.plugin.settings.TagColors.ColorPicker[tag_id];
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()

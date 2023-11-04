@@ -22,8 +22,8 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
 		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
-			.map(tagName => {
-				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
+			.map(tagUUID => {
+				const {tag_name, color} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
 
 				const rgb:string = `${color.r}, ${color.g}, ${color.b}`;
 				const opacity_background:string = this.plugin.settings.Kanban.Values.CardBackgroundOpacity.toString();
@@ -31,10 +31,10 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 
 				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `
-					div.kanban-plugin__item.has-tag-${tagName.toLowerCase()} div.kanban-plugin__item-title-wrapper { 
+					div.kanban-plugin__item.has-tag-${tag_name} div.kanban-plugin__item-title-wrapper { 
 						background: rgba(${rgb}, ${opacity_background}) !important;
 					}
-					div.kanban-plugin__item.has-tag-${tagName.toLowerCase()}{ 
+					div.kanban-plugin__item.has-tag-${tag_name}{ 
 						border-color: rgba(${rgb}, ${opacity_border}) !important;
 					}
 				`;

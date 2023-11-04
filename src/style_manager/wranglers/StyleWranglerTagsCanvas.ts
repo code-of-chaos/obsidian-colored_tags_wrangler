@@ -26,8 +26,8 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 		const background_luminance_offset = this.plugin.settings.Canvas.Values.CardBackgroundLuminanceOffset;
 
 		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
-			.map(tagName => {
-				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
+			.map(tagUUID => {
+				const {tag_name, color} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
 
 				const hsl:HSL = rgbToHsl(color);
 				hsl.l -= background_luminance_offset;
@@ -36,7 +36,7 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 
 				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `
-					div.canvas-node-container:has(div.markdown-embed-content a[href="#${tagName}"]) {
+					div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
 						background : rgb(${rgb}) !important;
 						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
 					}`;

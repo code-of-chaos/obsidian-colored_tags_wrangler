@@ -22,8 +22,8 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
 		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
-			.map(tagName => {
-				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
+			.map(tagUUID => {
+				const {tag_name, color} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
 
 				const rgb:string = `${color.r}, ${color.g}, ${color.b}`;
 				const opacity_background:string = this.plugin.settings.Kanban.Values.ListBackgroundOpacity.toString();
@@ -31,11 +31,11 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 
 				// noinspection CssInvalidFunction,CssUnusedSymbol
 				return `
-					div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tagName.toLowerCase()}"]){
+					div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
 						background : rgba(${rgb}, ${opacity_background}) !important;
 						border-color: rgba(${rgb}, ${opacity_border}) !important;
 					}
-					div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tagName.toLowerCase()}"]){
+					div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
 						border-color: rgba(${rgb}, ${opacity_border}) !important;
 					}
 				`;

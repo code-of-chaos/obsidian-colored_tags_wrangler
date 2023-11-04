@@ -3,8 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
 	from "src/style_manager/wranglers/StyleWrangler";
-import {RGB}
-	from "obsidian";
 import ColoredTagWranglerPlugin
 	from "src/main";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -25,11 +23,11 @@ export class StyleWranglerTags extends StyleWrangler {
 		const background_opacity_hover = this.plugin.settings.TagColors.Values.BackgroundOpacityHover;
 
 		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
-			.map(tagName => {
-				const color: RGB = this.plugin.settings.TagColors.ColorPicker[tagName];
+			.map(tagUUID => {
+				const {tag_name, color} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
 				// noinspection CssInvalidFunction
 				return `
-					.tag[href="#${tagName}"], .cm-tag-${tagName} { 
+					.tag[href="#${tag_name}"], .cm-tag-${tag_name} { 
 						--color: rgb(${color.r}, ${color.g}, ${color.b});
 						--color-hover: var(--color);
 						--background: rgba(${color.r}, ${color.g}, ${color.b}, ${background_opacity});
