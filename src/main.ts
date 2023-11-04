@@ -9,8 +9,7 @@ import {SettingTab}
 	from "src/setting_tab";
 import {StyleManager}
 	from "src/style_manager";
-import {migrate_0_to_1} from "./settings/SettingsMigrations";
-import {ISettings_v000} from "./settings/old_setting_versions/ISettings_v000";
+import {Migrate} from "./settings/Migrate";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -41,33 +40,8 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 	// -----------------------------------------------------------------------------------------------------------------
 	async loadSettings() {
 		// Retrieve setting_tab from stored data.json file
-		let loaded_data:any =  await this.loadData()
-
-		let migrated_data:IColoredTagWranglerSettings;
-		let save_settings :boolean = false;
-
-		switch (loaded_data?.Info?.SettingsVersion ?? -1) {
-			case 0 :
-				let loaded_data_v0: ISettings_v000 = loaded_data as ISettings_v000;
-				migrated_data = migrate_0_to_1(loaded_data_v0);
-				save_settings = true
-				break;
-
-			case DefaultSettings.Info.SettingsVersion :
-				// Everything is normal
-				migrated_data = loaded_data as IColoredTagWranglerSettings;
-				break;
-
-			default:
-				console.warn("Version could not be established, assigning as is. Please check for updates")
-				migrated_data = loaded_data as IColoredTagWranglerSettings;
-				break;
-		}
-
-		this.settings = Object.assign({}, DefaultSettings, migrated_data);
-		if (save_settings){
-			await this.saveData(this.settings);
-		}
+		this.settings = Object.assign({}, DefaultSettings, Migrate(await this.loadData()));
+		await this.saveData(this.settings);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	async saveSettings() {
