@@ -9,8 +9,8 @@ import {SettingTab}
 	from "src/setting_tab";
 import {StyleManager}
 	from "src/style_manager";
-import {ISettings_v0} from "./settings/old_setting_versions/ISettings_v000";
 import {migrate_0_to_1} from "./settings/SettingsMigrations";
+import {ISettings_v000} from "./settings/old_setting_versions/ISettings_v000";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 
 		switch (loaded_data?.Info?.SettingsVersion ?? -1) {
 			case 0 :
-				let loaded_data_v0: ISettings_v0 = loaded_data as ISettings_v0;
+				let loaded_data_v0: ISettings_v000 = loaded_data as ISettings_v000;
 				migrated_data = migrate_0_to_1(loaded_data_v0);
 				save_settings = true
 				break;
