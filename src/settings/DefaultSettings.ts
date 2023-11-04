@@ -90,6 +90,6 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 		}
 	},
 	Info: {
-		SettingsVersion: 2
+		SettingsVersion: 2 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }
