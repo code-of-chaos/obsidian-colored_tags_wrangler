@@ -33,10 +33,10 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 		const luminance_offset = this.plugin.settings.TagColors.Values.SemanticColorsLuminanceOffset;
 
 		return Object.keys(this.plugin.settings?.TagColors.SemanticObsidianColors)
-			.map(tagName => {
+			.map(tagUUID => {
 				// Iterate over the enum and find the key
-				const css_var: string = this.plugin.settings.TagColors.SemanticObsidianColors[tagName];
-				const css_key = enumIndex[css_var];
+				const {tag_name, obsidian_css_var} = this.plugin.settings.TagColors.SemanticObsidianColors[tagUUID];
+				const css_key = enumIndex[obsidian_css_var];
 
 				let colorFormat = "unknown";
 
@@ -85,7 +85,7 @@ export class StyleWranglerTagsSemanticColors extends StyleWrangler {
 
 				// noinspection CssInvalidFunction
 				return `
-					.tag[href="#${tagName}"], .cm-tag-${tagName} { 
+					.tag[href="#${tag_name}"], .cm-tag-${tag_name} { 
 						--color: var(${css_key});
 						--color-hover: var(${css_key});
 						--background: ${new_css};

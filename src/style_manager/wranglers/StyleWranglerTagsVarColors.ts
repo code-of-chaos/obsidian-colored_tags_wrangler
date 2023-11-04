@@ -20,11 +20,11 @@ export class StyleWranglerTagsVarColors extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
 		return Object.keys(this.plugin.settings?.TagColors.CssVars)
-			.map(tagName => {
-				const {color,background} = this.plugin.settings.TagColors.CssVars[tagName];
+			.map(tagUUID => {
+				const {tag_name, color,background} = this.plugin.settings.TagColors.CssVars[tagUUID];
 				// noinspection CssInvalidFunction
 				return `
-					.tag[href="#${tagName}"], .cm-tag-${tagName} { 
+					.tag[href="#${tag_name}"], .cm-tag-${tag_name} { 
 						--color: var(${color});
 						--color-hover: var(--color);
 						--background: var(${background});

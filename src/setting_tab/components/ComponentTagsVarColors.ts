@@ -5,6 +5,8 @@ import {Setting}
 	from "obsidian";
 import {SettingsTabComponent}
 	from "src/setting_tab/SettingsTabComponent";
+import {v4 as uuid4}
+	from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +29,8 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 				button
 					.setButtonText("Add new tag")
 					.onClick(async () => {
-						this.plugin.settings.TagColors.CssVars[this._NEW_TAG_NAME] = {
+						this.plugin.settings.TagColors.CssVars[uuid4()] = {
+							tag_name:this._NEW_TAG_NAME,
 							color:this._NEW_DEFAULT_COLOR,
 							background:this._NEW_DEFAULT_BACKGROUND
 						}; // Default color
@@ -60,14 +63,13 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 
 
 		// Create the amount of tags already stored in the setting_tab
-		for (const tagName in this.plugin.settings.TagColors.CssVars) {
-			if (!this.plugin.settings.TagColors.CssVars.hasOwnProperty(tagName)) {
+		for (const tagUUID in this.plugin.settings.TagColors.CssVars) {
+			if (!this.plugin.settings.TagColors.CssVars.hasOwnProperty(tagUUID)) {
 				continue;
 			}
 			this._createTagColorSetting(
-				tagName,
-				this.plugin.settings.TagColors.CssVars[tagName].color,
-				this.plugin.settings.TagColors.CssVars[tagName].background,
+				tagUUID,
+				this.plugin.settings.TagColors.CssVars[tagUUID],
 				containerEL
 			);
 		}
@@ -76,36 +78,29 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _createTagColorSetting(tagName: string, css_var_color: string, css_var_background:string, containerEL:HTMLElement) {
-		let new_tag_name = tagName; // Initialize newTagName with the existing tag name
-		let new_css_var_color = css_var_color; // Initialize newColor with the existing color
-		let new_css_var_background = css_var_background; // Initialize newColor with the existing color
+	private _createTagColorSetting(tagUUID: string, tag_content:{tag_name:string,color:string,background:string}, containerEL:HTMLElement) {
+		let tag_id = tagUUID;
+		let new_tag_content = tag_content;
 
 		const setting = new Setting(containerEL)
 			.addText((text) =>
 				text
-					.setPlaceholder("Text Color")
-					.setValue(tagName)
+					.setPlaceholder(this._NEW_TAG_NAME)
+					.setValue(new_tag_content.tag_name)
 					.onChange(async (value) => {
 						// Cleanup the value
 						value = value.replace("#","");
 						value = value.toLowerCase();
 
-						// delete the "old" tag name, before the edit
-						delete this.plugin.settings.TagColors.CssVars[new_tag_name];
-
-						// Add the updated tag and color
-						this.plugin.settings.TagColors.CssVars[value] = {color:new_css_var_color, background:new_css_var_background};
+						new_tag_content.tag_name = value
+						this.plugin.settings.TagColors.CssVars[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
-
-						// Handle user-defined tag name changes here
-						new_tag_name = value; // Update newTagName as the user changes the tag name
 
 					})
 			).addText((text_css_var_color) =>
 				text_css_var_color
-					.setPlaceholder("Background Color")
-					.setValue(css_var_color)
+					.setPlaceholder(this._NEW_DEFAULT_COLOR)
+					.setValue(new_tag_content.color)
 					.onChange(async (value) => {
 						// Cleanup the value
 						value = value
@@ -114,16 +109,15 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 							.toLowerCase();
 
 						// Add the updated tag and color
-						this.plugin.settings.TagColors.CssVars[new_tag_name] = {color:value, background:new_css_var_background};
+						new_tag_content.color = value
+						this.plugin.settings.TagColors.CssVars[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
-
-						new_css_var_color = value
 
 					})
 			).addText((text_css_var_background) =>
 				text_css_var_background
 					.setPlaceholder(this._NEW_DEFAULT_BACKGROUND)
-					.setValue(css_var_background)
+					.setValue(new_tag_content.background)
 					.onChange(async (value) => {
 						// Cleanup the value
 						value = value
@@ -132,10 +126,9 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 							.toLowerCase();
 
 						// Add the updated tag and background
-						this.plugin.settings.TagColors.CssVars[new_tag_name] = {color:new_css_var_color, background:value};
+						new_tag_content.background = value
+						this.plugin.settings.TagColors.CssVars[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
-
-						new_css_var_background = value
 
 					})
 			).addButton((button) =>
@@ -143,7 +136,7 @@ export class ComponentTagsVarColors extends SettingsTabComponent{
 					.setButtonText('-')
 					.onClick(async () => {
 						// Remove the tag and color
-						delete this.plugin.settings.TagColors.CssVars[tagName];
+						delete this.plugin.settings.TagColors.CssVars[tag_id];
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
