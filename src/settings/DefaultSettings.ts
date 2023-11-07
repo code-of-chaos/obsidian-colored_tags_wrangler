@@ -21,6 +21,7 @@ export interface IColoredTagWranglerSettings {
 
 	FolderNote:{
 		Enable:boolean
+		FolderTagLinks:Record<string, {folder_path:string, tag_name:string}>;
 	},
 
 	Kanban:{
@@ -69,7 +70,8 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 	},
 
 	FolderNote:{
-		Enable:false
+		Enable:false,
+		FolderTagLinks:{},
 	},
 
 	Kanban:{

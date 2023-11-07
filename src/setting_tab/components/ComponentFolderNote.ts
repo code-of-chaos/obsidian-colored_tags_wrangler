@@ -22,6 +22,7 @@ export class ComponentFolderNote extends SettingsTabComponent{
 						.onChange(async state => {
 							this.plugin.settings.FolderNote.Enable = state;
 							await this.plugin.saveSettings();
+							this.settings_tab.display();
 						})
 				}
 			);

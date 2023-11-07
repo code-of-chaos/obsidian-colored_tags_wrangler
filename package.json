@@ -16,6 +16,7 @@
   "author": "AndreasSasDev",
   "license": "GPL-3.0",
   "devDependencies": {
+    "@types/js-yaml": "^4.0.8",
     "@types/node": "^16.11.6",
     "@types/uuid": "^9.0.6",
     "@typescript-eslint/eslint-plugin": "5.29.0",
@@ -27,6 +28,7 @@
     "typescript": "4.7.4"
   },
   "dependencies": {
+    "js-yaml": "^4.1.0",
     "uuid": "^9.0.1"
   }
 }
