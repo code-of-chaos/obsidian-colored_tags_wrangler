@@ -16,6 +16,7 @@ import {
 	ComponentTagsCanvas,
 	SettingsTabComponent,
 	ComponentTagsVarColors,
+	ComponentFolderNote,
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -26,6 +27,7 @@ export class SettingTab extends PluginSettingTab {
 		comp_tags: SettingsTabComponent,
 		comp_tags_canvas:SettingsTabComponent,
 		comp_tags_semantic:SettingsTabComponent,
+		comp_folder_note:ComponentFolderNote,
 		comp_tags_var:SettingsTabComponent,
 		comp_kanban:SettingsTabComponent,
 		comp_kanban_cards:SettingsTabComponent,
@@ -42,6 +44,7 @@ export class SettingTab extends PluginSettingTab {
 			comp_tags_canvas:		new ComponentTagsCanvas(plugin, this),
 			comp_tags_semantic:		new ComponentTagsSemanticColors(plugin, this),
 			comp_tags_var:			new ComponentTagsVarColors(plugin, this),
+			comp_folder_note:		new ComponentFolderNote(plugin, this),
 			comp_kanban: 			new ComponentKanban(plugin,this),
 			comp_kanban_cards:		new ComponentKanbanCards(plugin,this),
 			comp_kanban_lists:		new ComponentKanbanLists(plugin,this),
@@ -77,6 +80,15 @@ export class SettingTab extends PluginSettingTab {
         this._components.comp_kanban.create_component(containerEl);
 		this._components.comp_kanban_cards.create_component(containerEl);
 		this._components.comp_kanban_lists.create_component(containerEl);
+
+		// Kanban Settings
+		// -------------------------------------------------------------------------------------------------------------
+		containerEl.createEl('br');
+		containerEl.createEl('h2', {text: "Folder Note integration"});
+		containerEl.createEl('div', {cls:"setting-item-description",text: "Doesn't integrate with a particular plugin, but relies of the concept of 'Folder Notes'."});
+
+		this._components.comp_folder_note.create_component(containerEl);
+
 
 		// Debug Settings
 		// -------------------------------------------------------------------------------------------------------------

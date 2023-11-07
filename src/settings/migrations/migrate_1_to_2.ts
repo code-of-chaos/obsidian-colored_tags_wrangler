@@ -2,12 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {ISettings_v001} from "../old_setting_versions/ISettings_v001";
-import {IColoredTagWranglerSettings} from "../DefaultSettings";
 import {v4 as uuid4} from "uuid";
+import {ISettings_v002} from "../old_setting_versions/ISettings_v002";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_1_to_2(loaded_data:ISettings_v001):IColoredTagWranglerSettings {
+export function migrate_1_to_2(loaded_data:ISettings_v001):ISettings_v002 {
     // Update SemanticObsidianColors
     let original_semantic_tags: Record<string, string> = loaded_data.TagColors.SemanticObsidianColors;
     let transformed_semantic_tags: Record<string, {tag_name:string, obsidian_css_var:string }> = {};
@@ -40,7 +40,7 @@ export function migrate_1_to_2(loaded_data:ISettings_v001):IColoredTagWranglerSe
     }
 
     // Return the updated data with the new structure
-    let transformed_data = loaded_data as unknown as IColoredTagWranglerSettings;
+    let transformed_data = loaded_data as unknown as ISettings_v002;
     transformed_data.TagColors.SemanticObsidianColors = transformed_semantic_tags;
     transformed_data.TagColors.CssVars = transformed_css_var_tags;
     transformed_data.Info.SettingsVersion = 2;
