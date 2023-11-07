@@ -33,38 +33,44 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 
 	// -----------------------------------------------------------------------------------------------------------------
 	private async _auto_detect_links(): Promise<void> {
-		const {vault} = this.plugin.app;
-
+		const { vault } = this.plugin.app;
 		const markdownFiles = vault.getMarkdownFiles();
 
 		// Loop through the markdown files
 		for (const file of markdownFiles) {
 			const parentFolderName = this.getParentFolderName(file.path);
-			console.warn(file)
+			console.warn(file);
 			if (file.name.replace(".md", "") === parentFolderName) {
-				let found_tags = this.parseYamlFrontMatter(await vault.read(file))
-				console.warn(found_tags)
-				for (const tag in found_tags){
-					let exists_TagColors = this.processTagColors(tag);
-					let exists_SemanticObsidianColors = this.processSemanticObsidianColors(tag);
-					let exists_CssVars = this.processCssVars(tag);
+				let found_tags = this.parseYamlFrontMatter(await vault.read(file));
+				console.warn(found_tags);
 
-					if (exists_TagColors !== null){
-						this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = {tag_name:tag, folder_path:parentFolderName}
-						console.warn("applied exists_TagColors")
-					} else if (exists_SemanticObsidianColors !== null){
-						this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = {tag_name:tag, folder_path:parentFolderName}
-						console.warn("applied exists_SemanticObsidianColors")
-					} else if (exists_CssVars !== null){
-						this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = {tag_name:tag, folder_path:parentFolderName}
-						console.warn("applied exists_CssVars")
-					} else{
-						console.warn("applied NOTHING")
+				if (found_tags && found_tags.length > 0) {
+					for (const tag of found_tags) {
+						const exists_TagColors = this.processTagColors(tag);
+						const exists_SemanticObsidianColors = this.processSemanticObsidianColors(tag);
+						const exists_CssVars = this.processCssVars(tag);
+
+						if (exists_TagColors !== null) {
+							this.addFolderTagLink(uuid4(), tag, file.path.replace(file.name, ""));
+							console.warn("applied exists_TagColors");
+						} else if (exists_SemanticObsidianColors !== null) {
+							this.addFolderTagLink(uuid4(), tag, file.path.replace(file.name, ""));
+							console.warn("applied exists_SemanticObsidianColors");
+						} else if (exists_CssVars !== null) {
+							this.addFolderTagLink(uuid4(), tag, file.path.replace(file.name, ""));
+							console.warn("applied exists_CssVars");
+						} else {
+							console.warn("applied NOTHING");
+						}
 					}
 				}
 			}
 		}
 	}
+	private addFolderTagLink(uuid: string, tag: string, folderName: string) {
+		this.plugin.settings.FolderNote.FolderTagLinks[uuid] = { tag_name: tag, folder_path: folderName };
+	}
+
 	getParentFolderName(filePath: string): string {
 		// Extract the parent folder name from the file path
 		const pathParts = filePath.split('/');
@@ -94,36 +100,28 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 		return [];
 	}
 
-	processTagColors(tag_to_find:string) {
-		for (const key in Object.keys(this.plugin.settings.TagColors.ColorPicker)) {
-			if (this.plugin.settings.TagColors.SemanticObsidianColors.hasOwnProperty(key)){
-				if (this.plugin.settings.TagColors.ColorPicker[key].tag_name === tag_to_find){
-					return key;
-				}
+	private processTagColors(tag_to_find: string) {
+		for (const key in this.plugin.settings.TagColors.ColorPicker) {
+			if (this.plugin.settings.TagColors.ColorPicker[key].tag_name === tag_to_find) {
+				return key;
 			}
 		}
 		return null;
 	}
 
-	processSemanticObsidianColors(tag_to_find:string) {
-		for (const key in Object.keys(this.plugin.settings.TagColors.SemanticObsidianColors)) {
-			if (this.plugin.settings.TagColors.SemanticObsidianColors.hasOwnProperty(key)){
-				if (this.plugin.settings.TagColors.SemanticObsidianColors[key].tag_name === tag_to_find){
-					return key;
-				}
-
+	private processSemanticObsidianColors(tag_to_find: string) {
+		for (const key in this.plugin.settings.TagColors.SemanticObsidianColors) {
+			if (this.plugin.settings.TagColors.SemanticObsidianColors[key].tag_name === tag_to_find) {
+				return key;
 			}
 		}
 		return null;
 	}
 
-	processCssVars(tag_to_find:string) {
-		for (const key in Object.keys(this.plugin.settings.TagColors.ColorPicker)) {
-			if (this.plugin.settings.TagColors.SemanticObsidianColors.hasOwnProperty(key)){
-				if (this.plugin.settings.TagColors.CssVars[key].tag_name === tag_to_find){
-					return key;
-				}
-
+	private processCssVars(tag_to_find: string) {
+		for (const key in this.plugin.settings.TagColors.CssVars) {
+			if (this.plugin.settings.TagColors.CssVars[key].tag_name === tag_to_find) {
+				return key;
 			}
 		}
 		return null;
