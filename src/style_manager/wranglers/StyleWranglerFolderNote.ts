@@ -44,6 +44,8 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 								text-decoration-thickness: 2px;
 								color: rgb(${color.r}, ${color.g}, ${color.b});
 							}
+							
+							/* Applies color to the title of the file*/
 							div.nav-folder:has(> [data-path="${folder_path}"]) .nav-file-title-content{
 								color: rgb(${color.r}, ${color.g}, ${color.b});
 							}
