@@ -56,6 +56,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 								background-color: rgba(${background_color.r}, ${background_color.g}, ${background_color.b},  ${background_opacity});								
 								border-radius: ${border_radius};
 								padding: ${padding};
+								margin-bottom: ${padding};
 							}`
 						})
 						.flat()
