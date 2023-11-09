@@ -12,6 +12,9 @@ import {IColoredTagWranglerSettings} from "./DefaultSettings";
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
 const MIGRATION_STEPS: ((data: any) => any)[] = [ // Using any's isn't perfect but will do for now
+    // Add more lambdas in order.
+    //      Btw this only works because I smart enough to start from 0,
+    //      that way I don't need to do any other steps in the for loop
     (data) => migrate_0_to_1(data),
     (data) => migrate_1_to_2(data),
     (data) => migrate_2_to_3(data),
@@ -21,10 +24,12 @@ const MIGRATION_STEPS: ((data: any) => any)[] = [ // Using any's isn't perfect b
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function Migrate(data:any):IColoredTagWranglerSettings   {
-    // Add more lambdas in order.
-    //      Btw this only works because I smart enough to start from 0,
-    //      that way I don't need to do any other steps in the for loop
+export function Migrate(data:any):IColoredTagWranglerSettings|null   {
+    // If the plugin hasn't been used before, no data will be present
+    if (data === null){
+        return null
+    }
+
     let version = data?.Info?.SettingsVersion ?? -1;
 
     if (version === -1){
@@ -38,7 +43,7 @@ export function Migrate(data:any):IColoredTagWranglerSettings   {
     let migratedData: IColoredTagWranglerSettings = data;
     for (version; version < MIGRATION_STEPS.length; version++) {
         migratedData = MIGRATION_STEPS[version](migratedData);
-        console.log(`Migrate data.json from ColoredTagsWrangler to version ${version}`)
+        console.log(`Migrated data.json from ColoredTagsWrangler to version ${version+1}`)
     }
     return migratedData;
 }

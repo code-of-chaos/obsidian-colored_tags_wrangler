@@ -5,6 +5,7 @@ import ColoredTagWranglerPlugin
 	from "src/main";
 import {
 	IStyleWrangler,
+	StyleWranglerFolderNote,
 	StyleWranglerKanban,
 	StyleWranglerKanbanCards,
 	StyleWranglerKanbanLists,
@@ -21,6 +22,7 @@ export class StyleManager{
 	wrangler_kanban: StyleWranglerKanban;
 	wrangler_kanban_cards: StyleWranglerKanbanCards;
 	wrangler_kanban_lists: StyleWranglerKanbanLists;
+	wrangler_folder_note: StyleWranglerFolderNote;
 
 	private _style_wranglers: Array<IStyleWrangler>;
 	// -----------------------------------------------------------------------------------------------------------------
@@ -33,6 +35,7 @@ export class StyleManager{
 		this.wrangler_kanban = new StyleWranglerKanban(plugin);
 		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
 		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
+		this.wrangler_folder_note = new StyleWranglerFolderNote(plugin);
 
 		this._style_wranglers = new Array<IStyleWrangler>(
 			this.wrangler_tags,
@@ -40,7 +43,8 @@ export class StyleManager{
 			this.wrangler_kanban,
 			this.wrangler_kanban,
 			this.wrangler_kanban_cards,
-			this.wrangler_kanban_lists
+			this.wrangler_kanban_lists,
+			this.wrangler_folder_note
 		)
 	}
 	// -----------------------------------------------------------------------------------------------------------------
@@ -66,6 +70,10 @@ export class StyleManager{
 		this.plugin.settings.Canvas.Enable
 			? this.wrangler_tags_canvas.apply_styles()
 			: this.wrangler_tags_canvas.remove_styles() ;
+
+		this.plugin.settings.FolderNote.Enable
+			? this.wrangler_folder_note.apply_styles()
+			: this.wrangler_folder_note.remove_styles() ;
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

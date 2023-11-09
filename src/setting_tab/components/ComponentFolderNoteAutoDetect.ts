@@ -47,18 +47,11 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 				if (found_tags && found_tags.length > 0) {
 					for (const tag of found_tags) {
 						const exists_TagColors = this.processTagColors(tag);
-						const exists_SemanticObsidianColors = this.processSemanticObsidianColors(tag);
-						const exists_CssVars = this.processCssVars(tag);
 
 						if (exists_TagColors !== null) {
-							this.addFolderTagLink(uuid4(), tag, file.path.replace(file.name, ""));
+							let folder_path = file.path.replace(`/${file.name}`, "")
+							this.addFolderTagLink(uuid4(), tag, folder_path);
 							console.warn("applied exists_TagColors");
-						} else if (exists_SemanticObsidianColors !== null) {
-							this.addFolderTagLink(uuid4(), tag, file.path.replace(file.name, ""));
-							console.warn("applied exists_SemanticObsidianColors");
-						} else if (exists_CssVars !== null) {
-							this.addFolderTagLink(uuid4(), tag, file.path.replace(file.name, ""));
-							console.warn("applied exists_CssVars");
 						} else {
 							console.warn("applied NOTHING");
 						}
@@ -75,11 +68,6 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 		// Extract the parent folder name from the file path
 		const pathParts = filePath.split('/');
 		return pathParts[pathParts.length - 2];
-	}
-
-	hasYamlFrontMatter(fileContent: string): boolean {
-		// Check if the file content contains "---" indicating the start of YAML front matter
-		return fileContent.startsWith('---');
 	}
 
 	parseYamlFrontMatter(fileContent: string): string[] {
@@ -103,24 +91,6 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 	private processTagColors(tag_to_find: string) {
 		for (const key in this.plugin.settings.TagColors.ColorPicker) {
 			if (this.plugin.settings.TagColors.ColorPicker[key].tag_name === tag_to_find) {
-				return key;
-			}
-		}
-		return null;
-	}
-
-	private processSemanticObsidianColors(tag_to_find: string) {
-		for (const key in this.plugin.settings.TagColors.SemanticObsidianColors) {
-			if (this.plugin.settings.TagColors.SemanticObsidianColors[key].tag_name === tag_to_find) {
-				return key;
-			}
-		}
-		return null;
-	}
-
-	private processCssVars(tag_to_find: string) {
-		for (const key in this.plugin.settings.TagColors.CssVars) {
-			if (this.plugin.settings.TagColors.CssVars[key].tag_name === tag_to_find) {
 				return key;
 			}
 		}
