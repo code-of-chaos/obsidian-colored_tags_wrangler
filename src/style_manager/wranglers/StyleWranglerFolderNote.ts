@@ -32,7 +32,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
 						.map(({tag_name, color, background_color, background_opacity}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
-							let txt = `
+							return `
 							/* Apply color to drop down triangle */
 							div.nav-folder-title[data-path="${folder_path}"] svg.svg-icon.right-triangle{
 								stroke: rgb(${color.r}, ${color.g}, ${color.b});
@@ -57,8 +57,6 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 								border-radius: ${border_radius};
 								padding: ${padding};
 							}`
-							console.warn(txt)
-							return txt
 						})
 						.flat()
 				}
