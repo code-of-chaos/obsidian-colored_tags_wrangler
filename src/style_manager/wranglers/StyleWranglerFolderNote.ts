@@ -53,7 +53,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 							
 							/* Apply color to folder title and background*/
 							.nav-folder:has(> [data-path="${folder_path}"]){
-								background-color: rgba(${background_color.r}, ${background_color.g}, ${background_color.b},  0.15);								
+								background-color: rgba(${background_color.r}, ${background_color.g}, ${background_color.b},  ${background_opacity});								
 								border-radius: ${border_radius};
 								padding: ${padding};
 							}`

@@ -121,7 +121,6 @@ export class ComponentTags extends SettingsTabComponent{
 						new_tag_content.background_color = hexToRgb(value)
 						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
-
 					})
 			);
 		}
