@@ -14,3 +14,4 @@ export * from 'src/setting_tab/components/ComponentTagsVarColors';
 export * from 'src/setting_tab/components/ComponentFolderNote';
 export * from 'src/setting_tab/components/ComponentFolderNoteAutoDetect';
 export * from 'src/setting_tab/components/ComponentFolderNoteFolderTagLinks';
+export * from 'src/setting_tab/components/ComponentTagsEnableMultipleTags';

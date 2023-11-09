@@ -12,6 +12,8 @@ export interface IColoredTagWranglerSettings {
 		SemanticObsidianColors: Record<string, {tag_name:string, obsidian_css_var:string }>,
 		CssVars: Record<string, {tag_name:string, color:string, background:string}>,
 
+		EnableMultipleTags:boolean,
+
 		Values:{
 			BackgroundOpacity:number,
 			BackgroundOpacityHover:number,
@@ -61,6 +63,8 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 		ColorPicker: {},
 		SemanticObsidianColors: {},
 		CssVars: {},
+
+		EnableMultipleTags:true,
 
 		Values:{
 			BackgroundOpacity:0.2,
