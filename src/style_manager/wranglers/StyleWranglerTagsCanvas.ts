@@ -25,22 +25,22 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 		const opacity_border = this.plugin.settings.Canvas.Values.CardBorderOpacity;
 		const background_luminance_offset = this.plugin.settings.Canvas.Values.CardBackgroundLuminanceOffset;
 
-		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
-			.map(tagUUID => {
-				const {tag_name, color} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
 
-				const hsl:HSL = rgbToHsl(color);
-				hsl.l -= background_luminance_offset;
-				const color2 = hslToRgb(hsl);
-				const rgb:string = `${color2.r}, ${color2.g}, ${color2.b}`;
+		return this.get_tags()
+			.map(
+				({tag_name, color}) => {
+					const hsl:HSL = rgbToHsl(color);
+					hsl.l -= background_luminance_offset;
+					const color2 = hslToRgb(hsl);
+					const rgb:string = `${color2.r}, ${color2.g}, ${color2.b}`;
 
-				// noinspection CssInvalidFunction,CssUnusedSymbol
-				return `
+					return `
 					div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
 						background : rgb(${rgb}) !important;
 						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
-					}`;
-			}).join('\n');
+					}`
+				}
+			)
+			.join('\n');
 	}
-
 }

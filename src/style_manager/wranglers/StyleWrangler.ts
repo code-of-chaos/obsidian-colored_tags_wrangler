@@ -1,10 +1,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {removeById}
-	from "src/lib";
-import ColoredTagWranglerPlugin
-	from "src/main";
+import {removeById} from "src/lib";
+import ColoredTagWranglerPlugin from "src/main";
+import {RGB} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
@@ -16,6 +15,7 @@ export interface IStyleWrangler{
 	assemble_css():string;
 	apply_styles(): void;
 	remove_styles(): void;
+	get_tags():Array<{tag_name:string, color:RGB}>;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -53,4 +53,19 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		this.styleEL?.parentNode?.removeChild(this.styleEL);
 		removeById(this.id);
 	};
+
+	get_tags():Array<{tag_name:string, color:RGB}>{
+		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
+			.map(tagUUID => {
+				const {tag_name, color} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
+				if (this.plugin.settings?.TagColors.EnableMultipleTags) {
+					return tag_name.split(";").map(tag => {
+						return {tag_name: tag, color: color};
+					})
+				} else {
+					return {tag_name: tag_name, color: color};
+				}
+			})
+			.flat();
+	}
 }

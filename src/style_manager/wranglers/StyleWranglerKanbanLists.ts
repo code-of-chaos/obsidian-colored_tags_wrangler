@@ -5,8 +5,6 @@ import {StyleWrangler}
 	from "src/style_manager/wranglers/StyleWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
-import {RGB}
-	from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -21,24 +19,20 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
-		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
-			.map(tagUUID => {
-				const {tag_name, color} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
+		const opacity_background: string = this.plugin.settings.Kanban.Values.ListBackgroundOpacity.toString();
+		const opacity_border: string = this.plugin.settings.Kanban.Values.ListBorderOpacity.toString();
 
-				const rgb:string = `${color.r}, ${color.g}, ${color.b}`;
-				const opacity_background:string = this.plugin.settings.Kanban.Values.ListBackgroundOpacity.toString();
-				const opacity_border:string = this.plugin.settings.Kanban.Values.ListBorderOpacity.toString();
-
-				// noinspection CssInvalidFunction,CssUnusedSymbol
-				return `
+		return this.get_tags()
+			.map(
+				({tag_name, color}) => `
 					div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
-						background : rgba(${rgb}, ${opacity_background}) !important;
-						border-color: rgba(${rgb}, ${opacity_border}) !important;
+						background : rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_background}) !important;
+						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
 					}
 					div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
-						border-color: rgba(${rgb}, ${opacity_border}) !important;
-					}
-				`;
-			}).join('\n');
+						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
+					}`
+			)
+			.join('\n');
 	}
 }
