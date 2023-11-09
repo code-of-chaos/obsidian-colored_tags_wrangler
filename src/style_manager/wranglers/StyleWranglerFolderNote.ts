@@ -44,6 +44,9 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 								text-decoration-thickness: 2px;
 								color: rgb(${color.r}, ${color.g}, ${color.b});
 							}
+							div.nav-folder:has(> [data-path="${folder_path}"]) .nav-file-title-content{
+								color: rgb(${color.r}, ${color.g}, ${color.b});
+							}
 							
 							/* Applies color to the bar next to the notes in the folder*/
 							.nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-children {
