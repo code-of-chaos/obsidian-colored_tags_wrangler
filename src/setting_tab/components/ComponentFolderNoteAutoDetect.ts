@@ -21,6 +21,9 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 				button
 				.setButtonText('Detect')
 				.onClick(async () => {
+					// Reset the table and then detect
+					this.plugin.settings.FolderNote.FolderTagLinks = {}
+					
 					await this._auto_detect_links()
 					await Promise.all([
 						this.plugin.saveSettings(),
