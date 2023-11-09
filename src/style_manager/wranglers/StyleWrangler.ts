@@ -15,7 +15,7 @@ export interface IStyleWrangler{
 	assemble_css():string;
 	apply_styles(): void;
 	remove_styles(): void;
-	get_tags():Array<{tag_name:string, color:RGB}>;
+	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, background_opacity:number}>;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -54,16 +54,16 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		removeById(this.id);
 	};
 
-	get_tags():Array<{tag_name:string, color:RGB}>{
+	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, background_opacity:number}>{
 		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
 			.map(tagUUID => {
-				const {tag_name, color} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
+				const {tag_name, color, background_color, background_opacity} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
 				if (this.plugin.settings?.TagColors.EnableMultipleTags) {
 					return tag_name.split(";").map(tag => {
-						return {tag_name: tag, color: color};
+						return {tag_name: tag, color, background_color, background_opacity};
 					})
 				} else {
-					return {tag_name: tag_name, color: color};
+					return {tag_name: tag_name, color, background_color, background_opacity};
 				}
 			})
 			.flat();

@@ -16,7 +16,9 @@ import {
 	SettingsTabComponent,
 	ComponentFolderNote,
 	ComponentFolderNoteAutoDetect,
-	ComponentFolderNoteFolderTagLinks, ComponentTagsEnableMultipleTags
+	ComponentFolderNoteFolderTagLinks,
+	ComponentTagsEnableMultipleTags,
+	ComponentTagsEnableSeparateBackground
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -27,6 +29,7 @@ export class SettingTab extends PluginSettingTab {
 		comp_tags: 								SettingsTabComponent,
 		comp_tags_canvas:						SettingsTabComponent,
 		comp_tags_enable_multiple_tags:			SettingsTabComponent,
+		comp_tags_enable_background:			SettingsTabComponent,
 		comp_folder_note:						SettingsTabComponent,
 		comp_folder_note_auto_detect:			SettingsTabComponent,
 		comp_folder_note_folder_tag_links:		SettingsTabComponent,
@@ -44,6 +47,7 @@ export class SettingTab extends PluginSettingTab {
 			comp_tags: 							new ComponentTags(plugin, this),
 			comp_tags_canvas:					new ComponentTagsCanvas(plugin, this),
 			comp_tags_enable_multiple_tags:		new ComponentTagsEnableMultipleTags(plugin, this),
+			comp_tags_enable_background: 		new ComponentTagsEnableSeparateBackground(plugin, this),
 			comp_folder_note:					new ComponentFolderNote(plugin, this),
 			comp_folder_note_auto_detect:		new ComponentFolderNoteAutoDetect(plugin, this),
 			comp_folder_note_folder_tag_links:	new ComponentFolderNoteFolderTagLinks(plugin, this),
@@ -72,6 +76,7 @@ export class SettingTab extends PluginSettingTab {
  		// Below this should be boolean options for the tags
 		this._components.comp_tags_canvas.create_component(containerEl);
 		this._components.comp_tags_enable_multiple_tags.create_component(containerEl);
+		this._components.comp_tags_enable_background.create_component(containerEl);
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------

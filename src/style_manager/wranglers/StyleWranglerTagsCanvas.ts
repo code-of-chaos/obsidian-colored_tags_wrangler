@@ -28,15 +28,15 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 
 		return this.get_tags()
 			.map(
-				({tag_name, color}) => {
-					const hsl:HSL = rgbToHsl(color);
+				({tag_name, color, background_color}) => {
+					const hsl:HSL = rgbToHsl(background_color);
 					hsl.l -= background_luminance_offset;
 					const color2 = hslToRgb(hsl);
-					const rgb:string = `${color2.r}, ${color2.g}, ${color2.b}`;
+					const background_rgb:string = `${color2.r}, ${color2.g}, ${color2.b}`;
 
 					return `
 					div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
-						background : rgb(${rgb}) !important;
+						background : rgb(${background_rgb}) !important;
 						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
 					}`
 				}

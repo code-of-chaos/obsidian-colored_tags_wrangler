@@ -15,6 +15,8 @@ import {v4 as uuid4}
 export class ComponentTags extends SettingsTabComponent{
 	private _NEW_TAG_NAME:string = "new-tag";
 	private _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
+	private _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 255, g: 255, b: 255 };
+	private _NEW_DEFAULT_OPACITY:number = 0.2;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
@@ -27,7 +29,12 @@ export class ComponentTags extends SettingsTabComponent{
 				button
 					.setButtonText("Add new tag")
 					.onClick(async () => {
-						this.plugin.settings.TagColors.ColorPicker[uuid4()] = {tag_name: this._NEW_TAG_NAME, color:this._NEW_DEFAULT_COLOR}; // Default color
+						this.plugin.settings.TagColors.ColorPicker[uuid4()] = {
+							tag_name: this._NEW_TAG_NAME,
+							color: this._NEW_DEFAULT_COLOR, // Default color
+							background_color: this._NEW_DEFAULT_BACKGROUND_COLOR, // Default color
+							background_opacity: this._NEW_DEFAULT_OPACITY,
+						};
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
@@ -68,7 +75,7 @@ export class ComponentTags extends SettingsTabComponent{
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _createTagColorSetting(tagUUID: string, tag_content: {tag_name:string, color:RGB}, containerEL:HTMLElement) {
+	private _createTagColorSetting(tagUUID: string, tag_content: {tag_name:string, color:RGB, background_color:RGB, background_opacity:number}, containerEL:HTMLElement) {
 		let tag_id = tagUUID;
 		let new_tag_content = tag_content;
 
@@ -94,11 +101,46 @@ export class ComponentTags extends SettingsTabComponent{
 					.onChange(async (value) => {
 						// Handle user-defined tag colors here
 						new_tag_content.color = hexToRgb(value)
+
+						// Store the edited value to the background color, if we haven't enabled separate backgrounds
+						if (!this.plugin.settings.TagColors.EnableSeparateBackground){
+							new_tag_content.background_color = new_tag_content.color;
+						}
 						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
 
 					})
-			).addButton((button) =>
+			);
+
+		if (this.plugin.settings.TagColors.EnableSeparateBackground){
+			setting.addColorPicker((colorPicker) =>
+				colorPicker
+					.setValueRgb(new_tag_content.background_color)
+					.onChange(async (value) => {
+						// Handle user-defined tag colors here
+						new_tag_content.background_color = hexToRgb(value)
+						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
+						await this.plugin.saveSettings();
+
+					})
+			);
+		}
+		if (this.plugin.settings.Debug.Enable){
+			setting
+				.addText((text) =>
+					text
+						.setPlaceholder(this._NEW_DEFAULT_OPACITY.toString())
+						.setValue(new_tag_content.background_opacity.toString())
+						.onChange(async (value) => {
+							// Add the updated tag and color
+							new_tag_content.background_opacity = Number(value)
+							this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
+							await this.plugin.saveSettings();
+						})
+				)
+		}
+
+		setting.addButton((button) =>
 				button
 					.setButtonText('-')
 					.onClick(async () => {

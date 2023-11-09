@@ -30,7 +30,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 					let {folder_path, tag_name:folder_tag_name} = this.plugin.settings.FolderNote.FolderTagLinks[folderUUID];
 					return all_tags
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
-						.map(({color}) => {
+						.map(({tag_name, color, background_color, background_opacity}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
 							let txt = `
 							/* Apply color to drop down triangle */
@@ -53,7 +53,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 							
 							/* Apply color to folder title and background*/
 							.nav-folder:has(> [data-path="${folder_path}"]){
-								background-color: rgba(${color.r}, ${color.g}, ${color.b},  0.15);								
+								background-color: rgba(${background_color.r}, ${background_color.g}, ${background_color.b},  0.15);								
 								border-radius: ${border_radius};
 								padding: ${padding};
 							}`
