@@ -12,10 +12,8 @@ import {
 	ComponentKanbanLists,
 	ComponentDebugReloadCSS,
 	ComponentDebug,
-	ComponentTagsSemanticColors,
 	ComponentTagsCanvas,
 	SettingsTabComponent,
-	ComponentTagsVarColors,
 	ComponentFolderNote,
 	ComponentFolderNoteAutoDetect,
 	ComponentFolderNoteFolderTagLinks, ComponentTagsEnableMultipleTags
@@ -26,19 +24,17 @@ import {
 export class SettingTab extends PluginSettingTab {
 	plugin: ColoredTagWranglerPlugin;
 	_components: {
-		comp_tags: SettingsTabComponent,
-		comp_tags_canvas:ComponentTagsCanvas,
-		comp_tags_semantic:ComponentTagsSemanticColors,
-		comp_tags_enable_multiple_tags:ComponentTagsEnableMultipleTags,
-		comp_folder_note:ComponentFolderNote,
-		comp_folder_note_auto_detect:ComponentFolderNoteAutoDetect,
-		comp_folder_note_folder_tag_links:ComponentFolderNoteFolderTagLinks,
-		comp_tags_var:SettingsTabComponent,
-		comp_kanban:SettingsTabComponent,
-		comp_kanban_cards:SettingsTabComponent,
-		comp_kanban_lists:SettingsTabComponent,
-		comp_debug:SettingsTabComponent,
-		comp_debug_reloadcss:SettingsTabComponent,
+		comp_tags: 								SettingsTabComponent,
+		comp_tags_canvas:						SettingsTabComponent,
+		comp_tags_enable_multiple_tags:			SettingsTabComponent,
+		comp_folder_note:						SettingsTabComponent,
+		comp_folder_note_auto_detect:			SettingsTabComponent,
+		comp_folder_note_folder_tag_links:		SettingsTabComponent,
+		comp_kanban:							SettingsTabComponent,
+		comp_kanban_cards:						SettingsTabComponent,
+		comp_kanban_lists:						SettingsTabComponent,
+		comp_debug:								SettingsTabComponent,
+		comp_debug_reloadcss:					SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {
@@ -47,9 +43,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components = {
 			comp_tags: 							new ComponentTags(plugin, this),
 			comp_tags_canvas:					new ComponentTagsCanvas(plugin, this),
-			comp_tags_semantic:					new ComponentTagsSemanticColors(plugin, this),
 			comp_tags_enable_multiple_tags:		new ComponentTagsEnableMultipleTags(plugin, this),
-			comp_tags_var:						new ComponentTagsVarColors(plugin, this),
 			comp_folder_note:					new ComponentFolderNote(plugin, this),
 			comp_folder_note_auto_detect:		new ComponentFolderNoteAutoDetect(plugin, this),
 			comp_folder_note_folder_tag_links:	new ComponentFolderNoteFolderTagLinks(plugin, this),
@@ -74,8 +68,6 @@ export class SettingTab extends PluginSettingTab {
 
 		// Tags lists and which component they should adhere to
 		this._components.comp_tags.create_component(containerEl);
-		this._components.comp_tags_semantic.create_component(containerEl);
-		this._components.comp_tags_var.create_component(containerEl);
 
  		// Below this should be boolean options for the tags
 		this._components.comp_tags_canvas.create_component(containerEl);

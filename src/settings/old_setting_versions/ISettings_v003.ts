@@ -6,9 +6,11 @@ import {RGB} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagWranglerSettings {
+export interface ISettings_v003 {
 	TagColors:{
 		ColorPicker: Record<string, {tag_name:string, color:RGB}>,
+		SemanticObsidianColors: Record<string, {tag_name:string, obsidian_css_var:string }>,
+		CssVars: Record<string, {tag_name:string, color:string, background:string}>,
 
 		EnableMultipleTags:boolean,
 
@@ -51,55 +53,5 @@ export interface IColoredTagWranglerSettings {
 	},
 	Info: {
 		SettingsVersion: number
-	}
-}
-// ---------------------------------------------------------------------------------------------------------------------
-// Code
-// ---------------------------------------------------------------------------------------------------------------------
-export const DefaultSettings: IColoredTagWranglerSettings = {
-	TagColors:{
-		ColorPicker: {},
-
-		EnableMultipleTags:true,
-
-		Values:{
-			BackgroundOpacity:0.2,
-			BackgroundOpacityHover:0.1,
-			SemanticColorsLuminanceOffset:0.35
-		}
-	},
-
-	FolderNote:{
-		Enable:false,
-		FolderTagLinks:{},
-	},
-
-	Kanban:{
-		Enable:false,
-		EnableCards:false,
-		EnableLists:false,
-
-		Values:{
-			CardBackgroundOpacity:0.2,
-			CardBorderOpacity:0.3,
-			ListBackgroundOpacity:0.2,
-			ListBorderOpacity:0.3,
-		},
-	},
-
-	Debug:{
-		Enable:false,
-	},
-
-	Canvas:{
-		Enable:false,
-
-		Values:{
-			CardBorderOpacity:0.3,
-			CardBackgroundLuminanceOffset:0.35,
-		}
-	},
-	Info: {
-		SettingsVersion: 4 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }

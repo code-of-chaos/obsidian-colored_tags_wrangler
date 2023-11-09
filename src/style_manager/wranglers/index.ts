@@ -7,5 +7,3 @@ export * from "src/style_manager/wranglers/StyleWranglerKanbanCards";
 export * from "src/style_manager/wranglers/StyleWranglerKanbanLists";
 export * from "src/style_manager/wranglers/StyleWranglerTags";
 export * from "src/style_manager/wranglers/StyleWranglerTagsCanvas";
-export * from "src/style_manager/wranglers/StyleWranglerTagsSemanticColors";
-export * from "src/style_manager/wranglers/StyleWranglerTagsVarColors";
