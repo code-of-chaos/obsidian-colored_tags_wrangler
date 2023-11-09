@@ -3,10 +3,7 @@ This plugin allows the user to apply different colors to different tags.
 The tags are applied in the "Settings Tab" of the plugin.
 
 ## Features
-- The ability to define a tag with a unique color.
-  - A Color Picker
-  - A [Semantic color defined by Obsidian](https://docs.obsidian.md/Reference/CSS+variables/Foundations/Colors#Semantic+colors)
-  - CSS vars for a tag's text color and background 
+- The ability to define a tag with a unique color by a Color Picker
 - Integration with Canvas cards.
   - Setting to apply a tag color to a Canvas card which has that tag.
 - Integration with the [Kanban](https://github.com/mgmeyers/obsidian-kanban) plugin.
