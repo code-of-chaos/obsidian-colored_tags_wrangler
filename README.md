@@ -10,6 +10,8 @@ The tags are applied in the "Settings Tab" of the plugin.
   - Setting to apply a tag color to a Kanban card which has that tag.
   - Setting to apply a tag color to a Kanban list, when a tag is present in the title.
   - Setting to omit the `#` from tags in the Kanban view
+- Integration with tags within Folder Notes
+  - Setting to apply color to a folder, if the folder's note has a colored tag.
 
 ### Feature Examples
 
