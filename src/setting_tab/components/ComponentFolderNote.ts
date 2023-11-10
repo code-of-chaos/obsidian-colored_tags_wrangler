@@ -17,6 +17,7 @@ export class ComponentFolderNote extends SettingsTabComponent{
 			.setDesc(`
 				Applies the tag color, of the tag within a Folder Note, to the background color of the folder in the file viewer.
 				It is recommended that you enable 'Enable Multiple Tags' as well, to easily reuse colors for multiple folders.
+				The order of these lines is important, as they influence which CSS is eventually used.
 			`).addToggle(component => {
 					component
 						.setValue(this.plugin.settings.FolderNote.Enable)

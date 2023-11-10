@@ -35,10 +35,10 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 					const background_rgb:string = `${color2.r}, ${color2.g}, ${color2.b}`;
 
 					return `
-					div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
-						background : rgb(${background_rgb}) !important;
-						border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
-					}`
+div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
+	background : rgb(${background_rgb}) !important;
+	border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
+}`
 				}
 			)
 			.join('\n');
