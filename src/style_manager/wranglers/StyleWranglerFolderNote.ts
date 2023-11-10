@@ -31,7 +31,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 					let {folder_path, tag_name:folder_tag_name} = this.plugin.settings.FolderNote.FolderTagLinks[folderUUID];
 					return all_tags
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
-						.map(({tag_name, color, background_color:bcolor, background_opacity}) => {
+						.map(({color, background_color:bcolor, background_opacity}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
 							return `
 /* Apply color to drop down triangle */
