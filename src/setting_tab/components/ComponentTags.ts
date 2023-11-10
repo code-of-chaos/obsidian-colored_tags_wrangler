@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {
 	RGB,
-	Setting
-}
-	from "obsidian";
+	Setting, TextAreaComponent,
+	TextComponent
+} from "obsidian";
 import {hexToRgb}
 	from "src/lib";
 import {SettingsTabComponent}
@@ -78,27 +78,34 @@ export class ComponentTags extends SettingsTabComponent{
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
+	private _text_callback(text:TextComponent|TextAreaComponent, tag_id:string, new_tag_content:{tag_name:string, color:RGB, background_color:RGB, background_opacity:number}) {
+		return text
+			.setPlaceholder(this._NEW_TAG_NAME)
+			.setValue(new_tag_content.tag_name)
+			.onChange(async (value) => {
+				// Add the updated tag and color
+				new_tag_content.tag_name = value
+					.replace("#", "")
+					.toLowerCase()
+					.trim()
+				;
+				this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
+				await this.plugin.saveSettings();
+			});
+	}
 	private _createTagColorSetting(tagUUID: string, tag_content: {tag_name:string, color:RGB, background_color:RGB, background_opacity:number}, containerEL:HTMLElement) {
 		let tag_id = tagUUID;
 		let new_tag_content = tag_content;
 
-		const setting = new Setting(containerEL)
-			.addText((text) =>
-				text
-					.setPlaceholder(this._NEW_TAG_NAME)
-					.setValue(new_tag_content.tag_name)
-					.onChange(async (value) => {
-						// Add the updated tag and color
-						new_tag_content.tag_name = value
-							.replace("#","")
-							.toLowerCase()
-							.trim()
-						;
-						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
-						await this.plugin.saveSettings();
+		const setting = new Setting(containerEL);
 
-					})
-			).addColorPicker((colorPicker) =>
+		if (this.plugin.settings.TagColors.EnableMultipleTags){
+			setting.addTextArea((text) => this._text_callback(text,tag_id, new_tag_content));
+		} else {
+			setting.addText((text) => this._text_callback(text,tag_id, new_tag_content));
+		}
+
+		setting.addColorPicker((colorPicker) =>
 				colorPicker
 					.setValueRgb(new_tag_content.color)
 					.onChange(async (value) => {

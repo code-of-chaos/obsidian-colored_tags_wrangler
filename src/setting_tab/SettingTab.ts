@@ -62,6 +62,7 @@ export class SettingTab extends PluginSettingTab {
         // Refresh the Element container
 		const {containerEl} = this;
 		containerEl.empty();
+		containerEl.addClass("cwt-settings-tab")
 
 		// Tags Settings
 		// -------------------------------------------------------------------------------------------------------------

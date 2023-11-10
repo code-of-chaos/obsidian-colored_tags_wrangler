@@ -26,3 +26,7 @@ a.tag:hover {
 	font-weight: bold;
 	font-size: larger;
 }
+
+.cwt-settings-tab textarea{
+    width: 100%;
+}
