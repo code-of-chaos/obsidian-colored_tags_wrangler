@@ -13,7 +13,8 @@ The tags are applied in the "Settings Tab" of the plugin.
   - Setting to omit the `#` from tags in the Kanban view
 - Integration with tags within Folder Notes's properties
   - Setting to apply color to a folder, if the folder's note has a colored tag within its file's properties.
-  - (This isn't really tied to a single plugin. I use [AidenLX's FolderNote](https://github.com/aidenlx/alx-folder-note) for this, but any file that has the same name as the folder in which it is in will work)
+  - *Current flaw*: You have to manually press the `detect` button in the Settings, when you change the tag within in a file's properties.
+  - This isn't really tied to a single plugin. I use [AidenLX's FolderNote](https://github.com/aidenlx/alx-folder-note) for this, but any file that has the same name as the folder in which it is in will work
 
 ### Feature Examples
 
