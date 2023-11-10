@@ -29,16 +29,11 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 					
 					let found_folder_tags = await this._auto_detect_links();
 					found_folder_tags
-						.sort((a, b) =>
-							a.folder_path.localeCompare(b.folder_path)
-						)
-						.forEach(
-							v =>{
-								this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = v
-							}
-						)
+						.sort((a, b) => a.folder_path.localeCompare(b.folder_path))
+						.forEach(v => {
+							this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = v
+						})
 					;
-
 					await Promise.all([
 						this.plugin.saveSettings(),
 						this.settings_tab.display()
@@ -50,32 +45,31 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 
 	// -----------------------------------------------------------------------------------------------------------------
 	private async _auto_detect_links(): Promise<{ tag_name: string; folder_path: string }[]> {
-		const { vault } = this.plugin.app;
-		const markdownFiles = vault.getMarkdownFiles();
+		try {
+			const { vault } = this.plugin.app;
+			const markdownFiles = vault.getMarkdownFiles();
 
-		let links = [];
-
-		// Loop through the markdown files
-		for (const file of markdownFiles) {
-			if (file.name.replace(".md", "") !== this.getParentFolderName(file.path)) {
-				continue;
-			}
-
-			let found_tags = this.parseYamlFrontMatter(await vault.read(file));
-			if (!(found_tags && found_tags.length > 0)) {
-				continue;
-			}
-
-			for (const tag of found_tags) {
-				if (this.processTagColors(tag) === null) {
-					continue;
-				}
-				let folder_path = file.path.replace(`/${file.name}`, "")
-				links.push({tag_name: tag, folder_path: folder_path})
-			}
+			let links = await Promise.all(
+				markdownFiles
+					.filter(file => file.name.replace(".md", "") === this.getParentFolderName(file.path))
+					.map(async file => {
+						const found_tags = this.parseYamlFrontMatter(await vault.read(file));
+						if (!( found_tags && found_tags.length > 0)){
+							return []
+						}
+						return found_tags
+							.filter(tag => this.processTagColors(tag))
+							.map(tag => ({
+								tag_name: tag as string,
+								folder_path: file.path.replace(`/${file.name}`, "")
+							}));
+					})
+			);
+			return links.flat();
+		} catch (error) {
+			console.error('Error in _auto_detect_links:', error);
+			return [];
 		}
-
-		return links
 	}
 
 	getParentFolderName(filePath: string): string {
@@ -94,7 +88,7 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 					return [];
 				}
 				// @ts-ignore
-				return yaml_data?.tags;
+				return yaml_data?.tags || [];
 			} catch (error) {
 				console.error('Error parsing YAML front matter:', error);
 			}
@@ -102,13 +96,18 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 		return [];
 	}
 
-	private processTagColors(tag_to_find: string) {
-		for (const key in this.plugin.settings.TagColors.ColorPicker) {
-			if (this.plugin.settings.TagColors.ColorPicker[key].tag_name === tag_to_find) {
-				return key;
-			}
-		}
-		return null;
+	private processTagColors(tag_to_find: string): string | false {
+		for (let key of Object.keys(this.plugin.settings.TagColors.ColorPicker)) {
+			if (this.plugin.settings.TagColors.EnableMultipleTags) {
+				for (let tag of this.plugin.settings.TagColors.ColorPicker[key].tag_name.split(";")) {
+					if (tag === tag_to_find) {
+						return key;
+				}}
+			} else {
+				if (this.plugin.settings.TagColors.ColorPicker[key].tag_name === tag_to_find) {
+					return key;
+			}}}
+		return false;
 	}
 }
 
