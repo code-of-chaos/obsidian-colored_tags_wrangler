@@ -6,7 +6,7 @@ import ColoredTagWranglerPlugin
 import {
 	IStyleWrangler,
 	StyleWranglerFolderNote,
-	StyleWranglerKanban,
+	StyleWranglerKanbanHashtags,
 	StyleWranglerKanbanCards,
 	StyleWranglerKanbanLists,
 	StyleWranglerTags,
@@ -19,7 +19,7 @@ export class StyleManager{
 	plugin: ColoredTagWranglerPlugin;
 	wrangler_tags: StyleWranglerTags;
 	wrangler_tags_canvas: StyleWranglerTagsCanvas;
-	wrangler_kanban: StyleWranglerKanban;
+	wrangler_kanban_hashtags: StyleWranglerKanbanHashtags;
 	wrangler_kanban_cards: StyleWranglerKanbanCards;
 	wrangler_kanban_lists: StyleWranglerKanbanLists;
 	wrangler_folder_note: StyleWranglerFolderNote;
@@ -32,7 +32,7 @@ export class StyleManager{
 		this.plugin = plugin;
 		this.wrangler_tags = new StyleWranglerTags(plugin);
 		this.wrangler_tags_canvas = new StyleWranglerTagsCanvas(plugin);
-		this.wrangler_kanban = new StyleWranglerKanban(plugin);
+		this.wrangler_kanban_hashtags = new StyleWranglerKanbanHashtags(plugin);
 		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
 		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
 		this.wrangler_folder_note = new StyleWranglerFolderNote(plugin);
@@ -40,11 +40,10 @@ export class StyleManager{
 		this._style_wranglers = new Array<IStyleWrangler>(
 			this.wrangler_tags,
 			this.wrangler_tags_canvas,
-			this.wrangler_kanban,
-			this.wrangler_kanban,
+			this.wrangler_kanban_hashtags,
 			this.wrangler_kanban_cards,
 			this.wrangler_kanban_lists,
-			this.wrangler_folder_note
+			this.wrangler_folder_note,
 		)
 	}
 	// -----------------------------------------------------------------------------------------------------------------
@@ -55,9 +54,9 @@ export class StyleManager{
 			? this.wrangler_tags.apply_styles()
 			: this.wrangler_tags.remove_styles() ;
 
-		this.plugin.settings.Kanban.Enable
-			? this.wrangler_kanban.apply_styles()
-			: this.wrangler_kanban.remove_styles() ;
+		this.plugin.settings.Kanban.HideHashtags
+			? this.wrangler_kanban_hashtags.apply_styles()
+			: this.wrangler_kanban_hashtags.remove_styles() ;
 
 		this.plugin.settings.Kanban.EnableCards
 			? this.wrangler_kanban_cards.apply_styles()
