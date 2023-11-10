@@ -7,7 +7,7 @@ import {RGB}
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagWranglerSettings {
+export interface ISettings_v005 {
 	TagColors:{
 		ColorPicker: Record<string, {tag_name:string, color:RGB, background_color:RGB,background_opacity:number}>,
 
@@ -35,7 +35,6 @@ export interface IColoredTagWranglerSettings {
 		Enable: boolean,
 		EnableCards:boolean,
 		EnableLists:boolean,
-		HideHashtags:boolean,
 
 		Values:{
 			CardBackgroundOpacity:number,
@@ -59,63 +58,5 @@ export interface IColoredTagWranglerSettings {
 	},
 	Info: {
 		SettingsVersion: number
-	}
-}
-// ---------------------------------------------------------------------------------------------------------------------
-// Code
-// ---------------------------------------------------------------------------------------------------------------------
-export const DefaultSettings: IColoredTagWranglerSettings = {
-	TagColors:{
-		ColorPicker: {},
-
-		EnableMultipleTags:true,
-		EnableSeparateBackground:false,
-
-		Values:{
-			BackgroundOpacity:0.2,
-			BackgroundOpacityHover:0.1,
-			SemanticColorsLuminanceOffset:0.35
-		}
-	},
-
-	FolderNote:{
-		Enable:false,
-		FolderTagLinks:{},
-
-		Values:{
-			ForceImportant:true,
-			BorderRadius:"12px",
-			Padding:"5px",
-		}
-	},
-
-	Kanban:{
-		Enable:false,
-		EnableCards:false,
-		EnableLists:false,
-		HideHashtags:false,
-
-		Values:{
-			CardBackgroundOpacity:0.2,
-			CardBorderOpacity:0.3,
-			ListBackgroundOpacity:0.2,
-			ListBorderOpacity:0.3,
-		},
-	},
-
-	Debug:{
-		Enable:false,
-	},
-
-	Canvas:{
-		Enable:false,
-
-		Values:{
-			CardBorderOpacity:0.3,
-			CardBackgroundLuminanceOffset:0.35,
-		}
-	},
-	Info: {
-		SettingsVersion: 6 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }

@@ -8,20 +8,21 @@ import {SettingsTabComponent}
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentKanban extends SettingsTabComponent{
+export class ComponentKanbanHideHashtags extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): Setting {
 		return new Setting(containerEL)
-			.setName("Apply tag colors to Kanban lists and cards")
+			.setName("Omit '#' in kanban boards")
 			.setDesc(`
-				Enables the Kanban integration of this plugin.
+				Hides the '#' from the kanban view, 
+					though they still have to be typed out within the used areas.
 			`).addToggle(component => {
 					component
-						.setValue(this.plugin.settings.Kanban.Enable)
+						.setValue(this.plugin.settings.Kanban.HideHashtags)
 						.onChange(async state => {
-							this.plugin.settings.Kanban.Enable = state;
+							this.plugin.settings.Kanban.HideHashtags = state;
 							await this.plugin.saveSettings();
 						})
 				}

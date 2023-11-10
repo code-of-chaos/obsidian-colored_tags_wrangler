@@ -18,7 +18,7 @@ import {
 	ComponentFolderNoteAutoDetect,
 	ComponentFolderNoteFolderTagLinks,
 	ComponentTagsEnableMultipleTags,
-	ComponentTagsEnableSeparateBackground
+	ComponentTagsEnableSeparateBackground, ComponentKanbanHideHashtags
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -36,6 +36,7 @@ export class SettingTab extends PluginSettingTab {
 		comp_kanban:							SettingsTabComponent,
 		comp_kanban_cards:						SettingsTabComponent,
 		comp_kanban_lists:						SettingsTabComponent,
+		comp_kanban_hashtags:					SettingsTabComponent,
 		comp_debug:								SettingsTabComponent,
 		comp_debug_reloadcss:					SettingsTabComponent,
 	}
@@ -54,6 +55,7 @@ export class SettingTab extends PluginSettingTab {
 			comp_kanban: 						new ComponentKanban(plugin,this),
 			comp_kanban_cards:					new ComponentKanbanCards(plugin,this),
 			comp_kanban_lists:					new ComponentKanbanLists(plugin,this),
+			comp_kanban_hashtags:				new ComponentKanbanHideHashtags(plugin,this),
 			comp_debug:							new ComponentDebug(plugin,this),
 			comp_debug_reloadcss:				new ComponentDebugReloadCSS(plugin,this),
 		}
@@ -88,6 +90,7 @@ export class SettingTab extends PluginSettingTab {
 		if (this.plugin.settings.Kanban.Enable){
 			this._components.comp_kanban_cards.create_component(containerEl);
 			this._components.comp_kanban_lists.create_component(containerEl);
+			this._components.comp_kanban_hashtags.create_component(containerEl);
 		}
 
 		// Folder Note Settings

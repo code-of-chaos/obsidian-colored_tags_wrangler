@@ -14,3 +14,4 @@ export * from 'src/setting_tab/components/ComponentFolderNoteAutoDetect';
 export * from 'src/setting_tab/components/ComponentFolderNoteFolderTagLinks';
 export * from 'src/setting_tab/components/ComponentTagsEnableMultipleTags';
 export * from 'src/setting_tab/components/ComponentTagsEnableSeparateBackground';
+export * from 'src/setting_tab/components/ComponentKanbanHideHashtags';
