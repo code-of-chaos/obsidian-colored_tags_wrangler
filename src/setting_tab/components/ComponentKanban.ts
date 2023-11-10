@@ -14,10 +14,8 @@ export class ComponentKanban extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): Setting {
 		return new Setting(containerEL)
-			.setName("Apply tag colors to Kanban lists and cards")
-			.setDesc(`
-				Enables the Kanban integration of this plugin.
-			`).addToggle(component => {
+			.setName("Enable Kanban integration")
+			.addToggle(component => {
 					component
 						.setValue(this.plugin.settings.Kanban.Enable)
 						.onChange(async state => {

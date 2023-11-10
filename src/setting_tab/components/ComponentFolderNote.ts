@@ -14,7 +14,7 @@ export class ComponentFolderNote extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): Setting {
 		return new Setting(containerEL)
-			.setName("Folder Note's Tags to file viewer")
+			.setName("Enable Folder Note integration")
 			.setDesc(`
 				Applies the tag color, of the tag within a Folder Note, to the background color of the folder in the file viewer.
 				It is recommended that you enable 'Enable Multiple Tags' as well, to easily reuse colors for multiple folders.
