@@ -24,12 +24,12 @@ export class StyleWranglerTags extends StyleWrangler {
 		return this.get_tags()
 			.map(
 				({tag_name, color, background_color, background_opacity}) => `
-				.tag[href="#${tag_name}"], .cm-tag-${tag_name} { 
-					--color: rgb(${color.r}, ${color.g}, ${color.b});
-					--color-hover: var(--color);
-					--background: rgba(${background_color.r}, ${background_color.g}, ${background_color.b}, ${background_opacity});
-					--background-hover: rgba(${background_color.r}, ${background_color.g}, ${background_color.b}, ${background_opacity_hover});
-				}`
+.tag[href="#${tag_name}"], .cm-tag-${tag_name} { 
+	--color: rgb(${color.r}, ${color.g}, ${color.b});
+	--color-hover: var(--color);
+	--background: rgba(${background_color.r}, ${background_color.g}, ${background_color.b}, ${background_opacity});
+	--background-hover: rgba(${background_color.r}, ${background_color.g}, ${background_color.b}, ${background_opacity_hover});
+}`
 			)
 			.join('\n');
 	}

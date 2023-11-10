@@ -45,7 +45,7 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		// first remove the old style element, else we will keep appending data to the dom
 		this.remove_styles();
 
-		this.styleEL.innerText = this.assemble_css();
+		this.styleEL.innerText = this.assemble_css().split("\n").map(line => line.trim()).join("");
 		document.head.appendChild(this.styleEL);
 	};
 

@@ -24,7 +24,18 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 					// Reset the table and then detect
 					this.plugin.settings.FolderNote.FolderTagLinks = {}
 					
-					await this._auto_detect_links()
+					let found_folder_tags = await this._auto_detect_links();
+					found_folder_tags
+						.sort((a, b) =>
+							a.folder_path.localeCompare(b.folder_path)
+						)
+						.forEach(
+							v =>{
+								this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = v
+							}
+						)
+					;
+
 					await Promise.all([
 						this.plugin.saveSettings(),
 						this.settings_tab.display()
@@ -35,36 +46,33 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent{
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private async _auto_detect_links(): Promise<void> {
+	private async _auto_detect_links(): Promise<{ tag_name: string; folder_path: string }[]> {
 		const { vault } = this.plugin.app;
 		const markdownFiles = vault.getMarkdownFiles();
 
+		let links = [];
+
 		// Loop through the markdown files
 		for (const file of markdownFiles) {
-			const parentFolderName = this.getParentFolderName(file.path);
-			console.warn(file);
-			if (file.name.replace(".md", "") === parentFolderName) {
-				let found_tags = this.parseYamlFrontMatter(await vault.read(file));
-				console.warn(found_tags);
+			if (file.name.replace(".md", "") !== this.getParentFolderName(file.path)) {
+				continue;
+			}
 
-				if (found_tags && found_tags.length > 0) {
-					for (const tag of found_tags) {
-						const exists_TagColors = this.processTagColors(tag);
+			let found_tags = this.parseYamlFrontMatter(await vault.read(file));
+			if (!(found_tags && found_tags.length > 0)) {
+				continue;
+			}
 
-						if (exists_TagColors !== null) {
-							let folder_path = file.path.replace(`/${file.name}`, "")
-							this.addFolderTagLink(uuid4(), tag, folder_path);
-							console.warn("applied exists_TagColors");
-						} else {
-							console.warn("applied NOTHING");
-						}
-					}
+			for (const tag of found_tags) {
+				if (this.processTagColors(tag) === null) {
+					continue;
 				}
+				let folder_path = file.path.replace(`/${file.name}`, "")
+				links.push({tag_name: tag, folder_path: folder_path})
 			}
 		}
-	}
-	private addFolderTagLink(uuid: string, tag: string, folderName: string) {
-		this.plugin.settings.FolderNote.FolderTagLinks[uuid] = { tag_name: tag, folder_path: folderName };
+
+		return links
 	}
 
 	getParentFolderName(filePath: string): string {

@@ -20,13 +20,13 @@ export class StyleWranglerKanban extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css(): string {
 		return `
-            div[data-type="kanban"] a.tag>span,
-            div.kanban-plugin a.tag>span,
-            div[data-type="kanban"] .cm-hashtag-begin {
-                visibility: hidden;
-                position: absolute;
-            }
-		`;
+div[data-type="kanban"] a.tag>span,
+div.kanban-plugin a.tag>span,
+div[data-type="kanban"] .cm-hashtag-begin {
+	visibility: hidden;
+	position: absolute;
+}`
+		;
 	}
 
 }
