@@ -77,9 +77,9 @@ export class StyleManager{
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	applyAllStyles():void {
-		this._style_wranglers.forEach(value => {value.apply_styles()});
-	}
+	// applyAllStyles():void {
+	// 	this._style_wranglers.forEach(value => {value.apply_styles()});
+	// }
 
 	// -----------------------------------------------------------------------------------------------------------------
 	removeAllStyles():void {
