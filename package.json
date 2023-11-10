@@ -7,9 +7,9 @@
     "dev": "node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
     "version": "node version-bump.mjs && git add manifest.json versions.json",
-    "internal_version_bump-full": "npx ts-node tools/internal_version_bump.mjs full   && git add package.json manifest.json && git commit -m \"Version Bump\"",
+    "internal_version_bump-full": "npx ts-node tools/internal_version_bump.mjs full     && git add package.json manifest.json && git commit -m \"Version Bump\"",
     "internal_version_bump-change": "npx ts-node tools/internal_version_bump.mjs change && git add package.json manifest.json && git commit -m \"Version Bump\"",
-    "internal_version_bump-fix": "npx ts-node tools/internal_version_bump.mjs fix    && git add package.json manifest.json && git commit -m \"Version Bump\"",
+    "internal_version_bump-fix": "npx ts-node tools/internal_version_bump.mjs fix       && git add package.json manifest.json && git commit -m \"Version Bump\"",
     "update-git-tag": "npx ts-node tools/set-git-tags.mjs"
   },
   "keywords": [],

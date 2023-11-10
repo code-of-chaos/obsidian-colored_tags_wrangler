@@ -85,12 +85,12 @@ export class ComponentTags extends SettingsTabComponent{
 					.setPlaceholder(this._NEW_TAG_NAME)
 					.setValue(new_tag_content.tag_name)
 					.onChange(async (value) => {
-						// Cleanup the value
-						value = value.replace("#","");
-						value = value.toLowerCase();
-
 						// Add the updated tag and color
 						new_tag_content.tag_name = value
+							.replace("#","")
+							.toLowerCase()
+							.trim()
+						;
 						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
 
