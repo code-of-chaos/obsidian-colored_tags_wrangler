@@ -1,9 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Setting} from "obsidian";
-import {SettingsTabComponent} from "src/setting_tab/SettingsTabComponent";
-import * as YAML from 'js-yaml'
+import {Setting}
+	from "obsidian";
+import {SettingsTabComponent}
+	from "src/setting_tab/SettingsTabComponent";
+import * as YAML
+	from 'js-yaml'
 import {v4 as uuid4}
 	from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------

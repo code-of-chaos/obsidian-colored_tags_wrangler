@@ -1,10 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ISettings_v000} from "../old_setting_versions/ISettings_v000";
-import {ISettings_v001} from "../old_setting_versions/ISettings_v001";
-import {RGB} from "obsidian";
-import {v4 as uuid4} from "uuid";
+import {ISettings_v000}
+    from "../old_setting_versions/ISettings_v000";
+import {ISettings_v001}
+    from "../old_setting_versions/ISettings_v001";
+import {RGB}
+    from "obsidian";
+import {v4 as uuid4}
+    from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

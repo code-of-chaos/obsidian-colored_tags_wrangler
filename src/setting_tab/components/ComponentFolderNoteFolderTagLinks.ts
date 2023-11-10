@@ -1,11 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {RGB, Setting}
+import {Setting}
 	from "obsidian";
-import {SettingsTabComponent} from "src/setting_tab/SettingsTabComponent";
-import {v4 as uuid4} from "uuid";
-import {hexToRgb} from "../../lib";
+import {SettingsTabComponent}
+	from "src/setting_tab/SettingsTabComponent";
+import {v4 as uuid4}
+	from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

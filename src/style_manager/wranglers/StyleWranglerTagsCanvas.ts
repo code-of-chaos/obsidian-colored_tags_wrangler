@@ -3,11 +3,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
 	from "src/style_manager/wranglers/StyleWrangler";
-import {RGB, HSL}
+import {HSL}
 	from "obsidian";
 import ColoredTagWranglerPlugin
 	from "src/main";
-import {hslToRgb, rgbToHsl} from "src/lib/ColorConverters";
+import {hslToRgb, rgbToHsl}
+	from "src/lib/ColorConverters";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

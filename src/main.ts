@@ -3,13 +3,16 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {Plugin}
 	from "obsidian";
-import {IColoredTagWranglerSettings, DefaultSettings}
-	from "src/settings/DefaultSettings";
+import {
+	IColoredTagWranglerSettings,
+	DefaultSettings
+} from "src/settings/DefaultSettings";
 import {SettingTab}
 	from "src/setting_tab";
 import {StyleManager}
 	from "src/style_manager";
-import {Migrate} from "./settings/Migrate";
+import {Migrate}
+	from "./settings/Migrate";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

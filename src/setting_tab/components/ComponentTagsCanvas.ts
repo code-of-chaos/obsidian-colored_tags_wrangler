@@ -1,8 +1,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Setting, SliderComponent, TextComponent}
-	from "obsidian";
+import {
+	Setting,
+	SliderComponent,
+	TextComponent
+} from "obsidian";
 import {SettingsTabComponent}
 	from "src/setting_tab/SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
