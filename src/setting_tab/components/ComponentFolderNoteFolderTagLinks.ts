@@ -74,12 +74,12 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 					.setPlaceholder(this._NEW_TAG_NAME)
 					.setValue(new_link_content.tag_name)
 					.onChange(async (value) => {
-						// Cleanup the value
-						value = value.replace("#","");
-						value = value.toLowerCase();
-
 						// Add the updated tag and color
 						new_link_content.tag_name = value
+							.replace("#","")
+							.toLowerCase()
+							.trim()
+						;
 						this.plugin.settings.FolderNote.FolderTagLinks[link_id] = new_link_content;
 						await this.plugin.saveSettings();
 
