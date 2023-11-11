@@ -34,15 +34,12 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 						"body.theme-light",
 						tag_name,
 						color,
-						hslToRgb(hsl_background),
-						opacity_border,
+						hslToRgb(hsl_background)
 					)
 				});
 	}
 
 	assemble_css_dark(): Array<string> {
-		const opacity_border = this.plugin.settings.Canvas.Values.CardBorderOpacity;
-
 		return this.get_tags()
 			.map(
 				({tag_name, color, background_color, luminance_offset}) => {
@@ -52,17 +49,16 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 						"body.theme-dark",
 						tag_name,
 						color,
-						hslToRgb(hsl_background),
-						opacity_border,
+						hslToRgb(hsl_background)
 					)
 				});
 	}
 
-	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB, opacity_border:number){
+	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB){
 		return`
 ${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
 	background : rgb(${background_color.r}, ${background_color.g}, ${background_color.b}) !important;
-	border-color: rgba(${color.r}, ${color.g}, ${color.b}, ${opacity_border}) !important;
+	border-color: rgb(${color.r}, ${color.g}, ${color.b}) !important;
 }`
 
 	}
