@@ -5,12 +5,12 @@ import ColoredTagWranglerPlugin
 	from "src/main";
 import {
 	IStyleWrangler,
+	StyleWranglerTags,
+	StyleWranglerTagsCanvas,
 	StyleWranglerFolderNote,
 	StyleWranglerKanbanHashtags,
 	StyleWranglerKanbanCards,
 	StyleWranglerKanbanLists,
-	StyleWranglerTags,
-	StyleWranglerTagsCanvas,
 } from "src/style_manager/wranglers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -54,6 +54,10 @@ export class StyleManager{
 			? this.wrangler_tags.apply_styles()
 			: this.wrangler_tags.remove_styles() ;
 
+		this.plugin.settings.Canvas.Enable
+			? this.wrangler_tags_canvas.apply_styles()
+			: this.wrangler_tags_canvas.remove_styles() ;
+
 		this.plugin.settings.Kanban.HideHashtags
 			? this.wrangler_kanban_hashtags.apply_styles()
 			: this.wrangler_kanban_hashtags.remove_styles() ;
@@ -65,10 +69,6 @@ export class StyleManager{
 		this.plugin.settings.Kanban.EnableLists
 			? this.wrangler_kanban_lists.apply_styles()
 			: this.wrangler_kanban_lists.remove_styles() ;
-
-		this.plugin.settings.Canvas.Enable
-			? this.wrangler_tags_canvas.apply_styles()
-			: this.wrangler_tags_canvas.remove_styles() ;
 
 		this.plugin.settings.FolderNote.Enable
 			? this.wrangler_folder_note.apply_styles()

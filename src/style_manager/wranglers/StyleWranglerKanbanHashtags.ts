@@ -5,6 +5,7 @@ import {StyleWrangler}
 	from "src/style_manager/wranglers/StyleWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
+import {RGB} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,15 +19,23 @@ export class StyleWranglerKanbanHashtags extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assemble_css(): string {
-		return `
-div[data-type="kanban"] a.tag>span,
-div.kanban-plugin a.tag>span,
-div[data-type="kanban"] .cm-hashtag-begin {
-	visibility: hidden;
-	position: absolute;
-}`
-		;
+	assemble_css_light(): Array<string> {
+		return [this.assemble_css()]
+	}
+
+	assemble_css_dark(): Array<string> {
+		return [this.assemble_css()]
+	}
+
+	private assemble_css(){
+		return`
+		div[data-type="kanban"] a.tag>span,
+		div.kanban-plugin a.tag>span,
+		div[data-type="kanban"] .cm-hashtag-begin {
+			visibility: hidden;
+			position: absolute;
+		}`
+
 	}
 
 }
