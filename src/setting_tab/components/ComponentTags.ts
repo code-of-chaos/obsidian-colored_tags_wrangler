@@ -3,10 +3,10 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {
 	RGB,
-	Setting, TextAreaComponent,
+	Setting, SliderComponent, TextAreaComponent,
 	TextComponent
 } from "obsidian";
-import {hexToRgb}
+import {hexToRgb, hslToRgb, rgbToHsl}
 	from "src/lib";
 import {SettingsTabComponent}
 	from "src/setting_tab/SettingsTabComponent";
@@ -19,7 +19,6 @@ export class ComponentTags extends SettingsTabComponent{
 	private _NEW_TAG_NAME:string = "new-tag";
 	private _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
 	private _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 255, g: 255, b: 255 };
-	private _NEW_DEFAULT_OPACITY:number = 0.2;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
@@ -36,7 +35,7 @@ export class ComponentTags extends SettingsTabComponent{
 							tag_name: this._NEW_TAG_NAME,
 							color: this._NEW_DEFAULT_COLOR, // Default color
 							background_color: this._NEW_DEFAULT_BACKGROUND_COLOR, // Default color
-							background_opacity: this._NEW_DEFAULT_OPACITY,
+							luminance_offset: this.plugin.settings.TagColors.Values.LuminanceOffset,
 						};
 						await Promise.all([
 							this.plugin.saveSettings(),
@@ -78,7 +77,7 @@ export class ComponentTags extends SettingsTabComponent{
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _text_callback(text:TextComponent|TextAreaComponent, tag_id:string, new_tag_content:{tag_name:string, color:RGB, background_color:RGB, background_opacity:number}) {
+	private _text_callback(text:TextComponent|TextAreaComponent, tag_id:string, new_tag_content:{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}) {
 		return text
 			.setPlaceholder(this._NEW_TAG_NAME)
 			.setValue(new_tag_content.tag_name)
@@ -93,7 +92,7 @@ export class ComponentTags extends SettingsTabComponent{
 				await this.plugin.saveSettings();
 			});
 	}
-	private _createTagColorSetting(tagUUID: string, tag_content: {tag_name:string, color:RGB, background_color:RGB, background_opacity:number}, containerEL:HTMLElement) {
+	private _createTagColorSetting(tagUUID: string, tag_content: {tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}, containerEL:HTMLElement) {
 		let tag_id = tagUUID;
 		let new_tag_content = tag_content;
 
@@ -114,7 +113,9 @@ export class ComponentTags extends SettingsTabComponent{
 
 						// Store the edited value to the background color, if we haven't enabled separate backgrounds
 						if (!this.plugin.settings.TagColors.EnableSeparateBackground){
-							new_tag_content.background_color = new_tag_content.color;
+							let hsl = rgbToHsl(new_tag_content.color);
+							hsl.l = 2 * (hsl.l / 3);
+							new_tag_content.background_color = hslToRgb(hsl);
 						}
 						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
@@ -134,19 +135,41 @@ export class ComponentTags extends SettingsTabComponent{
 					})
 			);
 		}
-		if (this.plugin.settings.Debug.Enable){
+		if (this.plugin.settings.TagColors.EnableSeparateLuminanceOffset){
+			let sliderElement: SliderComponent; // Little work around to make them update together
+			let textElement: TextComponent;
 			setting
-				.addText((text) =>
-					text
-						.setPlaceholder(this._NEW_DEFAULT_OPACITY.toString())
-						.setValue(new_tag_content.background_opacity.toString())
-						.onChange(async (value) => {
-							// Add the updated tag and color
-							new_tag_content.background_opacity = Number(value)
-							this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
-							await this.plugin.saveSettings();
-						})
-				)
+				.addSlider(component => {
+						component
+							.setLimits(0, .5, 0.05)
+							.setValue(this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset)
+							.onChange(async state => {
+								this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset = state;
+								await this.plugin.saveSettings();
+
+								// Update the text component's value
+								textElement.setValue(String(state));
+							});
+						sliderElement = component;
+					}
+				).addText((text) => {
+				text
+					.setPlaceholder(this.plugin.settings.TagColors.Values.LuminanceOffset.toString())
+					.setValue(String(this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset))
+					.onChange(async state => {
+						// Because this is a text component it needs to be cast to a number
+						let state_as_number = Number(state)
+						if (isNaN(state_as_number) || state_as_number === null){
+							state_as_number = 0
+						}
+
+						this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset = state_as_number;
+						await this.plugin.saveSettings();
+
+						sliderElement.setValue(state_as_number)
+					});
+				textElement = text;
+			});
 		}
 
 		setting.addButton((button) =>

@@ -6,22 +6,19 @@ import {SettingsTabComponent} from "src/setting_tab/SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentTagsCanvas extends SettingsTabComponent {
+export class ComponentTagsEnableSeparateLuminance extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): Setting {
 		return new Setting(containerEL)
-			.setName("Apply tag color to canvas card")
-			.setDesc(`
-			Applies the tag color, of the tag within the canvas's card, to the background color of the canvas card.
-			The Value slider and setter to the right, are the luminance offsets for the background.
-			`)
+			.setName("Enable separate luminance offsets per tag")
+			.setDesc("Allows you to specify a different luminance offset value for each tag. This offset is used in background of items like Canvas Card, Kanban Card/List, ...")
 			.addToggle(component => {
 					component
-						.setValue(this.plugin.settings.Canvas.Enable)
+						.setValue(this.plugin.settings.TagColors.EnableSeparateLuminanceOffset)
 						.onChange(async state => {
-							this.plugin.settings.Canvas.Enable = state;
+							this.plugin.settings.TagColors.EnableSeparateLuminanceOffset = state;
 							await this.plugin.saveSettings();
 							this.settings_tab.display();
 						})

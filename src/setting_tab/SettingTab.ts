@@ -18,7 +18,9 @@ import {
 	ComponentFolderNoteAutoDetect,
 	ComponentFolderNoteFolderTagLinks,
 	ComponentTagsEnableMultipleTags,
-	ComponentTagsEnableSeparateBackground, ComponentKanbanHideHashtags
+	ComponentTagsEnableSeparateBackground,
+	ComponentKanbanHideHashtags,
+	ComponentTagsEnableSeparateLuminance
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -39,6 +41,7 @@ export class SettingTab extends PluginSettingTab {
 		comp_kanban_hashtags:					SettingsTabComponent,
 		comp_debug:								SettingsTabComponent,
 		comp_debug_reloadcss:					SettingsTabComponent,
+		comp_tags_enable_luminance:			    SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {
@@ -58,6 +61,8 @@ export class SettingTab extends PluginSettingTab {
 			comp_kanban_hashtags:				new ComponentKanbanHideHashtags(plugin,this),
 			comp_debug:							new ComponentDebug(plugin,this),
 			comp_debug_reloadcss:				new ComponentDebugReloadCSS(plugin,this),
+			comp_tags_enable_luminance:			new ComponentTagsEnableSeparateLuminance(plugin, this),
+
 		}
 	}
 	async display() {
@@ -80,6 +85,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components.comp_tags_canvas.create_component(containerEl);
 		this._components.comp_tags_enable_multiple_tags.create_component(containerEl);
 		this._components.comp_tags_enable_background.create_component(containerEl);
+		this._components.comp_tags_enable_luminance.create_component(containerEl);
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------

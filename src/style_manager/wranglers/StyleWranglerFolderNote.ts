@@ -31,20 +31,19 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 					let {folder_path, tag_name:folder_tag_name} = this.plugin.settings.FolderNote.FolderTagLinks[folderUUID];
 					return all_tags
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
-						.map(({color, background_color:bcolor, background_opacity}) => {
+						.map(({color, background_color, luminance_offset}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
 							return this.assemble_css(
 								"body.theme-light",
 								folder_path,
 								color,
-								bcolor,
+								background_color,
 								important,
-								background_opacity,
+								luminance_offset,
 								border_radius,
 								padding
 							)
 						})
-						.flat()
 				}
 			)
 			.flat()
@@ -62,26 +61,25 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 					let {folder_path, tag_name:folder_tag_name} = this.plugin.settings.FolderNote.FolderTagLinks[folderUUID];
 					return all_tags
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
-						.map(({color, background_color:bcolor, background_opacity}) => {
+						.map(({color, background_color, luminance_offset}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
 							return this.assemble_css(
 								"body.theme-dark",
 								folder_path,
 								color,
-								bcolor,
+								background_color,
 								important,
-								background_opacity,
+								luminance_offset,
 								border_radius,
 								padding
 							)
 						})
-						.flat()
 				}
 			)
 			.flat()
 	}
 
-	private assemble_css(theme:string, folder_path:string, color:RGB, bcolor:RGB, important:string, background_opacity:number, border_radius:string, padding:string){
+	private assemble_css(theme:string, folder_path:string, color:RGB, bcolor:RGB, important:string, luminance_offset:number, border_radius:string, padding:string){
 		return`
 /* Apply color to drop down triangle */
 ${theme} div.nav-folder-title[data-path="${folder_path}"] svg.svg-icon.right-triangle{
@@ -109,7 +107,7 @@ ${theme} .nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-children {
 
 /* Apply color to folder title and background*/
 ${theme} .nav-folder:has(> [data-path="${folder_path}"]){
-	background-color: rgba(${bcolor.r}, ${bcolor.g}, ${bcolor.b},  ${background_opacity}) ${important};								
+	background-color: rgb(${bcolor.r}, ${bcolor.g}, ${bcolor.b}) ${important};								
 	border-radius: ${border_radius};
 	padding: ${padding};
 	margin-bottom: ${padding};

@@ -9,14 +9,15 @@ import {RGB}
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IColoredTagWranglerSettings {
 	TagColors:{
-		ColorPicker: Record<string, {tag_name:string, color:RGB, background_color:RGB,background_opacity:number}>,
+		ColorPicker: Record<string, {tag_name:string, color:RGB, background_color:RGB,luminance_offset:number}>,
 
 		EnableMultipleTags:boolean,
 		EnableSeparateBackground:boolean,
+		EnableSeparateLuminanceOffset:boolean,
 		Values:{
 			BackgroundOpacity:number,
 			BackgroundOpacityHover:number,
-			SemanticColorsLuminanceOffset:number,
+			LuminanceOffset:number,
 		}
 	},
 
@@ -70,11 +71,12 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 
 		EnableMultipleTags:true,
 		EnableSeparateBackground:false,
+		EnableSeparateLuminanceOffset:false,
 
 		Values:{
 			BackgroundOpacity:0.2,
 			BackgroundOpacityHover:0.1,
-			SemanticColorsLuminanceOffset:0.35
+			LuminanceOffset:0.15
 		}
 	},
 
@@ -112,10 +114,10 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 
 		Values:{
 			CardBorderOpacity:0.3,
-			CardBackgroundLuminanceOffset:0.35,
+			CardBackgroundLuminanceOffset:0.15,
 		}
 	},
 	Info: {
-		SettingsVersion: 6 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
+		SettingsVersion: 7 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }
