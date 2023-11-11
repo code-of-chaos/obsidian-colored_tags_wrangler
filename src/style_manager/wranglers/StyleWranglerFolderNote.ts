@@ -5,7 +5,8 @@ import {StyleWrangler}
 	from "src/style_manager/wranglers/StyleWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
-import {RGB} from "obsidian";
+import {HSL, RGB} from "obsidian";
+import {hslToRgb, rgbToHsl} from "../../lib";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -33,13 +34,16 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
 						.map(({color, background_color, luminance_offset}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
+
+							let background_hsl = rgbToHsl(background_color);
+							background_hsl.l -= luminance_offset;
+
 							return this.assemble_css(
 								"body.theme-light",
 								folder_path,
 								color,
-								background_color,
+								hslToRgb(background_hsl),
 								important,
-								luminance_offset,
 								border_radius,
 								padding
 							)
@@ -55,6 +59,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 		let important = this.plugin.settings.FolderNote.Values.ForceImportant ? "!important" : ""
 		let border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
 		let padding = this.plugin.settings.FolderNote.Values.Padding
+
 		return Object.keys(this.plugin.settings.FolderNote.FolderTagLinks)
 			.map(
 				folderUUID => {
@@ -63,13 +68,16 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
 						.map(({color, background_color, luminance_offset}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
+
+							let background_hsl = rgbToHsl(background_color);
+							background_hsl.l -= luminance_offset;
+
 							return this.assemble_css(
 								"body.theme-dark",
 								folder_path,
 								color,
-								background_color,
+								hslToRgb(background_hsl),
 								important,
-								luminance_offset,
 								border_radius,
 								padding
 							)
@@ -79,7 +87,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 			.flat()
 	}
 
-	private assemble_css(theme:string, folder_path:string, color:RGB, bcolor:RGB, important:string, luminance_offset:number, border_radius:string, padding:string){
+	private assemble_css(theme:string, folder_path:string, color:RGB, background:RGB, important:string, border_radius:string, padding:string){
 		return`
 /* Apply color to drop down triangle */
 ${theme} div.nav-folder-title[data-path="${folder_path}"] svg.svg-icon.right-triangle{
@@ -101,13 +109,13 @@ ${theme} div.nav-folder:has(> [data-path="${folder_path}"]) .nav-file-title-cont
 
 /* Applies color to the bar next to the notes in the folder*/
 ${theme} .nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-children {
-	border-left-color: rgba(${color.r}, ${color.g}, ${color.b},  0.2) ${important};
+	border-left-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 	border-left-width: 2px ${important};
 }
 
 /* Apply color to folder title and background*/
 ${theme} .nav-folder:has(> [data-path="${folder_path}"]){
-	background-color: rgb(${bcolor.r}, ${bcolor.g}, ${bcolor.b}) ${important};								
+	background-color: rgb(${background.r}, ${background.g}, ${background.b}) ${important};								
 	border-radius: ${border_radius};
 	padding: ${padding};
 	margin-bottom: ${padding};
