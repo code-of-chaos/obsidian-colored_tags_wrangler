@@ -45,6 +45,6 @@ function checkColor(color:RGB, background:RGB):boolean{
 
 function callback_fix_background(background:RGB, luminance_offset:number):RGB{
     let background_hsl = rgbToHsl(background)
-    background_hsl.l -= luminance_offset
+    background_hsl.l -=  2 * (background_hsl.l / 3);
     return hslToRgb(background_hsl)
 }
