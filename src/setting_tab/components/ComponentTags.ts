@@ -141,7 +141,7 @@ export class ComponentTags extends SettingsTabComponent{
 			setting
 				.addSlider(component => {
 						component
-							.setLimits(0, .5, 0.05)
+							.setLimits(-0.5, .5, 0.05)
 							.setValue(this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset)
 							.onChange(async state => {
 								this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset = state;
