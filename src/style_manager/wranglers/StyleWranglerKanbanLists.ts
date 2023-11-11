@@ -24,15 +24,15 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 		return this.get_tags()
 			.map(
 				({tag_name, color, background_color,luminance_offset}) => {
-
-					let background_hsl = rgbToHsl(background_color);
-					background_hsl.l += luminance_offset;
-
 					return this.assemble_css(
 						"body.theme-light",
 						tag_name,
 						color,
-						hslToRgb(background_hsl)
+						this.get_background_color(
+							background_color,
+							luminance_offset,
+							true
+						)
 					)
 				});
 	}
@@ -41,15 +41,15 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 		return this.get_tags()
 			.map(
 				({tag_name, color, background_color,luminance_offset}) => {
-
-					let background_hsl = rgbToHsl(background_color);
-					background_hsl.l -= luminance_offset;
-
 					return this.assemble_css(
 						"body.theme-dark",
 						tag_name,
 						color,
-						hslToRgb(background_hsl)
+						this.get_background_color(
+							background_color,
+							luminance_offset,
+							false
+						)
 					)
 				});
 	}

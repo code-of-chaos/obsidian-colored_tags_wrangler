@@ -14,6 +14,7 @@ export function migrate_6_to_7(loaded_data:ISettings_v006):IColoredTagWranglerSe
     let transformed_data = loaded_data as unknown as IColoredTagWranglerSettings;
     transformed_data.TagColors.Values.LuminanceOffset = 0.15;
     transformed_data.TagColors.EnableSeparateLuminanceOffset = false;
+    transformed_data.TagColors.EnableDarkLightDifference = true;
 
     // Fixes mistake
     for (const tagUUID of Object.keys(loaded_data.TagColors.ColorPicker)){

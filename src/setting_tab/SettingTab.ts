@@ -20,7 +20,8 @@ import {
 	ComponentTagsEnableMultipleTags,
 	ComponentTagsEnableSeparateBackground,
 	ComponentKanbanHideHashtags,
-	ComponentTagsEnableSeparateLuminance
+	ComponentTagsEnableSeparateLuminance,
+	ComponentTagsEnableDarkLightDifference
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -42,26 +43,28 @@ export class SettingTab extends PluginSettingTab {
 		comp_debug:								SettingsTabComponent,
 		comp_debug_reloadcss:					SettingsTabComponent,
 		comp_tags_enable_luminance:			    SettingsTabComponent,
+		comp_tags_enable_dark_light_difference: SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {
 		super(plugin.app, plugin);
 		this.plugin = plugin;
 		this._components = {
-			comp_tags: 							new ComponentTags(plugin, this),
-			comp_tags_canvas:					new ComponentTagsCanvas(plugin, this),
-			comp_tags_enable_multiple_tags:		new ComponentTagsEnableMultipleTags(plugin, this),
-			comp_tags_enable_background: 		new ComponentTagsEnableSeparateBackground(plugin, this),
-			comp_folder_note:					new ComponentFolderNote(plugin, this),
-			comp_folder_note_auto_detect:		new ComponentFolderNoteAutoDetect(plugin, this),
-			comp_folder_note_folder_tag_links:	new ComponentFolderNoteFolderTagLinks(plugin, this),
-			comp_kanban: 						new ComponentKanban(plugin,this),
-			comp_kanban_cards:					new ComponentKanbanCards(plugin,this),
-			comp_kanban_lists:					new ComponentKanbanLists(plugin,this),
-			comp_kanban_hashtags:				new ComponentKanbanHideHashtags(plugin,this),
-			comp_debug:							new ComponentDebug(plugin,this),
-			comp_debug_reloadcss:				new ComponentDebugReloadCSS(plugin,this),
-			comp_tags_enable_luminance:			new ComponentTagsEnableSeparateLuminance(plugin, this),
+			comp_tags: 								new ComponentTags(plugin, this),
+			comp_tags_canvas:						new ComponentTagsCanvas(plugin, this),
+			comp_tags_enable_multiple_tags:			new ComponentTagsEnableMultipleTags(plugin, this),
+			comp_tags_enable_background: 			new ComponentTagsEnableSeparateBackground(plugin, this),
+			comp_folder_note:						new ComponentFolderNote(plugin, this),
+			comp_folder_note_auto_detect:			new ComponentFolderNoteAutoDetect(plugin, this),
+			comp_folder_note_folder_tag_links:		new ComponentFolderNoteFolderTagLinks(plugin, this),
+			comp_kanban: 							new ComponentKanban(plugin,this),
+			comp_kanban_cards:						new ComponentKanbanCards(plugin,this),
+			comp_kanban_lists:						new ComponentKanbanLists(plugin,this),
+			comp_kanban_hashtags:					new ComponentKanbanHideHashtags(plugin,this),
+			comp_debug:								new ComponentDebug(plugin,this),
+			comp_debug_reloadcss:					new ComponentDebugReloadCSS(plugin,this),
+			comp_tags_enable_luminance:				new ComponentTagsEnableSeparateLuminance(plugin, this),
+			comp_tags_enable_dark_light_difference: new ComponentTagsEnableDarkLightDifference(plugin,this),
 
 		}
 	}
@@ -86,6 +89,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components.comp_tags_enable_multiple_tags.create_component(containerEl);
 		this._components.comp_tags_enable_background.create_component(containerEl);
 		this._components.comp_tags_enable_luminance.create_component(containerEl);
+		this._components.comp_tags_enable_dark_light_difference.create_component(containerEl);
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------

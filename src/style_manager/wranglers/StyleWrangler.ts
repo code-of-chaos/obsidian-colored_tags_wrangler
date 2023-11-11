@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {removeById}
+import {hslToRgb, removeById, rgbToHsl}
 	from "src/lib";
 import ColoredTagWranglerPlugin
 	from "src/main";
@@ -21,6 +21,7 @@ export interface IStyleWrangler{
 	apply_styles(): void;
 	remove_styles(): void;
 	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}>;
+	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -79,5 +80,14 @@ export abstract class StyleWrangler implements IStyleWrangler{
 				}
 			})
 			.flat();
+	}
+
+	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
+		if (is_light_theme && this.plugin.settings.TagColors.EnableDarkLightDifference ){
+			luminance_offset = -luminance_offset; // Double negative => +
+		}
+		let background_hsl = rgbToHsl(background_color);
+		background_hsl.l -= luminance_offset;
+		return hslToRgb(background_hsl);
 	}
 }

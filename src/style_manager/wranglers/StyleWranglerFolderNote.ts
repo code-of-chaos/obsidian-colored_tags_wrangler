@@ -6,7 +6,6 @@ import {StyleWrangler}
 import ColoredTagWranglerPlugin
 	from "src/main";
 import {HSL, RGB} from "obsidian";
-import {hslToRgb, rgbToHsl} from "../../lib";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -34,15 +33,15 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
 						.map(({color, background_color, luminance_offset}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
-
-							let background_hsl = rgbToHsl(background_color);
-							background_hsl.l += luminance_offset;
-
 							return this.assemble_css(
 								"body.theme-light",
 								folder_path,
 								color,
-								hslToRgb(background_hsl),
+								this.get_background_color(
+									background_color,
+									luminance_offset,
+									true
+								),
 								important,
 								border_radius,
 								padding
@@ -68,15 +67,15 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
 						.map(({color, background_color, luminance_offset}) => {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
-
-							let background_hsl = rgbToHsl(background_color);
-							background_hsl.l -= luminance_offset;
-
 							return this.assemble_css(
 								"body.theme-dark",
 								folder_path,
 								color,
-								hslToRgb(background_hsl),
+								this.get_background_color(
+									background_color,
+									luminance_offset,
+									false
+								),
 								important,
 								border_radius,
 								padding

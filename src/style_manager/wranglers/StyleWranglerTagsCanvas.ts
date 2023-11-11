@@ -28,13 +28,15 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 		return this.get_tags()
 			.map(
 				({tag_name, color, background_color,luminance_offset}) => {
-					let hsl_background = rgbToHsl(background_color);
-					hsl_background.l += luminance_offset
 					return this.assemble_css(
 						"body.theme-light",
 						tag_name,
 						color,
-						hslToRgb(hsl_background)
+						this.get_background_color(
+							background_color,
+							luminance_offset,
+							true
+						)
 					)
 				});
 	}
@@ -43,13 +45,15 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 		return this.get_tags()
 			.map(
 				({tag_name, color, background_color, luminance_offset}) => {
-					let hsl_background = rgbToHsl(background_color);
-					hsl_background.l -= luminance_offset
 					return this.assemble_css(
 						"body.theme-dark",
 						tag_name,
 						color,
-						hslToRgb(hsl_background)
+						this.get_background_color(
+							background_color,
+							luminance_offset,
+							false
+						)
 					)
 				});
 	}
