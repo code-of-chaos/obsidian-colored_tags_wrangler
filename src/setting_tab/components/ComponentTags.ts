@@ -114,7 +114,7 @@ export class ComponentTags extends SettingsTabComponent{
 						// Store the edited value to the background color, if we haven't enabled separate backgrounds
 						if (!this.plugin.settings.TagColors.EnableSeparateBackground){
 							let hsl = rgbToHsl(new_tag_content.color);
-							hsl.l = 2 * (hsl.l / 3);
+							hsl.l -= this.plugin.settings.TagColors.Values.LuminanceOffset;
 							new_tag_content.background_color = hslToRgb(hsl);
 						}
 						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
