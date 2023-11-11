@@ -6,7 +6,6 @@ import {StyleWrangler}
 import ColoredTagWranglerPlugin
 	from "src/main";
 import {RGB} from "obsidian";
-import {hslToRgb, rgbToHsl} from "../../lib";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -57,7 +56,7 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB){
 		return`
 ${theme} div.kanban-plugin__item.has-tag-${tag_name} div.kanban-plugin__item-title-wrapper { 
-	background: rgb(${background_color.r}, ${background_color.g}, ${background_color.b}) !important;
+	background: ${this.get_background_string(background_color)} !important;
 }
 ${theme} div.kanban-plugin__item.has-tag-${tag_name}{ 
 	border-color: rgb(${color.r}, ${color.g}, ${color.b}) !important;

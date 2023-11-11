@@ -22,6 +22,7 @@ export interface IStyleWrangler{
 	remove_styles(): void;
 	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}>;
 	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
+	get_background_string(color:RGB):string;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -89,5 +90,15 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		let background_hsl = rgbToHsl(background_color);
 		background_hsl.l -= luminance_offset;
 		return hslToRgb(background_hsl);
+	}
+
+	get_background_string(color:RGB):string{
+		let rgb = this.plugin.settings.TagColors.EnableBackgroundOpacity
+			?  "rgba"
+			: "rgb";
+		let opacity = this.plugin.settings.TagColors.EnableBackgroundOpacity
+			?  `, ${this.plugin.settings.TagColors.Values.BackgroundOpacity}`
+			: "";
+		return `${rgb}(${color.r}, ${color.g}, ${color.b}${opacity})`
 	}
 }

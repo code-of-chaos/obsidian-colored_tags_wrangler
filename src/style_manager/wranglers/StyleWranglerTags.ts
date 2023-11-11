@@ -7,7 +7,6 @@ import ColoredTagWranglerPlugin
 	from "src/main";
 import {RGB}
 	from "obsidian";
-import {hslToRgb, rgbToHsl} from "../../lib";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -22,10 +21,9 @@ export class StyleWranglerTags extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css_light(): Array<string> {
-		const luminance_offset_hover = this.plugin.settings.TagColors.Values.BackgroundOpacityHover;
 		return this.get_tags()
 			.map(
-				({tag_name, color, background_color, luminance_offset}) => this.assemble_css(
+				({tag_name, color, background_color}) => this.assemble_css(
 					"body.theme-light",
 					tag_name,
 					color,
@@ -34,10 +32,9 @@ export class StyleWranglerTags extends StyleWrangler {
 	}
 
 	assemble_css_dark(): Array<string> {
-		const luminance_offset_hover = this.plugin.settings.TagColors.Values.BackgroundOpacityHover;
 		return this.get_tags()
 			.map(
-				({tag_name, color, background_color, luminance_offset}) => this.assemble_css(
+				({tag_name, color, background_color}) => this.assemble_css(
 					"body.theme-dark",
 					tag_name,
 					color,
@@ -48,12 +45,12 @@ export class StyleWranglerTags extends StyleWrangler {
 	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB){
 		let important = this.plugin.settings.FolderNote.Values.ForceImportant ? "!important" : ""
 
-		// noinspection CssInvalidPropertyValue,CssInvalidFunction
+		// noinspection CssInvalidPropertyValue,CssInvalidFunction,CssUnusedSymbol
 		return` 
 ${theme} .tag[href="#${tag_name}"], 
 ${theme} .cm-tag-${tag_name} { 
 	color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
-	background-color: rgb(${background_color.r}, ${background_color.g}, ${background_color.b}) ${important};
+	background-color: ${this.get_background_string(background_color)} ${important};
 }
 `
 	}

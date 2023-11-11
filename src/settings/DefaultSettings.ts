@@ -15,9 +15,9 @@ export interface IColoredTagWranglerSettings {
 		EnableSeparateBackground:boolean,
 		EnableSeparateLuminanceOffset:boolean,
 		EnableDarkLightDifference:boolean,
+		EnableBackgroundOpacity:boolean,
 		Values:{
 			BackgroundOpacity:number,
-			BackgroundOpacityHover:number,
 			LuminanceOffset:number,
 		}
 	},
@@ -74,9 +74,9 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 		EnableSeparateBackground:false,
 		EnableSeparateLuminanceOffset:false,
 		EnableDarkLightDifference:true,
+		EnableBackgroundOpacity:false,
 		Values:{
 			BackgroundOpacity:0.2,
-			BackgroundOpacityHover:0.1,
 			LuminanceOffset:0.15
 		}
 	},

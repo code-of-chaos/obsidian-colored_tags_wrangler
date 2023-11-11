@@ -5,7 +5,8 @@ import {StyleWrangler}
 	from "src/style_manager/wranglers/StyleWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
-import {HSL, RGB} from "obsidian";
+import {RGB}
+	from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -114,7 +115,7 @@ ${theme} .nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-children {
 
 /* Apply color to folder title and background*/
 ${theme} .nav-folder:has(> [data-path="${folder_path}"]){
-	background-color: rgb(${background.r}, ${background.g}, ${background.b}) ${important};								
+	background-color: ${this.get_background_string(background)} ${important};								
 	border-radius: ${border_radius};
 	padding: ${padding};
 	margin-bottom: ${padding};

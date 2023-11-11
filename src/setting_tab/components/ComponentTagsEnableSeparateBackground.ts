@@ -13,7 +13,7 @@ export class ComponentTagsEnableSeparateBackground extends SettingsTabComponent 
 	public create_component(containerEL:HTMLElement): Setting {
 		return new Setting(containerEL)
 			.setName("Enable separate background color")
-			.setDesc("Allows you to specify a different background color for each tag")
+			.setDesc("Allows you to specify a different background color for each tag.")
 			.addToggle(component => {
 					component
 						.setValue(this.plugin.settings.TagColors.EnableSeparateBackground)

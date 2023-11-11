@@ -13,7 +13,7 @@ export class ComponentTagsEnableDarkLightDifference extends SettingsTabComponent
 	public create_component(containerEL:HTMLElement): Setting {
 		return new Setting(containerEL)
 			.setName("Enable different luminance formula for dark & light mode")
-			.setDesc("When enabled, applies the luminance offset differently depending on Dark or Light mode")
+			.setDesc("When enabled, applies the luminance offset differently depending on Dark or Light mode.")
 			.addToggle(component => {
 					component
 						.setValue(this.plugin.settings.TagColors.EnableDarkLightDifference)

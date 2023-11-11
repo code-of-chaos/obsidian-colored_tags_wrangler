@@ -15,6 +15,8 @@ export function migrate_6_to_7(loaded_data:ISettings_v006):IColoredTagWranglerSe
     transformed_data.TagColors.Values.LuminanceOffset = 0.15;
     transformed_data.TagColors.EnableSeparateLuminanceOffset = false;
     transformed_data.TagColors.EnableDarkLightDifference = true;
+    transformed_data.TagColors.EnableBackgroundOpacity = false;
+    transformed_data.TagColors.Values.BackgroundOpacity = 0.2;
 
     // Fixes mistake
     for (const tagUUID of Object.keys(loaded_data.TagColors.ColorPicker)){
