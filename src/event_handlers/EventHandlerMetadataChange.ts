@@ -7,7 +7,7 @@ import {
 } from "obsidian";
 import ColoredTagWranglerPlugin
     from "../main";
-import {processTagColors}
+import {file_is_folderNote, processTagColors}
     from "../lib/FolderNoteLogic";
 import {v4 as uuid4}
     from "uuid";
@@ -36,7 +36,8 @@ export class EventHandlerMetadataChange{
     private async callback(file:TFile, cache: CachedMetadata):Promise<void>{
         const folder_path = file.path.replace(`/${file.name}`, "")
         const tags = cache.frontmatter?.tags as string[] | undefined;
-        if (tags === undefined){
+
+        if (!file_is_folderNote(file) || tags === undefined){
             return
         }
 

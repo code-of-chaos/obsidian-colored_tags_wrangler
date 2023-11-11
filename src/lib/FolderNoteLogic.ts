@@ -4,6 +4,7 @@
 import {
     IColoredTagWranglerPlugin
 } from "src/main";
+import {TFile} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -32,6 +33,10 @@ export async function processTagColors(plugin:IColoredTagWranglerPlugin, tag_to_
         .first() ?? null
 }
 
+export function file_is_folderNote(file:TFile){
+    return file.name.replace(".md", "") === getParentFolderName(file.path)
+}
+
 // ---------------------------------------------------------------------------------------------------------------------
 export async function detect_all_links(plugin:IColoredTagWranglerPlugin): Promise<{ tag_name: string; folder_path: string }[]> {
     try {
@@ -40,7 +45,7 @@ export async function detect_all_links(plugin:IColoredTagWranglerPlugin): Promis
 
         let links = await Promise.all(
             markdownFiles
-                .filter(file => file.name.replace(".md", "") === getParentFolderName(file.path))
+                .filter(file => file_is_folderNote(file) )
                 .map(async file => {
                     let tags = plugin.app.metadataCache.getFileCache(file)?.frontmatter?.tags as string[] | undefined;
                     if (tags === undefined){
