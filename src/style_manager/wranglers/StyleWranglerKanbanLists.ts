@@ -57,7 +57,7 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB){
 		return`
 ${theme} div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
-	background : rgb(${background_color.r}, ${background_color.g}, ${background_color.b}}) !important;
+	background: rgb(${background_color.r}, ${background_color.g}, ${background_color.b}) !important;
 	border-color: rgb(${color.r}, ${color.g}, ${color.b}) !important;
 }
 ${theme} div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
