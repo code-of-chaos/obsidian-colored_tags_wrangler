@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Plugin}
+import {App, CachedMetadata, Plugin}
 	from "obsidian";
 import {
 	IColoredTagWranglerSettings,
@@ -13,6 +13,18 @@ import {StyleManager}
 	from "src/style_manager";
 import {Migrate}
 	from "./settings/Migrate";
+import {EventHandlerMetadataChange}
+	from "./event_handlers/EventHandlerMetadataChange";
+// ---------------------------------------------------------------------------------------------------------------------
+// Interface
+// ---------------------------------------------------------------------------------------------------------------------
+export interface IColoredTagWranglerPlugin{
+	settings: IColoredTagWranglerSettings;
+	style_manager:StyleManager;
+	app:App;
+
+	saveSettings():Promise<void>;
+}
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -35,7 +47,10 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 
 		this.style_manager.switchAllStyles();
 
+		// maybe store this somewhere?
+		new EventHandlerMetadataChange(this).register()
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	onunload() {
 		this.style_manager.removeAllStyles();

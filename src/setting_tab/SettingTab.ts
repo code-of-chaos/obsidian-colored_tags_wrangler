@@ -15,14 +15,15 @@ import {
 	ComponentTagsCanvas,
 	SettingsTabComponent,
 	ComponentFolderNote,
-	ComponentFolderNoteAutoDetect,
+	ComponentFolderNoteDetect,
 	ComponentFolderNoteFolderTagLinks,
 	ComponentTagsEnableMultipleTags,
 	ComponentTagsEnableSeparateBackground,
 	ComponentKanbanHideHashtags,
 	ComponentTagsEnableSeparateLuminance,
 	ComponentTagsEnableDarkLightDifference,
-	ComponentTagsEnableBackgroundOpacity
+	ComponentTagsEnableBackgroundOpacity,
+	ComponentFolderNoteAutoDetect
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -36,6 +37,7 @@ export class SettingTab extends PluginSettingTab {
 		comp_tags_enable_background:			SettingsTabComponent,
 		comp_folder_note:						SettingsTabComponent,
 		comp_folder_note_auto_detect:			SettingsTabComponent,
+		comp_folder_note_detect:				SettingsTabComponent,
 		comp_folder_note_folder_tag_links:		SettingsTabComponent,
 		comp_kanban:							SettingsTabComponent,
 		comp_kanban_cards:						SettingsTabComponent,
@@ -58,6 +60,7 @@ export class SettingTab extends PluginSettingTab {
 			comp_tags_enable_background: 			new ComponentTagsEnableSeparateBackground(plugin, this),
 			comp_folder_note:						new ComponentFolderNote(plugin, this),
 			comp_folder_note_auto_detect:			new ComponentFolderNoteAutoDetect(plugin, this),
+			comp_folder_note_detect:				new ComponentFolderNoteDetect(plugin, this),
 			comp_folder_note_folder_tag_links:		new ComponentFolderNoteFolderTagLinks(plugin, this),
 			comp_kanban: 							new ComponentKanban(plugin,this),
 			comp_kanban_cards:						new ComponentKanbanCards(plugin,this),
@@ -116,6 +119,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components.comp_folder_note.create_component(containerEl);
 		if (this.plugin.settings.FolderNote.Enable){
 			this._components.comp_folder_note_auto_detect.create_component(containerEl);
+			this._components.comp_folder_note_detect.create_component(containerEl);
 			this._components.comp_folder_note_folder_tag_links.create_component(containerEl);
 
 		}
