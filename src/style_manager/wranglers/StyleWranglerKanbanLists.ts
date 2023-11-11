@@ -26,7 +26,7 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 				({tag_name, color, background_color,luminance_offset}) => {
 
 					let background_hsl = rgbToHsl(background_color);
-					background_hsl.l -= luminance_offset;
+					background_hsl.l += luminance_offset;
 
 					return this.assemble_css(
 						"body.theme-light",

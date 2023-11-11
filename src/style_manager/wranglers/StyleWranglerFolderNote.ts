@@ -36,7 +36,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 							// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
 
 							let background_hsl = rgbToHsl(background_color);
-							background_hsl.l -= luminance_offset;
+							background_hsl.l += luminance_offset;
 
 							return this.assemble_css(
 								"body.theme-light",

@@ -29,7 +29,7 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 			.map(
 				({tag_name, color, background_color,luminance_offset}) => {
 					let hsl_background = rgbToHsl(background_color);
-					hsl_background.l -= luminance_offset
+					hsl_background.l += luminance_offset
 					return this.assemble_css(
 						"body.theme-light",
 						tag_name,
