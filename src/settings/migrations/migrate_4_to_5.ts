@@ -11,7 +11,7 @@ import {ISettings_v005}
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export function migrate_4_to_5(loaded_data:ISettings_v004):ISettings_v005 {
-    let transformed_data = loaded_data as unknown as IColoredTagWranglerSettings;
+    let transformed_data = loaded_data as unknown as ISettings_v005;
 
     for (const tagUUID of Object.keys(loaded_data.TagColors.ColorPicker)){
         transformed_data.TagColors.ColorPicker[tagUUID] = {
@@ -23,6 +23,6 @@ export function migrate_4_to_5(loaded_data:ISettings_v004):ISettings_v005 {
     }
 
     transformed_data.Info.SettingsVersion = 5;
-    return transformed_data as unknown as IColoredTagWranglerSettings;
+    return transformed_data as unknown as ISettings_v005;
 
 }
