@@ -22,7 +22,7 @@ export function migrate_6_to_7(loaded_data:ISettings_v006):IColoredTagWranglerSe
         }
     }
     transformed_data.TagColors.EnableSeparateLuminanceOffset = false;
-    transformed_data.TagColors.Values.LuminanceOffset = loaded_data.TagColors.Values.SemanticColorsLuminanceOffset;
+    transformed_data.TagColors.Values.LuminanceOffset = 0.15;
 
     transformed_data.Info.SettingsVersion = 7;
     return transformed_data as unknown as IColoredTagWranglerSettings;

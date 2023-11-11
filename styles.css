@@ -27,6 +27,12 @@
 	font-size: larger;
 }
 
+/* Text area for Multi Tags */
 .cwt-settings-tab textarea{
     width: 100%;
+}
+
+/* Luminance offset things */
+.cwt-settings-tab input[type=text]:nth-child(5){
+	width: 15%;
 }
