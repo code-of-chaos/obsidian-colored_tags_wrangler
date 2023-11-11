@@ -21,8 +21,6 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css_light(): Array<string> {
-		const opacity_border = this.plugin.settings.Kanban.Values.CardBorderOpacity;
-
 		return this.get_tags()
 			.map(
 				({tag_name, color, background_color,luminance_offset}) => {
@@ -40,8 +38,6 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 	}
 
 	assemble_css_dark(): Array<string> {
-		const opacity_border = this.plugin.settings.Kanban.Values.CardBorderOpacity;
-
 		return this.get_tags()
 			.map(
 				({tag_name, color, background_color,luminance_offset}) => {
