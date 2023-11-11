@@ -5,7 +5,6 @@ import {StyleWrangler}
 	from "src/style_manager/wranglers/StyleWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
-import {RGB} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

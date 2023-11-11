@@ -7,7 +7,8 @@ import {
     migrate_2_to_3,
     migrate_3_to_4,
     migrate_4_to_5,
-    migrate_5_to_6
+    migrate_5_to_6,
+    migrate_6_to_7
 } from "src/settings/migrations";
 import {IColoredTagWranglerSettings} from "./DefaultSettings";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -23,6 +24,7 @@ const MIGRATION_STEPS: ((data: any) => any)[] = [ // Using any's isn't perfect b
     (data) => migrate_3_to_4(data),
     (data) => migrate_4_to_5(data),
     (data) => migrate_5_to_6(data),
+    (data) => migrate_6_to_7(data),
 ];
 
 // ---------------------------------------------------------------------------------------------------------------------

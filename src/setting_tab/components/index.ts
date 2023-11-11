@@ -15,3 +15,6 @@ export * from 'src/setting_tab/components/ComponentFolderNoteFolderTagLinks';
 export * from 'src/setting_tab/components/ComponentTagsEnableMultipleTags';
 export * from 'src/setting_tab/components/ComponentTagsEnableSeparateBackground';
 export * from 'src/setting_tab/components/ComponentKanbanHideHashtags';
+export * from 'src/setting_tab/components/ComponentTagsEnableSeparateLuminance';
+export * from 'src/setting_tab/components/ComponentTagsEnableDarkLightDifference';
+export * from 'src/setting_tab/components/ComponentTagsEnableBackgroundOpacity';

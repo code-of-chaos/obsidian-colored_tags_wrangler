@@ -18,7 +18,11 @@ import {
 	ComponentFolderNoteAutoDetect,
 	ComponentFolderNoteFolderTagLinks,
 	ComponentTagsEnableMultipleTags,
-	ComponentTagsEnableSeparateBackground, ComponentKanbanHideHashtags
+	ComponentTagsEnableSeparateBackground,
+	ComponentKanbanHideHashtags,
+	ComponentTagsEnableSeparateLuminance,
+	ComponentTagsEnableDarkLightDifference,
+	ComponentTagsEnableBackgroundOpacity
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -39,25 +43,32 @@ export class SettingTab extends PluginSettingTab {
 		comp_kanban_hashtags:					SettingsTabComponent,
 		comp_debug:								SettingsTabComponent,
 		comp_debug_reloadcss:					SettingsTabComponent,
+		comp_tags_enable_luminance:			    SettingsTabComponent,
+		comp_tags_enable_dark_light_difference: SettingsTabComponent,
+		comp_tags_enable_background_opacity: SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {
 		super(plugin.app, plugin);
 		this.plugin = plugin;
 		this._components = {
-			comp_tags: 							new ComponentTags(plugin, this),
-			comp_tags_canvas:					new ComponentTagsCanvas(plugin, this),
-			comp_tags_enable_multiple_tags:		new ComponentTagsEnableMultipleTags(plugin, this),
-			comp_tags_enable_background: 		new ComponentTagsEnableSeparateBackground(plugin, this),
-			comp_folder_note:					new ComponentFolderNote(plugin, this),
-			comp_folder_note_auto_detect:		new ComponentFolderNoteAutoDetect(plugin, this),
-			comp_folder_note_folder_tag_links:	new ComponentFolderNoteFolderTagLinks(plugin, this),
-			comp_kanban: 						new ComponentKanban(plugin,this),
-			comp_kanban_cards:					new ComponentKanbanCards(plugin,this),
-			comp_kanban_lists:					new ComponentKanbanLists(plugin,this),
-			comp_kanban_hashtags:				new ComponentKanbanHideHashtags(plugin,this),
-			comp_debug:							new ComponentDebug(plugin,this),
-			comp_debug_reloadcss:				new ComponentDebugReloadCSS(plugin,this),
+			comp_tags: 								new ComponentTags(plugin, this),
+			comp_tags_canvas:						new ComponentTagsCanvas(plugin, this),
+			comp_tags_enable_multiple_tags:			new ComponentTagsEnableMultipleTags(plugin, this),
+			comp_tags_enable_background: 			new ComponentTagsEnableSeparateBackground(plugin, this),
+			comp_folder_note:						new ComponentFolderNote(plugin, this),
+			comp_folder_note_auto_detect:			new ComponentFolderNoteAutoDetect(plugin, this),
+			comp_folder_note_folder_tag_links:		new ComponentFolderNoteFolderTagLinks(plugin, this),
+			comp_kanban: 							new ComponentKanban(plugin,this),
+			comp_kanban_cards:						new ComponentKanbanCards(plugin,this),
+			comp_kanban_lists:						new ComponentKanbanLists(plugin,this),
+			comp_kanban_hashtags:					new ComponentKanbanHideHashtags(plugin,this),
+			comp_debug:								new ComponentDebug(plugin,this),
+			comp_debug_reloadcss:					new ComponentDebugReloadCSS(plugin,this),
+			comp_tags_enable_luminance:				new ComponentTagsEnableSeparateLuminance(plugin, this),
+			comp_tags_enable_dark_light_difference: new ComponentTagsEnableDarkLightDifference(plugin,this),
+			comp_tags_enable_background_opacity: 	new ComponentTagsEnableBackgroundOpacity(plugin,this),
+
 		}
 	}
 	async display() {
@@ -70,7 +81,7 @@ export class SettingTab extends PluginSettingTab {
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('h2', {text: "Obsidian tags"});
 		containerEl.createDiv({cls:"setting-item-description",text: `Don't add the '#' before the tag. Write everything in lowercase without spaces.`});
-		containerEl.createDiv({cls:"setting-item-description",text: `If you forget this, this done for you in code, resulting in the input being changed if you reload this page.`});
+		containerEl.createDiv({cls:"setting-item-description",text: `If you forget this, this is done in code for you, resulting in the input being changed.`});
 		containerEl.createEl('br');
 
 		// Tags lists and which component they should adhere to
@@ -80,6 +91,9 @@ export class SettingTab extends PluginSettingTab {
 		this._components.comp_tags_canvas.create_component(containerEl);
 		this._components.comp_tags_enable_multiple_tags.create_component(containerEl);
 		this._components.comp_tags_enable_background.create_component(containerEl);
+		this._components.comp_tags_enable_luminance.create_component(containerEl);
+		this._components.comp_tags_enable_dark_light_difference.create_component(containerEl);
+		this._components.comp_tags_enable_background_opacity.create_component(containerEl);
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------

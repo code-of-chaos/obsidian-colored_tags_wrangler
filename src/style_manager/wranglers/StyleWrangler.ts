@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {removeById}
+import {hslToRgb, removeById, rgbToHsl}
 	from "src/lib";
 import ColoredTagWranglerPlugin
 	from "src/main";
@@ -20,7 +20,9 @@ export interface IStyleWrangler{
 	assemble_css_dark():Array<string>;
 	apply_styles(): void;
 	remove_styles(): void;
-	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, background_opacity:number}>;
+	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}>;
+	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
+	get_background_string(color:RGB):string;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -66,18 +68,37 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		removeById(this.id);
 	};
 
-	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, background_opacity:number}>{
+	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}>{
 		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
 			.map(tagUUID => {
-				const {tag_name, color, background_color, background_opacity} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
+				const {tag_name, color, background_color, luminance_offset} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
 				if (this.plugin.settings?.TagColors.EnableMultipleTags) {
 					return tag_name.split(";").map(tag => {
-						return {tag_name: tag, color, background_color, background_opacity};
+						return {tag_name: tag, color, background_color, luminance_offset};
 					})
 				} else {
-					return {tag_name: tag_name, color, background_color, background_opacity};
+					return {tag_name: tag_name, color, background_color, luminance_offset};
 				}
 			})
 			.flat();
+	}
+
+	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
+		if (is_light_theme && this.plugin.settings.TagColors.EnableDarkLightDifference ){
+			luminance_offset = -luminance_offset; // Double negative => +
+		}
+		let background_hsl = rgbToHsl(background_color);
+		background_hsl.l -= luminance_offset;
+		return hslToRgb(background_hsl);
+	}
+
+	get_background_string(color:RGB):string{
+		let rgb = this.plugin.settings.TagColors.EnableBackgroundOpacity
+			?  "rgba"
+			: "rgb";
+		let opacity = this.plugin.settings.TagColors.EnableBackgroundOpacity
+			?  `, ${this.plugin.settings.TagColors.Values.BackgroundOpacity}`
+			: "";
+		return `${rgb}(${color.r}, ${color.g}, ${color.b}${opacity})`
 	}
 }
