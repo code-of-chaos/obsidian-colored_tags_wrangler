@@ -109,7 +109,7 @@ ${theme} div.nav-folder:has(> [data-path="${folder_path}"]) .nav-file-title-cont
 
 /* Applies color to the bar next to the notes in the folder*/
 ${theme} .nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-children {
-	border-left-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
+	border-left-color: rgba(${color.r}, ${color.g}, ${color.b}, 0.2) ${important};
 	border-left-width: 2px ${important};
 }
 
