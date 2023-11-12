@@ -57,10 +57,10 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 		return`
 ${theme} div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
 	background: ${this.get_background_string(background_color)} !important;
-	border-color: rgb(${color.r}, ${color.g}, ${color.b}) !important;
+	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) !important;
 }
 ${theme} div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
-	border-color: rgb(${color.r}, ${color.g}, ${color.b}) !important;
+	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) !important;
 }`
 
 	}

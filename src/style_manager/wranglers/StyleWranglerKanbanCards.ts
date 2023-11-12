@@ -59,7 +59,7 @@ ${theme} div.kanban-plugin__item.has-tag-${tag_name} div.kanban-plugin__item-tit
 	background: ${this.get_background_string(background_color)} !important;
 }
 ${theme} div.kanban-plugin__item.has-tag-${tag_name}{ 
-	border-color: rgb(${color.r}, ${color.g}, ${color.b}) !important;
+	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) !important;
 }`
 
 	}
