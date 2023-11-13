@@ -47,10 +47,7 @@ export async function detect_all_links(plugin:IColoredTagWranglerPlugin): Promis
             markdownFiles
                 .filter(file => file_is_folderNote(file) )
                 .map(async file => {
-                    let tags = plugin.app.metadataCache.getFileCache(file)?.frontmatter?.tags as string[] | undefined;
-                    if (tags === undefined){
-                        return []
-                    }
+                    let tags = plugin.app.metadataCache.getFileCache(file)?.frontmatter?.tags as string[] ?? [];
                     return tags
                         .filter(async tag => await processTagColors(plugin, tag))
                         .map(tag => ({

@@ -41,7 +41,7 @@ export class EventHandlerMetadataChange{
             return
         }
 
-        let links = Object
+        const links = Object
             .values(this.plugin.settings.FolderNote.FolderTagLinks)
             .filter(link=> link.folder_path !== folder_path); // exclude the current file, if it is in there somewhere
 
