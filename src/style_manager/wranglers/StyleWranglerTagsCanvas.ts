@@ -55,10 +55,12 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 	}
 
 	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB){
+		const important:string = this.get_important();
+
 		return`
 ${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
-	background : ${this.get_background_string(background_color)} !important;
-	border-color: rgb(${color.r}, ${color.g}, ${color.b}) !important;
+	background : ${this.get_background_string(background_color)} ${important};
+	border-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }`
 
 	}
