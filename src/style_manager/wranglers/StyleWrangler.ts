@@ -98,13 +98,13 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	}
 
 	get_background_string(color:RGB):string{
-		const rgb = this.plugin.settings.TagColors.EnableBackgroundOpacity
+		const rgb:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
 			?  "rgba"
 			: "rgb";
-		const opacity = this.plugin.settings.TagColors.EnableBackgroundOpacity
+		const opacity:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
 			?  `, ${this.plugin.settings.TagColors.Values.BackgroundOpacity}`
 			: "";
-		return `${rgb}(${color.r}, ${color.g}, ${color.b}${opacity}})`
+		return `${rgb}(${color.r}, ${color.g}, ${color.b}${opacity})`
 	}
 
 	get_important(): string {
