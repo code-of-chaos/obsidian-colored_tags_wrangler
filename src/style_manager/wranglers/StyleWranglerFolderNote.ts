@@ -90,20 +90,20 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 	private assemble_css(theme:string, folder_path:string, color:RGB, background:RGB, important:string, border_radius:string, padding:string){
 		return`
 /* Apply color to drop down triangle */
-${theme} div.nav-folder-title[data-path="${folder_path}"] svg.svg-icon.right-triangle{
+${theme} .nav-folder:has(> [data-path="${folder_path}"]) svg.svg-icon.right-triangle{
 	stroke: rgb(${color.r}, ${color.g}, ${color.b}) ${important}; 
 }
 
 /* Applies color to the title of the folder*/
 ${theme} .nav-folder.alx-folder-with-note:has(> [data-path="${folder_path}"]) > .nav-folder-title > .nav-folder-title-content,
-${theme} div.nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-title-content{
+${theme} .nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-title-content{
 	text-decoration-color: rgba(${color.r}, ${color.g}, ${color.b},  0.6) ${important};
 	text-decoration-thickness: 2px;
 	color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }
 
 /* Applies color to the title of the file*/
-${theme} div.nav-folder:has(> [data-path="${folder_path}"]) .nav-file-title-content{
+${theme} .nav-folder:has(> [data-path="${folder_path}"]) .nav-file-title-content{
 	color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }
 
