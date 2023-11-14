@@ -89,7 +89,7 @@ export class ComponentTags extends SettingsTabComponent{
 				// Add the updated tag and color
 				new_tag_content.tag_name = value
 					.replace("#", "")
-					.toLowerCase()
+					// .toLowerCase() // Currently this has been disabled. Maybe a future setting?
 					.trim()
 				;
 				this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
