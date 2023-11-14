@@ -83,7 +83,7 @@ export class SettingTab extends PluginSettingTab {
 		// Tags Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('h2', {text: "Obsidian tags"});
-		containerEl.createDiv({cls:"setting-item-description",text: `Don't add the '#' before the tag. Write everything in lowercase without spaces.`});
+		containerEl.createDiv({cls:"setting-item-description",text: `Don't add the '#' before the tag.`});
 		containerEl.createDiv({cls:"setting-item-description",text: `If you forget this, this is done in code for you, resulting in the input being changed.`});
 		containerEl.createEl('br');
 
