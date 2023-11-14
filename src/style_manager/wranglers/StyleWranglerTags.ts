@@ -43,7 +43,7 @@ export class StyleWranglerTags extends StyleWrangler {
 	}
 
 	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB){
-		let important = this.plugin.settings.FolderNote.Values.ForceImportant ? "!important" : ""
+		const important:string = this.get_important();
 
 		// noinspection CssInvalidPropertyValue,CssInvalidFunction,CssUnusedSymbol
 		return` 

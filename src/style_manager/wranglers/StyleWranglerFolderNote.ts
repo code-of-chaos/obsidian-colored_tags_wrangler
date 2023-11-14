@@ -21,15 +21,14 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css_light(): Array<string> {
-		let all_tags = this.get_tags();
-		// let important = this.plugin.settings.FolderNote.Values.ForceImportant ? "!important" : ""
-		let important = this.plugin.settings.FolderNote.Values.ForceImportant ? "!important" : ""
-		let border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
-		let padding = this.plugin.settings.FolderNote.Values.Padding
+		const all_tags = this.get_tags();
+		const border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
+		const padding = this.plugin.settings.FolderNote.Values.Padding
+
 		return Object.keys(this.plugin.settings.FolderNote.FolderTagLinks)
 			.map(
 				folderUUID => {
-					let {folder_path, tag_name:folder_tag_name} = this.plugin.settings.FolderNote.FolderTagLinks[folderUUID];
+					const {folder_path, tag_name:folder_tag_name} = this.plugin.settings.FolderNote.FolderTagLinks[folderUUID];
 					return all_tags
 						.filter(({tag_name:known_tag})=>known_tag===folder_tag_name)
 						.map(({color, background_color, luminance_offset}) => {
@@ -43,7 +42,6 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 									luminance_offset,
 									true
 								),
-								important,
 								border_radius,
 								padding
 							)
@@ -55,8 +53,6 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 
 	assemble_css_dark(): Array<string> {
 		let all_tags = this.get_tags();
-		// let important = this.plugin.settings.FolderNote.Values.ForceImportant ? "!important" : ""
-		let important = this.plugin.settings.FolderNote.Values.ForceImportant ? "!important" : ""
 		let border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
 		let padding = this.plugin.settings.FolderNote.Values.Padding
 
@@ -77,7 +73,6 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 									luminance_offset,
 									false
 								),
-								important,
 								border_radius,
 								padding
 							)
@@ -87,23 +82,27 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 			.flat()
 	}
 
-	private assemble_css(theme:string, folder_path:string, color:RGB, background:RGB, important:string, border_radius:string, padding:string){
+	private assemble_css(theme:string, folder_path:string, color:RGB, background:RGB, border_radius:string, padding:string){
+		const important:string = this.get_important();
+
+		console.warn({folder_path, important})
+
 		return`
 /* Apply color to drop down triangle */
-${theme} div.nav-folder-title[data-path="${folder_path}"] svg.svg-icon.right-triangle{
+${theme} .nav-folder:has(> [data-path="${folder_path}"]) svg.svg-icon.right-triangle{
 	stroke: rgb(${color.r}, ${color.g}, ${color.b}) ${important}; 
 }
 
 /* Applies color to the title of the folder*/
 ${theme} .nav-folder.alx-folder-with-note:has(> [data-path="${folder_path}"]) > .nav-folder-title > .nav-folder-title-content,
-${theme} div.nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-title-content{
+${theme} .nav-folder:has(> [data-path="${folder_path}"]) .nav-folder-title-content{
 	text-decoration-color: rgba(${color.r}, ${color.g}, ${color.b},  0.6) ${important};
 	text-decoration-thickness: 2px;
 	color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }
 
 /* Applies color to the title of the file*/
-${theme} div.nav-folder:has(> [data-path="${folder_path}"]) .nav-file-title-content{
+${theme} .nav-folder:has(> [data-path="${folder_path}"]) .nav-file-title-content{
 	color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }
 

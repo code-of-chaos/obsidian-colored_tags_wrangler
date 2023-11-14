@@ -54,12 +54,14 @@ export class StyleWranglerKanbanCards extends StyleWrangler {
 	}
 
 	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB){
+		const important:string = this.get_important();
+
 		return`
 ${theme} div.kanban-plugin__item.has-tag-${tag_name} div.kanban-plugin__item-title-wrapper { 
-	background: ${this.get_background_string(background_color)} !important;
+	background: ${this.get_background_string(background_color)} ${important};
 }
 ${theme} div.kanban-plugin__item.has-tag-${tag_name}{ 
-	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) !important;
+	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) ${important};
 }`
 
 	}

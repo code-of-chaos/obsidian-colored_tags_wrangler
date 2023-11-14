@@ -23,6 +23,7 @@ export interface IStyleWrangler{
 	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}>;
 	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
 	get_background_string(color:RGB):string;
+	get_important():string;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -73,9 +74,13 @@ export abstract class StyleWrangler implements IStyleWrangler{
 			.map(tagUUID => {
 				const {tag_name, color, background_color, luminance_offset} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
 				if (this.plugin.settings?.TagColors.EnableMultipleTags) {
-					return tag_name.split(";").map(tag => {
-						return {tag_name: tag, color, background_color, luminance_offset};
-					})
+					return tag_name
+						.split(/[\n;]/) // for organization, I added \n
+						.filter(tag => tag) // filter out empty lines
+						.map(tag => (
+							// Also trim the tag for leading spaces after or before a \n? Should fix some common issues.
+							{tag_name: tag.trim(), color, background_color, luminance_offset})
+						);
 				} else {
 					return {tag_name: tag_name, color, background_color, luminance_offset};
 				}
@@ -93,12 +98,20 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	}
 
 	get_background_string(color:RGB):string{
-		let rgb = this.plugin.settings.TagColors.EnableBackgroundOpacity
+		const rgb:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
 			?  "rgba"
 			: "rgb";
-		let opacity = this.plugin.settings.TagColors.EnableBackgroundOpacity
+		const opacity:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
 			?  `, ${this.plugin.settings.TagColors.Values.BackgroundOpacity}`
 			: "";
 		return `${rgb}(${color.r}, ${color.g}, ${color.b}${opacity})`
+	}
+
+	get_important(): string {
+		// Not that this setting should be used by users,
+		// 		but can be helpful for people who want to debug what is going on
+		return this.plugin.settings.FolderNote.Values.ForceImportant
+			? "!important"
+			: ""
 	}
 }

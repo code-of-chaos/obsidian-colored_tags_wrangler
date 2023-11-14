@@ -13,12 +13,16 @@ import {SettingsTabComponent}
 import {v4 as uuid4}
 	from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------
+// Support Code
+// ---------------------------------------------------------------------------------------------------------------------
+const _NEW_TAG_NAME:string = "new-tag";
+const _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
+const _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 255, g: 255, b: 255 };
+
+// ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ComponentTags extends SettingsTabComponent{
-	private _NEW_TAG_NAME:string = "new-tag";
-	private _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
-	private _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 255, g: 255, b: 255 };
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
@@ -32,9 +36,9 @@ export class ComponentTags extends SettingsTabComponent{
 					.setButtonText("Add new tag")
 					.onClick(async () => {
 						this.plugin.settings.TagColors.ColorPicker[uuid4()] = {
-							tag_name: this._NEW_TAG_NAME,
-							color: this._NEW_DEFAULT_COLOR, // Default color
-							background_color: this._NEW_DEFAULT_BACKGROUND_COLOR, // Default color
+							tag_name: _NEW_TAG_NAME,
+							color: _NEW_DEFAULT_COLOR, // Default color
+							background_color: _NEW_DEFAULT_BACKGROUND_COLOR, // Default color
 							luminance_offset: this.plugin.settings.TagColors.Values.LuminanceOffset,
 						};
 						await Promise.all([
@@ -79,7 +83,7 @@ export class ComponentTags extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	private _text_callback(text:TextComponent|TextAreaComponent, tag_id:string, new_tag_content:{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}) {
 		return text
-			.setPlaceholder(this._NEW_TAG_NAME)
+			.setPlaceholder(_NEW_TAG_NAME)
 			.setValue(new_tag_content.tag_name)
 			.onChange(async (value) => {
 				// Add the updated tag and color

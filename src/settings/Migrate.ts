@@ -51,7 +51,7 @@ export function Migrate(data:any):IColoredTagWranglerSettings|null   {
     let migratedData: IColoredTagWranglerSettings = data;
     for (version; version < MIGRATION_STEPS.length; version++) {
         migratedData = MIGRATION_STEPS[version](migratedData);
-        console.log(`Migrated data.json from ColoredTagsWrangler to version ${version+1}`)
+        console.log(`Migrated data.json from ColoredTagsWrangler to version ${migratedData.Info.SettingsVersion}`)
     }
     return migratedData;
 }
