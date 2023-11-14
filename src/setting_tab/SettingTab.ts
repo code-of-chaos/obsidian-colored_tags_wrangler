@@ -47,7 +47,7 @@ export class SettingTab extends PluginSettingTab {
 		comp_debug_reloadcss:					SettingsTabComponent,
 		comp_tags_enable_luminance:			    SettingsTabComponent,
 		comp_tags_enable_dark_light_difference: SettingsTabComponent,
-		comp_tags_enable_background_opacity: SettingsTabComponent,
+		comp_tags_enable_background_opacity: 	SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {

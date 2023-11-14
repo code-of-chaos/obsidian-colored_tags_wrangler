@@ -27,7 +27,7 @@ export class ComponentFolderNoteDetect extends SettingsTabComponent{
 					// Reset the table and then detect
 					this.plugin.settings.FolderNote.FolderTagLinks = {}
 
-					let found_folder_tags = await detect_all_links(this.plugin);
+					const found_folder_tags = await detect_all_links(this.plugin);
 					found_folder_tags
 						.sort((a, b) => a.folder_path.localeCompare(b.folder_path))
 						.forEach(v => {

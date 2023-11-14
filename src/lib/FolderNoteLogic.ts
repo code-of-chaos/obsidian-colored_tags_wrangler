@@ -43,7 +43,7 @@ export async function detect_all_links(plugin:IColoredTagWranglerPlugin): Promis
         const { vault } = plugin.app;
         const markdownFiles = vault.getMarkdownFiles();
 
-        let links = await Promise.all(
+        const links = await Promise.all(
             markdownFiles
                 .filter(file => file_is_folderNote(file) )
                 .map(async file => {
