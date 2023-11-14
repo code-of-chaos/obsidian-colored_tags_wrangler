@@ -13,7 +13,7 @@ export class ComponentTagsEnableMultipleTags extends SettingsTabComponent {
 	public create_component(containerEL:HTMLElement): Setting {
 		return new Setting(containerEL)
 			.setName("Enable multiple tags per line")
-			.setDesc("Allows the usage of `;` to bind multiple tags to one color. (Currently only works with the Color picker).")
+			.setDesc("Allows the usage of `;` or `\\n` (new line) to bind multiple tags to one color.")
 			.addToggle(component => {
 					component
 						.setValue(this.plugin.settings.TagColors.EnableMultipleTags)
