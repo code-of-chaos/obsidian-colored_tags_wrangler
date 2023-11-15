@@ -85,8 +85,6 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 	private assemble_css(theme:string, folder_path:string, color:RGB, background:RGB, border_radius:string, padding:string){
 		const important:string = this.get_important();
 
-		console.warn({folder_path, important})
-
 		return`
 /* Apply color to drop down triangle */
 ${theme} .nav-folder:has(> [data-path="${folder_path}"]) svg.svg-icon.right-triangle{
