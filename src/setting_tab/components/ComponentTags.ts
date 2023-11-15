@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {
+	ButtonComponent,
 	RGB,
 	Setting, SliderComponent, TextAreaComponent,
 	TextComponent
@@ -31,23 +32,8 @@ export class ComponentTags extends SettingsTabComponent{
 		let setting = new Setting(containerEL)
 			.setName("Custom color tags")
 			.setDesc(`Define custom colors for tags.`)
-			.addButton((button) =>
-				button
-					.setButtonText("Add new tag")
-					.onClick(async () => {
-						this.plugin.settings.TagColors.ColorPicker[uuid4()] = {
-							tag_name: _NEW_TAG_NAME,
-							color: _NEW_DEFAULT_COLOR, // Default color
-							background_color: _NEW_DEFAULT_BACKGROUND_COLOR, // Default color
-							luminance_offset: this.plugin.settings.TagColors.Values.LuminanceOffset,
-						};
-						await Promise.all([
-							this.plugin.saveSettings(),
-							this.settings_tab.display()
-						]);
-					})
-					.setClass("mod-cta")
-			);
+			// Keep the button at the top for old times sake
+			.addButton((button) => this._add_new_tag_button(button));
 
 		// Only when Debug settings are on, allow the "Clear all" button to appear
 		if(this.plugin.settings.Debug.Enable){
@@ -76,9 +62,31 @@ export class ComponentTags extends SettingsTabComponent{
 			}
 			this._createTagColorSetting(tagUUID, this.plugin.settings.TagColors.ColorPicker[tagUUID], containerEL);
 		}
+
+		// Add the same button to the bottom of the list
+		//		Else you need to scroll up all time to create new tag at the bottom
+		new Setting(containerEL).addButton((button) => this._add_new_tag_button(button));
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
+	private _add_new_tag_button(button:ButtonComponent){
+		button
+			.setButtonText("Add new tag")
+			.onClick(async () => {
+				this.plugin.settings.TagColors.ColorPicker[uuid4()] = {
+					tag_name: _NEW_TAG_NAME,
+					color: _NEW_DEFAULT_COLOR, // Default color
+					background_color: _NEW_DEFAULT_BACKGROUND_COLOR, // Default color
+					luminance_offset: this.plugin.settings.TagColors.Values.LuminanceOffset,
+				};
+				await Promise.all([
+					this.plugin.saveSettings(),
+					this.settings_tab.display()
+				]);
+			})
+			.setClass("mod-cta")
+	}
+
 	private _text_callback(text:TextComponent|TextAreaComponent, tag_id:string, new_tag_content:{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}) {
 		return text
 			.setPlaceholder(_NEW_TAG_NAME)
