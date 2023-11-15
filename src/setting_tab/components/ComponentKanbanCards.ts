@@ -12,8 +12,8 @@ export class ComponentKanbanCards extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): Setting {
-		return new Setting(containerEL)
+	public create_component(containerEL:HTMLElement): void {
+		new Setting(containerEL)
 			.setName("Apply tag color to kanban card")
 			.setDesc(`
 				Applies the tag color, of the tag within the card, to the background color of the card. 

@@ -16,8 +16,8 @@ export class ComponentFolderNoteDetect extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): Setting {
-		return new Setting(containerEL)
+	public create_component(containerEL:HTMLElement): void {
+		new Setting(containerEL)
 			.setName("Detect tags in folder notes")
 			.setDesc(`Traverses your vault and stores all tags found in notes with the same name as the folder they are found in.`)
 			.addButton((button) =>

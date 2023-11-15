@@ -10,8 +10,8 @@ export class ComponentTagsEnableDarkLightDifference extends SettingsTabComponent
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): Setting {
-		return new Setting(containerEL)
+	public create_component(containerEL:HTMLElement): void {
+		new Setting(containerEL)
 			.setName("Enable different luminance formula for dark & light mode")
 			.setDesc(`
 				When enabled, applies the luminance offset differently depending on Dark or Light mode.

@@ -16,7 +16,7 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): Setting {
+	public create_component(containerEL:HTMLElement): void {
 		let setting = new Setting(containerEL)
 			.setName("Top Level Folder ")
 			.setDesc(`Define custom colors for tags.`)
@@ -60,8 +60,6 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 			}
 			this._createFolderTagLinks(linkUUID, this.plugin.settings.FolderNote.FolderTagLinks[linkUUID], containerEL);
 		}
-
-		return setting
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
