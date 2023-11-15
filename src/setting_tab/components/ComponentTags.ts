@@ -27,7 +27,7 @@ export class ComponentTags extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): Setting {
+	public create_component(containerEL:HTMLElement): void {
 		let setting = new Setting(containerEL)
 			.setName("Custom color tags")
 			.setDesc(`Define custom colors for tags.`)
@@ -76,8 +76,6 @@ export class ComponentTags extends SettingsTabComponent{
 			}
 			this._createTagColorSetting(tagUUID, this.plugin.settings.TagColors.ColorPicker[tagUUID], containerEL);
 		}
-
-		return setting
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

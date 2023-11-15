@@ -9,8 +9,8 @@ import {SettingsTabComponent}
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ComponentDebug extends SettingsTabComponent{
-	public create_component(containerEL:HTMLElement): Setting {
-		return new Setting(containerEL)
+	public create_component(containerEL:HTMLElement): void {
+		new Setting(containerEL)
 			.setName("Enable debug options")
 			.setDesc(`
 				Allows you to view and use some extra debug option. 

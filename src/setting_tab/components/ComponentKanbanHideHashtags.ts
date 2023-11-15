@@ -12,8 +12,8 @@ export class ComponentKanbanHideHashtags extends SettingsTabComponent{
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): Setting {
-		return new Setting(containerEL)
+	public create_component(containerEL:HTMLElement): void {
+		new Setting(containerEL)
 			.setName("Omit '#' in kanban boards")
 			.setDesc(`
 				Hides the '#' from the kanban view, 

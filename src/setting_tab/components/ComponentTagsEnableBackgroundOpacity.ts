@@ -10,7 +10,7 @@ export class ComponentTagsEnableBackgroundOpacity extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): Setting {
+	public create_component(containerEL:HTMLElement): void {
 		let setting = new Setting(containerEL)
 			.setName("Enable background opacity")
 			.setDesc(`
@@ -45,7 +45,6 @@ export class ComponentTagsEnableBackgroundOpacity extends SettingsTabComponent {
 					});
 			});
 		}
-		return setting
 	}
 }
 

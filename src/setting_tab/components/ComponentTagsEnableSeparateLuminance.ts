@@ -10,8 +10,8 @@ export class ComponentTagsEnableSeparateLuminance extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): Setting {
-		return new Setting(containerEL)
+	public create_component(containerEL:HTMLElement): void {
+		new Setting(containerEL)
 			.setName("Enable separate luminance offsets per tag")
 			.setDesc("Allows you to specify a different luminance offset value for each tag. This offset is used in background of items like Canvas Card, Kanban Card/List, ...")
 			.addToggle(component => {
