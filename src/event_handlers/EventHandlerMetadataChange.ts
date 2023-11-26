@@ -41,25 +41,31 @@ export class EventHandlerMetadataChange{
             return
         }
 
-        const links = Object
-            .values(this.plugin.settings.FolderNote.FolderTagLinks)
-            .filter(link=> link.folder_path !== folder_path); // exclude the current file, if it is in there somewhere
+		// Filter out links associated with the current file
+		const linksToKeep = Object
+			.values(this.plugin.settings.FolderNote.FolderTagLinks)
+			.filter(link => link.folder_path !== folder_path);
+
+		// Create new links based on tags
+		const newLinks = tags
+			.map(tag => tag.replace("#", ""))
+			.filter(tag => processTagColors(this.plugin, tag))
+			.map(tag => ({
+				tag_name: tag as string,
+				folder_path: folder_path
+			}));
+
 
         this.plugin.settings.FolderNote.FolderTagLinks = {}; // reset the list
 
-        links
-            .concat(tags
-                .map(tag=> tag.replace("#", ""))
-                .filter(tag => processTagColors(this.plugin, tag))
-                .map(tag => ({
-                    tag_name: tag as string,
-                    folder_path: folder_path
-                }))
-            )
-            .sort((a, b) => a.folder_path.localeCompare(b.folder_path))
-            .forEach(v => {
-                this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = v
-            })
+		const updatedLinks = [...linksToKeep, ...newLinks];
+
+		updatedLinks
+			.sort((a, b) => a.folder_path.localeCompare(b.folder_path))
+			.forEach(link => {
+				this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = link;
+			})
+		;
 
         await this.plugin.saveSettings()
 
