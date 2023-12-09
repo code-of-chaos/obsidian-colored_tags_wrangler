@@ -34,19 +34,15 @@ export class ComponentCSSTagsNoWrap extends SettingsTabComponent{
 					You can specify which value to use for the CSS property 'white-space'. 
 					Intended uses are 'pre' or 'nowrap'.
 				`)
-				.addText(component => {
+				.addDropdown(component => {
 					component
+						.addOption('pre', 'pre')
+						.addOption('nowrap', 'nowrap')
 						.setValue(this.plugin.settings.CSS.TagsNoWrapText)
 						.onChange(async (value) => {
-
-							if (INVALID_CHAR.some(char => value.includes(char))){
-								new Notice(`The inserted value cannot any of the following characters: ${INVALID_CHAR.join(',')}`)
-								return
-							}
-
 							this.plugin.settings.CSS.TagsNoWrapText = value;
 							await this.plugin.saveSettings();
-						})
+						});
 				})
 		}
 
