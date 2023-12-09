@@ -42,7 +42,7 @@ export function Migrate(data:any):IColoredTagWranglerSettings|null   {
 
     if (version === -1){
         // Exit clause
-        console.warn("Version could not be established, assigning as is. Please data.json.")
+        console.warn("Version could not be established, assigning as is. Please check the data.json file.")
         return data
     }
 
