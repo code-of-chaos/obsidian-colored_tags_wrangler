@@ -7,11 +7,12 @@ import {ISettings_v006}
     from "../old_setting_versions/ISettings_v006";
 import {RGB} from "obsidian";
 import {hslToRgb, rgbToHsl} from "../../lib";
+import {ISettings_v007} from "../old_setting_versions/ISettings_v007";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_6_to_7(loaded_data:ISettings_v006):IColoredTagWranglerSettings {
-    let transformed_data = loaded_data as unknown as IColoredTagWranglerSettings;
+export function migrate_6_to_7(loaded_data:ISettings_v006):ISettings_v007 {
+    let transformed_data = loaded_data as unknown as ISettings_v007;
     transformed_data.TagColors.Values.LuminanceOffset = 0.15;
     transformed_data.TagColors.EnableSeparateLuminanceOffset = false;
     transformed_data.TagColors.EnableDarkLightDifference = true;
@@ -32,8 +33,7 @@ export function migrate_6_to_7(loaded_data:ISettings_v006):IColoredTagWranglerSe
     }
 
     transformed_data.Info.SettingsVersion = 7;
-    return transformed_data as unknown as IColoredTagWranglerSettings;
-
+    return transformed_data as unknown as ISettings_v007;
 }
 
 function checkColor(color:RGB, background:RGB):boolean{

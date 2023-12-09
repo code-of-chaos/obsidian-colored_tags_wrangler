@@ -9,7 +9,7 @@ import {
     migrate_4_to_5,
     migrate_5_to_6,
     migrate_6_to_7,
-    migrate_7_to_8
+    migrate_7_to_8, migrate_8_to_9
 } from "src/settings/migrations";
 import {IColoredTagWranglerSettings} from "./DefaultSettings";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -27,6 +27,7 @@ const MIGRATION_STEPS: ((data: any) => any)[] = [ // Using any's isn't perfect b
     (data) => migrate_5_to_6(data),
     (data) => migrate_6_to_7(data),
     (data) => migrate_7_to_8(data),
+    (data) => migrate_8_to_9(data),
 ];
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -42,7 +43,7 @@ export function Migrate(data:any):IColoredTagWranglerSettings|null   {
 
     if (version === -1){
         // Exit clause
-        console.warn("Version could not be established, assigning as is. Please data.json.")
+        console.warn("Version could not be established, assigning as is. Please check the data.json file.")
         return data
     }
 

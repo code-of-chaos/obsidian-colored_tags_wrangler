@@ -11,6 +11,7 @@ import {
 	StyleWranglerKanbanHashtags,
 	StyleWranglerKanbanCards,
 	StyleWranglerKanbanLists,
+	StyleWranglerCSS,
 } from "src/style_manager/wranglers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -23,6 +24,7 @@ export class StyleManager{
 	wrangler_kanban_cards: StyleWranglerKanbanCards;
 	wrangler_kanban_lists: StyleWranglerKanbanLists;
 	wrangler_folder_note: StyleWranglerFolderNote;
+	wrangler_css: StyleWranglerCSS;
 
 	private _style_wranglers: Array<IStyleWrangler>;
 	// -----------------------------------------------------------------------------------------------------------------
@@ -36,6 +38,7 @@ export class StyleManager{
 		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
 		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
 		this.wrangler_folder_note = new StyleWranglerFolderNote(plugin);
+		this.wrangler_css = new StyleWranglerCSS(plugin);
 
 		this._style_wranglers = new Array<IStyleWrangler>(
 			this.wrangler_tags,
@@ -44,6 +47,7 @@ export class StyleManager{
 			this.wrangler_kanban_cards,
 			this.wrangler_kanban_lists,
 			this.wrangler_folder_note,
+			this.wrangler_css,
 		)
 	}
 	// -----------------------------------------------------------------------------------------------------------------
@@ -73,6 +77,11 @@ export class StyleManager{
 		this.plugin.settings.FolderNote.Enable
 			? this.wrangler_folder_note.apply_styles()
 			: this.wrangler_folder_note.remove_styles() ;
+
+		this.plugin.settings.CSS.Enable
+			? this.wrangler_css.apply_styles()
+			: this.wrangler_css.remove_styles() ;
+
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

@@ -49,6 +49,12 @@ export interface IColoredTagWranglerSettings {
 		},
 	},
 
+	CSS:{
+		Enable: boolean,
+		TagsNoWrap:boolean,
+		TagsNoWrapText:string,
+	},
+
 	Debug:{
 		Enable:boolean,
 	},
@@ -114,6 +120,12 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 		Enable:false,
 	},
 
+	CSS:{
+		Enable: false,
+		TagsNoWrap: false,
+		TagsNoWrapText: "pre",
+	},
+
 	Canvas:{
 		Enable:false,
 
@@ -123,6 +135,6 @@ export const DefaultSettings: IColoredTagWranglerSettings = {
 		}
 	},
 	Info: {
-		SettingsVersion: 8 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
+		SettingsVersion: 9 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }

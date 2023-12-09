@@ -23,7 +23,7 @@ import {
 	ComponentTagsEnableSeparateLuminance,
 	ComponentTagsEnableDarkLightDifference,
 	ComponentTagsEnableBackgroundOpacity,
-	ComponentFolderNoteAutoDetect
+	ComponentFolderNoteAutoDetect, ComponentCSS, ComponentCSSTagsNoWrap
 } from "src/setting_tab/components";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -48,6 +48,8 @@ export class SettingTab extends PluginSettingTab {
 		comp_tags_enable_luminance:			    SettingsTabComponent,
 		comp_tags_enable_dark_light_difference: SettingsTabComponent,
 		comp_tags_enable_background_opacity: 	SettingsTabComponent,
+		comp_css: 								SettingsTabComponent,
+		comp_css_tags_no_wrap: 					SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {
@@ -71,6 +73,8 @@ export class SettingTab extends PluginSettingTab {
 			comp_tags_enable_luminance:				new ComponentTagsEnableSeparateLuminance(plugin, this),
 			comp_tags_enable_dark_light_difference: new ComponentTagsEnableDarkLightDifference(plugin,this),
 			comp_tags_enable_background_opacity: 	new ComponentTagsEnableBackgroundOpacity(plugin,this),
+			comp_css: 								new ComponentCSS(plugin,this),
+			comp_css_tags_no_wrap: 					new ComponentCSSTagsNoWrap(plugin,this),
 
 		}
 	}
@@ -123,6 +127,18 @@ export class SettingTab extends PluginSettingTab {
 			this._components.comp_folder_note_folder_tag_links.create_component(containerEl);
 
 		}
+
+		// CSS Settings
+		// -------------------------------------------------------------------------------------------------------------
+		containerEl.createEl('br');
+		containerEl.createEl('h2', {text: "Extra CSS options"});
+		containerEl.createEl('div', {cls:"setting-item-description",text: "A collection of minor CSS tweaks for tags"});
+
+		this._components.comp_css.create_component(containerEl);
+		if (this.plugin.settings.CSS.Enable){
+			this._components.comp_css_tags_no_wrap.create_component(containerEl);
+		}
+
 
 		// Debug Settings
 		// -------------------------------------------------------------------------------------------------------------

@@ -6,3 +6,4 @@ export * from './migrate_4_to_5';
 export * from './migrate_5_to_6';
 export * from './migrate_6_to_7';
 export * from './migrate_7_to_8';
+export * from './migrate_8_to_9';
