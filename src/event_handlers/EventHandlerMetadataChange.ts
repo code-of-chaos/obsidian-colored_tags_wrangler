@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {
-    CachedMetadata, PluginSettingTab,
+    CachedMetadata,
     TFile
 } from "obsidian";
 import ColoredTagWranglerPlugin
@@ -11,6 +11,7 @@ import {file_is_folderNote, processTagColors}
     from "../lib/FolderNoteLogic";
 import {v4 as uuid4}
     from "uuid";
+import {debounce} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -22,6 +23,8 @@ export class EventHandlerMetadataChange{
     }
 
     public register(){
+        const debounced_save_settings = debounce(this.plugin.saveSettings, 500)
+
         this.plugin.registerEvent(
             this.plugin.app.metadataCache.on(
                 "changed",
@@ -29,6 +32,8 @@ export class EventHandlerMetadataChange{
                     if (this.plugin.settings.FolderNote.Enable && this.plugin.settings.FolderNote.EnableAutoDetect) {
                         await this.callback(file, cache)
                     }
+
+                    await debounced_save_settings.call(this)
                 }
             ));
     }
@@ -66,8 +71,5 @@ export class EventHandlerMetadataChange{
 				this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = link;
 			})
 		;
-
-        await this.plugin.saveSettings()
-
     }
 }
