@@ -15,6 +15,7 @@ import {Migrate}
 	from "./settings/Migrate";
 import {EventHandlerMetadataChange}
 	from "./event_handlers/EventHandlerMetadataChange";
+import {MarkdownPostProcessorNoteBackground} from "./markdown_post_processors/note_background";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
@@ -45,10 +46,13 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 		this.style_manager = new StyleManager(this);
 		this.addSettingTab(new SettingTab(this));
 
-		this.style_manager.switchAllStyles();
-
 		// maybe store this somewhere?
-		new EventHandlerMetadataChange(this).register()
+		new EventHandlerMetadataChange(this).register();
+
+		// Load the styles
+		this.app.workspace.onLayoutReady(() => {
+			this.style_manager.switchAllStyles();
+        });
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
