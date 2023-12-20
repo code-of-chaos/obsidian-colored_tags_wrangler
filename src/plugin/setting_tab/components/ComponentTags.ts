@@ -7,12 +7,13 @@ import {
 	Setting, SliderComponent, TextAreaComponent,
 	TextComponent
 } from "obsidian";
-import {hexToRgb, hslToRgb, rgbToHsl}
-	from "src/api";
-import {SettingsTabComponent}
-	from "src/plugin/setting_tab/SettingsTabComponent";
-import {v4 as uuid4}
-	from "uuid";
+import {
+	hexToRgb,
+	hslToRgb,
+	rgbToHsl
+} from "src/api";
+import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
+import {v4 as uuid4} from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------

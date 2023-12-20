@@ -6,9 +6,12 @@ import {RGB} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface ISettings_v008 {
+export interface ISettings {
     TagColors:{
-        ColorPicker: Record<string, {tag_name:string, color:RGB, background_color:RGB,luminance_offset:number}>,
+        ColorPicker: Record<
+            string,
+            {tag_name:string, color:RGB, background_color:RGB,luminance_offset:number}
+        >,
 
         EnableMultipleTags:boolean,
         EnableSeparateBackground:boolean,
@@ -23,7 +26,10 @@ export interface ISettings_v008 {
 
     FolderNote:{
         Enable:boolean
-        FolderTagLinks:Record<string, {folder_path:string, tag_name:string}>,
+        FolderTagLinks:Record<
+            string,
+            {folder_path:string, tag_name:string}
+        >,
 
         EnableAutoDetect:boolean,
 
@@ -46,6 +52,12 @@ export interface ISettings_v008 {
             ListBackgroundOpacity:number,
             ListBorderOpacity:number,
         },
+    },
+
+    CSS:{
+        Enable: boolean,
+        TagsNoWrap:boolean,
+        TagsNoWrapText:string,
     },
 
     Debug:{

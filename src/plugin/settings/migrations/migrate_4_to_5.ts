@@ -1,12 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IColoredTagWranglerSettings}
-    from "../DefaultSettings";
-import {ISettings_v004}
-    from "../old_setting_versions/ISettings_v004";
-import {ISettings_v005}
-    from "../old_setting_versions/ISettings_v005";
+import {ISettings_v004} from "../old_setting_versions/ISettings_v004";
+import {ISettings_v005} from "../old_setting_versions/ISettings_v005";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

@@ -2,16 +2,17 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {App} from "obsidian";
-import {IColoredTagWranglerSettings} from "src/plugin/settings/DefaultSettings";
+import {ISettings} from "./settings/ISettings";
 import {StyleManager} from "src/plugin/style_manager";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IColoredTagWrangler {
-    settings: IColoredTagWranglerSettings;
+    settings: ISettings;
     style_manager: StyleManager;
     app: App;
 
     saveSettings(): Promise<void>;
+    loadSettings(): Promise<void>;
 }

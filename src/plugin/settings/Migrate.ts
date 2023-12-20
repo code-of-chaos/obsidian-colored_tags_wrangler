@@ -12,7 +12,8 @@ import {
     migrate_7_to_8,
     migrate_8_to_9
 } from "src/plugin/settings/migrations";
-import {IColoredTagWranglerSettings} from "./DefaultSettings";
+import {ISettings} from "src/plugin/settings/ISettings";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -34,12 +35,13 @@ const MIGRATION_STEPS: ((data: any) => any)[] = [ // Using any's isn't perfect b
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function Migrate(data:any):IColoredTagWranglerSettings|null   {
-    // If the plugin hasn't been used before, no data will be present
+export function Migrate(data:any):ISettings|null   {
+    // If the plugin hasn't been used before, no data will be present aka no migrations needed
     if (data === null){
         return null
     }
 
+    // Set a default version, else the migrations won't work.
     let version = data?.Info?.SettingsVersion ?? -1;
 
     if (version === -1){
@@ -50,7 +52,7 @@ export function Migrate(data:any):IColoredTagWranglerSettings|null   {
 
     // Actual migrations
     //      Added logging, might remove this in future?
-    let migratedData: IColoredTagWranglerSettings = data;
+    let migratedData: ISettings = data;
     for (version; version < MIGRATION_STEPS.length; version++) {
         migratedData = MIGRATION_STEPS[version](migratedData);
         console.log(`Migrated data.json from ColoredTagsWrangler to version ${migratedData.Info.SettingsVersion}`)
