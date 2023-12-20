@@ -30,7 +30,7 @@ export class MetadataChange {
 
         // Now, I can use the bound method with the debounce function,
         // creating a debounced version of saveSettings, bound to the right `this` context.
-        const debounced_save_settings = debounce(saveSettings, 500);
+        const debounced_save_settings = debounce(saveSettings, 100);
 
         this.plugin.registerEvent(
             this.plugin.app.metadataCache.on(
