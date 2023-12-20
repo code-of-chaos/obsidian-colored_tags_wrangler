@@ -1,66 +1,52 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App, CachedMetadata, Plugin}
-	from "obsidian";
-import {
-	IColoredTagWranglerSettings,
-	DefaultSettings
-} from "src/settings/DefaultSettings";
-import {SettingTab}
-	from "src/setting_tab";
-import {StyleManager}
-	from "src/style_manager";
-import {Migrate}
-	from "./settings/Migrate";
-import {EventHandlerMetadataChange}
-	from "./event_handlers/EventHandlerMetadataChange";
-// ---------------------------------------------------------------------------------------------------------------------
-// Interface
-// ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagWranglerPlugin{
-	settings: IColoredTagWranglerSettings;
-	style_manager:StyleManager;
-	app:App;
+import {Plugin} from "obsidian";
+import {Migrate} from "src/plugin/settings/Migrate";
+import {MetadataChange} from "src/plugin/event_handlers/MetadataChange";
+import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
+import {DefaultSettings} from "src/plugin/settings/DefaultSettings";
+import {ISettings} from "./plugin/settings/ISettings";
+import {StyleManager} from "src/plugin/style_manager/StyleManager";
+import {SettingTab} from "src/plugin/setting_tab/SettingTab";
 
-	saveSettings():Promise<void>;
-}
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export default class ColoredTagWranglerPlugin extends Plugin {
-	settings: IColoredTagWranglerSettings;
+export default class ColoredTagWrangler extends Plugin implements IColoredTagWrangler {
+	settings: ISettings;
 	style_manager:StyleManager;
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	async onload() {
-		try {
-			await this.loadSettings();
-		} catch (error) {
-			console.error("Error loading setting_tab for obsidian-colored_tags_wrangler:", error);
-			return;
-		}
+		await this.loadSettings();
 
 		this.style_manager = new StyleManager(this);
 		this.addSettingTab(new SettingTab(this));
 
-		this.style_manager.switchAllStyles();
-
 		// maybe store this somewhere?
-		new EventHandlerMetadataChange(this).register()
+		await new MetadataChange(this).register();
+
+		// Load the styles
+		this.app.workspace.onLayoutReady(() => {
+			this.style_manager.switchAllStyles();
+        });
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	onunload() {
 		this.style_manager.removeAllStyles();
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	async loadSettings() {
 		// Retrieve setting_tab from stored data.json file
 		this.settings = Object.assign({}, DefaultSettings, Migrate(await this.loadData()));
 		await this.saveData(this.settings);
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	async saveSettings() {
 		await this.saveData(this.settings);
@@ -68,5 +54,4 @@ export default class ColoredTagWranglerPlugin extends Plugin {
 		//		This way we know it is always run when needed
 		this.style_manager.switchAllStyles();
 	}
-
 }

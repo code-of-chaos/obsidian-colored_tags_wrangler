@@ -39,7 +39,7 @@ function process_file(filepath, new_version = null, version_bump_type) {
 
 		// Update the version in the JSON data and write to file
 		jsonData.version = new_version;
-		fs.writeFileSync(filepath, JSON.stringify(jsonData, null, 2));
+		fs.writeFileSync(filepath, JSON.stringify(jsonData, null, 4));
 
 		return new_version;
 	} catch (err) {
