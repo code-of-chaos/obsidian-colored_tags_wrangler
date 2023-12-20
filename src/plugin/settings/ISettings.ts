@@ -72,6 +72,7 @@ export interface ISettings {
             CardBackgroundLuminanceOffset:number,
         },
     },
+
     Info: {
         SettingsVersion: number
     }
