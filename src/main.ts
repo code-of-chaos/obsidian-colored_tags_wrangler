@@ -9,6 +9,7 @@ import {DefaultSettings} from "src/plugin/settings/DefaultSettings";
 import {ISettings} from "./plugin/settings/ISettings";
 import {StyleManager} from "src/plugin/style_manager/StyleManager";
 import {SettingTab} from "src/plugin/setting_tab/SettingTab";
+import {JQueryTest} from "./plugin/commands/JQueryTest";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -33,6 +34,21 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 		this.app.workspace.onLayoutReady(() => {
 			this.style_manager.switchAllStyles();
         });
+
+		// -------------------------------------------------------------------------------------------------------------
+		// register the commands
+		const commands = new Map([
+			["test-jquery",          {callback: JQueryTest,      desc: "TEST jquery"}],
+		]);
+
+		commands.forEach(({callback, desc}, key) => {
+			this.addCommand({
+				id: key,
+				name: desc,
+				editorCallback: (editor, ctx) => callback(editor, ctx, this)
+			})
+		})
+
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
