@@ -12,6 +12,7 @@ import {file_is_folderNote, processTagColors}
 import {v4 as uuid4}
     from "uuid";
 import {debounce} from "obsidian";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -22,8 +23,14 @@ export class MetadataChange {
         this.plugin = plugin;
     }
 
-    public register(){
-        const debounced_save_settings = debounce(this.plugin.saveSettings, 500)
+    public async register(){
+        // Here I create a bound version of this.plugin.saveSettings
+        // so that it will receive the correct `this` context of the plugin later
+        const saveSettings = this.plugin.saveSettings.bind(this.plugin);
+
+        // Now, I can use the bound method with the debounce function,
+        // creating a debounced version of saveSettings, bound to the right `this` context.
+        const debounced_save_settings = debounce(saveSettings, 500);
 
         this.plugin.registerEvent(
             this.plugin.app.metadataCache.on(
