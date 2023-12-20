@@ -10,6 +10,7 @@ import {ISettings} from "./plugin/settings/ISettings";
 import {StyleManager} from "src/plugin/style_manager/StyleManager";
 import {SettingTab} from "src/plugin/setting_tab/SettingTab";
 import {JQueryTest} from "./plugin/commands/JQueryTest";
+import {JQueryNotes} from "./plugin/commands/JQueryNotes";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -38,16 +39,20 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 		// -------------------------------------------------------------------------------------------------------------
 		// register the commands
 		const commands = new Map([
-			["test-jquery",          {callback: JQueryTest,      desc: "TEST jquery"}],
+			["test-jquery",          {callback: JQueryNotes,      desc: "TEST jquery"}],
 		]);
 
 		commands.forEach(({callback, desc}, key) => {
 			this.addCommand({
 				id: key,
 				name: desc,
-				editorCallback: (editor, ctx) => callback(editor, ctx, this)
+				editorCallback: (editor, ctx) => callback(this)
 			})
 		})
+
+		this.registerEvent(this.app.workspace.on('file-open', (file) => {
+			JQueryTest(this)
+		}));
 
 	}
 
