@@ -2,9 +2,9 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {RGB} from "obsidian";
-import {IColoredTagWrangler} from "../IColoredTagWrangler";
+import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 import $ from "jquery";
-import {get_tags} from "../../api/tags";
+import {get_tags} from "src/api/tags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -20,9 +20,10 @@ export async function JQueryNotes(plugin: IColoredTagWrangler){
     tags.map(
         ({tag_name, color, background_color, luminance_offset}) =>{
             const page = $('div.workspace-leaf-content[data-type="markdown"] div.view-content');
-            const tag = page.find(`div.multi-select-pill:has(span:contains("${tag_name}"))`);
+            const tag = page.find($(`div.multi-select-pill:has(span:contains("${tag_name}"))`));
 
-            if (tag.length !== 0) {
+            // noinspection JSUnresolvedReference
+			if (tag.length !== 0) {
                 page.css('background-color', get_rgb_string(background_color))
             }
         }

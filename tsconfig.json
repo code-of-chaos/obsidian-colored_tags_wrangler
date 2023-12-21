@@ -20,8 +20,6 @@
     ]
   },
   "include": [
-    "**/*.ts",
-    "node_modules/@types/jquery/JQuery.d.ts",
-    "node_modules/@types/jquery/JQuery.d.ts"
+	  "**/*.ts"
   ]
 }

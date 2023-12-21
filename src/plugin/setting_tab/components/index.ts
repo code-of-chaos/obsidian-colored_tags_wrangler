@@ -1,8 +1,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-export * from './ComponentCSS';
 export * from './ComponentCSSTagsNoWrap';
+export * from './ComponentCSSNoteTags';
+export * from './ComponentCSSNoteBackground';
 
 export * from './ComponentDebug';
 export * from './ComponentDebugReloadCSS';

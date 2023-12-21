@@ -6,7 +6,7 @@ import {ISettings_v005} from "../old_setting_versions/ISettings_v005";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_4_to_5(loaded_data:ISettings_v004):ISettings_v005 {
+export function migrate_04_to_05(loaded_data:ISettings_v004):ISettings_v005 {
     let transformed_data = loaded_data as unknown as ISettings_v005;
 
     for (const tagUUID of Object.keys(loaded_data.TagColors.ColorPicker)){

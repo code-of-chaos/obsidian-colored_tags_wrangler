@@ -6,7 +6,7 @@ import {ISettings_v006} from "../old_setting_versions/ISettings_v006";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_5_to_6(loaded_data:ISettings_v005):ISettings_v006 {
+export function migrate_05_to_06(loaded_data:ISettings_v005):ISettings_v006 {
     let transformed_data = loaded_data as unknown as ISettings_v006;
 
     // Fixes mistake

@@ -6,7 +6,8 @@ import {PluginSettingTab}
 import ColoredTagWranglerPlugin
     from "src/main";
 import {
-	ComponentCSS,
+	ComponentCSSNoteBackground,
+	ComponentCSSNoteTags,
 	ComponentCSSTagsNoWrap,
 	ComponentDebug,
 	ComponentDebugReloadCSS,
@@ -50,8 +51,9 @@ export class SettingTab extends PluginSettingTab {
 		tags_enable_luminance:			    SettingsTabComponent,
 		tags_enable_dark_light_difference: 	SettingsTabComponent,
 		tags_enable_background_opacity: 	SettingsTabComponent,
-		css: 								SettingsTabComponent,
 		css_tags_no_wrap: 					SettingsTabComponent,
+		css_note_tags: 						SettingsTabComponent,
+		css_note_background: 				SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {
@@ -75,8 +77,9 @@ export class SettingTab extends PluginSettingTab {
 			tags_enable_luminance:				new ComponentTagsEnableSeparateLuminance(plugin, this),
 			tags_enable_dark_light_difference: 	new ComponentTagsEnableDarkLightDifference(plugin,this),
 			tags_enable_background_opacity: 	new ComponentTagsEnableBackgroundOpacity(plugin,this),
-			css: 								new ComponentCSS(plugin,this),
 			css_tags_no_wrap: 					new ComponentCSSTagsNoWrap(plugin,this),
+			css_note_tags: 						new ComponentCSSNoteTags(plugin,this),
+			css_note_background: 				new ComponentCSSNoteBackground(plugin,this),
 
 		}
 	}
@@ -104,6 +107,16 @@ export class SettingTab extends PluginSettingTab {
 		this._components.tags_enable_dark_light_difference.create_component(containerEl);
 		this._components.tags_enable_background_opacity.create_component(containerEl);
 
+		// CSS Settings
+		// -------------------------------------------------------------------------------------------------------------
+		containerEl.createEl('br');
+		containerEl.createEl('h2', {text: "CSS options"});
+		containerEl.createEl('div', {cls:"setting-item-description",text: "A collection of CSS tweaks for tags"});
+
+		this._components.css_note_tags.create_component(containerEl);
+		this._components.css_note_background.create_component(containerEl);
+		this._components.css_tags_no_wrap.create_component(containerEl);
+
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
@@ -129,18 +142,6 @@ export class SettingTab extends PluginSettingTab {
 			this._components.folder_note_folder_tag_links.create_component(containerEl);
 
 		}
-
-		// CSS Settings
-		// -------------------------------------------------------------------------------------------------------------
-		containerEl.createEl('br');
-		containerEl.createEl('h2', {text: "Extra CSS options"});
-		containerEl.createEl('div', {cls:"setting-item-description",text: "A collection of minor CSS tweaks for tags"});
-
-		this._components.css.create_component(containerEl);
-		if (this.plugin.settings.CSS.Enable){
-			this._components.css_tags_no_wrap.create_component(containerEl);
-		}
-
 
 		// Debug Settings
 		// -------------------------------------------------------------------------------------------------------------

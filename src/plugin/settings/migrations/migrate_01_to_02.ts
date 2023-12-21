@@ -7,7 +7,7 @@ import {ISettings_v002} from "../old_setting_versions/ISettings_v002";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_1_to_2(loaded_data:ISettings_v001):ISettings_v002 {
+export function migrate_01_to_02(loaded_data:ISettings_v001):ISettings_v002 {
     // Update SemanticObsidianColors
     let original_semantic_tags: Record<string, string> = loaded_data.TagColors.SemanticObsidianColors;
     let transformed_semantic_tags: Record<string, {tag_name:string, obsidian_css_var:string }> = {};

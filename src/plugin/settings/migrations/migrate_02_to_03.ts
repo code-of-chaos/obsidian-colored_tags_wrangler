@@ -6,7 +6,7 @@ import {ISettings_v003} from "../old_setting_versions/ISettings_v003";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_2_to_3(loaded_data:ISettings_v002):ISettings_v003 {
+export function migrate_02_to_03(loaded_data:ISettings_v002):ISettings_v003 {
     // Return data as is, because structure wasn't changed, just added to.
     let transformed_data = loaded_data as unknown as ISettings_v003;
     transformed_data.Info.SettingsVersion = 3;
