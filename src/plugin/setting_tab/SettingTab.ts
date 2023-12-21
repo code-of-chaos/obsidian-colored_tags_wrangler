@@ -6,7 +6,7 @@ import {PluginSettingTab}
 import ColoredTagWranglerPlugin
     from "src/main";
 import {
-	ComponentCSSNoteBackground,
+	ComponentCSSNoteBackground, ComponentCSSNoteProperties,
 	ComponentCSSNoteTags,
 	ComponentCSSTagsNoWrap,
 	ComponentDebug,
@@ -54,6 +54,7 @@ export class SettingTab extends PluginSettingTab {
 		css_tags_no_wrap: 					SettingsTabComponent,
 		css_note_tags: 						SettingsTabComponent,
 		css_note_background: 				SettingsTabComponent,
+		css_note_properties:				SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {
@@ -80,6 +81,7 @@ export class SettingTab extends PluginSettingTab {
 			css_tags_no_wrap: 					new ComponentCSSTagsNoWrap(plugin,this),
 			css_note_tags: 						new ComponentCSSNoteTags(plugin,this),
 			css_note_background: 				new ComponentCSSNoteBackground(plugin,this),
+			css_note_properties: 				new ComponentCSSNoteProperties(plugin,this),
 
 		}
 	}
@@ -114,8 +116,9 @@ export class SettingTab extends PluginSettingTab {
 		containerEl.createEl('div', {cls:"setting-item-description",text: "A collection of CSS tweaks for tags"});
 
 		this._components.css_note_tags.create_component(containerEl);
-		this._components.css_note_background.create_component(containerEl);
+		this._components.css_note_properties.create_component(containerEl);
 		this._components.css_tags_no_wrap.create_component(containerEl);
+		this._components.css_note_background.create_component(containerEl);
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------
