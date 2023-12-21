@@ -22,25 +22,23 @@ export class EventHandlerFileOpen extends EventHandler{
 						return
 					}
 
-					if (this.plugin.settings.CSS.NoteProperties){
-						await this.callback_css_note_properties(file);
-					}
+					this.plugin.settings.CSS.NoteProperties
+						? await this.apply_css_note_properties(file)
+						: await this.remove_css_note_properties(file);
 
-					if (this.plugin.settings.CSS.NoteBackgrounds){
-						await this.callback_css_note_backgrounds(file);
-					}
+					this.plugin.settings.CSS.NoteBackgrounds
+						? await this.apply_css_note_backgrounds(file)
+						: await this.remove_css_note_backgrounds(file);
 		}));
 	}
 
-	private async callback_css_note_properties(_:TFile):Promise<void>{
+	private async apply_css_note_properties(_:TFile):Promise<void>{
 		const tags = get_tags(this.plugin);
 		tags.map(
 			({tag_name, color, background_color}) =>{
 				// noinspection TypeScriptValidateJSTypes
 				const element = $('div[data-property-key="tags"]')
 					.find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
-
-				console.warn({tag_name, element})
 
 				element
 					.css('background-color', rgbToString(background_color))
@@ -54,7 +52,28 @@ export class EventHandlerFileOpen extends EventHandler{
 			}
 		)
 	}
-	private async callback_css_note_backgrounds(_:TFile):Promise<void>{
+
+	private async remove_css_note_properties(_:TFile):Promise<void>{
+		const tags = get_tags(this.plugin);
+		tags.map(
+			({tag_name}) =>{
+				// noinspection TypeScriptValidateJSTypes
+				const element = $('div[data-property-key="tags"]')
+					.find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
+
+				element
+					.removeAttr("style")
+
+				// Find the svg element within the tag, so it can color the X
+				element
+					.find('svg')
+					.removeAttr("style")
+
+			}
+		)
+	}
+
+	private async apply_css_note_backgrounds(_:TFile):Promise<void>{
 		const tags = get_tags(this.plugin);
 		tags.map(
 			({tag_name, background_color}) =>{
@@ -67,5 +86,10 @@ export class EventHandlerFileOpen extends EventHandler{
 				}
 			}
 		)
+	}
+
+	private async remove_css_note_backgrounds(_:TFile):Promise<void>{
+		const page = $('div.workspace-leaf-content[data-type="markdown"] div.view-content');
+		page.removeAttr("style");
 	}
 }
