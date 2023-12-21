@@ -3,14 +3,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {Plugin} from "obsidian";
 import {Migrate} from "src/plugin/settings/Migrate";
-import {MetadataChange} from "src/plugin/event_handlers/MetadataChange";
+import {EventHandlerMetadataChange} from "src/plugin/event_handlers/MetadataChange";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 import {DefaultSettings} from "src/plugin/settings/DefaultSettings";
 import {ISettings} from "./plugin/settings/ISettings";
 import {StyleManager} from "src/plugin/style_manager/StyleManager";
 import {SettingTab} from "src/plugin/setting_tab/SettingTab";
-import {JQueryTest} from "./plugin/commands/JQueryTest";
-import {JQueryNotes} from "./plugin/commands/JQueryNotes";
+import {EventHandlerFileOpen} from "src/plugin/event_handlers/FileOpen";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -29,31 +28,13 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 		this.addSettingTab(new SettingTab(this));
 
 		// maybe store this somewhere?
-		await new MetadataChange(this).register();
+		await new EventHandlerMetadataChange(this).register();
+		await new EventHandlerFileOpen(this).register();
 
 		// Load the styles
 		this.app.workspace.onLayoutReady(() => {
 			this.style_manager.switchAllStyles();
         });
-
-		// -------------------------------------------------------------------------------------------------------------
-		// register the commands
-		const commands = new Map([
-			["test-jquery",          {callback: JQueryNotes,      desc: "TEST jquery"}],
-		]);
-
-		commands.forEach(({callback, desc}, key) => {
-			this.addCommand({
-				id: key,
-				name: desc,
-				editorCallback: (editor, ctx) => callback(this)
-			})
-		})
-
-		this.registerEvent(this.app.workspace.on('file-open', (file) => {
-			JQueryTest(this)
-		}));
-
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

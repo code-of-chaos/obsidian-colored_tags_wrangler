@@ -160,3 +160,7 @@ export function stringToRgba(txt:String):RGBa{
 		a:Number(textArray[3])
 	}
 }
+
+export function rgbToString(color:RGB):string{
+	return `rgb(${color.r}, ${color.g}, ${color.b})`
+}

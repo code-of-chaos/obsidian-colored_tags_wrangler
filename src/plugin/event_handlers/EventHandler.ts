@@ -1,18 +1,20 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App,Plugin} from "obsidian";
-import {ISettings} from "./settings/ISettings";
-import {StyleManager} from "src/plugin/style_manager";
+import {Debouncer, debounce} from "obsidian";
+import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagWrangler extends Plugin{
-    settings: ISettings;
-    style_manager: StyleManager;
-    app: App;
+export abstract class EventHandler {
+	plugin:IColoredTagWrangler;
+	debounced_save_settings:Debouncer<any, any>
 
-    saveSettings(): Promise<void>;
-    loadSettings(): Promise<void>;
+	public constructor(plugin:IColoredTagWrangler,) {
+		this.plugin = plugin;
+		this.debounced_save_settings = debounce(plugin.saveSettings.bind(plugin), 100);
+	}
+
+	abstract register():Promise<void>;
 }

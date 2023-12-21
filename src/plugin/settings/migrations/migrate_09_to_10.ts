@@ -12,6 +12,7 @@ export function migrate_09_to_10(loaded_data:ISettings_v009):ISettings {
 
     let transformed_data = temp_data as ISettings;
 
+	transformed_data.CSS.NoteTags = true;
     transformed_data.CSS.NoteBackgrounds = false;
     transformed_data.CSS.NoteProperties = true;
 
