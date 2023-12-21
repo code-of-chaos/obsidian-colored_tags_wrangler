@@ -1,18 +1,15 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ISettings_v005} from "../old_setting_versions/ISettings_v005";
-import {ISettings_v006} from "../old_setting_versions/ISettings_v006";
+import {ISettings_v002} from "../old_setting_versions/ISettings_v002";
+import {ISettings_v003} from "../old_setting_versions/ISettings_v003";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_5_to_6(loaded_data:ISettings_v005):ISettings_v006 {
-    let transformed_data = loaded_data as unknown as ISettings_v006;
-
-    // Fixes mistake
-    transformed_data.Kanban.HideHashtags = loaded_data.Kanban.Enable
-
-    transformed_data.Info.SettingsVersion = 6;
+export function migrate_02_to_03(loaded_data:ISettings_v002):ISettings_v003 {
+    // Return data as is, because structure wasn't changed, just added to.
+    let transformed_data = loaded_data as unknown as ISettings_v003;
+    transformed_data.Info.SettingsVersion = 3;
     return transformed_data;
 
 }

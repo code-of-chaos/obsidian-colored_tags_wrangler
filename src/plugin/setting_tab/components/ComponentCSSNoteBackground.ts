@@ -8,17 +8,17 @@ import {SettingsTabComponent}
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentCSS extends SettingsTabComponent{
+export class ComponentCSSNoteBackground extends SettingsTabComponent{
 	public create_component(containerEL:HTMLElement): void {
 		new Setting(containerEL)
-			.setName("Enable extra CSS options")
+			.setName("Apply Tag color to note background")
+			.setDesc("Uses a tag in the note's properties, and applies its color to the workspace background")
 			.addToggle(component => {
 					component
-						.setValue(this.plugin.settings.CSS.Enable)
+						.setValue(this.plugin.settings.CSS.NoteBackgrounds)
 						.onChange(async state => {
-							this.plugin.settings.CSS.Enable = state;
+							this.plugin.settings.CSS.NoteBackgrounds = state;
 							await this.plugin.saveSettings();
-							this.settings_tab.display();
 						})
 				}
 			);

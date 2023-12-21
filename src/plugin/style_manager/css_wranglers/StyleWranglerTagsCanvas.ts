@@ -1,20 +1,19 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {StyleWrangler}
-	from "src/plugin/style_manager/wranglers/StyleWrangler";
-import ColoredTagWranglerPlugin
-	from "src/main";
+import {StyleWrangler} from "src/plugin/style_manager/css_wranglers/StyleWrangler";
 import {RGB} from "obsidian";
+import ColoredTagWranglerPlugin from "src/main";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleWranglerKanbanLists extends StyleWrangler {
+export class StyleWranglerTagsCanvas extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleKanbanListsEl", plugin);
+		super("#styleTagsCanvasEl", plugin);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
@@ -39,7 +38,7 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 	assemble_css_dark(): Array<string> {
 		return this.get_tags()
 			.map(
-				({tag_name, color, background_color,luminance_offset}) => {
+				({tag_name, color, background_color, luminance_offset}) => {
 					return this.assemble_css(
 						"body.theme-dark",
 						tag_name,
@@ -57,12 +56,9 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 		const important:string = this.get_important();
 
 		return`
-${theme} div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
-	background: ${this.get_background_string(background_color)} ${important};
-	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) ${important};
-}
-${theme} div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
-	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) ${important};
+${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
+	background : ${this.get_background_string(background_color)} ${important};
+	border-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }`
 
 	}

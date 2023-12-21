@@ -8,7 +8,7 @@ import {v4 as uuid4} from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_0_to_1(loaded_data:ISettings_v000):ISettings_v001 {
+export function migrate_00_to_01(loaded_data:ISettings_v000):ISettings_v001 {
     let original_colored_tags: Record<string, { r: number; g: number; b: number }> = loaded_data.TagColors.ColorPicker;
     let transformedColoredTags: Record<string, {tag_name:string, color:RGB}> = {};
 

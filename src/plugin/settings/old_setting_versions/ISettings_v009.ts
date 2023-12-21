@@ -1,17 +1,16 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IColorPicker} from "src/api/interfaces/IColorPicker";
+import {RGB} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface ISettings {
-	// Main settings for colors to tags
-	TagColors:{
+export interface ISettings_v009 {
+    TagColors:{
         ColorPicker: Record<
             string,
-			IColorPicker
+            {tag_name:string, color:RGB, background_color:RGB,luminance_offset:number}
         >,
 
         EnableMultipleTags:boolean,
@@ -25,17 +24,7 @@ export interface ISettings {
         }
     },
 
-	CSS:{
-		NoteTags:boolean,
-		NoteProperties:boolean,
-		NoteBackgrounds:boolean,
-
-		TagsNoWrap:boolean,
-		TagsNoWrapText:string,
-	},
-
-	// Extra integrations
-	FolderNote:{
+    FolderNote:{
         Enable:boolean
         FolderTagLinks:Record<
             string,
@@ -65,6 +54,16 @@ export interface ISettings {
         },
     },
 
+    CSS:{
+        Enable: boolean,
+        TagsNoWrap:boolean,
+        TagsNoWrapText:string,
+    },
+
+    Debug:{
+        Enable:boolean,
+    },
+
     Canvas:{
         Enable:boolean,
 
@@ -74,12 +73,7 @@ export interface ISettings {
         },
     },
 
-	// Extra stuff
-	Debug:{
-		Enable:boolean,
-	},
-
-	Info: {
+    Info: {
         SettingsVersion: number
     }
 }

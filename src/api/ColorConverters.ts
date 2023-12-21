@@ -1,15 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {RGB, HSL}
-	from "obsidian";
+import {RGB, HSL} from "obsidian";
+import {RGBa} from "src/api/interfaces/rgba";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface RGBa extends RGB {
-	a: number;
-}
-
 export function hexToRgb(hexColor:string) : RGB{
 	const hex = hexColor.replace("#", "");
 	return {
@@ -162,4 +159,8 @@ export function stringToRgba(txt:String):RGBa{
 		b:Number(textArray[2]),
 		a:Number(textArray[3])
 	}
+}
+
+export function rgbToString(color:RGB):string{
+	return `rgb(${color.r}, ${color.g}, ${color.b})`
 }

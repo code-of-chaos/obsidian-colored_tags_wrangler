@@ -3,12 +3,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {ISettings_v006} from "../old_setting_versions/ISettings_v006";
 import {RGB} from "obsidian";
-import {hslToRgb, rgbToHsl} from "src/api";
+import {hslToRgb, rgbToHsl} from "src/api/ColorConverters";
 import {ISettings_v007} from "../old_setting_versions/ISettings_v007";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_6_to_7(loaded_data:ISettings_v006):ISettings_v007 {
+export function migrate_06_to_07(loaded_data:ISettings_v006):ISettings_v007 {
     let transformed_data = loaded_data as unknown as ISettings_v007;
     transformed_data.TagColors.Values.LuminanceOffset = 0.15;
     transformed_data.TagColors.EnableSeparateLuminanceOffset = false;

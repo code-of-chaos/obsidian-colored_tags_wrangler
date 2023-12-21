@@ -7,6 +7,7 @@ import {ISettings} from "src/plugin/settings/ISettings";
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export const DefaultSettings: ISettings = {
+	// Main settings for colors to tags
 	TagColors:{
 		ColorPicker: {},
 
@@ -15,12 +16,23 @@ export const DefaultSettings: ISettings = {
 		EnableSeparateLuminanceOffset:false,
 		EnableDarkLightDifference:true,
 		EnableBackgroundOpacity:false,
+
 		Values:{
 			BackgroundOpacity:0.2,
 			LuminanceOffset:0.15
 		}
 	},
 
+	CSS:{
+		NoteTags:true,
+		NoteProperties:true,
+		NoteBackgrounds:false,
+
+		TagsNoWrap: true,
+		TagsNoWrapText: "pre",
+	},
+
+	// Extra integrations
 	FolderNote:{
 		Enable:false,
 		FolderTagLinks:{},
@@ -48,16 +60,6 @@ export const DefaultSettings: ISettings = {
 		},
 	},
 
-	Debug:{
-		Enable:false,
-	},
-
-	CSS:{
-		Enable: false,
-		TagsNoWrap: false,
-		TagsNoWrapText: "pre",
-	},
-
 	Canvas:{
 		Enable:false,
 
@@ -66,7 +68,13 @@ export const DefaultSettings: ISettings = {
 			CardBackgroundLuminanceOffset:0.15,
 		}
 	},
+
+	// Extra stuff
+	Debug:{
+		Enable:false,
+	},
+
 	Info: {
-		SettingsVersion: 9 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
+		SettingsVersion: 10 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }

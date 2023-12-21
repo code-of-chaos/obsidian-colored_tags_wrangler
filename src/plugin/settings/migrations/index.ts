@@ -1,12 +1,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-export * from './migrate_0_to_1';
-export * from './migrate_1_to_2';
-export * from './migrate_2_to_3';
-export * from './migrate_3_to_4';
-export * from './migrate_4_to_5';
-export * from './migrate_5_to_6';
-export * from './migrate_6_to_7';
-export * from './migrate_7_to_8';
-export * from './migrate_8_to_9';
+export * from 'src/plugin/settings/migrations/migrate_00_to_01';
+export * from 'src/plugin/settings/migrations/migrate_01_to_02';
+export * from 'src/plugin/settings/migrations/migrate_02_to_03';
+export * from 'src/plugin/settings/migrations/migrate_03_to_04';
+export * from 'src/plugin/settings/migrations/migrate_04_to_05';
+export * from 'src/plugin/settings/migrations/migrate_05_to_06';
+export * from 'src/plugin/settings/migrations/migrate_06_to_07';
+export * from 'src/plugin/settings/migrations/migrate_07_to_08';
+export * from 'src/plugin/settings/migrations/migrate_08_to_09';
+export * from 'src/plugin/settings/migrations/migrate_09_to_10';

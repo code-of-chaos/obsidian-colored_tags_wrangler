@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {StyleWrangler}
-	from "src/plugin/style_manager/wranglers/StyleWrangler";
+	from "src/plugin/style_manager/css_wranglers/StyleWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
 import {RGB}

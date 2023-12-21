@@ -11,7 +11,7 @@ import {
 	hexToRgb,
 	hslToRgb,
 	rgbToHsl
-} from "src/api";
+} from "src/api/ColorConverters"
 import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
 import {v4 as uuid4} from "uuid";
 // ---------------------------------------------------------------------------------------------------------------------

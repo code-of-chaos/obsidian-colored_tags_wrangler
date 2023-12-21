@@ -23,7 +23,6 @@ export class ComponentCSSTagsNoWrap extends SettingsTabComponent{
 						.onChange(async state => {
 							this.plugin.settings.CSS.TagsNoWrap = state;
 							await this.plugin.saveSettings();
-							this.settings_tab.display();
 						})
 				}
 			);

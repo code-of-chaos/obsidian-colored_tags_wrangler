@@ -1,18 +1,18 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App,Plugin} from "obsidian";
-import {ISettings} from "./settings/ISettings";
-import {StyleManager} from "src/plugin/style_manager";
-
+import {ISettings_v005} from "../old_setting_versions/ISettings_v005";
+import {ISettings_v006} from "../old_setting_versions/ISettings_v006";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagWrangler extends Plugin{
-    settings: ISettings;
-    style_manager: StyleManager;
-    app: App;
+export function migrate_05_to_06(loaded_data:ISettings_v005):ISettings_v006 {
+    let transformed_data = loaded_data as unknown as ISettings_v006;
 
-    saveSettings(): Promise<void>;
-    loadSettings(): Promise<void>;
+    // Fixes mistake
+    transformed_data.Kanban.HideHashtags = loaded_data.Kanban.Enable
+
+    transformed_data.Info.SettingsVersion = 6;
+    return transformed_data;
+
 }

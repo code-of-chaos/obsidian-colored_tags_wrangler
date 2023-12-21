@@ -5,26 +5,25 @@ import ColoredTagWranglerPlugin
 	from "src/main";
 import {
 	IStyleWrangler,
-	StyleWranglerTags,
+	StyleWranglerCSSNoteTags,
 	StyleWranglerTagsCanvas,
 	StyleWranglerFolderNote,
 	StyleWranglerKanbanHashtags,
 	StyleWranglerKanbanCards,
-	StyleWranglerKanbanLists,
-	StyleWranglerCSS,
-} from "src/plugin/style_manager/wranglers";
+	StyleWranglerKanbanLists, StyleWranglerCSSTagsNoWrap,
+} from "src/plugin/style_manager/css_wranglers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class StyleManager{
 	plugin: ColoredTagWranglerPlugin;
-	wrangler_tags: StyleWranglerTags;
+	wrangler_css_note_tags: StyleWranglerCSSNoteTags;
+	wrangler_css_note_tags_no_wrap: StyleWranglerCSSTagsNoWrap;
 	wrangler_tags_canvas: StyleWranglerTagsCanvas;
 	wrangler_kanban_hashtags: StyleWranglerKanbanHashtags;
 	wrangler_kanban_cards: StyleWranglerKanbanCards;
 	wrangler_kanban_lists: StyleWranglerKanbanLists;
 	wrangler_folder_note: StyleWranglerFolderNote;
-	wrangler_css: StyleWranglerCSS;
 
 	private _style_wranglers: Array<IStyleWrangler>;
 	// -----------------------------------------------------------------------------------------------------------------
@@ -32,22 +31,22 @@ export class StyleManager{
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin: ColoredTagWranglerPlugin) {
 		this.plugin = plugin;
-		this.wrangler_tags = new StyleWranglerTags(plugin);
+		this.wrangler_css_note_tags = new StyleWranglerCSSNoteTags(plugin);
+		this.wrangler_css_note_tags_no_wrap = new StyleWranglerCSSTagsNoWrap(plugin);
 		this.wrangler_tags_canvas = new StyleWranglerTagsCanvas(plugin);
 		this.wrangler_kanban_hashtags = new StyleWranglerKanbanHashtags(plugin);
 		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
 		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
 		this.wrangler_folder_note = new StyleWranglerFolderNote(plugin);
-		this.wrangler_css = new StyleWranglerCSS(plugin);
 
 		this._style_wranglers = new Array<IStyleWrangler>(
-			this.wrangler_tags,
+			this.wrangler_css_note_tags,
+			this.wrangler_css_note_tags_no_wrap,
 			this.wrangler_tags_canvas,
 			this.wrangler_kanban_hashtags,
 			this.wrangler_kanban_cards,
 			this.wrangler_kanban_lists,
 			this.wrangler_folder_note,
-			this.wrangler_css,
 		)
 	}
 	// -----------------------------------------------------------------------------------------------------------------
@@ -55,8 +54,13 @@ export class StyleManager{
 	// -----------------------------------------------------------------------------------------------------------------
 	switchAllStyles():void {
 		Object.keys(this.plugin.settings.TagColors.ColorPicker).length != 0
-			? this.wrangler_tags.apply_styles()
-			: this.wrangler_tags.remove_styles() ;
+		&& this.plugin.settings.CSS.NoteTags
+			? this.wrangler_css_note_tags.apply_styles()
+			: this.wrangler_css_note_tags.remove_styles() ;
+
+		this.plugin.settings.CSS.TagsNoWrap
+			? this.wrangler_css_note_tags_no_wrap.apply_styles()
+			: this.wrangler_css_note_tags_no_wrap.remove_styles() ;
 
 		this.plugin.settings.Canvas.Enable
 			? this.wrangler_tags_canvas.apply_styles()
@@ -77,11 +81,6 @@ export class StyleManager{
 		this.plugin.settings.FolderNote.Enable
 			? this.wrangler_folder_note.apply_styles()
 			: this.wrangler_folder_note.remove_styles() ;
-
-		this.plugin.settings.CSS.Enable
-			? this.wrangler_css.apply_styles()
-			: this.wrangler_css.remove_styles() ;
-
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

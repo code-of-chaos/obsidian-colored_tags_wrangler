@@ -1,12 +1,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {hslToRgb, removeById, rgbToHsl}
-	from "src/api";
-import ColoredTagWranglerPlugin
-	from "src/main";
-import {RGB}
-	from "obsidian";
+import {hslToRgb, rgbToHsl} from "src/api/ColorConverters";
+import ColoredTagWranglerPlugin from "src/main";
+import {RGB} from "obsidian";
+import {removeById} from "src/api/RemoveById";
+import {IColorPicker} from "src/api/interfaces/IColorPicker";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,7 +19,7 @@ export interface IStyleWrangler{
 	assemble_css_dark():Array<string>;
 	apply_styles(): void;
 	remove_styles(): void;
-	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}>;
+	get_tags():Array<IColorPicker>;
 	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
 	get_background_string(color:RGB):string;
 	get_important():string;
@@ -69,7 +68,7 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		removeById(this.id);
 	};
 
-	get_tags():Array<{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}>{
+	get_tags():Array<IColorPicker>{
 		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
 			.map(tagUUID => {
 				const {tag_name, color, background_color, luminance_offset} = this.plugin.settings.TagColors.ColorPicker[tagUUID];

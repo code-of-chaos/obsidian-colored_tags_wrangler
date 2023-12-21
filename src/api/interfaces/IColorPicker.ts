@@ -1,18 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App,Plugin} from "obsidian";
-import {ISettings} from "./settings/ISettings";
-import {StyleManager} from "src/plugin/style_manager";
+import {RGB} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagWrangler extends Plugin{
-    settings: ISettings;
-    style_manager: StyleManager;
-    app: App;
-
-    saveSettings(): Promise<void>;
-    loadSettings(): Promise<void>;
+export interface IColorPicker {
+	tag_name:string,
+	color:RGB,
+	background_color:RGB,
+	luminance_offset:number
 }
