@@ -1,16 +1,16 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {RGB} from "obsidian";
 import {IColoredTagWrangler} from "../plugin/IColoredTagWrangler";
+import {IColorPicker} from "src/api/interfaces/IColorPicker";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function get_tags(plugin:IColoredTagWrangler):Array<{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}>{
+export function get_tags(plugin:IColoredTagWrangler):Array<IColorPicker>{
     return Object.keys(plugin.settings?.TagColors.ColorPicker)
         .map(tagUUID => {
-            const {tag_name, color, background_color, luminance_offset} = plugin.settings.TagColors.ColorPicker[tagUUID];
+            const {tag_name, color, background_color, luminance_offset} = plugin.settings?.TagColors.ColorPicker[tagUUID];
             if (plugin.settings?.TagColors.EnableMultipleTags) {
                 return tag_name
                     .split(/[\n;]/) // for organization, I added \n

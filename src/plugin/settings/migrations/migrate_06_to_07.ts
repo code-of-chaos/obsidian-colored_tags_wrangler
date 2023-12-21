@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {ISettings_v006} from "../old_setting_versions/ISettings_v006";
 import {RGB} from "obsidian";
-import {hslToRgb, rgbToHsl} from "src/api";
+import {hslToRgb, rgbToHsl} from "src/api/ColorConverters";
 import {ISettings_v007} from "../old_setting_versions/ISettings_v007";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

@@ -1,12 +1,10 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {StyleWrangler}
-	from "src/plugin/style_manager/css_wranglers/StyleWrangler";
-import {RGB}
-	from "obsidian";
-import ColoredTagWranglerPlugin
-	from "src/main";
+import {StyleWrangler} from "src/plugin/style_manager/css_wranglers/StyleWrangler";
+import {RGB} from "obsidian";
+import ColoredTagWranglerPlugin from "src/main";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

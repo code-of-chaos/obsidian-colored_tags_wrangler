@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {RGB} from "obsidian";
+import {IColorPicker} from "src/api/interfaces/IColorPicker";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -11,7 +11,7 @@ export interface ISettings {
 	TagColors:{
         ColorPicker: Record<
             string,
-            {tag_name:string, color:RGB, background_color:RGB,luminance_offset:number}
+			IColorPicker
         >,
 
         EnableMultipleTags:boolean,
