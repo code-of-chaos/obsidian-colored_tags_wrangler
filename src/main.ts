@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Plugin} from "obsidian";
+import {Platform, Plugin} from "obsidian";
 import {Migrate} from "src/plugin/settings/Migrate";
 import {EventHandlerMetadataChange} from "src/plugin/event_handlers/MetadataChange";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
@@ -10,6 +10,8 @@ import {ISettings} from "./plugin/settings/ISettings";
 import {StyleManager} from "src/plugin/style_manager/StyleManager";
 import {SettingTab} from "src/plugin/setting_tab/SettingTab";
 import {EventHandlerFileOpen} from "src/plugin/event_handlers/FileOpen";
+import * as experimental from "src/plugin/commands/experimental"
+import * as commands from "src/plugin/commands"
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -35,6 +37,27 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 		this.app.workspace.onLayoutReady(() => {
 			this.style_manager.switchAllStyles();
         });
+
+		// Commands
+		this.addCommand({
+			id:"export-tags-to-graph-codeblock",
+			name:"Creates a code block at caret of color groups, which you can manually copy into the graph.json file.",
+			editorCallback: async (editor, ctx) => await commands.ExportGraphJsonTagsCodeblock(editor, ctx, this)
+		})
+
+		// Experimental Commands
+		if (Platform.isDesktopApp && this.settings.Debug.EnableExperimentalCommands){
+			this.addCommand({
+				id:"export-tags-to-graph",
+				name:"EXPERIMENTAL : export tags to graph.json. This overwrites your current graph.json. Use at own risk!",
+				callback: async () => await experimental.exportGraphJsonTags(this)
+			})
+			this.addCommand({
+				id:"export-FOLDER-to-graph",
+				name:"EXPERIMENTAL : export TAGS LINKED TO FOLDER NOTES to graph.json. This overwrites your current graph.json. Use at own risk!",
+				callback: async () => await experimental.exportGraphJsonFolderNotes(this)
+			})
+		}
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

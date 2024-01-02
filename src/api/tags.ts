@@ -8,14 +8,14 @@ import {IColorPicker} from "src/api/interfaces/IColorPicker";
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export function get_tags(plugin:IColoredTagWrangler):Array<IColorPicker>{
-    return Object.keys(plugin.settings?.TagColors.ColorPicker)
-        .map(tagUUID => {
-            const {tag_name, color, background_color, luminance_offset} = plugin.settings?.TagColors.ColorPicker[tagUUID];
+    return plugin.settings?.TagColors.ColorPicker
+        .map(color_picker => {
+            const {tag_name, color, background_color, luminance_offset} = color_picker;
             if (plugin.settings?.TagColors.EnableMultipleTags) {
                 return tag_name
                     .split(/[\n;]/) // for organization, I added \n
-                    .filter(tag => tag) // filter out empty lines
-                    .map(tag => (
+                    .filter((tag: any) => tag) // filter out empty lines
+                    .map((tag: string) => (
                         // Also trim the tag for leading spaces after or before a \n? Should fix some common issues.
                         {tag_name: tag.trim(), color, background_color, luminance_offset})
                     );

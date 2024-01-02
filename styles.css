@@ -28,8 +28,11 @@
 }
 
 /* Text area for Multi Tags */
-.cwt-settings-tab textarea{
-    width: 100%;
+.cwt-settings-tab .setting-item:has(textarea)>.setting-item-info {
+    display: none;
+}
+.cwt-settings-tab textarea {
+	width: 100%;
 }
 
 /* Luminance offset things */

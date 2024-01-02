@@ -9,7 +9,7 @@ import {ISettings} from "src/plugin/settings/ISettings";
 export const DefaultSettings: ISettings = {
 	// Main settings for colors to tags
 	TagColors:{
-		ColorPicker: {},
+		ColorPicker: [],
 
 		EnableMultipleTags:true,
 		EnableSeparateBackground:false,
@@ -72,9 +72,10 @@ export const DefaultSettings: ISettings = {
 	// Extra stuff
 	Debug:{
 		Enable:false,
+		EnableExperimentalCommands:false
 	},
 
 	Info: {
-		SettingsVersion: 10 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
+		SettingsVersion: 11 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }

@@ -8,6 +8,7 @@ export * from './ComponentCSSNoteProperties';
 
 export * from './ComponentDebug';
 export * from './ComponentDebugReloadCSS';
+export * from './ComponentDebugExperimentalCommands';
 
 export * from './ComponentFolderNote';
 export * from './ComponentFolderNoteAutoDetect';

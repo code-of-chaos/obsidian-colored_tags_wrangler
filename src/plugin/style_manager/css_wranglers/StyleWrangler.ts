@@ -69,9 +69,9 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	};
 
 	get_tags():Array<IColorPicker>{
-		return Object.keys(this.plugin.settings?.TagColors.ColorPicker)
-			.map(tagUUID => {
-				const {tag_name, color, background_color, luminance_offset} = this.plugin.settings.TagColors.ColorPicker[tagUUID];
+		return this.plugin.settings?.TagColors.ColorPicker
+			.map(tag_color_picker => {
+				const {tag_name, color, background_color, luminance_offset} = tag_color_picker;
 				if (this.plugin.settings?.TagColors.EnableMultipleTags) {
 					return tag_name
 						.split(/[\n;]/) // for organization, I added \n
