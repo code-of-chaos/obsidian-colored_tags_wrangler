@@ -76,36 +76,36 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 
 					}
 				})
-			}
+			
+			this.addCommand({
+				id:"export-tags-to-graph",
+				name:"EXPERIMENTAL : export tags to graph.json. This overwrites your current graph.json. Use at own risk!",
+				callback: async () => {
+					let graph_data: IGraphJSON | null = await readGraphJson(this.app.vault);
+					if (graph_data === null){
+						return
+					}
 
-		this.addCommand({
-			id:"export-tags-to-graph",
-			name:"EXPERIMENTAL : export tags to graph.json. This overwrites your current graph.json. Use at own risk!",
-			callback: async () => {
-				let graph_data: IGraphJSON | null = await readGraphJson(this.app.vault);
-				if (graph_data === null){
-					return
+					let all_tags = get_tags(this);
+
+					graph_data.colorGroups = all_tags
+						.map(({tag_name, color}) => {
+							console.warn(`${color.r}${color.g}${color.b}`)
+							console.warn(color)
+							return {
+								"query": `tag:#${tag_name}`,
+								"color": {
+									"a": 1,
+									"rgb": Number.parseInt(`${(color.r << 16) + (color.g << 8) + color.b}`)
+								}
+							} as IColorGroup
+						})
+
+					await writeGraphJson(graph_data, this.app.vault)
+
 				}
-
-				let all_tags = get_tags(this);
-
-				graph_data.colorGroups = all_tags
-					.map(({tag_name, color}) => {
-						console.warn(`${color.r}${color.g}${color.b}`)
-						console.warn(color)
-						return {
-							"query": `tag:#${tag_name}`,
-							"color": {
-								"a": 1,
-								"rgb": Number.parseInt(`${(color.r << 16) + (color.g << 8) + color.b}`)
-							}
-						} as IColorGroup
-					})
-
-				await writeGraphJson(graph_data, this.app.vault)
-
-			}
-		})
+			})
+		}
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
