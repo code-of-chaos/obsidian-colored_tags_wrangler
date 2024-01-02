@@ -13,5 +13,4 @@ export function migrate_10_to_11(loaded_data:ISettings_v010):ISettings {
     transformed_data.Debug.EnableExperimentalCommands = false;
     transformed_data.Info.SettingsVersion = 11;
     return transformed_data as unknown as ISettings;
-
 }
