@@ -15,20 +15,20 @@ export function getParentFolderName(filePath: string): string {
 
 // ---------------------------------------------------------------------------------------------------------------------
 export async function processTagColors(plugin:IColoredTagWrangler, tag_to_find: string): Promise<string | null> {
-    return Object
-        .keys(plugin.settings.TagColors.ColorPicker)
-        .filter(key =>{
-            const data = plugin.settings.TagColors.ColorPicker[key];
-            if (plugin.settings.TagColors.EnableMultipleTags) {
-                return data.tag_name
-                    .split(";")
-                    .filter(tag =>  tag === tag_to_find)
-                    .first()
-            } else {
-                return data.tag_name === tag_to_find
-            }
-        })
-        .first() ?? null
+    const colorPickerArray = plugin.settings.TagColors.ColorPicker;
+
+    const matchingKey = colorPickerArray.findIndex((data) => {
+        if (plugin.settings.TagColors.EnableMultipleTags) {
+            return (
+                data.tag_name.split(";").find((tag) => tag === tag_to_find) !== undefined
+            );
+        } else {
+            return data.tag_name === tag_to_find;
+        }
+    });
+
+    return matchingKey !== -1 ? matchingKey.toString() : null;
+
 }
 
 export function file_is_folderNote(file:TFile){

@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Notice, Setting}
+import {Setting}
 	from "obsidian";
 import {SettingsTabComponent}
 	from "src/plugin/setting_tab/SettingsTabComponent";

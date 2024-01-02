@@ -1,32 +1,3 @@
-/* Custom tag colors */
-/* ------------------------------------------------------------------------- */
-/*noinspection ALL*/
-/*a.tag,*/
-/*.cm-hashtag {*/
-/*    --color: var(--tag-color);*/
-/*    --color-hover: var(--tag-color-hover);*/
-/*    --background: var(--tag-background);*/
-/*    --background-hover: var(--tag-background-hover);*/
-
-/*    !*noinspection CssUnresolvedCustomProperty*!*/
-/*    background-color: var(--background) !important;*/
-/*    color: var(--color) !important;*/
-/*    transition: all 0.5s ease;*/
-/*    !*padding-top: 2px !important;*! !* TODO MAKE THIS A SETTING *!*/
-/*    !*padding-bottom: 2px !important;*! !* TODO MAKE THIS A SETTING *!*/
-/*}*/
-/*a.tag:hover {*/
-/*    !*noinspection CssUnresolvedCustomProperty*!*/
-/*    background-color: var(--background-hover) !important;*/
-/*    color: var(--color-hover) !important;*/
-/*}*/
-
-.colored_tags_wrangler-settings-kanban,
-.colored_tags_wrangler-settings-tags{
-	font-weight: bold;
-	font-size: larger;
-}
-
 /* Text area for Multi Tags */
 .cwt-settings-tab .setting-item:has(textarea)>.setting-item-info {
     display: none;

@@ -1,6 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+
 import {TFile} from "obsidian";
 import $ from "jquery";
 
@@ -40,11 +41,13 @@ export class EventHandlerFileOpen extends EventHandler{
 				const element = $('div[data-property-key="tags"]')
 					.find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
 
+				// noinspection JSUnresolvedReference
 				element
 					.css('background-color', rgbToString(background_color))
 					.css('color', rgbToString(color));
 
 				// Find the svg element within the tag, so it can color the X
+				// noinspection JSUnresolvedReference
 				element
 					.find('svg')
 					.css('stroke', rgbToString(color))
@@ -61,10 +64,12 @@ export class EventHandlerFileOpen extends EventHandler{
 				const element = $('div[data-property-key="tags"]')
 					.find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
 
+				// noinspection JSUnresolvedReference
 				element
 					.removeAttr("style")
 
 				// Find the svg element within the tag, so it can color the X
+				// noinspection JSUnresolvedReference
 				element
 					.find('svg')
 					.removeAttr("style")

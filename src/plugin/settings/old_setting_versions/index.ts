@@ -10,3 +10,5 @@ export * from './ISettings_v005';
 export * from './ISettings_v006';
 export * from './ISettings_v007';
 export * from './ISettings_v008';
+export * from './ISettings_v009';
+export * from './ISettings_v010';
