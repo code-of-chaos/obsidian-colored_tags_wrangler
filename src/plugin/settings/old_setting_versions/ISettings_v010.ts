@@ -6,10 +6,13 @@ import {IColorPicker} from "src/api/interfaces/IColorPicker";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface ISettings {
+export interface ISettings_v010 {
 	// Main settings for colors to tags
 	TagColors:{
-        ColorPicker: Array<IColorPicker>,
+        ColorPicker: Record<
+            string,
+			IColorPicker
+        >,
 
         EnableMultipleTags:boolean,
         EnableSeparateBackground:boolean,

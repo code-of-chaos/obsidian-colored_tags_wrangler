@@ -53,7 +53,7 @@ export class StyleManager{
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	switchAllStyles():void {
-		Object.keys(this.plugin.settings.TagColors.ColorPicker).length != 0
+		this.plugin.settings.TagColors.ColorPicker.length != 0
 		&& this.plugin.settings.CSS.NoteTags
 			? this.wrangler_css_note_tags.apply_styles()
 			: this.wrangler_css_note_tags.remove_styles() ;

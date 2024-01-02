@@ -1,22 +1,17 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ISettings_v009} from "src/plugin/settings/old_setting_versions/ISettings_v009";
+import {ISettings} from "src/plugin/settings/ISettings";
 import {ISettings_v010} from "src/plugin/settings/old_setting_versions/ISettings_v010";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function migrate_09_to_10(loaded_data:ISettings_v009):ISettings_v010 {
-	const temp_data : any = loaded_data;
-	delete temp_data.CSS.Enable; // CSS is always enabled in some way or another.
+export function migrate_10_to_11(loaded_data:ISettings_v010):ISettings {
+    let transformed_data = loaded_data as unknown as ISettings;
+    transformed_data.TagColors.ColorPicker = Object.values(loaded_data.TagColors.ColorPicker)
 
-    let transformed_data = temp_data as ISettings_v010;
-
-	transformed_data.CSS.NoteTags = true;
-    transformed_data.CSS.NoteBackgrounds = false;
-    transformed_data.CSS.NoteProperties = true;
-
-    transformed_data.Info.SettingsVersion = 10;
-    return transformed_data as unknown as ISettings_v010;
+    transformed_data.Info.SettingsVersion = 11;
+    return transformed_data as unknown as ISettings;
 
 }

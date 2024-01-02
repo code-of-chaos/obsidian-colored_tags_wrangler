@@ -1,18 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {
-    migrate_00_to_01,
-    migrate_01_to_02,
-    migrate_02_to_03,
-    migrate_03_to_04,
-    migrate_04_to_05,
-    migrate_05_to_06,
-    migrate_06_to_07,
-    migrate_07_to_08,
-    migrate_08_to_09,
-    migrate_09_to_10,
-} from "src/plugin/settings/migrations";
+import * as migrations from "src/plugin/settings/migrations";
 import {ISettings} from "src/plugin/settings/ISettings";
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -22,16 +11,17 @@ const MIGRATION_STEPS: ((data: any) => any)[] = [ // Using any's isn't perfect b
     // Add more lambdas in order.
     //      Btw this only works because I am dumb enough to start from 0,
     //      that way I don't need to do any other steps in the for loop
-    (data) => migrate_00_to_01(data),
-    (data) => migrate_01_to_02(data),
-    (data) => migrate_02_to_03(data),
-    (data) => migrate_03_to_04(data),
-    (data) => migrate_04_to_05(data),
-    (data) => migrate_05_to_06(data),
-    (data) => migrate_06_to_07(data),
-    (data) => migrate_07_to_08(data),
-    (data) => migrate_08_to_09(data),
-    (data) => migrate_09_to_10(data),
+    (data) => migrations.migrate_00_to_01(data),
+    (data) => migrations.migrate_01_to_02(data),
+    (data) => migrations.migrate_02_to_03(data),
+    (data) => migrations.migrate_03_to_04(data),
+    (data) => migrations.migrate_04_to_05(data),
+    (data) => migrations.migrate_05_to_06(data),
+    (data) => migrations.migrate_06_to_07(data),
+    (data) => migrations.migrate_07_to_08(data),
+    (data) => migrations.migrate_08_to_09(data),
+    (data) => migrations.migrate_09_to_10(data),
+    (data) => migrations.migrate_10_to_11(data),
 ];
 
 // ---------------------------------------------------------------------------------------------------------------------

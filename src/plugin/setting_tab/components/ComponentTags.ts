@@ -13,7 +13,8 @@ import {
 	rgbToHsl
 } from "src/api/ColorConverters"
 import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
-import {v4 as uuid4} from "uuid";
+import {arrayMove} from "src/api/ArrayUtils"
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -42,8 +43,7 @@ export class ComponentTags extends SettingsTabComponent{
 				button
 					.setButtonText('Clear all')
 					.onClick(async () => {
-							Object.keys(this.plugin.settings.TagColors.ColorPicker)
-								.forEach((key_name) => delete this.plugin.settings.TagColors.ColorPicker[key_name]);
+							this.plugin.settings.TagColors.ColorPicker = [];
 							await Promise.all([
 								this.plugin.saveSettings(),
 								this.settings_tab.display()
@@ -51,17 +51,14 @@ export class ComponentTags extends SettingsTabComponent{
 						}
 					)
 					.setClass('mod-warning')
-					.setDisabled(Object.keys(this.plugin.settings.TagColors.ColorPicker).length == 0)
+					.setDisabled(this.plugin.settings.TagColors.ColorPicker.length == 0)
 			);
 		}
 
 
 		// Create the amount of tags already stored in the setting_tab
-		for (const tagUUID in this.plugin.settings.TagColors.ColorPicker) {
-			if (!this.plugin.settings.TagColors.ColorPicker.hasOwnProperty(tagUUID)) {
-				continue;
-			}
-			this._createTagColorSetting(tagUUID, this.plugin.settings.TagColors.ColorPicker[tagUUID], containerEL);
+		for (let i = 0; i < this.plugin.settings.TagColors.ColorPicker.length; i++) {
+			this._createTagColorSetting(i, this.plugin.settings.TagColors.ColorPicker[i], containerEL);
 		}
 
 		// Add the same button to the bottom of the list
@@ -74,12 +71,12 @@ export class ComponentTags extends SettingsTabComponent{
 		button
 			.setButtonText("Add new tag")
 			.onClick(async () => {
-				this.plugin.settings.TagColors.ColorPicker[uuid4()] = {
+				this.plugin.settings.TagColors.ColorPicker.push({
 					tag_name: _NEW_TAG_NAME,
 					color: _NEW_DEFAULT_COLOR, // Default color
 					background_color: _NEW_DEFAULT_BACKGROUND_COLOR, // Default color
 					luminance_offset: this.plugin.settings.TagColors.Values.LuminanceOffset,
-				};
+				});
 				await Promise.all([
 					this.plugin.saveSettings(),
 					this.settings_tab.display()
@@ -88,7 +85,7 @@ export class ComponentTags extends SettingsTabComponent{
 			.setClass("mod-cta")
 	}
 
-	private _text_callback(text:TextComponent|TextAreaComponent, tag_id:string, new_tag_content:{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}) {
+	private _text_callback(text:TextComponent|TextAreaComponent, tag_id:number, new_tag_content:{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}) {
 		return text
 			.setPlaceholder(_NEW_TAG_NAME)
 			.setValue(new_tag_content.tag_name)
@@ -103,8 +100,8 @@ export class ComponentTags extends SettingsTabComponent{
 				await this.plugin.saveSettings();
 			});
 	}
-	private _createTagColorSetting(tagUUID: string, tag_content: {tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}, containerEL:HTMLElement) {
-		let tag_id = tagUUID;
+	private _createTagColorSetting(tag_id: number, tag_content: {tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}, containerEL:HTMLElement) {
+		let new_tag_id = tag_id;
 		let new_tag_content = tag_content;
 
 		const setting = new Setting(containerEL);
@@ -128,7 +125,7 @@ export class ComponentTags extends SettingsTabComponent{
 							hsl.l -= this.plugin.settings.TagColors.Values.LuminanceOffset;
 							new_tag_content.background_color = hslToRgb(hsl);
 						}
-						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
+						this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
 
 					})
@@ -141,7 +138,7 @@ export class ComponentTags extends SettingsTabComponent{
 					.onChange(async (value) => {
 						// Handle user-defined tag colors here
 						new_tag_content.background_color = hexToRgb(value)
-						this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
+						this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
 					})
 			);
@@ -153,9 +150,9 @@ export class ComponentTags extends SettingsTabComponent{
 				.addSlider(component => {
 						component
 							.setLimits(-0.5, .5, 0.05)
-							.setValue(this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset)
+							.setValue(this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset)
 							.onChange(async state => {
-								this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset = state;
+								this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset = state;
 								await this.plugin.saveSettings();
 
 								// Update the text component's value
@@ -166,7 +163,7 @@ export class ComponentTags extends SettingsTabComponent{
 				).addText((text) => {
 				text
 					.setPlaceholder(this.plugin.settings.TagColors.Values.LuminanceOffset.toString())
-					.setValue(String(this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset))
+					.setValue(String(this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset))
 					.onChange(async state => {
 						// Because this is a text component it needs to be cast to a number
 						let state_as_number = Number(state)
@@ -174,7 +171,7 @@ export class ComponentTags extends SettingsTabComponent{
 							state_as_number = 0
 						}
 
-						this.plugin.settings.TagColors.ColorPicker[tag_id].luminance_offset = state_as_number;
+						this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset = state_as_number;
 						await this.plugin.saveSettings();
 
 						sliderElement.setValue(state_as_number)
@@ -183,12 +180,33 @@ export class ComponentTags extends SettingsTabComponent{
 			});
 		}
 
-		setting.addButton((button) =>
-				button
-					.setButtonText('-')
+		setting.addExtraButton((cb) => {
+			cb.setIcon("up-chevron-glyph")
+				.setTooltip("Move up")
+				.onClick(async () => {
+					// reorder stuff here!!!
+					arrayMove(this.plugin.settings.TagColors.ColorPicker, new_tag_id, new_tag_id-1)
+					await this.plugin.saveSettings();
+					this.settings_tab.display()
+				});
+		})
+		setting.addExtraButton((cb) => {
+			cb.setIcon("down-chevron-glyph")
+				.setTooltip("Move down")
+				.onClick(async () => {
+					// reorder stuff here!!!
+					arrayMove(this.plugin.settings.TagColors.ColorPicker, new_tag_id, new_tag_id+1)
+					await this.plugin.saveSettings();
+					this.settings_tab.display()
+				});
+		})
+
+		setting.addExtraButton((cb) =>
+				cb.setIcon("trash")
+					.setTooltip("Delete")
 					.onClick(async () => {
 						// Remove the tag and color
-						delete this.plugin.settings.TagColors.ColorPicker[tag_id];
+						this.plugin.settings.TagColors.ColorPicker.splice(new_tag_id, 1);
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
