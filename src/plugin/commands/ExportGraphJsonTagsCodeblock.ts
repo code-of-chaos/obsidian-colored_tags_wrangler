@@ -2,19 +2,15 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
-import {IColorGroup, IGraphJSON, readGraphJson, writeGraphJson} from "src/api/graph";
+import {Editor, MarkdownFileInfo, MarkdownView} from "obsidian";
 import {get_tags} from "src/api/tags";
+import {IColorGroup} from "src/api/graph";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export async function exportGraphJsonTags(plugin:IColoredTagWrangler) {
-    let graph_data: IGraphJSON | null = await readGraphJson(plugin.app.vault);
-    if (graph_data === null){
-        return
-    }
-
-    graph_data.colorGroups = get_tags(plugin)
+export async function ExportGraphJsonTagsCodeblock(editor: Editor, ctx: MarkdownView | MarkdownFileInfo, plugin: IColoredTagWrangler){
+    const color_groups = get_tags(plugin)
         .map(({tag_name, color}) => {
             return {
                 "query": `tag:#${tag_name}`,
@@ -25,5 +21,12 @@ export async function exportGraphJsonTags(plugin:IColoredTagWrangler) {
             } as IColorGroup
         })
 
-    await writeGraphJson(graph_data, plugin.app.vault)
+    editor.replaceSelection(
+        [
+            "```json",
+            JSON.stringify({"colorGroups":color_groups}, null,2),
+            "```",
+        ].join("\n")
+    )
+
 }
