@@ -12,7 +12,7 @@ import {SettingTab} from "src/plugin/setting_tab/SettingTab";
 import {EventHandlerFileOpen} from "src/plugin/event_handlers/FileOpen";
 import {IColorGroup, IGraphJSON, readGraphJson, writeGraphJson} from "src/api/graph"
 import {get_tags} from "src/api/tags"
-
+import * as experimental from "src/plugin/commands/experimental"
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -40,70 +40,14 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 
 		if (Platform.isDesktopApp){
 			this.addCommand({
-				id:"export-FOLDER-to-graph",
-				name:"EXPERIMENTAL : export FOLDER NOTES to graph.json. This overwrites your current graph.json. Use at own risk!",
-				callback: async () => {
-					let graph_data: IGraphJSON | null = await readGraphJson(this.app.vault);
-					if (graph_data === null){
-						return
-					}
-
-					let all_tags = get_tags(this);
-
-					graph_data.colorGroups = Object.keys(this.settings.FolderNote.FolderTagLinks)
-						.map(
-							folderUUID => {
-								const {folder_path, tag_name: folder_tag_name} = this.settings.FolderNote.FolderTagLinks[folderUUID];
-								return all_tags
-									.filter(({tag_name: known_tag}) => known_tag === folder_tag_name)
-									.map(({color}) => {
-										console.warn(`${color.r}${color.g}${color.b}`)
-										console.warn(color)
-
-										return {
-											"query": `path:${folder_path}`,
-											"color": {
-												"a": 1,
-												"rgb": Number.parseInt(`${(color.r << 16) + (color.g << 8) + color.b}`)
-											}
-										} as IColorGroup
-									})
-							}
-						)
-						.flat();
-
-					await writeGraphJson(graph_data, this.app.vault)
-
-					}
-				})
-			
-			this.addCommand({
 				id:"export-tags-to-graph",
 				name:"EXPERIMENTAL : export tags to graph.json. This overwrites your current graph.json. Use at own risk!",
-				callback: async () => {
-					let graph_data: IGraphJSON | null = await readGraphJson(this.app.vault);
-					if (graph_data === null){
-						return
-					}
-
-					let all_tags = get_tags(this);
-
-					graph_data.colorGroups = all_tags
-						.map(({tag_name, color}) => {
-							console.warn(`${color.r}${color.g}${color.b}`)
-							console.warn(color)
-							return {
-								"query": `tag:#${tag_name}`,
-								"color": {
-									"a": 1,
-									"rgb": Number.parseInt(`${(color.r << 16) + (color.g << 8) + color.b}`)
-								}
-							} as IColorGroup
-						})
-
-					await writeGraphJson(graph_data, this.app.vault)
-
-				}
+				callback: async () => await experimental.exportGraphJsonTags(this)
+			})
+			this.addCommand({
+				id:"export-FOLDER-to-graph",
+				name:"EXPERIMENTAL : export TAGS LINKED TO FOLDER NOTES to graph.json. This overwrites your current graph.json. Use at own risk!",
+				callback: async () => await experimental.exportGraphJsonFolderNotes(this)
 			})
 		}
 	}
