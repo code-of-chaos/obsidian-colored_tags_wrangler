@@ -11,6 +11,7 @@ import {
 	ComponentCSSTagsNoWrap,
 	ComponentDebug,
 	ComponentDebugReloadCSS,
+	ComponentDebugExperimentalCommands,
 	ComponentFolderNote,
 	ComponentFolderNoteAutoDetect,
 	ComponentFolderNoteDetect,
@@ -48,6 +49,7 @@ export class SettingTab extends PluginSettingTab {
 		kanban_hashtags:					SettingsTabComponent,
 		debug:								SettingsTabComponent,
 		debug_reloadcss:					SettingsTabComponent,
+		debug_experimental_commands:		SettingsTabComponent,
 		tags_enable_luminance:			    SettingsTabComponent,
 		tags_enable_dark_light_difference: 	SettingsTabComponent,
 		tags_enable_background_opacity: 	SettingsTabComponent,
@@ -75,6 +77,7 @@ export class SettingTab extends PluginSettingTab {
 			kanban_hashtags:					new ComponentKanbanHideHashtags(plugin,this),
 			debug:								new ComponentDebug(plugin,this),
 			debug_reloadcss:					new ComponentDebugReloadCSS(plugin,this),
+			debug_experimental_commands:		new ComponentDebugExperimentalCommands(plugin, this),
 			tags_enable_luminance:				new ComponentTagsEnableSeparateLuminance(plugin, this),
 			tags_enable_dark_light_difference: 	new ComponentTagsEnableDarkLightDifference(plugin,this),
 			tags_enable_background_opacity: 	new ComponentTagsEnableBackgroundOpacity(plugin,this),
@@ -155,6 +158,7 @@ export class SettingTab extends PluginSettingTab {
 
 		if (this.plugin.settings.Debug.Enable){
 			this._components.debug_reloadcss.create_component(containerEl);
+			this._components.debug_experimental_commands.create_component(containerEl);
     	}
 	}
 }

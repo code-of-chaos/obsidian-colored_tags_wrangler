@@ -12,6 +12,7 @@ import {SettingTab} from "src/plugin/setting_tab/SettingTab";
 import {EventHandlerFileOpen} from "src/plugin/event_handlers/FileOpen";
 import * as experimental from "src/plugin/commands/experimental"
 import * as commands from "src/plugin/commands"
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -37,13 +38,15 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 			this.style_manager.switchAllStyles();
         });
 
+		// Commands
 		this.addCommand({
 			id:"export-tags-to-graph-codeblock",
 			name:"Creates a code block at caret of color groups, which you can manually copy into the graph.json file.",
 			editorCallback: async (editor, ctx) => await commands.ExportGraphJsonTagsCodeblock(editor, ctx, this)
 		})
 
-		if (Platform.isDesktopApp){
+		// Experimental Commands
+		if (Platform.isDesktopApp && this.settings.Debug.EnableExperimentalCommands){
 			this.addCommand({
 				id:"export-tags-to-graph",
 				name:"EXPERIMENTAL : export tags to graph.json. This overwrites your current graph.json. Use at own risk!",

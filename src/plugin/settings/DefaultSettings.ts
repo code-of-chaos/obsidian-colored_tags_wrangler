@@ -72,6 +72,7 @@ export const DefaultSettings: ISettings = {
 	// Extra stuff
 	Debug:{
 		Enable:false,
+		EnableExperimentalCommands:false
 	},
 
 	Info: {

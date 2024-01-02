@@ -74,6 +74,7 @@ export interface ISettings {
 	// Extra stuff
 	Debug:{
 		Enable:boolean,
+        EnableExperimentalCommands:boolean,
 	},
 
 	Info: {
