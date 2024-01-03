@@ -10,7 +10,7 @@ import {IColorGroup} from "src/api/graph";
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export async function ExportGraphJsonTagsCodeblock(editor: Editor, ctx: MarkdownView | MarkdownFileInfo, plugin: IColoredTagWrangler){
-    const color_groups = get_tags(plugin)
+    const color_groups = get_tags(plugin.settings.TagColors.ColorPicker, plugin.settings?.TagColors.EnableMultipleTags)
         .map(({tag_name, color}) => {
             return {
                 "query": `tag:#${tag_name}`,

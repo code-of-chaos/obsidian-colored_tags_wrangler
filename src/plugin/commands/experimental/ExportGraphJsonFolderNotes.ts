@@ -14,7 +14,7 @@ export async function exportGraphJsonFolderNotes(plugin:IColoredTagWrangler) {
         return
     }
 
-    let all_tags = get_tags(plugin);
+    let all_tags = get_tags(plugin.settings.TagColors.ColorPicker, plugin.settings?.TagColors.EnableMultipleTags);
 
     graph_data.colorGroups = Object.keys(plugin.settings.FolderNote.FolderTagLinks)
         .map(

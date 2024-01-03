@@ -14,7 +14,7 @@ export async function exportGraphJsonTags(plugin:IColoredTagWrangler) {
         return
     }
 
-    graph_data.colorGroups = get_tags(plugin)
+    graph_data.colorGroups = get_tags(plugin.settings.TagColors.ColorPicker, plugin.settings?.TagColors.EnableMultipleTags)
         .map(({tag_name, color}) => {
             return {
                 "query": `tag:#${tag_name}`,
