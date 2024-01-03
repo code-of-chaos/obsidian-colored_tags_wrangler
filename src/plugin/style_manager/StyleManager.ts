@@ -10,20 +10,29 @@ import {
 	StyleWranglerFolderNote,
 	StyleWranglerKanbanHashtags,
 	StyleWranglerKanbanCards,
-	StyleWranglerKanbanLists, StyleWranglerCSSTagsNoWrap,
+	StyleWranglerKanbanLists,
+	StyleWranglerCSSTagsNoWrap,
 } from "src/plugin/style_manager/css_wranglers";
+import {
+	IJqueryWrangler, JqueryWranglerNoteBackgrounds,
+	JqueryWranglerNotePropertyTags
+} from "./jquery_wranglers";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class StyleManager{
 	plugin: ColoredTagWranglerPlugin;
-	wrangler_css_note_tags: StyleWranglerCSSNoteTags;
-	wrangler_css_note_tags_no_wrap: StyleWranglerCSSTagsNoWrap;
-	wrangler_tags_canvas: StyleWranglerTagsCanvas;
-	wrangler_kanban_hashtags: StyleWranglerKanbanHashtags;
-	wrangler_kanban_cards: StyleWranglerKanbanCards;
-	wrangler_kanban_lists: StyleWranglerKanbanLists;
-	wrangler_folder_note: StyleWranglerFolderNote;
+	wrangler_css_note_tags: IStyleWrangler;
+	wrangler_css_note_tags_no_wrap: IStyleWrangler;
+	wrangler_tags_canvas: IStyleWrangler;
+	wrangler_kanban_hashtags: IStyleWrangler;
+	wrangler_kanban_cards: IStyleWrangler;
+	wrangler_kanban_lists: IStyleWrangler;
+	wrangler_folder_note: IStyleWrangler;
+
+	wrangler_note_property_tags:IJqueryWrangler;
+	wrangler_note_background:IJqueryWrangler;
 
 	private _style_wranglers: Array<IStyleWrangler>;
 	// -----------------------------------------------------------------------------------------------------------------
@@ -38,6 +47,9 @@ export class StyleManager{
 		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
 		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
 		this.wrangler_folder_note = new StyleWranglerFolderNote(plugin);
+
+		this.wrangler_note_property_tags = new JqueryWranglerNotePropertyTags(plugin);
+		this.wrangler_note_background = new JqueryWranglerNoteBackgrounds(plugin);
 
 		this._style_wranglers = new Array<IStyleWrangler>(
 			this.wrangler_css_note_tags,
