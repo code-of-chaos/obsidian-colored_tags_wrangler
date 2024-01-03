@@ -34,7 +34,7 @@ export class EventHandlerFileOpen extends EventHandler{
 	}
 
 	private async apply_css_note_properties(_:TFile):Promise<void>{
-		const tags = get_tags(this.plugin);
+		const tags = get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags, false);
 		tags.map(
 			({tag_name, color, background_color}) =>{
 				// noinspection TypeScriptValidateJSTypes
@@ -57,7 +57,7 @@ export class EventHandlerFileOpen extends EventHandler{
 	}
 
 	private async remove_css_note_properties(_:TFile):Promise<void>{
-		const tags = get_tags(this.plugin);
+		const tags = get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags, false);
 		tags.map(
 			({tag_name}) =>{
 				// noinspection TypeScriptValidateJSTypes
@@ -79,7 +79,7 @@ export class EventHandlerFileOpen extends EventHandler{
 	}
 
 	private async apply_css_note_backgrounds(_:TFile):Promise<void>{
-		const tags = get_tags(this.plugin);
+		const tags = get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags, false);
 		tags.map(
 			({tag_name, background_color}) =>{
 				const page = $('div.workspace-leaf-content[data-type="markdown"] div.view-content');

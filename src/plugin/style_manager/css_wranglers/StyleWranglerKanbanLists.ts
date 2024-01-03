@@ -6,6 +6,7 @@ import {StyleWrangler}
 import ColoredTagWranglerPlugin
 	from "src/main";
 import {RGB} from "obsidian";
+import {get_tags} from "../../../api/tags";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,7 +21,7 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css_light(): Array<string> {
-		return this.get_tags()
+		return get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags)
 			.map(
 				({tag_name, color, background_color,luminance_offset}) => {
 					return this.assemble_css(
@@ -37,7 +38,7 @@ export class StyleWranglerKanbanLists extends StyleWrangler {
 	}
 
 	assemble_css_dark(): Array<string> {
-		return this.get_tags()
+		return get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags)
 			.map(
 				({tag_name, color, background_color,luminance_offset}) => {
 					return this.assemble_css(

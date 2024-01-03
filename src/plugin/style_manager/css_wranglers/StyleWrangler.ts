@@ -5,7 +5,7 @@ import {hslToRgb, rgbToHsl} from "src/api/ColorConverters";
 import ColoredTagWranglerPlugin from "src/main";
 import {RGB} from "obsidian";
 import {removeById} from "src/api/RemoveById";
-import {IColorPicker} from "src/api/interfaces/IColorPicker";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
@@ -19,7 +19,6 @@ export interface IStyleWrangler{
 	assemble_css_dark():Array<string>;
 	apply_styles(): void;
 	remove_styles(): void;
-	get_tags():Array<IColorPicker>;
 	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
 	get_background_string(color:RGB):string;
 	get_important():string;
@@ -67,25 +66,6 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		this.styleEL_dark?.parentNode?.removeChild(this.styleEL_dark);
 		removeById(this.id);
 	};
-
-	get_tags():Array<IColorPicker>{
-		return this.plugin.settings?.TagColors.ColorPicker
-			.map(tag_color_picker => {
-				const {tag_name, color, background_color, luminance_offset} = tag_color_picker;
-				if (this.plugin.settings?.TagColors.EnableMultipleTags) {
-					return tag_name
-						.split(/[\n;]/) // for organization, I added \n
-						.filter(tag => tag) // filter out empty lines
-						.map(tag => (
-							// Also trim the tag for leading spaces after or before a \n? Should fix some common issues.
-							{tag_name: tag.trim(), color, background_color, luminance_offset})
-						);
-				} else {
-					return {tag_name: tag_name, color, background_color, luminance_offset};
-				}
-			})
-			.flat();
-	}
 
 	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
 		if (is_light_theme && this.plugin.settings.TagColors.EnableDarkLightDifference ){
