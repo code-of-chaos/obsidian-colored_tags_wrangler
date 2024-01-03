@@ -7,6 +7,7 @@ import ColoredTagWranglerPlugin
 	from "src/main";
 import {RGB}
 	from "obsidian";
+import {get_tags} from "../../../api/tags";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -21,7 +22,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assemble_css_light(): Array<string> {
-		const all_tags = this.get_tags();
+		const all_tags = get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags);
 		const border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
 		const padding = this.plugin.settings.FolderNote.Values.Padding
 
@@ -52,7 +53,7 @@ export class StyleWranglerFolderNote extends StyleWrangler {
 	}
 
 	assemble_css_dark(): Array<string> {
-		let all_tags = this.get_tags();
+		let all_tags = get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags);
 		let border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
 		let padding = this.plugin.settings.FolderNote.Values.Padding
 
