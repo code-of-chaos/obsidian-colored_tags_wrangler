@@ -4,7 +4,7 @@
 import {JqueryWrangler} from "./JqueryWrangler";
 import $ from "jquery";
 import {get_tags} from "src/api/tags";
-import {rgbToString} from "src/api/ColorConverters";
+import {rgbaToString, rgbToString} from "src/api/ColorConverters";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -24,6 +24,8 @@ export class JqueryWranglerNoteBackgrounds extends JqueryWrangler{
         const color_picker = this.plugin.settings.TagColors.ColorPicker;
         const enable_multiple_tags = this.plugin.settings.TagColors.EnableMultipleTags;
         const tags = get_tags(color_picker, enable_multiple_tags, false);
+		const enable_background_opacity = this.plugin.settings.TagColors.EnableBackgroundOpacity;
+		const value_background_opacity = this.plugin.settings.TagColors.Values.BackgroundOpacity;
 
         tags.map(
             ({tag_name, background_color}) =>{
@@ -32,7 +34,9 @@ export class JqueryWranglerNoteBackgrounds extends JqueryWrangler{
 
                 // noinspection JSUnresolvedReference
                 if (tag.length !== 0) {
-                    page.css('background-color', rgbToString(background_color))
+                    page.css('background-color', enable_background_opacity
+						? rgbaToString({...background_color, a:value_background_opacity})
+						: rgbToString(background_color))
                 }
             }
         )
