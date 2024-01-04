@@ -164,3 +164,7 @@ export function stringToRgba(txt:String):RGBa{
 export function rgbToString(color:RGB):string{
 	return `rgb(${color.r}, ${color.g}, ${color.b})`
 }
+
+export function rgbaToString(color:RGBa):string{
+	return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
+}
