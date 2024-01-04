@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {JqueryWrangler} from "./JqueryWrangler";
 import $ from "jquery";
-import {get_tags} from "../../../api/tags";
-import {rgbToString} from "../../../api/ColorConverters";
-import {IColoredTagWrangler} from "../../IColoredTagWrangler";
+import {get_tags} from "src/api/tags";
+import {rgbToString} from "src/api/ColorConverters";
+import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
