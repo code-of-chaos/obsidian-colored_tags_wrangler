@@ -13,8 +13,8 @@ export const DefaultSettings: ISettings = {
 
 		EnableMultipleTags:true,
 		EnableSeparateBackground:false,
-		EnableSeparateLuminanceOffset:false,
-		EnableDarkLightDifference:true,
+		EnableSeparateLuminanceOffset:false, 	// can be removed
+		EnableDarkLightDifference:true, 		// can be removed
 		EnableBackgroundOpacity:false,
 
 		Values:{
