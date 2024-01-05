@@ -34,19 +34,19 @@ export class EventHandlerFileOpen extends EventHandler{
 	}
 
 	private async apply_css_note_properties(_:TFile):Promise<void>{
-		this.plugin.style_manager.wrangler_note_property_tags.assemble_styling();
+		this.plugin.style_manager.wrangler_note_property_tags.assembleStyling();
 	}
 
 	private async remove_css_note_properties(_:TFile):Promise<void>{
-		this.plugin.style_manager.wrangler_note_property_tags.remove_styling();
+		this.plugin.style_manager.wrangler_note_property_tags.removeStyling();
 
 	}
 
 	private async apply_css_note_backgrounds(_:TFile):Promise<void>{
-		this.plugin.style_manager.wrangler_note_background.assemble_styling();
+		this.plugin.style_manager.wrangler_note_background.assembleStyling();
 	}
 
 	private async remove_css_note_backgrounds(_:TFile):Promise<void>{
-		this.plugin.style_manager.wrangler_note_background.remove_styling();
+		this.plugin.style_manager.wrangler_note_background.removeStyling();
 	}
 }

@@ -13,12 +13,12 @@ export const DefaultSettings: ISettings = {
 
 		EnableMultipleTags:true,
 		EnableSeparateBackground:false,
-		EnableSeparateLuminanceOffset:false,
-		EnableDarkLightDifference:true,
+		EnableSeparateLuminanceOffset:false, 	// can be removed
+		EnableDarkLightDifference:true, 		// can be removed
 		EnableBackgroundOpacity:false,
 
 		Values:{
-			BackgroundOpacity:0.2,
+			BackgroundOpacity:0.45,
 			LuminanceOffset:0.15
 		}
 	},
@@ -35,7 +35,7 @@ export const DefaultSettings: ISettings = {
 	// Extra integrations
 	FolderNote:{
 		Enable:false,
-		FolderTagLinks:{},
+		FolderTagLinks:[],
 
 		EnableAutoDetect:true,
 
@@ -76,6 +76,6 @@ export const DefaultSettings: ISettings = {
 	},
 
 	Info: {
-		SettingsVersion: 11 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
+		SettingsVersion: 12 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }

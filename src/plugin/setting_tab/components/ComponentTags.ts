@@ -2,16 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {
-	ButtonComponent,
+	ButtonComponent, Platform,
 	RGB,
-	Setting, SliderComponent, TextAreaComponent,
+	Setting, TextAreaComponent,
 	TextComponent
 } from "obsidian";
-import {
-	hexToRgb,
-	hslToRgb,
-	rgbToHsl
-} from "src/api/ColorConverters"
+import {hexToRgb} from "src/api/ColorConverters"
 import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
 import {arrayMove} from "src/api/ArrayUtils"
 
@@ -20,7 +16,7 @@ import {arrayMove} from "src/api/ArrayUtils"
 // ---------------------------------------------------------------------------------------------------------------------
 const _NEW_TAG_NAME:string = "new-tag";
 const _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
-const _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 255, g: 255, b: 255 };
+const _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 100, g: 100, b: 100 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -54,7 +50,6 @@ export class ComponentTags extends SettingsTabComponent{
 					.setDisabled(this.plugin.settings.TagColors.ColorPicker.length == 0)
 			);
 		}
-
 
 		// Create the amount of tags already stored in the setting_tab
 		for (let i = 0; i < this.plugin.settings.TagColors.ColorPicker.length; i++) {
@@ -105,6 +100,9 @@ export class ComponentTags extends SettingsTabComponent{
 		let new_tag_content = tag_content;
 
 		const setting = new Setting(containerEL);
+		if (Platform.isMobileApp || Platform.isMobile){
+			setting.setClass("cwt-setting-tags")
+		}
 
 		if (this.plugin.settings.TagColors.EnableMultipleTags){
 			setting.addTextArea((text) => this._text_callback(text,tag_id, new_tag_content));
@@ -112,27 +110,21 @@ export class ComponentTags extends SettingsTabComponent{
 			setting.addText((text) => this._text_callback(text,tag_id, new_tag_content));
 		}
 
-		setting.addColorPicker((colorPicker) =>
+		setting
+			.addColorPicker((colorPicker) =>
 				colorPicker
 					.setValueRgb(new_tag_content.color)
 					.onChange(async (value) => {
 						// Handle user-defined tag colors here
 						new_tag_content.color = hexToRgb(value)
 
-						// Store the edited value to the background color, if we haven't enabled separate backgrounds
-						if (!this.plugin.settings.TagColors.EnableSeparateBackground){
-							let hsl = rgbToHsl(new_tag_content.color);
-							hsl.l -= this.plugin.settings.TagColors.Values.LuminanceOffset;
-							new_tag_content.background_color = hslToRgb(hsl);
-						}
 						this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
 
 					})
-			);
+			)
 
-		if (this.plugin.settings.TagColors.EnableSeparateBackground){
-			setting.addColorPicker((colorPicker) =>
+			.addColorPicker((colorPicker) =>
 				colorPicker
 					.setValueRgb(new_tag_content.background_color)
 					.onChange(async (value) => {
@@ -142,44 +134,8 @@ export class ComponentTags extends SettingsTabComponent{
 						await this.plugin.saveSettings();
 					})
 			);
-		}
-		if (this.plugin.settings.TagColors.EnableSeparateLuminanceOffset){
-			let sliderElement: SliderComponent; // Little work around to make them update together
-			let textElement: TextComponent;
-			setting
-				.addSlider(component => {
-						component
-							.setLimits(-0.5, .5, 0.05)
-							.setValue(this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset)
-							.onChange(async state => {
-								this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset = state;
-								await this.plugin.saveSettings();
 
-								// Update the text component's value
-								textElement.setValue(String(state));
-							});
-						sliderElement = component;
-					}
-				).addText((text) => {
-				text
-					.setPlaceholder(this.plugin.settings.TagColors.Values.LuminanceOffset.toString())
-					.setValue(String(this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset))
-					.onChange(async state => {
-						// Because this is a text component it needs to be cast to a number
-						let state_as_number = Number(state)
-						if (isNaN(state_as_number) || state_as_number === null){
-							state_as_number = 0
-						}
-
-						this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset = state_as_number;
-						await this.plugin.saveSettings();
-
-						sliderElement.setValue(state_as_number)
-					});
-				textElement = text;
-			});
-		}
-
+		// Move stuff around buttons
 		setting.addExtraButton((cb) => {
 			cb.setIcon("up-chevron-glyph")
 				.setTooltip("Move up")

@@ -12,3 +12,4 @@ export * from 'src/plugin/settings/migrations/migrate_07_to_08';
 export * from 'src/plugin/settings/migrations/migrate_08_to_09';
 export * from 'src/plugin/settings/migrations/migrate_09_to_10';
 export * from 'src/plugin/settings/migrations/migrate_10_to_11';
+export * from 'src/plugin/settings/migrations/migrate_11_to_12';

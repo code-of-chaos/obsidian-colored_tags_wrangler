@@ -6,10 +6,9 @@
 	width: 100%;
 }
 
-/* Luminance offset things */
-.cwt-settings-tab div:nth-child(25) > div.setting-item-control > input[type=text]{
-	width: 30%;
-}
-.cwt-settings-tab input[type=text]:nth-child(5){
-	width: 15%;
+.cwt-setting-tags .setting-item-control:nth-child(-n+4) {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }

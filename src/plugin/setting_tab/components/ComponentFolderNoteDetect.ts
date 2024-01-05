@@ -5,8 +5,6 @@ import {Setting}
 	from "obsidian";
 import {SettingsTabComponent}
 	from "src/plugin/setting_tab/SettingsTabComponent";
-import {v4 as uuid4}
-	from "uuid";
 import {detect_all_links}
 	from "src/api/FolderNoteLogic"
 // ---------------------------------------------------------------------------------------------------------------------
@@ -25,15 +23,13 @@ export class ComponentFolderNoteDetect extends SettingsTabComponent{
 				.setButtonText('Detect Manually')
 				.onClick(async () => {
 					// Reset the table and then detect
-					this.plugin.settings.FolderNote.FolderTagLinks = {}
+					this.plugin.settings.FolderNote.FolderTagLinks = []
 
 					const found_folder_tags = await detect_all_links(this.plugin);
-					found_folder_tags
+					this.plugin.settings.FolderNote.FolderTagLinks = found_folder_tags
 						.sort((a, b) => a.folder_path.localeCompare(b.folder_path))
-						.forEach(v => {
-							this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = v
-						})
 					;
+
 					await Promise.all([
 						this.plugin.saveSettings(),
 						this.settings_tab.display()

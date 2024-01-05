@@ -1,40 +1,34 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {StyleWrangler}
-	from "src/plugin/style_manager/css_wranglers/StyleWrangler";
+import {CSSWrangler}
+	from "src/plugin/style_manager/css_wranglers/CSSWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleWranglerKanbanHashtags extends StyleWrangler {
+export class CSSWranglerTags extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleKanbanEl", plugin);
+		super("#styleTagsEl", plugin);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assemble_css_light(): Array<string> {
-		return [this.assemble_css()]
-	}
+	assembleCss(theme:string){
+		const important:string = this.getImportant();
 
-	assemble_css_dark(): Array<string> {
-		return [this.assemble_css()]
-	}
-
-	private assemble_css(){
-		return`
-		div[data-type="kanban"] a.tag>span,
-		div.kanban-plugin a.tag>span,
-		div[data-type="kanban"] .cm-hashtag-begin {
-			visibility: hidden;
-			position: absolute;
-		}`
-
+		return this.getTags().map(
+			({tag_name, color, background_color}) => ` 
+				${theme} .tag[href="#${tag_name}"], 
+				${theme} .cm-tag-${tag_name} { 
+					color: ${this.getForegroundString(color)} ${important};
+					background-color: ${this.getBackgroundString(background_color)} ${important};
+				}`
+		)
 	}
 
 }

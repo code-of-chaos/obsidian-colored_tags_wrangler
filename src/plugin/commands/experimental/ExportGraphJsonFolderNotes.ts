@@ -16,10 +16,10 @@ export async function exportGraphJsonFolderNotes(plugin:IColoredTagWrangler) {
 
     let all_tags = get_tags(plugin.settings.TagColors.ColorPicker, plugin.settings?.TagColors.EnableMultipleTags);
 
-    graph_data.colorGroups = Object.keys(plugin.settings.FolderNote.FolderTagLinks)
+    graph_data.colorGroups = this.plugin.settings.FolderNote.FolderTagLinks
         .map(
-            folderUUID => {
-                const {folder_path, tag_name: folder_tag_name} = plugin.settings.FolderNote.FolderTagLinks[folderUUID];
+            (value:{folder_path:string, tag_name:string}) => {
+                const {folder_path, tag_name: folder_tag_name} = value;
                 return all_tags
                     .filter(({tag_name: known_tag}) => known_tag === folder_tag_name)
                     .map(({color}) => {

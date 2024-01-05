@@ -1,28 +1,32 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
-import {IStyleWrangler, StyleWrangler} from "../StyleWrangler";
-
+import {CSSWrangler}
+	from "src/plugin/style_manager/css_wranglers/CSSWrangler";
+import ColoredTagWranglerPlugin
+	from "src/main";
 // ---------------------------------------------------------------------------------------------------------------------
-// Interface
+// Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IJqueryWrangler extends IStyleWrangler{
-	assembleStyling():void;
-	removeStyling():void;
-}
-
-// ---------------------------------------------------------------------------------------------------------------------
-// Interface
-// ---------------------------------------------------------------------------------------------------------------------
-export abstract class JqueryWrangler extends StyleWrangler implements IJqueryWrangler{
-	abstract assembleStyling():void;
-	abstract removeStyling(): void;
-
+export class CSSWranglerKanbanHashtags extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	protected constructor(plugin:IColoredTagWrangler) {
-		super(plugin);
+	constructor(plugin:ColoredTagWranglerPlugin) {
+		super("#styleKanbanEl", plugin);
 	}
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
+	assembleCss(_:string){
+		return[`
+		div[data-type="kanban"] a.tag>span,
+		div.kanban-plugin a.tag>span,
+		div[data-type="kanban"] .cm-hashtag-begin {
+			visibility: hidden;
+			position: absolute;
+		}`]
+
+	}
+
 }

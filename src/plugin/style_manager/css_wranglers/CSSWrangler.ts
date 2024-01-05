@@ -1,47 +1,45 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {hslToRgb, rgbToHsl} from "src/api/ColorConverters";
 import ColoredTagWranglerPlugin from "src/main";
-import {RGB} from "obsidian";
 import {removeById} from "src/api/RemoveById";
+import {IStyleWrangler, StyleWrangler} from "../StyleWrangler";
+
 
 // ---------------------------------------------------------------------------------------------------------------------
-// Interface
+// Interface & Support code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IStyleWrangler{
+export interface ICSSWrangler extends IStyleWrangler{
 	id:string;
 	styleEL_light:HTMLStyleElement;
 	styleEL_dark:HTMLStyleElement;
-	plugin:ColoredTagWranglerPlugin;
 
-	assemble_css_light():Array<string>;
-	assemble_css_dark():Array<string>;
-	apply_styles(): void;
-	remove_styles(): void;
-	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
-	get_background_string(color:RGB):string;
-	get_important():string;
+	assembleCss(theme:string):Array<string>;
+	applyStyles(): void;
+	removeStyles(): void;
 }
+
+const lineCleanup = (line:string) =>  line.split("\n").map(l=>l.trim()).join(" ")
+
 // ---------------------------------------------------------------------------------------------------------------------
-// Interface
+// Code
 // ---------------------------------------------------------------------------------------------------------------------
-export abstract class StyleWrangler implements IStyleWrangler{
+export abstract class CSSWrangler extends StyleWrangler implements ICSSWrangler{
 	id: string;
 	styleEL_light: HTMLStyleElement;
 	styleEL_dark: HTMLStyleElement;
-	plugin:ColoredTagWranglerPlugin;
 
-	abstract assemble_css_light(): Array<string>;
-	abstract assemble_css_dark(): Array<string>;
+	abstract assembleCss(theme:string): Array<string>;
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	protected constructor(id:string, plugin:ColoredTagWranglerPlugin) {
-		!id.startsWith("#") ? id = `#${id}` : null;
+		super(plugin);
 
-		this.id = id;
-		this.plugin = plugin;
+		this.id = !id.startsWith("#")
+			? `#${id}`
+			: id;
 
 		this.styleEL_light = document.createElement('style');
 		this.styleEL_dark = document.createElement('style');
@@ -51,46 +49,22 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	apply_styles(): void{
+	applyStyles(): void{
 		// first remove the old style element, else we will keep appending data to the dom
-		this.remove_styles();
+		this.removeStyles();
 
-		this.styleEL_light.innerText = this.assemble_css_light().map(line => line.split("\n").map(l=>l.trim()).join(" ")).join(" ");
-		this.styleEL_dark.innerText =  this.assemble_css_dark().map(line => line.split("\n").map(l=>l.trim()).join(" ")).join(" ");
+		this.styleEL_light.innerText = this.assembleCss("body.theme-light").map(lineCleanup).join(" ");
+		this.styleEL_dark.innerText =  this.assembleCss("body.theme-dark").map(lineCleanup).join(" ");
+
 		document.head.appendChild(this.styleEL_light);
 		document.head.appendChild(this.styleEL_dark);
 	};
 
-	remove_styles(): void{
+	removeStyles(): void{
 		this.styleEL_light?.parentNode?.removeChild(this.styleEL_light);
 		this.styleEL_dark?.parentNode?.removeChild(this.styleEL_dark);
+
+		// I don't know what this does anymore, and why it is needed at all?
 		removeById(this.id);
 	};
-
-	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
-		if (is_light_theme && this.plugin.settings.TagColors.EnableDarkLightDifference ){
-			luminance_offset = -luminance_offset; // Double negative => +
-		}
-		let background_hsl = rgbToHsl(background_color);
-		background_hsl.l -= luminance_offset;
-		return hslToRgb(background_hsl);
-	}
-
-	get_background_string(color:RGB):string{
-		const rgb:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
-			?  "rgba"
-			: "rgb";
-		const opacity:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
-			?  `, ${this.plugin.settings.TagColors.Values.BackgroundOpacity}`
-			: "";
-		return `${rgb}(${color.r}, ${color.g}, ${color.b}${opacity})`
-	}
-
-	get_important(): string {
-		// Not that this setting should be used by users,
-		// 		but can be helpful for people who want to debug what is going on
-		return this.plugin.settings.FolderNote.Values.ForceImportant
-			? "!important"
-			: ""
-	}
 }

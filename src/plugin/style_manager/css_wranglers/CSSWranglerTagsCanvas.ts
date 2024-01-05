@@ -1,43 +1,36 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {StyleWrangler}
-	from "src/plugin/style_manager/css_wranglers/StyleWrangler";
-import ColoredTagWranglerPlugin
-	from "src/main";
+import {CSSWrangler} from "src/plugin/style_manager/css_wranglers/CSSWrangler";
+import {RGB} from "obsidian";
+import ColoredTagWranglerPlugin from "src/main";
+import {get_tags} from "../../../api/tags";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleWranglerCSSTagsNoWrap extends StyleWrangler {
+export class CSSWranglerTagsCanvas extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleCSS", plugin);
+		super("#styleTagsCanvasEl", plugin);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assemble_css_light(): Array<string> {
-		return [this.assemble_css()]
-	}
+	assembleCss(theme:string){
+		const important:string = this.getImportant();
+		return this.getTags()
+			.map(
+				({tag_name, color, background_color}) => `
+${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
+	background : ${this.getBackgroundWithOpacityString(background_color)} ${important};
+	border-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
+}`
+				);
 
-	assemble_css_dark(): Array<string> {
-		return [this.assemble_css()]
-	}
 
-	private assemble_css(){
-		let css:string = ""
-		if (this.plugin.settings.CSS.TagsNoWrap){
-			css += `
-			a.tag {
-				white-space: ${this.plugin.settings.CSS.TagsNoWrapText};
-			}
-			`
-		}
-
-		return css
 
 	}
-
 }

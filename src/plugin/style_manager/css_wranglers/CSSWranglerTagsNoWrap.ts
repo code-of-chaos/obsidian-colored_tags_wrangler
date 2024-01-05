@@ -1,28 +1,28 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
-import {IStyleWrangler, StyleWrangler} from "../StyleWrangler";
-
+import {CSSWrangler}
+	from "src/plugin/style_manager/css_wranglers/CSSWrangler";
+import ColoredTagWranglerPlugin
+	from "src/main";
 // ---------------------------------------------------------------------------------------------------------------------
-// Interface
+// Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IJqueryWrangler extends IStyleWrangler{
-	assembleStyling():void;
-	removeStyling():void;
-}
-
-// ---------------------------------------------------------------------------------------------------------------------
-// Interface
-// ---------------------------------------------------------------------------------------------------------------------
-export abstract class JqueryWrangler extends StyleWrangler implements IJqueryWrangler{
-	abstract assembleStyling():void;
-	abstract removeStyling(): void;
-
+export class CSSWranglerTagsNoWrap extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	protected constructor(plugin:IColoredTagWrangler) {
-		super(plugin);
+	constructor(plugin:ColoredTagWranglerPlugin) {
+		super("#styleCSS", plugin);
 	}
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
+	assembleCss(_:string){
+		return [this.plugin.settings.CSS.TagsNoWrap
+			? `a.tag {white-space: ${this.plugin.settings.CSS.TagsNoWrapText};}`!
+			: ""]
+
+	}
+
 }
