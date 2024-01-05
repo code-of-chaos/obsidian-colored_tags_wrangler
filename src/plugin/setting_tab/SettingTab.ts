@@ -108,8 +108,8 @@ export class SettingTab extends PluginSettingTab {
 		this._components.tags_canvas.create_component(containerEl);
 		this._components.tags_enable_multiple_tags.create_component(containerEl);
 		this._components.tags_enable_background.create_component(containerEl);
-		this._components.tags_enable_luminance.create_component(containerEl);
-		this._components.tags_enable_dark_light_difference.create_component(containerEl);
+		// this._components.tags_enable_luminance.create_component(containerEl);
+		// this._components.tags_enable_dark_light_difference.create_component(containerEl);
 		this._components.tags_enable_background_opacity.create_component(containerEl);
 
 		// CSS Settings
