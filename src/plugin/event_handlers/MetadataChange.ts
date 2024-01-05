@@ -51,16 +51,9 @@ export class EventHandlerMetadataChange extends EventHandler{
 				folder_path: folder_path
 			}));
 
-
-        this.plugin.settings.FolderNote.FolderTagLinks = {}; // reset the list
-
-		const updatedLinks = [...linksToKeep, ...newLinks];
-
-		updatedLinks
+        this.plugin.settings.FolderNote.FolderTagLinks = [...linksToKeep, ...newLinks]
 			.sort((a, b) => a.folder_path.localeCompare(b.folder_path))
-			.forEach(link => {
-				this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = link;
-			})
+
 		;
     }
 }

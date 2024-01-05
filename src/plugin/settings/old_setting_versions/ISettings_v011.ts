@@ -6,7 +6,7 @@ import {IColorPicker} from "src/api/interfaces/IColorPicker";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface ISettings {
+export interface ISettings_v011 {
 	// Main settings for colors to tags
 	TagColors:{
         ColorPicker: Array<IColorPicker>,
@@ -34,7 +34,10 @@ export interface ISettings {
 	// Extra integrations
 	FolderNote:{
         Enable:boolean
-        FolderTagLinks:Array<{folder_path:string, tag_name:string}>,
+        FolderTagLinks:Record<
+            string,
+            {folder_path:string, tag_name:string}
+        >,
 
         EnableAutoDetect:boolean,
 

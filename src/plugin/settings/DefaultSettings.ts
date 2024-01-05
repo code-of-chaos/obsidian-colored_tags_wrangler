@@ -35,7 +35,7 @@ export const DefaultSettings: ISettings = {
 	// Extra integrations
 	FolderNote:{
 		Enable:false,
-		FolderTagLinks:{},
+		FolderTagLinks:[],
 
 		EnableAutoDetect:true,
 
@@ -76,6 +76,6 @@ export const DefaultSettings: ISettings = {
 	},
 
 	Info: {
-		SettingsVersion: 11 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
+		SettingsVersion: 12 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }

@@ -5,8 +5,7 @@ import {Setting}
 	from "obsidian";
 import {SettingsTabComponent}
 	from "src/plugin/setting_tab/SettingsTabComponent";
-import {v4 as uuid4}
-	from "uuid";
+import {arrayMove} from "../../../api/ArrayUtils";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -24,7 +23,7 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 				button
 					.setButtonText("Add new link")
 					.onClick(async () => {
-						this.plugin.settings.FolderNote.FolderTagLinks[uuid4()] = {folder_path: this._NEW_FOLDER_PATH, tag_name: this._NEW_TAG_NAME,};
+						this.plugin.settings.FolderNote.FolderTagLinks.push({folder_path: this._NEW_FOLDER_PATH, tag_name: this._NEW_TAG_NAME,});
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()
@@ -39,8 +38,7 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 				button
 					.setButtonText('Clear all')
 					.onClick(async () => {
-							Object.keys(this.plugin.settings.FolderNote.FolderTagLinks)
-								.forEach((key_name) => delete this.plugin.settings.FolderNote.FolderTagLinks[key_name]);
+							this.plugin.settings.FolderNote.FolderTagLinks=[];
 							await Promise.all([
 								this.plugin.saveSettings(),
 								this.settings_tab.display()
@@ -48,23 +46,20 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 						}
 					)
 					.setClass('mod-warning')
-					.setDisabled(Object.keys(this.plugin.settings.FolderNote.FolderTagLinks).length == 0)
+					.setDisabled(this.plugin.settings.FolderNote.FolderTagLinks.length == 0)
 			);
 		}
 
 
 		// Create the amount of tags already stored in the setting_tab
-		for (const linkUUID in this.plugin.settings.FolderNote.FolderTagLinks) {
-			if (!this.plugin.settings.FolderNote.FolderTagLinks.hasOwnProperty(linkUUID)) {
-				continue;
-			}
-			this._createFolderTagLinks(linkUUID, this.plugin.settings.FolderNote.FolderTagLinks[linkUUID], containerEL);
+		for (let i = 0; i < this.plugin.settings.FolderNote.FolderTagLinks.length; i++) {
+			this._createFolderTagLinks(i, this.plugin.settings.FolderNote.FolderTagLinks[i], containerEL);
 		}
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _createFolderTagLinks(linkUUID: string, link_content: {tag_name:string, folder_path:string}, containerEL:HTMLElement) {
-		let link_id = linkUUID;
+	private _createFolderTagLinks(link_id: number, link_content: {tag_name:string, folder_path:string}, containerEL:HTMLElement) {
+		let new_link_id = link_id;
 		let new_link_content = link_content;
 
 		const setting = new Setting(containerEL)
@@ -93,16 +88,39 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 
 						// Add the updated tag and color
 						new_link_content.folder_path = value
-						this.plugin.settings.FolderNote.FolderTagLinks[link_id] = new_link_content;
+						this.plugin.settings.FolderNote.FolderTagLinks[new_link_id] = new_link_content;
 						await this.plugin.saveSettings();
 
 					})
-			).addButton((button) =>
-				button
-					.setButtonText('-')
+			)
+
+			.addExtraButton((cb) => {
+				cb.setIcon("up-chevron-glyph")
+					.setTooltip("Move up")
+					.onClick(async () => {
+						// reorder stuff here!!!
+						arrayMove(this.plugin.settings.FolderNote.FolderTagLinks, new_link_id, new_link_id-1)
+						await this.plugin.saveSettings();
+						this.settings_tab.display()
+					});
+			})
+			.addExtraButton((cb) => {
+				cb.setIcon("down-chevron-glyph")
+					.setTooltip("Move down")
+					.onClick(async () => {
+						// reorder stuff here!!!
+						arrayMove(this.plugin.settings.FolderNote.FolderTagLinks, new_link_id, new_link_id+1)
+						await this.plugin.saveSettings();
+						this.settings_tab.display()
+					});
+			})
+
+			.addExtraButton((cb) =>
+				cb.setIcon("trash")
+					.setTooltip("Delete")
 					.onClick(async () => {
 						// Remove the tag and color
-						delete this.plugin.settings.FolderNote.FolderTagLinks[link_id];
+						this.plugin.settings.FolderNote.FolderTagLinks.splice(new_link_id, 1);
 						await Promise.all([
 							this.plugin.saveSettings(),
 							this.settings_tab.display()

@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {JqueryWrangler} from "./JqueryWrangler";
 import $ from "jquery";
-import {rgbToString} from "src/api/ColorConverters";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------

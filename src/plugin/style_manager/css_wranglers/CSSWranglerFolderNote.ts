@@ -26,10 +26,9 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 		let border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
 		let padding = this.plugin.settings.FolderNote.Values.Padding
 
-		return Object.keys(this.plugin.settings.FolderNote.FolderTagLinks)
+		return this.plugin.settings.FolderNote.FolderTagLinks
 			.map(
-				folderUUID => {
-					let {folder_path, tag_name: folder_tag_name} = this.plugin.settings.FolderNote.FolderTagLinks[folderUUID];
+				({folder_path, tag_name: folder_tag_name}) => {
 					return all_tags
 						.filter(({tag_name: known_tag}) => known_tag === folder_tag_name)
 						.map(({color, background_color}) => this.createCss(
