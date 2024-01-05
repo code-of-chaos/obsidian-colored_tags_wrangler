@@ -18,7 +18,7 @@ export const DefaultSettings: ISettings = {
 		EnableBackgroundOpacity:false,
 
 		Values:{
-			BackgroundOpacity:0.2,
+			BackgroundOpacity:0.45,
 			LuminanceOffset:0.15
 		}
 	},
