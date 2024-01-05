@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {
-	ButtonComponent,
+	ButtonComponent, Platform,
 	RGB,
 	Setting, TextAreaComponent,
 	TextComponent
@@ -100,6 +100,9 @@ export class ComponentTags extends SettingsTabComponent{
 		let new_tag_content = tag_content;
 
 		const setting = new Setting(containerEL);
+		if (Platform.isMobileApp || Platform.isMobile){
+			setting.setClass("cwt-setting-tags")
+		}
 
 		if (this.plugin.settings.TagColors.EnableMultipleTags){
 			setting.addTextArea((text) => this._text_callback(text,tag_id, new_tag_content));

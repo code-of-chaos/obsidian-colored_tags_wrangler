@@ -13,3 +13,10 @@
 .cwt-settings-tab input[type=text]:nth-child(5){
 	width: 15%;
 }
+
+.cwt-setting-tags .setting-item-control:nth-child(-n+4) {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
