@@ -49,7 +49,9 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	}
 
 	getBackgroundWithOpacityString(color:RGB):string{
-		return rgbaToString({...color, a:this.plugin.settings.TagColors.Values.BackgroundOpacity})
+		return this.plugin.settings.TagColors.EnableBackgroundOpacity
+			? rgbaToString({...color, a:this.plugin.settings.TagColors.Values.BackgroundOpacity})
+			: this.getBackgroundString(color)
 	}
 
 	getForegroundString(color:RGB):string{
