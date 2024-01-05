@@ -24,7 +24,7 @@ export class CSSWranglerKanbanLists extends CSSWrangler {
 			.map(
 				({tag_name, color, background_color}) => `
 ${theme} div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
-	background: ${this.getBackgroundString(background_color)} ${important};
+	background: ${this.getBackgroundWithOpacityString(background_color)} ${important};
 	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) ${important};
 }
 ${theme} div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){

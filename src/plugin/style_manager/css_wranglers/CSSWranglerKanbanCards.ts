@@ -22,16 +22,13 @@ export class CSSWranglerKanbanCards extends CSSWrangler {
 		const important:string = this.getImportant();
 		return this.getTags()
 			.map(
-				({tag_name, color, background_color}) => {
-					const string_background = this.getBackgroundString(background_color)
-					return `
+				({tag_name, color, background_color}) => `
 ${theme} div.kanban-plugin__item.has-tag-${tag_name} div.kanban-plugin__item-title-wrapper { 
-	background: ${string_background} ${important};
+	background: ${ this.getBackgroundWithOpacityString(background_color)} ${important};
 }
 ${theme} div.kanban-plugin__item.has-tag-${tag_name}{ 
 	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) ${important};
 }`
-				}
 			);
 
 	}

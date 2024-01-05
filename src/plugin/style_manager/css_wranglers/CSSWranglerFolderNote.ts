@@ -48,7 +48,7 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 	private createCss(theme: string, folder_path: string, color: RGB, background_color: RGB, important: string, border_radius: string, padding: string) {
 		// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
 		const  string_color= this.getForegroundString(color);
-		const string_background = this.getBackgroundString(background_color)
+		const string_background =  this.getBackgroundWithOpacityString(background_color)
 
 		return`
 /* Apply color to drop down triangle */

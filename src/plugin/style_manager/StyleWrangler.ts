@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {rgbToString} from "src/api/ColorConverters";
+import {rgbToString, rgbaToString} from "src/api/ColorConverters";
 import {RGB} from "obsidian";
 import {get_tags} from "src/api/tags";
 import {IColorPicker} from "src/api/interfaces/IColorPicker";
@@ -14,6 +14,7 @@ export interface IStyleWrangler{
 	plugin:IColoredTagWrangler;
 
 	getBackgroundString(color:RGB):string;
+	getBackgroundWithOpacityString(color:RGB):string;
 	getForegroundString(color:RGB):string;
 
 	getImportant():string;
@@ -44,13 +45,11 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	}
 
 	getBackgroundString(color:RGB):string{
-		const prefix:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
-			?  "rgba"
-			: "rgb";
-		const opacity:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
-			?  `, ${this.plugin.settings.TagColors.Values.BackgroundOpacity}`
-			: "";
-		return `${prefix}(${color.r}, ${color.g}, ${color.b}${opacity})`
+		return rgbToString(color)
+	}
+
+	getBackgroundWithOpacityString(color:RGB):string{
+		return rgbaToString({...color, a:this.plugin.settings.TagColors.Values.BackgroundOpacity})
 	}
 
 	getForegroundString(color:RGB):string{
