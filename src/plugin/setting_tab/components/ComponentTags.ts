@@ -4,14 +4,10 @@
 import {
 	ButtonComponent,
 	RGB,
-	Setting, SliderComponent, TextAreaComponent,
+	Setting, TextAreaComponent,
 	TextComponent
 } from "obsidian";
-import {
-	hexToRgb,
-	hslToRgb,
-	rgbToHsl
-} from "src/api/ColorConverters"
+import {hexToRgb} from "src/api/ColorConverters"
 import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
 import {arrayMove} from "src/api/ArrayUtils"
 
@@ -112,27 +108,21 @@ export class ComponentTags extends SettingsTabComponent{
 			setting.addText((text) => this._text_callback(text,tag_id, new_tag_content));
 		}
 
-		setting.addColorPicker((colorPicker) =>
+		setting
+			.addColorPicker((colorPicker) =>
 				colorPicker
 					.setValueRgb(new_tag_content.color)
 					.onChange(async (value) => {
 						// Handle user-defined tag colors here
 						new_tag_content.color = hexToRgb(value)
 
-						// Store the edited value to the background color, if we haven't enabled separate backgrounds
-						if (!this.plugin.settings.TagColors.EnableSeparateBackground){
-							let hsl = rgbToHsl(new_tag_content.color);
-							hsl.l -= this.plugin.settings.TagColors.Values.LuminanceOffset;
-							new_tag_content.background_color = hslToRgb(hsl);
-						}
 						this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
 
 					})
-			);
+			)
 
-		if (this.plugin.settings.TagColors.EnableSeparateBackground){
-			setting.addColorPicker((colorPicker) =>
+			.addColorPicker((colorPicker) =>
 				colorPicker
 					.setValueRgb(new_tag_content.background_color)
 					.onChange(async (value) => {
@@ -142,7 +132,6 @@ export class ComponentTags extends SettingsTabComponent{
 						await this.plugin.saveSettings();
 					})
 			);
-		}
 
 		// Move stuff around buttons
 		setting.addExtraButton((cb) => {
