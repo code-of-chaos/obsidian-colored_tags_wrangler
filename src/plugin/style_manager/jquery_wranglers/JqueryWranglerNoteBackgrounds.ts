@@ -35,7 +35,7 @@ export class JqueryWranglerNoteBackgrounds extends JqueryWrangler{
                 // noinspection JSUnresolvedReference
                 if (tag !== null && tag.length !== 0) {
                     // automatically applies the background opacity if enabled
-                    page.css('background-color', this.getBackgroundString(background_color))
+                    page.css('background-color', this.getBackgroundWithOpacityString(background_color))
                 }
             }
         )
