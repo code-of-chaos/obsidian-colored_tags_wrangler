@@ -1,40 +1,46 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {StyleWrangler}
-	from "src/plugin/style_manager/css_wranglers/StyleWrangler";
+import {CSSWrangler}
+	from "src/plugin/style_manager/css_wranglers/CSSWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleWranglerKanbanHashtags extends StyleWrangler {
+export class CSSWranglerKanbanCards extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleKanbanEl", plugin);
+		super("#styleKanbanCardsEl", plugin);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assemble_css_light(): Array<string> {
-		return [this.assemble_css()]
+	assembleCssLight(): Array<string> {
+		return this.assembleCss("body.theme-light", true)
 	}
 
-	assemble_css_dark(): Array<string> {
-		return [this.assemble_css()]
+	assembleCssDark(): Array<string> {
+		return this.assembleCss("body.theme-dark", false)
 	}
 
-	private assemble_css(){
-		return`
-		div[data-type="kanban"] a.tag>span,
-		div.kanban-plugin a.tag>span,
-		div[data-type="kanban"] .cm-hashtag-begin {
-			visibility: hidden;
-			position: absolute;
-		}`
+	private assembleCss(theme:string,is_light_theme:boolean){
+		const important:string = this.getImportant();
+		return this.getTags()
+			.map(
+				({tag_name, color, background_color,luminance_offset}) => {
+					const background = this.getBackgroundString(this.getBackgroundColorLuminanceOffset(background_color, luminance_offset, is_light_theme));
+					return `
+${theme} div.kanban-plugin__item.has-tag-${tag_name} div.kanban-plugin__item-title-wrapper { 
+	background: ${background} ${important};
+}
+${theme} div.kanban-plugin__item.has-tag-${tag_name}{ 
+	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) ${important};
+}`
+				}
+			);
 
 	}
-
 }

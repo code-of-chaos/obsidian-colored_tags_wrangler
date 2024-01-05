@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {StyleWrangler} from "src/plugin/style_manager/css_wranglers/StyleWrangler";
+import {CSSWrangler} from "src/plugin/style_manager/css_wranglers/CSSWrangler";
 import {RGB} from "obsidian";
 import ColoredTagWranglerPlugin from "src/main";
 import {get_tags} from "../../../api/tags";
@@ -9,7 +9,7 @@ import {get_tags} from "../../../api/tags";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleWranglerTagsCanvas extends StyleWrangler {
+export class CSSWranglerTagsCanvas extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
@@ -19,48 +19,26 @@ export class StyleWranglerTagsCanvas extends StyleWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assemble_css_light(): Array<string> {
-		return get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags)
-			.map(
-				({tag_name, color, background_color,luminance_offset}) => {
-					return this.assemble_css(
-						"body.theme-light",
-						tag_name,
-						color,
-						this.get_background_color(
-							background_color,
-							luminance_offset,
-							true
-						)
-					)
-				});
+	assembleCssLight(): Array<string> {
+		return this.assembleCss("body.theme-light", true)
 	}
 
-	assemble_css_dark(): Array<string> {
-		return get_tags(this.plugin.settings.TagColors.ColorPicker, this.plugin.settings?.TagColors.EnableMultipleTags)
-			.map(
-				({tag_name, color, background_color, luminance_offset}) => {
-					return this.assemble_css(
-						"body.theme-dark",
-						tag_name,
-						color,
-						this.get_background_color(
-							background_color,
-							luminance_offset,
-							false
-						)
-					)
-				});
+	assembleCssDark(): Array<string> {
+		return this.assembleCss("body.theme-dark", false)
 	}
 
-	private assemble_css(theme:string, tag_name:string, color:RGB, background_color:RGB){
-		const important:string = this.get_important();
-
-		return`
+	private assembleCss(theme:string, is_light_theme:boolean){
+		const important:string = this.getImportant();
+		return this.getTags()
+			.map(
+				({tag_name, color, background_color,luminance_offset}) => `
 ${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
-	background : ${this.get_background_string(background_color)} ${important};
+	background : ${this.getBackgroundString(this.getBackgroundColorLuminanceOffset(background_color, luminance_offset, is_light_theme))} ${important};
 	border-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }`
+				);
+
+
 
 	}
 }

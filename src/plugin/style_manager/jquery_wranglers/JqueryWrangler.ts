@@ -7,14 +7,15 @@ import {IStyleWrangler, StyleWrangler} from "../StyleWrangler";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IJqueryWrangler{
+export interface IJqueryWrangler extends IStyleWrangler{
 	assembleStyling():void;
 	removeStyling():void;
 }
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export abstract class JqueryWrangler extends StyleWrangler implements IJqueryWrangler, IStyleWrangler{
+export abstract class JqueryWrangler extends StyleWrangler implements IJqueryWrangler{
 	abstract assembleStyling():void;
 	abstract removeStyling(): void;
 

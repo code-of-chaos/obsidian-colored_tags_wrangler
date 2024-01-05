@@ -13,9 +13,10 @@ import {IColoredTagWrangler} from "../IColoredTagWrangler";
 export interface IStyleWrangler{
 	plugin:IColoredTagWrangler;
 
-	getBackgroundColor(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
+	getBackgroundColorLuminanceOffset(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
 	getBackgroundString(color:RGB):string;
 	getForegroundString(color:RGB):string;
+
 	getImportant():string;
 	getTags(remove_slash:boolean):IColorPicker[];
 }
@@ -44,8 +45,8 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		);
 	}
 
-	getBackgroundColor(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
-		if (is_light_theme && this.plugin.settings.TagColors.EnableDarkLightDifference ){
+	getBackgroundColorLuminanceOffset(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
+		if (is_light_theme && this.plugin.settings.TagColors.EnableDarkLightDifference){
 			luminance_offset = -luminance_offset; // Double negative => +
 		}
 		let background_hsl = rgbToHsl(background_color);
@@ -54,13 +55,13 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	}
 
 	getBackgroundString(color:RGB):string{
-		const rgb:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
+		const prefix:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
 			?  "rgba"
 			: "rgb";
 		const opacity:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
 			?  `, ${this.plugin.settings.TagColors.Values.BackgroundOpacity}`
 			: "";
-		return `${rgb}(${color.r}, ${color.g}, ${color.b}${opacity})`
+		return `${prefix}(${color.r}, ${color.g}, ${color.b}${opacity})`
 	}
 
 	getForegroundString(color:RGB):string{
