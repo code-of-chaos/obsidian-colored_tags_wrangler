@@ -143,43 +143,8 @@ export class ComponentTags extends SettingsTabComponent{
 					})
 			);
 		}
-		// if (this.plugin.settings.TagColors.EnableSeparateLuminanceOffset){
-		// 	let sliderElement: SliderComponent; // Little work around to make them update together
-		// 	let textElement: TextComponent;
-		// 	setting
-		// 		.addSlider(component => {
-		// 				component
-		// 					.setLimits(-0.5, .5, 0.05)
-		// 					.setValue(this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset)
-		// 					.onChange(async state => {
-		// 						this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset = state;
-		// 						await this.plugin.saveSettings();
-		//
-		// 						// Update the text component's value
-		// 						textElement.setValue(String(state));
-		// 					});
-		// 				sliderElement = component;
-		// 			}
-		// 		).addText((text) => {
-		// 		text
-		// 			.setPlaceholder(this.plugin.settings.TagColors.Values.LuminanceOffset.toString())
-		// 			.setValue(String(this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset))
-		// 			.onChange(async state => {
-		// 				// Because this is a text component it needs to be cast to a number
-		// 				let state_as_number = Number(state)
-		// 				if (isNaN(state_as_number) || state_as_number === null){
-		// 					state_as_number = 0
-		// 				}
-		//
-		// 				this.plugin.settings.TagColors.ColorPicker[new_tag_id].luminance_offset = state_as_number;
-		// 				await this.plugin.saveSettings();
-		//
-		// 				sliderElement.setValue(state_as_number)
-		// 			});
-		// 		textElement = text;
-		// 	});
-		// }
 
+		// Move stuff around buttons
 		setting.addExtraButton((cb) => {
 			cb.setIcon("up-chevron-glyph")
 				.setTooltip("Move up")

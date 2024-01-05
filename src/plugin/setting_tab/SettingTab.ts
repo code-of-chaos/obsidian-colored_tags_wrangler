@@ -22,11 +22,9 @@ import {
 	ComponentKanbanLists,
 	ComponentTags,
 	ComponentTagsCanvas,
-	ComponentTagsEnableBackgroundOpacity,
-	ComponentTagsEnableDarkLightDifference,
 	ComponentTagsEnableMultipleTags,
 	ComponentTagsEnableSeparateBackground,
-	ComponentTagsEnableSeparateLuminance,
+	ComponentTagsEnableBackgroundOpacity
 } from "src/plugin/setting_tab/components";
 import {SettingsTabComponent} from "./SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -35,28 +33,26 @@ import {SettingsTabComponent} from "./SettingsTabComponent";
 export class SettingTab extends PluginSettingTab {
 	plugin: ColoredTagWranglerPlugin;
 	_components: {
-		tags: 								SettingsTabComponent,
-		tags_canvas:						SettingsTabComponent,
-		tags_enable_multiple_tags:			SettingsTabComponent,
-		tags_enable_background:				SettingsTabComponent,
-		folder_note:						SettingsTabComponent,
-		folder_note_auto_detect:			SettingsTabComponent,
-		folder_note_detect:					SettingsTabComponent,
-		folder_note_folder_tag_links:		SettingsTabComponent,
-		kanban:								SettingsTabComponent,
-		kanban_cards:						SettingsTabComponent,
-		kanban_lists:						SettingsTabComponent,
-		kanban_hashtags:					SettingsTabComponent,
-		debug:								SettingsTabComponent,
-		debug_reloadcss:					SettingsTabComponent,
-		debug_experimental_commands:		SettingsTabComponent,
-		tags_enable_luminance:			    SettingsTabComponent,
-		tags_enable_dark_light_difference: 	SettingsTabComponent,
-		tags_enable_background_opacity: 	SettingsTabComponent,
-		css_tags_no_wrap: 					SettingsTabComponent,
-		css_note_tags: 						SettingsTabComponent,
-		css_note_background: 				SettingsTabComponent,
-		css_note_properties:				SettingsTabComponent,
+		tags: 									SettingsTabComponent,
+		tags_canvas:							SettingsTabComponent,
+		tags_enable_multiple_tags:				SettingsTabComponent,
+		tags_enable_background: 				SettingsTabComponent,
+		folder_note:							SettingsTabComponent,
+		folder_note_auto_detect:				SettingsTabComponent,
+		folder_note_detect:						SettingsTabComponent,
+		folder_note_folder_tag_links:			SettingsTabComponent,
+		kanban: 								SettingsTabComponent,
+		kanban_cards:							SettingsTabComponent,
+		kanban_lists:							SettingsTabComponent,
+		kanban_hashtags:						SettingsTabComponent,
+		debug:									SettingsTabComponent,
+		debug_reloadcss:						SettingsTabComponent,
+		debug_experimental_commands:			SettingsTabComponent,
+		css_tags_no_wrap: 						SettingsTabComponent,
+		css_note_tags: 							SettingsTabComponent,
+		css_note_background: 					SettingsTabComponent,
+		css_note_properties: 					SettingsTabComponent,
+		tags_enable_background_opacity:			SettingsTabComponent,
 	}
 
 	constructor(plugin: ColoredTagWranglerPlugin) {
@@ -78,13 +74,11 @@ export class SettingTab extends PluginSettingTab {
 			debug:								new ComponentDebug(plugin,this),
 			debug_reloadcss:					new ComponentDebugReloadCSS(plugin,this),
 			debug_experimental_commands:		new ComponentDebugExperimentalCommands(plugin, this),
-			tags_enable_luminance:				new ComponentTagsEnableSeparateLuminance(plugin, this),
-			tags_enable_dark_light_difference: 	new ComponentTagsEnableDarkLightDifference(plugin,this),
-			tags_enable_background_opacity: 	new ComponentTagsEnableBackgroundOpacity(plugin,this),
 			css_tags_no_wrap: 					new ComponentCSSTagsNoWrap(plugin,this),
 			css_note_tags: 						new ComponentCSSNoteTags(plugin,this),
 			css_note_background: 				new ComponentCSSNoteBackground(plugin,this),
 			css_note_properties: 				new ComponentCSSNoteProperties(plugin,this),
+			tags_enable_background_opacity: 	new ComponentTagsEnableBackgroundOpacity(plugin,this),
 
 		}
 	}
@@ -108,8 +102,6 @@ export class SettingTab extends PluginSettingTab {
 		this._components.tags_canvas.create_component(containerEl);
 		this._components.tags_enable_multiple_tags.create_component(containerEl);
 		this._components.tags_enable_background.create_component(containerEl);
-		// this._components.tags_enable_luminance.create_component(containerEl);
-		// this._components.tags_enable_dark_light_difference.create_component(containerEl);
 		this._components.tags_enable_background_opacity.create_component(containerEl);
 
 		// CSS Settings

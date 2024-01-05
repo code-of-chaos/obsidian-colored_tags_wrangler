@@ -23,7 +23,5 @@ export * from './ComponentKanbanLists';
 export * from './ComponentTags';
 export * from './ComponentTagsCanvas';
 export * from './ComponentTagsEnableBackgroundOpacity';
-export * from './ComponentTagsEnableDarkLightDifference';
 export * from './ComponentTagsEnableMultipleTags';
 export * from './ComponentTagsEnableSeparateBackground';
-export * from './ComponentTagsEnableSeparateLuminance';
