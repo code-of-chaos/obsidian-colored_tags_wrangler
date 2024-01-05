@@ -1,73 +1,50 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {hslToRgb, rgbToHsl} from "src/api/ColorConverters";
-import ColoredTagWranglerPlugin from "src/main";
+import {hslToRgb, rgbToHsl, rgbToString} from "src/api/ColorConverters";
 import {RGB} from "obsidian";
-import {removeById} from "src/api/RemoveById";
+import {get_tags} from "../../api/tags";
+import {IColorPicker} from "../../api/interfaces/IColorPicker";
+import {IColoredTagWrangler} from "../IColoredTagWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IStyleWrangler{
-	id:string;
-	styleEL_light:HTMLStyleElement;
-	styleEL_dark:HTMLStyleElement;
-	plugin:ColoredTagWranglerPlugin;
+	plugin:IColoredTagWrangler;
 
-	assemble_css_light():Array<string>;
-	assemble_css_dark():Array<string>;
-	apply_styles(): void;
-	remove_styles(): void;
-	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
-	get_background_string(color:RGB):string;
-	get_important():string;
+	getBackgroundColor(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
+	getBackgroundString(color:RGB):string;
+	getForegroundString(color:RGB):string;
+	getImportant():string;
+	getTags(remove_slash:boolean):IColorPicker[];
 }
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export abstract class StyleWrangler implements IStyleWrangler{
-	id: string;
-	styleEL_light: HTMLStyleElement;
-	styleEL_dark: HTMLStyleElement;
-	plugin:ColoredTagWranglerPlugin;
+	plugin:IColoredTagWrangler;
 
-	abstract assemble_css_light(): Array<string>;
-	abstract assemble_css_dark(): Array<string>;
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	protected constructor(id:string, plugin:ColoredTagWranglerPlugin) {
-		!id.startsWith("#") ? id = `#${id}` : null;
-
-		this.id = id;
+	protected constructor(plugin:IColoredTagWrangler) {
 		this.plugin = plugin;
 
-		this.styleEL_light = document.createElement('style');
-		this.styleEL_dark = document.createElement('style');
-		this.styleEL_light.id = `${this.id}_light`;
-		this.styleEL_dark.id = `${this.id}_dark`;
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	apply_styles(): void{
-		// first remove the old style element, else we will keep appending data to the dom
-		this.remove_styles();
+	getTags(remove_slash:boolean=false):IColorPicker[]{
+		return get_tags(
+			this.plugin.settings.TagColors.ColorPicker,
+			this.plugin.settings.TagColors.EnableMultipleTags,
+			remove_slash
+		);
+	}
 
-		this.styleEL_light.innerText = this.assemble_css_light().map(line => line.split("\n").map(l=>l.trim()).join(" ")).join(" ");
-		this.styleEL_dark.innerText =  this.assemble_css_dark().map(line => line.split("\n").map(l=>l.trim()).join(" ")).join(" ");
-		document.head.appendChild(this.styleEL_light);
-		document.head.appendChild(this.styleEL_dark);
-	};
-
-	remove_styles(): void{
-		this.styleEL_light?.parentNode?.removeChild(this.styleEL_light);
-		this.styleEL_dark?.parentNode?.removeChild(this.styleEL_dark);
-		removeById(this.id);
-	};
-
-	get_background_color(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
+	getBackgroundColor(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
 		if (is_light_theme && this.plugin.settings.TagColors.EnableDarkLightDifference ){
 			luminance_offset = -luminance_offset; // Double negative => +
 		}
@@ -76,7 +53,7 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		return hslToRgb(background_hsl);
 	}
 
-	get_background_string(color:RGB):string{
+	getBackgroundString(color:RGB):string{
 		const rgb:string = this.plugin.settings.TagColors.EnableBackgroundOpacity
 			?  "rgba"
 			: "rgb";
@@ -86,7 +63,11 @@ export abstract class StyleWrangler implements IStyleWrangler{
 		return `${rgb}(${color.r}, ${color.g}, ${color.b}${opacity})`
 	}
 
-	get_important(): string {
+	getForegroundString(color:RGB):string{
+		return rgbToString(color)
+	}
+
+	getImportant(): string {
 		// Not that this setting should be used by users,
 		// 		but can be helpful for people who want to debug what is going on
 		return this.plugin.settings.FolderNote.Values.ForceImportant

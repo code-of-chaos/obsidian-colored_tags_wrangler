@@ -2,30 +2,26 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
+import {IStyleWrangler, StyleWrangler} from "../StyleWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IJqueryWrangler{
-	plugin:IColoredTagWrangler;
-
-	assemble_styling():void;
-	remove_styling():void;
-
+	assembleStyling():void;
+	removeStyling():void;
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export abstract class JqueryWrangler implements IJqueryWrangler{
-	plugin:IColoredTagWrangler;
-
-	abstract assemble_styling():void;
-	abstract remove_styling(): void;
+export abstract class JqueryWrangler extends StyleWrangler implements IJqueryWrangler, IStyleWrangler{
+	abstract assembleStyling():void;
+	abstract removeStyling(): void;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	protected constructor(plugin:IColoredTagWrangler) {
-		this.plugin = plugin;
+		super(plugin);
 	}
 }

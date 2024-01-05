@@ -1,10 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {JqueryWrangler} from "./JqueryWrangler";
+import {JqueryWrangler} from "src/plugin/style_manager/jquery_wranglers/JqueryWrangler";
 import $ from "jquery";
-import {get_tags} from "src/api/tags";
-import {rgbaToString, rgbToString} from "src/api/ColorConverters";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,29 +18,30 @@ export class JqueryWranglerNoteBackgrounds extends JqueryWrangler{
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    assemble_styling(): void {
-        const color_picker = this.plugin.settings.TagColors.ColorPicker;
-        const enable_multiple_tags = this.plugin.settings.TagColors.EnableMultipleTags;
-        const tags = get_tags(color_picker, enable_multiple_tags, false);
-		const enable_background_opacity = this.plugin.settings.TagColors.EnableBackgroundOpacity;
-		const value_background_opacity = this.plugin.settings.TagColors.Values.BackgroundOpacity;
+    private findElement(tag_name:string|null):[JQuery<HTMLElement>,JQuery<HTMLElement>|null]{
+        // noinspection TypeScriptValidateJSTypes
+        const page = $('div.workspace-leaf-content[data-type="markdown"] div.view-content');
+        const tag = tag_name !== null
+            ? page.find($(`div.multi-select-pill:has(span:contains("${tag_name}"))`))
+            : null;
 
-        tags.map(
+        return [page,tag]
+    }
+
+    assembleStyling(): void {
+        this.getTags().map(
             ({tag_name, background_color}) =>{
-                const page = $('div.workspace-leaf-content[data-type="markdown"] div.view-content');
-                const tag = page.find($(`div.multi-select-pill:has(span:contains("${tag_name}"))`));
-
+                const [page, tag]  = this.findElement(tag_name);
                 // noinspection JSUnresolvedReference
-                if (tag.length !== 0) {
-                    page.css('background-color', enable_background_opacity
-						? rgbaToString({...background_color, a:value_background_opacity})
-						: rgbToString(background_color))
+                if (tag !== null && tag.length !== 0) {
+                    // automatically applies the background opacity if enabled
+                    page.css('background-color', this.getBackgroundString(background_color))
                 }
             }
         )
     }
-    remove_styling(): void {
-        const page = $('div.workspace-leaf-content[data-type="markdown"] div.view-content');
+    removeStyling(): void {
+        const [page, _]  = this.findElement(null);
         page.removeAttr("style");
     }
 }
