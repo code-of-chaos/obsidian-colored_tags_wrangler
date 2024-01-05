@@ -18,23 +18,15 @@ export class CSSWranglerKanbanCards extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCssLight(): Array<string> {
-		return this.assembleCss("body.theme-light", true)
-	}
-
-	assembleCssDark(): Array<string> {
-		return this.assembleCss("body.theme-dark", false)
-	}
-
-	private assembleCss(theme:string,is_light_theme:boolean){
+	assembleCss(theme:string){
 		const important:string = this.getImportant();
 		return this.getTags()
 			.map(
-				({tag_name, color, background_color,luminance_offset}) => {
-					const background = this.getBackgroundString(this.getBackgroundColorLuminanceOffset(background_color, luminance_offset, is_light_theme));
+				({tag_name, color, background_color}) => {
+					const string_background = this.getBackgroundString(background_color)
 					return `
 ${theme} div.kanban-plugin__item.has-tag-${tag_name} div.kanban-plugin__item-title-wrapper { 
-	background: ${background} ${important};
+	background: ${string_background} ${important};
 }
 ${theme} div.kanban-plugin__item.has-tag-${tag_name}{ 
 	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) ${important};

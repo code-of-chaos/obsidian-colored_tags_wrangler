@@ -1,11 +1,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {hslToRgb, rgbToHsl, rgbToString} from "src/api/ColorConverters";
+import {rgbToString} from "src/api/ColorConverters";
 import {RGB} from "obsidian";
-import {get_tags} from "../../api/tags";
-import {IColorPicker} from "../../api/interfaces/IColorPicker";
-import {IColoredTagWrangler} from "../IColoredTagWrangler";
+import {get_tags} from "src/api/tags";
+import {IColorPicker} from "src/api/interfaces/IColorPicker";
+import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -13,7 +13,6 @@ import {IColoredTagWrangler} from "../IColoredTagWrangler";
 export interface IStyleWrangler{
 	plugin:IColoredTagWrangler;
 
-	getBackgroundColorLuminanceOffset(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB;
 	getBackgroundString(color:RGB):string;
 	getForegroundString(color:RGB):string;
 
@@ -32,26 +31,16 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	// -----------------------------------------------------------------------------------------------------------------
 	protected constructor(plugin:IColoredTagWrangler) {
 		this.plugin = plugin;
-
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	getTags(remove_slash:boolean=false):IColorPicker[]{
+	getTags(remove_slash:boolean=true):IColorPicker[]{
 		return get_tags(
 			this.plugin.settings.TagColors.ColorPicker,
 			this.plugin.settings.TagColors.EnableMultipleTags,
 			remove_slash
 		);
-	}
-
-	getBackgroundColorLuminanceOffset(background_color:RGB, luminance_offset:number, is_light_theme:boolean):RGB{
-		if (is_light_theme && this.plugin.settings.TagColors.EnableDarkLightDifference){
-			luminance_offset = -luminance_offset; // Double negative => +
-		}
-		let background_hsl = rgbToHsl(background_color);
-		background_hsl.l -= luminance_offset;
-		return hslToRgb(background_hsl);
 	}
 
 	getBackgroundString(color:RGB):string{

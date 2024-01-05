@@ -18,15 +18,7 @@ export class CSSWranglerTags extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCssLight(): Array<string> {
-		return this.assembleCss("body.theme-light")
-	}
-
-	assembleCssDark(): Array<string> {
-		return this.assembleCss("body.theme-dark")
-	}
-
-	private assembleCss(theme:string){
+	assembleCss(theme:string){
 		const important:string = this.getImportant();
 
 		return this.getTags().map(

@@ -14,8 +14,7 @@ export interface ICSSWrangler extends IStyleWrangler{
 	styleEL_light:HTMLStyleElement;
 	styleEL_dark:HTMLStyleElement;
 
-	assembleCssLight():Array<string>;
-	assembleCssDark():Array<string>;
+	assembleCss(theme:string):Array<string>;
 	applyStyles(): void;
 	removeStyles(): void;
 }
@@ -30,8 +29,7 @@ export abstract class CSSWrangler extends StyleWrangler implements ICSSWrangler{
 	styleEL_light: HTMLStyleElement;
 	styleEL_dark: HTMLStyleElement;
 
-	abstract assembleCssLight(): Array<string>;
-	abstract assembleCssDark(): Array<string>;
+	abstract assembleCss(theme:string): Array<string>;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
@@ -55,8 +53,8 @@ export abstract class CSSWrangler extends StyleWrangler implements ICSSWrangler{
 		// first remove the old style element, else we will keep appending data to the dom
 		this.removeStyles();
 
-		this.styleEL_light.innerText = this.assembleCssLight().map(lineCleanup).join(" ");
-		this.styleEL_dark.innerText =  this.assembleCssDark().map(lineCleanup).join(" ");
+		this.styleEL_light.innerText = this.assembleCss("body.theme-light").map(lineCleanup).join(" ");
+		this.styleEL_dark.innerText =  this.assembleCss("body.theme-dark").map(lineCleanup).join(" ");
 
 		document.head.appendChild(this.styleEL_light);
 		document.head.appendChild(this.styleEL_dark);

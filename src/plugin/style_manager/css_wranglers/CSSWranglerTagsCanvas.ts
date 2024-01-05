@@ -19,21 +19,13 @@ export class CSSWranglerTagsCanvas extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCssLight(): Array<string> {
-		return this.assembleCss("body.theme-light", true)
-	}
-
-	assembleCssDark(): Array<string> {
-		return this.assembleCss("body.theme-dark", false)
-	}
-
-	private assembleCss(theme:string, is_light_theme:boolean){
+	assembleCss(theme:string){
 		const important:string = this.getImportant();
 		return this.getTags()
 			.map(
-				({tag_name, color, background_color,luminance_offset}) => `
+				({tag_name, color, background_color}) => `
 ${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
-	background : ${this.getBackgroundString(this.getBackgroundColorLuminanceOffset(background_color, luminance_offset, is_light_theme))} ${important};
+	background : ${this.getBackgroundString(background_color)} ${important};
 	border-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }`
 				);

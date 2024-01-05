@@ -20,15 +20,7 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCssLight(): Array<string> {
-		return this.assembleCss("body.theme-light", true)
-	}
-
-	assembleCssDark(): Array<string> {
-		return this.assembleCss("body.theme-dark", false)
-	}
-
-	private assembleCss(theme:string, is_light_theme:boolean) {
+	assembleCss(theme:string) {
 		const important: string = this.getImportant();
 		let all_tags = this.getTags();
 		let border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
@@ -40,11 +32,11 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 					let {folder_path, tag_name: folder_tag_name} = this.plugin.settings.FolderNote.FolderTagLinks[folderUUID];
 					return all_tags
 						.filter(({tag_name: known_tag}) => known_tag === folder_tag_name)
-						.map(({color, background_color, luminance_offset}) => this.createCss(
+						.map(({color, background_color}) => this.createCss(
 							theme,
 							folder_path,
 							color,
-							this.getBackgroundString(this.getBackgroundColorLuminanceOffset(background_color, luminance_offset, is_light_theme)),
+							background_color,
 							important,
 							border_radius,
 							padding
@@ -53,9 +45,10 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 			).flat()
 	}
 
-	private createCss(theme: string, folder_path: string, color: RGB, string_background: string, important: string, border_radius: string, padding: string) {
+	private createCss(theme: string, folder_path: string, color: RGB, background_color: RGB, important: string, border_radius: string, padding: string) {
 		// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
 		const  string_color= this.getForegroundString(color);
+		const string_background = this.getBackgroundString(background_color)
 
 		return`
 /* Apply color to drop down triangle */

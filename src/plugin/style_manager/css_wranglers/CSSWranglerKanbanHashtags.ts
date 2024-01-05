@@ -18,15 +18,7 @@ export class CSSWranglerKanbanHashtags extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCssLight(): Array<string> {
-		return this.assemble_css()
-	}
-
-	assembleCssDark(): Array<string> {
-		return this.assemble_css()
-	}
-
-	private assemble_css(){
+	assembleCss(_:string){
 		return[`
 		div[data-type="kanban"] a.tag>span,
 		div.kanban-plugin a.tag>span,

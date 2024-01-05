@@ -18,15 +18,7 @@ export class CSSWranglerTagsNoWrap extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCssLight(): Array<string> {
-		return this.assembleCss()
-	}
-
-	assembleCssDark(): Array<string> {
-		return this.assembleCss()
-	}
-
-	private assembleCss(){
+	assembleCss(_:string){
 		return [this.plugin.settings.CSS.TagsNoWrap
 			? `a.tag {white-space: ${this.plugin.settings.CSS.TagsNoWrapText};}`!
 			: ""]
