@@ -21,9 +21,9 @@ export class EventHandlerMetadataChange extends EventHandler{
                     if (this.plugin.settings.FolderNote.Enable && this.plugin.settings.FolderNote.EnableAutoDetect) {
                         await this.callback(file, cache)
 						await this.debounced_save_settings.call(this)
-                        this.plugin.style_manager.wrangler_note_property_tags.assemble_styling();
+                        this.plugin.style_manager.wrangler_note_property_tags.assembleStyling();
                     } else {
-                        this.plugin.style_manager.wrangler_note_property_tags.remove_styling();
+                        this.plugin.style_manager.wrangler_note_property_tags.removeStyling();
                     }
                 }
             ));

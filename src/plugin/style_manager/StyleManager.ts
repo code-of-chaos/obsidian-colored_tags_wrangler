@@ -4,14 +4,14 @@
 import ColoredTagWranglerPlugin
 	from "src/main";
 import {
-	IStyleWrangler,
-	StyleWranglerCSSNoteTags,
-	StyleWranglerTagsCanvas,
-	StyleWranglerFolderNote,
-	StyleWranglerKanbanHashtags,
-	StyleWranglerKanbanCards,
-	StyleWranglerKanbanLists,
-	StyleWranglerCSSTagsNoWrap,
+	ICSSWrangler,
+	CSSWranglerTags,
+	CSSWranglerTagsCanvas,
+	CSSWranglerFolderNote,
+	CSSWranglerKanbanHashtags,
+	CSSWranglerKanbanCards,
+	CSSWranglerKanbanLists,
+	CSSWranglerTagsNoWrap,
 } from "src/plugin/style_manager/css_wranglers";
 import {
 	IJqueryWrangler, JqueryWranglerNoteBackgrounds,
@@ -23,35 +23,34 @@ import {
 // ---------------------------------------------------------------------------------------------------------------------
 export class StyleManager{
 	plugin: ColoredTagWranglerPlugin;
-	wrangler_css_note_tags: IStyleWrangler;
-	wrangler_css_note_tags_no_wrap: IStyleWrangler;
-	wrangler_tags_canvas: IStyleWrangler;
-	wrangler_kanban_hashtags: IStyleWrangler;
-	wrangler_kanban_cards: IStyleWrangler;
-	wrangler_kanban_lists: IStyleWrangler;
-	wrangler_folder_note: IStyleWrangler;
+	wrangler_css_note_tags: ICSSWrangler;
+	wrangler_css_note_tags_no_wrap: ICSSWrangler;
+	wrangler_tags_canvas: ICSSWrangler;
+	wrangler_kanban_hashtags: ICSSWrangler;
+	wrangler_kanban_cards: ICSSWrangler;
+	wrangler_kanban_lists: ICSSWrangler;
+	wrangler_folder_note: ICSSWrangler;
 
 	wrangler_note_property_tags:IJqueryWrangler;
 	wrangler_note_background:IJqueryWrangler;
 
-	private _style_wranglers: Array<IStyleWrangler>;
+	private style_wranglers_css: Array<ICSSWrangler>;
+	private style_wranglers_jquery: Array<IJqueryWrangler>;
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin: ColoredTagWranglerPlugin) {
 		this.plugin = plugin;
-		this.wrangler_css_note_tags = new StyleWranglerCSSNoteTags(plugin);
-		this.wrangler_css_note_tags_no_wrap = new StyleWranglerCSSTagsNoWrap(plugin);
-		this.wrangler_tags_canvas = new StyleWranglerTagsCanvas(plugin);
-		this.wrangler_kanban_hashtags = new StyleWranglerKanbanHashtags(plugin);
-		this.wrangler_kanban_cards = new StyleWranglerKanbanCards(plugin);
-		this.wrangler_kanban_lists = new StyleWranglerKanbanLists(plugin);
-		this.wrangler_folder_note = new StyleWranglerFolderNote(plugin);
+		this.wrangler_css_note_tags = new CSSWranglerTags(plugin);
+		this.wrangler_css_note_tags_no_wrap = new CSSWranglerTagsNoWrap(plugin);
+		this.wrangler_tags_canvas = new CSSWranglerTagsCanvas(plugin);
+		this.wrangler_kanban_hashtags = new CSSWranglerKanbanHashtags(plugin);
+		this.wrangler_kanban_cards = new CSSWranglerKanbanCards(plugin);
+		this.wrangler_kanban_lists = new CSSWranglerKanbanLists(plugin);
+		this.wrangler_folder_note = new CSSWranglerFolderNote(plugin);
 
-		this.wrangler_note_property_tags = new JqueryWranglerNotePropertyTags(plugin);
-		this.wrangler_note_background = new JqueryWranglerNoteBackgrounds(plugin);
-
-		this._style_wranglers = new Array<IStyleWrangler>(
+		this.style_wranglers_css = new Array<ICSSWrangler>(
 			this.wrangler_css_note_tags,
 			this.wrangler_css_note_tags_no_wrap,
 			this.wrangler_tags_canvas,
@@ -60,6 +59,15 @@ export class StyleManager{
 			this.wrangler_kanban_lists,
 			this.wrangler_folder_note,
 		)
+
+		this.wrangler_note_property_tags = new JqueryWranglerNotePropertyTags(plugin);
+		this.wrangler_note_background = new JqueryWranglerNoteBackgrounds(plugin);
+
+		this.style_wranglers_jquery = new Array<IJqueryWrangler>(
+			this.wrangler_note_property_tags,
+			this.wrangler_note_background
+		)
+
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
@@ -67,41 +75,41 @@ export class StyleManager{
 	switchAllStyles():void {
 		this.plugin.settings.TagColors.ColorPicker.length != 0
 		&& this.plugin.settings.CSS.NoteTags
-			? this.wrangler_css_note_tags.apply_styles()
-			: this.wrangler_css_note_tags.remove_styles() ;
+			? this.wrangler_css_note_tags.applyStyles()
+			: this.wrangler_css_note_tags.removeStyles() ;
 
 		this.plugin.settings.CSS.TagsNoWrap
-			? this.wrangler_css_note_tags_no_wrap.apply_styles()
-			: this.wrangler_css_note_tags_no_wrap.remove_styles() ;
+			? this.wrangler_css_note_tags_no_wrap.applyStyles()
+			: this.wrangler_css_note_tags_no_wrap.removeStyles() ;
 
 		this.plugin.settings.Canvas.Enable
-			? this.wrangler_tags_canvas.apply_styles()
-			: this.wrangler_tags_canvas.remove_styles() ;
+			? this.wrangler_tags_canvas.applyStyles()
+			: this.wrangler_tags_canvas.removeStyles() ;
 
 		this.plugin.settings.Kanban.HideHashtags
-			? this.wrangler_kanban_hashtags.apply_styles()
-			: this.wrangler_kanban_hashtags.remove_styles() ;
+			? this.wrangler_kanban_hashtags.applyStyles()
+			: this.wrangler_kanban_hashtags.removeStyles() ;
 
 		this.plugin.settings.Kanban.EnableCards
-			? this.wrangler_kanban_cards.apply_styles()
-			: this.wrangler_kanban_cards.remove_styles() ;
+			? this.wrangler_kanban_cards.applyStyles()
+			: this.wrangler_kanban_cards.removeStyles() ;
 
 		this.plugin.settings.Kanban.EnableLists
-			? this.wrangler_kanban_lists.apply_styles()
-			: this.wrangler_kanban_lists.remove_styles() ;
+			? this.wrangler_kanban_lists.applyStyles()
+			: this.wrangler_kanban_lists.removeStyles() ;
 
 		this.plugin.settings.FolderNote.Enable
-			? this.wrangler_folder_note.apply_styles()
-			: this.wrangler_folder_note.remove_styles() ;
+			? this.wrangler_folder_note.applyStyles()
+			: this.wrangler_folder_note.removeStyles() ;
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// applyAllStyles():void {
-	// 	this._style_wranglers.forEach(value => {value.apply_styles()});
-	// }
+	// 	this._style_wranglers.forEach(value => {value.applyStyles()});
+	// }	// -----------------------------------------------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------------------------------------------
 	removeAllStyles():void {
-		this._style_wranglers.forEach(value => {value.remove_styles()});
+		this.style_wranglers_css.forEach(value => {value.removeStyles()});
+		this.style_wranglers_jquery.forEach(value => {value.removeStyling()})
 	}
 }
