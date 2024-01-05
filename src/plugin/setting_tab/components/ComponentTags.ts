@@ -16,7 +16,7 @@ import {arrayMove} from "src/api/ArrayUtils"
 // ---------------------------------------------------------------------------------------------------------------------
 const _NEW_TAG_NAME:string = "new-tag";
 const _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
-const _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 255, g: 255, b: 255 };
+const _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 100, g: 100, b: 100 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -50,7 +50,6 @@ export class ComponentTags extends SettingsTabComponent{
 					.setDisabled(this.plugin.settings.TagColors.ColorPicker.length == 0)
 			);
 		}
-
 
 		// Create the amount of tags already stored in the setting_tab
 		for (let i = 0; i < this.plugin.settings.TagColors.ColorPicker.length; i++) {
