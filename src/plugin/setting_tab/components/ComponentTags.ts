@@ -141,15 +141,12 @@ export class ComponentTags extends SettingsTabComponent{
 				cb.setIcon("paintbrush")
 					.setTooltip("Automatically generate a background color")
 					.onClick(async () => {
-						const background_c = adjustBrightness(
+						new_tag_content.background_color = adjustBrightness(
 							new_tag_content.color,
 							getContrastBool(new_tag_content.color)
 								? .5 	// dark foreground
 								: 1.75	// light foreground
-						)
-
-						console.warn(background_c)
-						new_tag_content.background_color = background_c
+						);
 
 						await this.plugin.saveSettings();
 						this.settings_tab.display()
