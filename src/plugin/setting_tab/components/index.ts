@@ -24,3 +24,4 @@ export * from './ComponentTags';
 export * from './ComponentTagsCanvas';
 export * from './ComponentTagsEnableBackgroundOpacity';
 export * from './ComponentTagsEnableMultipleTags';
+export * from './ComponentTagsEnableAutoBackgroundButton';

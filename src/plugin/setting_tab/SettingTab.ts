@@ -23,7 +23,7 @@ import {
 	ComponentTags,
 	ComponentTagsCanvas,
 	ComponentTagsEnableMultipleTags,
-	ComponentTagsEnableBackgroundOpacity
+	ComponentTagsEnableBackgroundOpacity, ComponentTagsEnableAutoBackgroundButton
 } from "src/plugin/setting_tab/components";
 import {SettingsTabComponent} from "./SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -35,6 +35,7 @@ export class SettingTab extends PluginSettingTab {
 		tags: 									SettingsTabComponent,
 		tags_canvas:							SettingsTabComponent,
 		tags_enable_multiple_tags:				SettingsTabComponent,
+		tags_enable_background_button:			SettingsTabComponent,
 		folder_note:							SettingsTabComponent,
 		folder_note_auto_detect:				SettingsTabComponent,
 		folder_note_detect:						SettingsTabComponent,
@@ -60,6 +61,7 @@ export class SettingTab extends PluginSettingTab {
 			tags: 								new ComponentTags(plugin, this),
 			tags_canvas:						new ComponentTagsCanvas(plugin, this),
 			tags_enable_multiple_tags:			new ComponentTagsEnableMultipleTags(plugin, this),
+			tags_enable_background_button:		new ComponentTagsEnableAutoBackgroundButton(plugin, this),
 			folder_note:						new ComponentFolderNote(plugin, this),
 			folder_note_auto_detect:			new ComponentFolderNoteAutoDetect(plugin, this),
 			folder_note_detect:					new ComponentFolderNoteDetect(plugin, this),
@@ -96,6 +98,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components.tags.create_component(containerEl);
 
  		// Below this should be boolean options for the tags
+		this._components.tags_enable_background_button.create_component(containerEl)
 		this._components.tags_canvas.create_component(containerEl);
 		this._components.tags_enable_multiple_tags.create_component(containerEl);
 		this._components.tags_enable_background_opacity.create_component(containerEl);

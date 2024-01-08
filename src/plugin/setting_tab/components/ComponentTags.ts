@@ -7,7 +7,7 @@ import {
 	Setting, TextAreaComponent,
 	TextComponent
 } from "obsidian";
-import {hexToRgb} from "src/api/ColorConverters"
+import {adjustBrightness, getContrastBool, getContrastColor, hexToRgb} from "src/api/ColorConverters"
 import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
 import {arrayMove} from "src/api/ArrayUtils"
 
@@ -117,13 +117,13 @@ export class ComponentTags extends SettingsTabComponent{
 					.onChange(async (value) => {
 						// Handle user-defined tag colors here
 						new_tag_content.color = hexToRgb(value)
-
 						this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
 
 					})
-			)
+			);
 
+		setting
 			.addColorPicker((colorPicker) =>
 				colorPicker
 					.setValueRgb(new_tag_content.background_color)
@@ -132,10 +132,31 @@ export class ComponentTags extends SettingsTabComponent{
 						new_tag_content.background_color = hexToRgb(value)
 						this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
 						await this.plugin.saveSettings();
+						this.settings_tab.display()
 					})
 			);
 
-		// Move stuff around buttons
+		if(this.plugin.settings.TagColors.EnableSeparateBackground){
+			setting.addButton((cb) => {
+				cb.setIcon("paintbrush")
+					.setTooltip("Automatically generate a background color")
+					.onClick(async () => {
+						const background_c = adjustBrightness(
+							new_tag_content.color,
+							getContrastBool(new_tag_content.color)
+								? .5 	// dark foreground
+								: 1.75	// light foreground
+						)
+
+						console.warn(background_c)
+						new_tag_content.background_color = background_c
+
+						await this.plugin.saveSettings();
+						this.settings_tab.display()
+					});
+			})
+
+		}
 		setting.addExtraButton((cb) => {
 			cb.setIcon("up-chevron-glyph")
 				.setTooltip("Move up")
