@@ -6,30 +6,29 @@ import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent"
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentTagsEnableBackgroundOpacity extends SettingsTabComponent {
+export class ComponentFolderNoteEnableBackgroundOpacity extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): void {
 		let setting = new Setting(containerEL)
-			.setName("Apply Opacity to tag background color")
-			.setDesc(`Enables an opacity offset for a tag's background color`)
+			.setName("Apply Opacity to Folder Note's background color")
 			.addToggle(component => {
 					component
-						.setValue(this.plugin.settings.TagColors.EnableBackgroundOpacity)
+						.setValue(this.plugin.settings.FolderNote.EnableBackgroundOpacity)
 						.onChange(async state => {
-							this.plugin.settings.TagColors.EnableBackgroundOpacity = state;
+							this.plugin.settings.FolderNote.EnableBackgroundOpacity = state;
 							await this.plugin.saveSettings();
 							await this.settings_tab.display();
 						})
 				}
 			)
 
-		if (this.plugin.settings.TagColors.EnableBackgroundOpacity){
+		if (this.plugin.settings.FolderNote.EnableBackgroundOpacity){
 			setting.addText((text) => {
 				text
-					.setPlaceholder(this.plugin.settings.TagColors.Values.BackgroundOpacity.toString())
-					.setValue(this.plugin.settings.TagColors.Values.BackgroundOpacity.toString())
+					.setPlaceholder(this.plugin.settings.FolderNote.Values.BackgroundOpacity.toString())
+					.setValue(this.plugin.settings.FolderNote.Values.BackgroundOpacity.toString())
 					.onChange(async state => {
 						// Because this is a text component it needs to be cast to a number
 						let state_as_number = Number(state)
@@ -37,7 +36,7 @@ export class ComponentTagsEnableBackgroundOpacity extends SettingsTabComponent {
 							state_as_number = 0
 						}
 
-						this.plugin.settings.TagColors.Values.BackgroundOpacity = state_as_number;
+						this.plugin.settings.FolderNote.Values.BackgroundOpacity = state_as_number;
 						await this.plugin.saveSettings();
 					});
 			});

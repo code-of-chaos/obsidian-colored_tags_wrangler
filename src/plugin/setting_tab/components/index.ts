@@ -14,14 +14,18 @@ export * from './ComponentFolderNote';
 export * from './ComponentFolderNoteAutoDetect';
 export * from './ComponentFolderNoteDetect';
 export * from './ComponentFolderNoteFolderTagLinks';
+export * from './ComponentFolderNoteEnableBackgroundOpacity';
 
 export * from './ComponentKanban';
 export * from './ComponentKanbanCards';
 export * from './ComponentKanbanHideHashtags';
 export * from './ComponentKanbanLists';
+export * from './ComponentKanbanEnableBackgroundOpacity';
 
 export * from './ComponentTags';
-export * from './ComponentTagsCanvas';
 export * from './ComponentTagsEnableBackgroundOpacity';
 export * from './ComponentTagsEnableMultipleTags';
 export * from './ComponentTagsEnableAutoBackgroundButton';
+
+export * from './ComponentCanvas';
+export * from './ComponentCanvasEnableBackgroundOpacity';
