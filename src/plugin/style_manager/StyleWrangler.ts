@@ -21,17 +21,27 @@ export interface IStyleWrangler{
 	getTags(remove_slash:boolean):IColorPicker[];
 }
 
+export interface SettingValues {
+	EnableBackgroundOpacity:boolean,
+	Values: {
+		BackgroundOpacity: number;
+	}
+}
+
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export abstract class StyleWrangler implements IStyleWrangler{
 	plugin:IColoredTagWrangler;
+	SettingLocation:SettingValues;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	protected constructor(plugin:IColoredTagWrangler) {
+	protected constructor(plugin:IColoredTagWrangler, settingLocation:SettingValues) {
 		this.plugin = plugin;
+		this.SettingLocation = settingLocation;
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
@@ -49,8 +59,8 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	}
 
 	getBackgroundWithOpacityString(color:RGB):string{
-		return this.plugin.settings.TagColors.EnableBackgroundOpacity
-			? rgbaToString({...color, a:this.plugin.settings.TagColors.Values.BackgroundOpacity})
+		return this.SettingLocation.EnableBackgroundOpacity
+			? rgbaToString({...color, a:this.SettingLocation.Values.BackgroundOpacity})
 			: this.getBackgroundString(color)
 	}
 

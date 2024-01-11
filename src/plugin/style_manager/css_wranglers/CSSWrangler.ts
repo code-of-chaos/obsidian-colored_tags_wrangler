@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import ColoredTagWranglerPlugin from "src/main";
 import {removeById} from "src/api/RemoveById";
-import {IStyleWrangler, StyleWrangler} from "../StyleWrangler";
+import {IStyleWrangler, SettingValues, StyleWrangler} from "../StyleWrangler";
 
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,7 +18,6 @@ export interface ICSSWrangler extends IStyleWrangler{
 	applyStyles(): void;
 	removeStyles(): void;
 }
-
 const lineCleanup = (line:string) =>  line.split("\n").map(l=>l.trim()).join(" ")
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -34,8 +33,8 @@ export abstract class CSSWrangler extends StyleWrangler implements ICSSWrangler{
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	protected constructor(id:string, plugin:ColoredTagWranglerPlugin) {
-		super(plugin);
+	protected constructor(id:string, plugin:ColoredTagWranglerPlugin, settingLocation:SettingValues) {
+		super(plugin, settingLocation);
 
 		this.id = !id.startsWith("#")
 			? `#${id}`

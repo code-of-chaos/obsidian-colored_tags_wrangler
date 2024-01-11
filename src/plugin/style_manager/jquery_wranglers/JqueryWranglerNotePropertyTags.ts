@@ -13,7 +13,7 @@ export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
     // Constructor
     // -----------------------------------------------------------------------------------------------------------------
     constructor(plugin:IColoredTagWrangler) {
-        super(plugin);
+        super(plugin, plugin.settings.TagColors);
     }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -28,7 +28,7 @@ export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
         this.getTags().map(
             ({tag_name, color, background_color}) =>{
                 this.findElement(tag_name)
-                    .css('background-color', this.getBackgroundString(background_color))
+                    .css('background-color', this.getBackgroundWithOpacityString(background_color))
                     .css('color', this.getForegroundString(color))
 
                 // Find the svg element within the tag, so it can color the X

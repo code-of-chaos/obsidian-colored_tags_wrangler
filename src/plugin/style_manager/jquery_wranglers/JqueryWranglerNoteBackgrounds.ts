@@ -13,7 +13,7 @@ export class JqueryWranglerNoteBackgrounds extends JqueryWrangler{
     // Constructor
     // -----------------------------------------------------------------------------------------------------------------
     constructor(plugin:IColoredTagWrangler) {
-        super(plugin);
+        super(plugin, plugin.settings.TagColors);
     }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
