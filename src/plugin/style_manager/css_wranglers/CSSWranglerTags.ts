@@ -13,7 +13,7 @@ export class CSSWranglerTags extends CSSWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleTagsEl", plugin);
+		super("#styleTagsEl", plugin, plugin.settings.TagColors);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
@@ -26,7 +26,7 @@ export class CSSWranglerTags extends CSSWrangler {
 				${theme} .tag[href="#${tag_name}"], 
 				${theme} .cm-tag-${tag_name} { 
 					color: ${this.getForegroundString(color)} ${important};
-					background-color: ${this.getBackgroundString(background_color)} ${important};
+					background-color: ${this.getBackgroundWithOpacityString(background_color)} ${important};
 				}`
 		)
 	}

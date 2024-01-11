@@ -38,8 +38,10 @@ export const DefaultSettings: ISettings = {
 		FolderTagLinks:[],
 
 		EnableAutoDetect:true,
+		EnableBackgroundOpacity:false,
 
 		Values:{
+			BackgroundOpacity:0.45,
 			ForceImportant:true,
 			BorderRadius:"12px",
 			Padding:"5px",
@@ -51,8 +53,11 @@ export const DefaultSettings: ISettings = {
 		EnableCards:false,
 		EnableLists:false,
 		HideHashtags:false,
+		EnableBackgroundOpacity:false,
 
 		Values:{
+			BackgroundOpacity:0.45,
+
 			CardBackgroundOpacity:0.2,
 			CardBorderOpacity:0.3,
 			ListBackgroundOpacity:0.2,
@@ -62,8 +67,10 @@ export const DefaultSettings: ISettings = {
 
 	Canvas:{
 		Enable:false,
+		EnableBackgroundOpacity:false,
 
 		Values:{
+			BackgroundOpacity:0.45,
 			CardBorderOpacity:0.3,
 			CardBackgroundLuminanceOffset:0.15,
 		}
@@ -76,6 +83,6 @@ export const DefaultSettings: ISettings = {
 	},
 
 	Info: {
-		SettingsVersion: 12 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
+		SettingsVersion: 13 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }

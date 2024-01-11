@@ -13,7 +13,7 @@ export class CSSWranglerKanbanLists extends CSSWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleKanbanListsEl", plugin);
+		super("#styleKanbanListsEl", plugin, plugin.settings.Kanban);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

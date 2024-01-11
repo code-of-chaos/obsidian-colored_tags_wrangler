@@ -15,7 +15,7 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleFolderNoteEl", plugin);
+		super("#styleFolderNoteEl", plugin, plugin.settings.FolderNote);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

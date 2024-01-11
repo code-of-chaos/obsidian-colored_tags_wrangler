@@ -23,6 +23,7 @@ const MIGRATION_STEPS: ((data: any) => any)[] = [ // Using any's isn't perfect b
     (data) => migrations.migrate_09_to_10(data),
     (data) => migrations.migrate_10_to_11(data),
     (data) => migrations.migrate_11_to_12(data),
+    (data) => migrations.migrate_12_to_13(data),
 ];
 
 // ---------------------------------------------------------------------------------------------------------------------

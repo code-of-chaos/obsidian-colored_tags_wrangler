@@ -6,7 +6,7 @@ import {IColorPicker} from "src/api/interfaces/IColorPicker";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface ISettings {
+export interface ISettings_v012 {
 	// Main settings for colors to tags
 	TagColors:{
         ColorPicker: Array<IColorPicker>,
@@ -37,10 +37,8 @@ export interface ISettings {
         FolderTagLinks:Array<{folder_path:string, tag_name:string}>,
 
         EnableAutoDetect:boolean,
-        EnableBackgroundOpacity:boolean,
 
         Values:{
-            BackgroundOpacity:number,
             ForceImportant:boolean,
             BorderRadius:string,
             Padding:string,
@@ -52,10 +50,8 @@ export interface ISettings {
         EnableCards:boolean,
         EnableLists:boolean,
         HideHashtags:boolean,
-        EnableBackgroundOpacity:boolean,
 
         Values:{
-            BackgroundOpacity:number,
             CardBackgroundOpacity:number,
             CardBorderOpacity:number,
             ListBackgroundOpacity:number,
@@ -65,10 +61,8 @@ export interface ISettings {
 
     Canvas:{
         Enable:boolean,
-        EnableBackgroundOpacity:boolean,
 
         Values:{
-            BackgroundOpacity:number,
             CardBorderOpacity:number,
             CardBackgroundLuminanceOffset:number,
         },

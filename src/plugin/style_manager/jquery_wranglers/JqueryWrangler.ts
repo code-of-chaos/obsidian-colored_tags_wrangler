@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
-import {IStyleWrangler, StyleWrangler} from "../StyleWrangler";
+import {IStyleWrangler, SettingValues, StyleWrangler} from "../StyleWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
@@ -22,7 +22,7 @@ export abstract class JqueryWrangler extends StyleWrangler implements IJqueryWra
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	protected constructor(plugin:IColoredTagWrangler) {
-		super(plugin);
+	protected constructor(plugin:IColoredTagWrangler, settingLocation:SettingValues) {
+		super(plugin, settingLocation);
 	}
 }

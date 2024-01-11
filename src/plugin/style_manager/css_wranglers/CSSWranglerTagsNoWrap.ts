@@ -13,7 +13,7 @@ export class CSSWranglerTagsNoWrap extends CSSWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleCSS", plugin);
+		super("#styleCSS", plugin, plugin.settings.TagColors);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
