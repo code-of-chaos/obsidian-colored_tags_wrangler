@@ -21,6 +21,8 @@ export interface IStyleWrangler{
 	getTags(remove_slash:boolean):IColorPicker[];
 }
 
+// TODO rewrite into something more descriptive for the actual settings to use
+//		Not simply for the StyleWrangler alone
 export interface SettingValues {
 	EnableBackgroundOpacity:boolean,
 	Values: {

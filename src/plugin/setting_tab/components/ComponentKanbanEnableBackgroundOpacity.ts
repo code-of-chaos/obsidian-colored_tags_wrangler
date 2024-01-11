@@ -13,6 +13,7 @@ export class ComponentKanbanEnableBackgroundOpacity extends SettingsTabComponent
 	public create_component(containerEL:HTMLElement): void {
 		let setting = new Setting(containerEL)
 			.setName("Apply Opacity to KanBan components' background color")
+			.setDesc("Allows you define if an item's background should have an opacity offset")
 			.addToggle(component => {
 					component
 						.setValue(this.plugin.settings.Kanban.EnableBackgroundOpacity)
