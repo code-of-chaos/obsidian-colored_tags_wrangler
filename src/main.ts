@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Platform, Plugin, EventRef } from "obsidian";
+import {Platform, Plugin } from "obsidian";
 import {Migrate} from "src/plugin/settings/Migrate";
 import {EventHandlerMetadataChange} from "src/plugin/event_handlers/MetadataChange";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
@@ -12,7 +12,7 @@ import {SettingTab} from "src/plugin/setting_tab/SettingTab";
 import {EventHandlerFileOpen} from "src/plugin/event_handlers/FileOpen";
 import * as experimental from "src/plugin/commands/experimental"
 import * as commands from "src/plugin/commands"
-import {EventHandlerCanvas} from "./plugin/event_handlers/Canvas";
+import {EventHandlerActiveLeafChange} from "./plugin/event_handlers/ActiveLeafChange";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -33,7 +33,7 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 		// maybe store this somewhere?
 		await new EventHandlerMetadataChange(this).register();
 		await new EventHandlerFileOpen(this).register();
-		await new EventHandlerCanvas(this).register();
+		await new EventHandlerActiveLeafChange(this).register();
 
 		// Load the styles
 		this.app.workspace.onLayoutReady(() => {
@@ -58,11 +58,6 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 				id:"export-FOLDER-to-graph",
 				name:"EXPERIMENTAL : export TAGS LINKED TO FOLDER NOTES to graph.json. This overwrites your current graph.json. Use at own risk!",
 				callback: async () => await experimental.exportGraphJsonFolderNotes(this)
-			})
-			this.addCommand({
-				id:"canvas-colored-tags",
-				name:"EXPERIMENTAL : Apply colors canvas",
-				callback: async () => await experimental.CanvasColoredTags(this)
 			})
 		}
 	}
