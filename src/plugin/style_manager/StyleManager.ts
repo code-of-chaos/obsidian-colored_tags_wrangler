@@ -14,7 +14,7 @@ import {
 	CSSWranglerTagsNoWrap,
 } from "src/plugin/style_manager/css_wranglers";
 import {
-	IJqueryWrangler, JqueryWranglerNoteBackgrounds,
+	IJqueryWrangler, JqueryWranglerCanvasNodeBackground, JqueryWranglerNoteBackgrounds,
 	JqueryWranglerNotePropertyTags
 } from "./jquery_wranglers";
 
@@ -33,6 +33,7 @@ export class StyleManager{
 
 	wrangler_note_property_tags:IJqueryWrangler;
 	wrangler_note_background:IJqueryWrangler;
+	wrangler_canvas_node_background:IJqueryWrangler;
 
 	private style_wranglers_css: Array<ICSSWrangler>;
 	private style_wranglers_jquery: Array<IJqueryWrangler>;
@@ -62,10 +63,12 @@ export class StyleManager{
 
 		this.wrangler_note_property_tags = new JqueryWranglerNotePropertyTags(plugin);
 		this.wrangler_note_background = new JqueryWranglerNoteBackgrounds(plugin);
+		this.wrangler_canvas_node_background = new JqueryWranglerCanvasNodeBackground(plugin);
 
 		this.style_wranglers_jquery = new Array<IJqueryWrangler>(
 			this.wrangler_note_property_tags,
-			this.wrangler_note_background
+			this.wrangler_note_background,
+			this.wrangler_canvas_node_background,
 		)
 
 	}

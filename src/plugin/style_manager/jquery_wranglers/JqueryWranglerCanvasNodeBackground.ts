@@ -1,14 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {JqueryWrangler} from "./JqueryWrangler";
+import {JqueryWrangler} from "src/plugin/style_manager/jquery_wranglers/JqueryWrangler";
 import $ from "jquery";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
+export class JqueryWranglerCanvasNodeBackground extends JqueryWrangler{
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor
     // -----------------------------------------------------------------------------------------------------------------
@@ -18,39 +18,23 @@ export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private findElement(tag_name:string):JQuery<HTMLElement>{
-        // noinspection TypeScriptValidateJSTypes
-        return $('div[data-property-key="tags"]')
-            .find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
+    private findElement(tag_name:string|null):JQuery<HTMLElement>|null{
+        return $(`div.canvas-node > div.canvas-node-container:has(a.tag[href="#${tag_name}"])`)
     }
 
     assembleStyling(): void {
         this.getTags(false).map(
             ({tag_name, color, background_color}) =>{
-                this.findElement(tag_name)
-                    .css('background-color', this.getBackgroundWithOpacityString(background_color))
-                    .css('color', this.getForegroundString(color))
-
-                // Find the svg element within the tag, so it can color the X
+                const canvasNode  = this.findElement(tag_name);
                 // noinspection JSUnresolvedReference
-                    .find('svg')
-                    .css('stroke', this.getForegroundString(color))
-
+                if (canvasNode !== null) {
+                    // console.warn(canvasNode)
+                    canvasNode.css({"--canvas-color": `${color.r}, ${color.g}, ${color.b}`});
+                    canvasNode.css({"background-color": this.getBackgroundWithOpacityString(background_color)});
+                }
             }
         )
     }
     removeStyling(): void {
-        this.getTags(false).map(
-            ({tag_name}) =>{
-                this.findElement(tag_name)
-                    .removeAttr("style")
-
-                // Find the svg element within the tag, so it can color the X
-                // noinspection JSUnresolvedReference
-                    .find('svg')
-                    .removeAttr("style")
-
-            }
-        )
     }
 }

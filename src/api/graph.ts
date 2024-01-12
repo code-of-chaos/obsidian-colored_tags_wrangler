@@ -37,7 +37,6 @@ export async function readGraphJson(vault:Vault): Promise<IGraphJSON|null>{
     const graphJsonPath = `${vault.configDir}/graph.json`
     try {
         const data = await this.app.vault.adapter.read(graphJsonPath)
-        console.warn(data)
         return JSON.parse(data) as IGraphJSON
     }
     catch (error){

@@ -33,13 +33,11 @@ export function migrate_06_to_07(loaded_data:ISettings_v006):ISettings_v007 {
 }
 
 function checkColor(color:RGB, background:RGB):boolean{
-    let check = (
+    return (
         color.r === background.r
         && color.g === background.g
         && color.b === background.b
     )
-    console.warn({color, background, check})
-    return check
 }
 
 function callback_fix_background(background:RGB, luminance_offset:number):RGB{
