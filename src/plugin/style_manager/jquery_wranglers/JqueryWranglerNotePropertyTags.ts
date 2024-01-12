@@ -19,13 +19,16 @@ export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private findElement(tag_name:string):JQuery<HTMLElement>{
+
+        console.warn(tag_name)
+
         // noinspection TypeScriptValidateJSTypes
         return $('div[data-property-key="tags"]')
             .find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
     }
 
     assembleStyling(): void {
-        this.getTags().map(
+        this.getTags(false).map(
             ({tag_name, color, background_color}) =>{
                 this.findElement(tag_name)
                     .css('background-color', this.getBackgroundWithOpacityString(background_color))
@@ -40,7 +43,7 @@ export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
         )
     }
     removeStyling(): void {
-        this.getTags().map(
+        this.getTags(false).map(
             ({tag_name}) =>{
                 this.findElement(tag_name)
                     .removeAttr("style")
