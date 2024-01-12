@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {
-	ButtonComponent, Platform,
+	ButtonComponent, ColorComponent, Platform,
 	RGB,
 	Setting, TextAreaComponent,
 	TextComponent
@@ -110,31 +110,30 @@ export class ComponentTags extends SettingsTabComponent{
 			setting.addText((text) => this._text_callback(text,tag_id, new_tag_content));
 		}
 
-		setting
-			.addColorPicker((colorPicker) =>
-				colorPicker
-					.setValueRgb(new_tag_content.color)
-					.onChange(async (value) => {
-						// Handle user-defined tag colors here
-						new_tag_content.color = hexToRgb(value)
-						this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
-						await this.plugin.saveSettings();
+		setting.addColorPicker((colorPicker) =>
+			colorPicker
+				.setValueRgb(new_tag_content.color)
+				.onChange(async (value) => {
+					// Handle user-defined tag colors here
+					new_tag_content.color = hexToRgb(value)
+					this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
+					await this.plugin.saveSettings();
 
-					})
-			);
+				})
+		);
 
-		setting
-			.addColorPicker((colorPicker) =>
-				colorPicker
-					.setValueRgb(new_tag_content.background_color)
-					.onChange(async (value) => {
-						// Handle user-defined tag colors here
-						new_tag_content.background_color = hexToRgb(value)
-						this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
-						await this.plugin.saveSettings();
-						this.settings_tab.display()
-					})
-			);
+		let colorPickerBackground :ColorComponent;
+		setting.addColorPicker((colorPicker) =>{
+			colorPickerBackground = colorPicker;
+			colorPickerBackground
+				.setValueRgb(new_tag_content.background_color)
+				.onChange(async (value) => {
+					// Handle user-defined tag colors here
+					new_tag_content.background_color = hexToRgb(value)
+					this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
+					await this.plugin.saveSettings();
+				})
+		});
 
 		if(this.plugin.settings.TagColors.EnableSeparateBackground){
 			setting.addButton((cb) => {
@@ -147,9 +146,9 @@ export class ComponentTags extends SettingsTabComponent{
 								? .5 	// dark foreground
 								: 1.75	// light foreground
 						);
-
+						colorPickerBackground.setValueRgb(new_tag_content.background_color)
 						await this.plugin.saveSettings();
-						this.settings_tab.display()
+
 					});
 			})
 
