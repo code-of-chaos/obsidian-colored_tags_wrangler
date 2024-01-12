@@ -20,7 +20,7 @@ export class ComponentKanbanEnableBackgroundOpacity extends SettingsTabComponent
 						.onChange(async state => {
 							this.plugin.settings.Kanban.EnableBackgroundOpacity = state;
 							await this.plugin.saveSettings();
-							await this.settings_tab.display();
+							await this.settings_tab.display(); // Yes, because this displays more settings when enabled
 						})
 				}
 			)

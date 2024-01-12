@@ -118,7 +118,6 @@ export class ComponentTags extends SettingsTabComponent{
 					new_tag_content.color = hexToRgb(value)
 					this.plugin.settings.TagColors.ColorPicker[new_tag_id] = new_tag_content;
 					await this.plugin.saveSettings();
-
 				})
 		);
 
@@ -148,7 +147,6 @@ export class ComponentTags extends SettingsTabComponent{
 						);
 						colorPickerBackground.setValueRgb(new_tag_content.background_color)
 						await this.plugin.saveSettings();
-
 					});
 			})
 
@@ -160,7 +158,7 @@ export class ComponentTags extends SettingsTabComponent{
 					// reorder stuff here!!!
 					arrayMove(this.plugin.settings.TagColors.ColorPicker, new_tag_id, new_tag_id-1)
 					await this.plugin.saveSettings();
-					this.settings_tab.display()
+					this.settings_tab.display() // Yes, because this alters the list
 				});
 		})
 		setting.addExtraButton((cb) => {
@@ -170,7 +168,7 @@ export class ComponentTags extends SettingsTabComponent{
 					// reorder stuff here!!!
 					arrayMove(this.plugin.settings.TagColors.ColorPicker, new_tag_id, new_tag_id+1)
 					await this.plugin.saveSettings();
-					this.settings_tab.display()
+					this.settings_tab.display() // Yes, because this alters the list
 				});
 		})
 
@@ -182,7 +180,7 @@ export class ComponentTags extends SettingsTabComponent{
 						this.plugin.settings.TagColors.ColorPicker.splice(new_tag_id, 1);
 						await Promise.all([
 							this.plugin.saveSettings(),
-							this.settings_tab.display()
+							this.settings_tab.display() // Yes, because this alters the list
 						]);
 					})
 			);

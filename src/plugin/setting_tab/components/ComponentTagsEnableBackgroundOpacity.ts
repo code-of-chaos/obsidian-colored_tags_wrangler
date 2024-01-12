@@ -20,7 +20,7 @@ export class ComponentTagsEnableBackgroundOpacity extends SettingsTabComponent {
 						.onChange(async state => {
 							this.plugin.settings.TagColors.EnableBackgroundOpacity = state;
 							await this.plugin.saveSettings();
-							await this.settings_tab.display();
+							await this.settings_tab.display(); // Yes, because adds extra settings
 						})
 				}
 			)

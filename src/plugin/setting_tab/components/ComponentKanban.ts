@@ -21,7 +21,7 @@ export class ComponentKanban extends SettingsTabComponent{
 						.onChange(async state => {
 							this.plugin.settings.Kanban.Enable = state;
 							await this.plugin.saveSettings();
-							this.settings_tab.display();
+							this.settings_tab.display();  // Yes, because this displays more settings when enabled
 						})
 				}
 			);

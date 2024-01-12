@@ -26,7 +26,7 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 						this.plugin.settings.FolderNote.FolderTagLinks.push({folder_path: this._NEW_FOLDER_PATH, tag_name: this._NEW_TAG_NAME,});
 						await Promise.all([
 							this.plugin.saveSettings(),
-							this.settings_tab.display()
+							this.settings_tab.display()  // Yes, because this adds more elements to the list
 						]);
 					})
 					.setClass("mod-cta")
@@ -41,7 +41,7 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 							this.plugin.settings.FolderNote.FolderTagLinks=[];
 							await Promise.all([
 								this.plugin.saveSettings(),
-								this.settings_tab.display()
+								this.settings_tab.display() // Yes, because this removes elements from the list
 							]);
 						}
 					)
@@ -101,7 +101,7 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 						// reorder stuff here!!!
 						arrayMove(this.plugin.settings.FolderNote.FolderTagLinks, new_link_id, new_link_id-1)
 						await this.plugin.saveSettings();
-						this.settings_tab.display()
+						this.settings_tab.display()  // Yes, because this alters the list
 					});
 			})
 			.addExtraButton((cb) => {
@@ -111,7 +111,7 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 						// reorder stuff here!!!
 						arrayMove(this.plugin.settings.FolderNote.FolderTagLinks, new_link_id, new_link_id+1)
 						await this.plugin.saveSettings();
-						this.settings_tab.display()
+						this.settings_tab.display() // Yes, because this alters the list
 					});
 			})
 
@@ -123,7 +123,7 @@ export class ComponentFolderNoteFolderTagLinks extends SettingsTabComponent{
 						this.plugin.settings.FolderNote.FolderTagLinks.splice(new_link_id, 1);
 						await Promise.all([
 							this.plugin.saveSettings(),
-							this.settings_tab.display()
+							this.settings_tab.display() // Yes, because this alters the list
 						]);
 					})
 			);

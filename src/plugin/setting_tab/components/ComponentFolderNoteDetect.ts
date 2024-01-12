@@ -32,7 +32,7 @@ export class ComponentFolderNoteDetect extends SettingsTabComponent{
 
 					await Promise.all([
 						this.plugin.saveSettings(),
-						this.settings_tab.display()
+						this.settings_tab.display()  // Yes, because this setting adds to the list of FolderNotes
 					]);
 				})
 				.setClass('mod-warning')

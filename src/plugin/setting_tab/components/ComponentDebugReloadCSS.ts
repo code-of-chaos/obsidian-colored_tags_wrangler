@@ -24,7 +24,6 @@ export class ComponentDebugReloadCSS extends SettingsTabComponent{
 					.setButtonText("Refresh")
 					.onClick(async () => {
 						this.plugin.style_manager.switchAllStyles();
-						this.settings_tab.display();
 					})
 			);
 	}

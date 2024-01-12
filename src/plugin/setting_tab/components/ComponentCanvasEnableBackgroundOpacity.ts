@@ -20,7 +20,7 @@ export class ComponentCanvasEnableBackgroundOpacity extends SettingsTabComponent
 						.onChange(async state => {
 							this.plugin.settings.Canvas.EnableBackgroundOpacity = state;
 							await this.plugin.saveSettings();
-							await this.settings_tab.display();
+							await this.settings_tab.display();  // Yes, because this displays more settings when enabled
 						})
 				}
 			)

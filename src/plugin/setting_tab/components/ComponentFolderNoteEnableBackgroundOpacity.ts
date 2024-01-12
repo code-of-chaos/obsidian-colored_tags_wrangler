@@ -20,7 +20,7 @@ export class ComponentFolderNoteEnableBackgroundOpacity extends SettingsTabCompo
 						.onChange(async state => {
 							this.plugin.settings.FolderNote.EnableBackgroundOpacity = state;
 							await this.plugin.saveSettings();
-							await this.settings_tab.display();
+							await this.settings_tab.display();  // Yes, because this displays more settings when enabled
 						})
 				}
 			)

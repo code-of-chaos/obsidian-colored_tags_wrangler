@@ -23,7 +23,7 @@ export class ComponentCanvas extends SettingsTabComponent {
 						.onChange(async state => {
 							this.plugin.settings.Canvas.Enable = state;
 							await this.plugin.saveSettings();
-							this.settings_tab.display();
+							this.settings_tab.display(); // Yes, because this displays more settings when enabled
 						})
 				}
 			)

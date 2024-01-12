@@ -11,7 +11,7 @@ export class ComponentTagsEnableAutoBackgroundButton extends SettingsTabComponen
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): void {
-		let setting = new Setting(containerEL)
+		new Setting(containerEL)
 			.setName("Enable button for Auto Background coloring")
 			.setDesc(`
 				Adds a small button next to each color picker, allowing users to auto generate an appropriate background color.
@@ -23,10 +23,9 @@ export class ComponentTagsEnableAutoBackgroundButton extends SettingsTabComponen
 						.onChange(async state => {
 							this.plugin.settings.TagColors.EnableSeparateBackground = state;
 							await this.plugin.saveSettings();
-							await this.settings_tab.display();
 						})
 				}
-			)
+			);
 	}
 }
 
