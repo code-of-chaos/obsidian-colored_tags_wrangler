@@ -20,7 +20,7 @@ export class CSSWranglerKanbanLists extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	assembleCss(theme:string){
 		const important:string = this.getImportant();
-		return this.getTags()
+		return this.getTags(false)
 			.map(
 				({tag_name, color, background_color}) => `
 ${theme} div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){

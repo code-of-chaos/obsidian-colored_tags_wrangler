@@ -21,7 +21,7 @@ export class CSSWranglerTagsCanvas extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	assembleCss(theme:string){
 		const important:string = this.getImportant();
-		return this.getTags()
+		return this.getTags(false)
 			.map(
 				({tag_name, color, background_color}) => `
 ${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag_name}"]) {
