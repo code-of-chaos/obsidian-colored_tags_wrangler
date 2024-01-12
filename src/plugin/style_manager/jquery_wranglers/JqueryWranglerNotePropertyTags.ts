@@ -19,9 +19,6 @@ export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private findElement(tag_name:string):JQuery<HTMLElement>{
-
-        console.warn(tag_name)
-
         // noinspection TypeScriptValidateJSTypes
         return $('div[data-property-key="tags"]')
             .find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
