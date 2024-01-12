@@ -17,12 +17,13 @@ export class EventHandlerActiveLeafChange extends EventHandler{
 			this.plugin.app.workspace.on(
 				'active-leaf-change',
 				async (leaf) => {
-					if (leaf?.getViewState().type === "canvas") {
-						await delay(1000);
-						// Now the leaf has finished loading, hopefully
-						this.plugin.style_manager.wrangler_canvas_node_background.assembleStyling();
+					if (this.plugin.settings.Canvas.Enable
+						&& leaf?.getViewState().type === "canvas"){
+							await delay(1000);
+							// Now the leaf has finished loading, hopefully
+							this.plugin.style_manager.wrangler_canvas_node_background.assembleStyling();
+						}
 					}
-				}
 			))
 	}
 }

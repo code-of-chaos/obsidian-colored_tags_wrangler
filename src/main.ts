@@ -12,7 +12,7 @@ import {SettingTab} from "src/plugin/setting_tab/SettingTab";
 import {EventHandlerFileOpen} from "src/plugin/event_handlers/FileOpen";
 import * as experimental from "src/plugin/commands/experimental"
 import * as commands from "src/plugin/commands"
-import {EventHandlerActiveLeafChange} from "./plugin/event_handlers/ActiveLeafChange";
+import {EventHandlerActiveLeafChange} from "src/plugin/event_handlers/ActiveLeafChange";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
