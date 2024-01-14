@@ -6,7 +6,8 @@ import {IColorPicker} from "src/api/interfaces/IColorPicker";
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
-const reSLASH = /\//g
+const reSLASH = /\//g;
+const reSplit = /[\n;]/; // for organization, I added \n
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -19,8 +20,8 @@ export function get_tags(data: Array<IColorPicker>, enable_multiple_tags: boolea
             }
 
             return tag_name // read the last line if you are confused why we are looping over the tag_name
-                .split(/[\n;]/) // for organization, I added \n
-                .map(tag => tag.trim())  // Also trim the tag for leading spaces after or before a \n? Should fix some common issues.
+                .split(reSplit)
+                .map(tag => tag.trim().toLowerCase())  // Also trim the tag for leading spaces & map everything to lowercase!
                 .filter(Boolean) // filter out empty lines
                 .map(tag => remove_slash ? tag.replace(reSLASH, "") : tag)  // replace the "/"
                 .map(tag => ({ tag_name: tag, color, background_color, luminance_offset }));

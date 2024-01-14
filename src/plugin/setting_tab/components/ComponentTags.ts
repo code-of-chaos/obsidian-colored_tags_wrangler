@@ -7,7 +7,7 @@ import {
 	Setting, TextAreaComponent,
 	TextComponent
 } from "obsidian";
-import {adjustBrightness, getContrastBool, getContrastColor, hexToRgb} from "src/api/ColorConverters"
+import {adjustBrightness, getContrastBool, hexToRgb} from "src/api/ColorConverters"
 import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
 import {arrayMove} from "src/api/ArrayUtils"
 
