@@ -119,7 +119,7 @@ export class StyleManager{
 			: [] );
 
 		// actually generate the element
-        this.styleElement.innerHTML = css_text.join();
+        this.styleElement.innerHTML = css_text.join("");
         document.head.appendChild(this.styleElement);
 	}
 
