@@ -64,7 +64,7 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 
 	// -----------------------------------------------------------------------------------------------------------------
 	onunload() {
-		this.style_manager.removeAllStyles();
+		this.style_manager.removeStyles();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

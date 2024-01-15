@@ -35,8 +35,10 @@ export class StyleManager{
 	wrangler_note_background:IJqueryWrangler;
 	wrangler_canvas_node_background:IJqueryWrangler;
 
-	private style_wranglers_css: Array<ICSSWrangler>;
-	private style_wranglers_jquery: Array<IJqueryWrangler>;
+	// private style_wranglers_css: Array<ICSSWrangler>;
+	// private style_wranglers_jquery: Array<IJqueryWrangler>;
+
+	styleElement:HTMLStyleElement;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
@@ -51,68 +53,67 @@ export class StyleManager{
 		this.wrangler_kanban_lists = new CSSWranglerKanbanLists(plugin);
 		this.wrangler_folder_note = new CSSWranglerFolderNote(plugin);
 
-		this.style_wranglers_css = new Array<ICSSWrangler>(
-			this.wrangler_css_note_tags,
-			this.wrangler_css_note_tags_no_wrap,
-			this.wrangler_tags_canvas,
-			this.wrangler_kanban_hashtags,
-			this.wrangler_kanban_cards,
-			this.wrangler_kanban_lists,
-			this.wrangler_folder_note,
-		)
+		// this.style_wranglers_css = new Array<ICSSWrangler>(
+		// 	this.wrangler_css_note_tags,
+		// 	this.wrangler_css_note_tags_no_wrap,
+		// 	this.wrangler_tags_canvas,
+		// 	this.wrangler_kanban_hashtags,
+		// 	this.wrangler_kanban_cards,
+		// 	this.wrangler_kanban_lists,
+		// 	this.wrangler_folder_note,
+		// )
 
 		this.wrangler_note_property_tags = new JqueryWranglerNotePropertyTags(plugin);
 		this.wrangler_note_background = new JqueryWranglerNoteBackgrounds(plugin);
 		this.wrangler_canvas_node_background = new JqueryWranglerCanvasNodeBackground(plugin);
 
-		this.style_wranglers_jquery = new Array<IJqueryWrangler>(
-			this.wrangler_note_property_tags,
-			this.wrangler_note_background,
-			this.wrangler_canvas_node_background,
-		)
+		// this.style_wranglers_jquery = new Array<IJqueryWrangler>(
+		// 	this.wrangler_note_property_tags,
+		// 	this.wrangler_note_background,
+		// 	this.wrangler_canvas_node_background,
+		// )
+
+		this.styleElement = document.createElement("style");
+		this.styleElement.id = "colored-tags-wrangler"
 
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	switchAllStyles():void {
-		this.plugin.settings.TagColors.ColorPicker.length != 0
-		&& this.plugin.settings.CSS.NoteTags
-			? this.wrangler_css_note_tags.applyStyles()
-			: this.wrangler_css_note_tags.removeStyles() ;
+		const styleSets = [{
+				enabled: this.plugin.settings.TagColors.ColorPicker.length !== 0 && this.plugin.settings.CSS.NoteTags,
+				styles: this.wrangler_css_note_tags
+			}, {
+				enabled: this.plugin.settings.CSS.TagsNoWrap,
+				styles: this.wrangler_css_note_tags_no_wrap
+			}, {
+				enabled: this.plugin.settings.Canvas.Enable,
+				styles: this.wrangler_tags_canvas
+			}, {
+				enabled: this.plugin.settings.Kanban.HideHashtags,
+				styles: this.wrangler_kanban_hashtags
+			}, {
+				enabled: this.plugin.settings.Kanban.EnableCards,
+				styles: this.wrangler_kanban_cards
+			}, {
+				enabled: this.plugin.settings.Kanban.EnableLists,
+				styles: this.wrangler_kanban_lists
+			}, {
+				enabled: this.plugin.settings.FolderNote.Enable,
+				styles: this.wrangler_folder_note
+			},
+		];
 
-		this.plugin.settings.CSS.TagsNoWrap
-			? this.wrangler_css_note_tags_no_wrap.applyStyles()
-			: this.wrangler_css_note_tags_no_wrap.removeStyles() ;
-
-		this.plugin.settings.Canvas.Enable
-			? this.wrangler_tags_canvas.applyStyles()
-			: this.wrangler_tags_canvas.removeStyles() ;
-
-		this.plugin.settings.Kanban.HideHashtags
-			? this.wrangler_kanban_hashtags.applyStyles()
-			: this.wrangler_kanban_hashtags.removeStyles() ;
-
-		this.plugin.settings.Kanban.EnableCards
-			? this.wrangler_kanban_cards.applyStyles()
-			: this.wrangler_kanban_cards.removeStyles() ;
-
-		this.plugin.settings.Kanban.EnableLists
-			? this.wrangler_kanban_lists.applyStyles()
-			: this.wrangler_kanban_lists.removeStyles() ;
-
-		this.plugin.settings.FolderNote.Enable
-			? this.wrangler_folder_note.applyStyles()
-			: this.wrangler_folder_note.removeStyles() ;
+		this.styleElement.innerHTML =  styleSets
+			.filter(set => set.enabled)
+			.flatMap(set => set.styles.applyStyles())
+			.join("");
+		
+		document.head.appendChild(this.styleElement);
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------
-	// applyAllStyles():void {
-	// 	this._style_wranglers.forEach(value => {value.applyStyles()});
-	// }	// -----------------------------------------------------------------------------------------------------------------
-
-	removeAllStyles():void {
-		this.style_wranglers_css.forEach(value => {value.removeStyles()});
-		this.style_wranglers_jquery.forEach(value => {value.removeStyling()})
+	public removeStyles(){
+		document.head.removeChild(this.styleElement);
 	}
 }

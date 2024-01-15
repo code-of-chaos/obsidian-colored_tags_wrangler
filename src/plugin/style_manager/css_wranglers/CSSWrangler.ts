@@ -15,8 +15,7 @@ export interface ICSSWrangler extends IStyleWrangler{
 	styleEL_dark:HTMLStyleElement;
 
 	assembleCss(theme:string):Array<string>;
-	applyStyles(): void;
-	removeStyles(): void;
+	applyStyles(): string[];
 }
 const lineCleanup = (line:string) =>  line.split("\n").map(l=>l.trim()).join(" ")
 
@@ -48,22 +47,11 @@ export abstract class CSSWrangler extends StyleWrangler implements ICSSWrangler{
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	applyStyles(): void{
+	applyStyles(): string[]{
 		// first remove the old style element, else we will keep appending data to the dom
-		this.removeStyles();
-
-		this.styleEL_light.innerText = this.assembleCss("body.theme-light").map(lineCleanup).join(" ");
-		this.styleEL_dark.innerText =  this.assembleCss("body.theme-dark").map(lineCleanup).join(" ");
-
-		document.head.appendChild(this.styleEL_light);
-		document.head.appendChild(this.styleEL_dark);
-	};
-
-	removeStyles(): void{
-		this.styleEL_light?.parentNode?.removeChild(this.styleEL_light);
-		this.styleEL_dark?.parentNode?.removeChild(this.styleEL_dark);
-
-		// I don't know what this does anymore, and why it is needed at all?
-		removeById(this.id);
+		return [
+			this.assembleCss("body.theme-light").map(lineCleanup).join(" "),
+			this.assembleCss("body.theme-dark").map(lineCleanup).join(" ")
+		]
 	};
 }
