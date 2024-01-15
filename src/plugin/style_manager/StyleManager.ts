@@ -81,46 +81,36 @@ export class StyleManager{
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	switchAllStyles():void {
-		const css_text:string[] = [];
+		const styleSets = [{
+				enabled: this.plugin.settings.TagColors.ColorPicker.length !== 0 && this.plugin.settings.CSS.NoteTags,
+				styles: this.wrangler_css_note_tags
+			}, {
+				enabled: this.plugin.settings.CSS.TagsNoWrap,
+				styles: this.wrangler_css_note_tags_no_wrap
+			}, {
+				enabled: this.plugin.settings.Canvas.Enable,
+				styles: this.wrangler_tags_canvas
+			}, {
+				enabled: this.plugin.settings.Kanban.HideHashtags,
+				styles: this.wrangler_kanban_hashtags
+			}, {
+				enabled: this.plugin.settings.Kanban.EnableCards,
+				styles: this.wrangler_kanban_cards
+			}, {
+				enabled: this.plugin.settings.Kanban.EnableLists,
+				styles: this.wrangler_kanban_lists
+			}, {
+				enabled: this.plugin.settings.FolderNote.Enable,
+				styles: this.wrangler_folder_note
+			},
+		];
 
-		css_text.push(...(this.plugin.settings.TagColors.ColorPicker.length != 0
-		&& this.plugin.settings.CSS.NoteTags)
-			? this.wrangler_css_note_tags.applyStyles()
-			: []
-		);
-
-		css_text.push(...this.plugin.settings.CSS.TagsNoWrap
-			? this.wrangler_css_note_tags_no_wrap.applyStyles()
-			: []
-		);
-
-		css_text.push(...this.plugin.settings.Canvas.Enable
-			? this.wrangler_tags_canvas.applyStyles()
-			: []
-		);
-
-		css_text.push(...this.plugin.settings.Kanban.HideHashtags
-			? this.wrangler_kanban_hashtags.applyStyles()
-			: []
-		);
-
-		css_text.push(...this.plugin.settings.Kanban.EnableCards
-			? this.wrangler_kanban_cards.applyStyles()
-			: []
-		);
-
-		css_text.push(...this.plugin.settings.Kanban.EnableLists
-			? this.wrangler_kanban_lists.applyStyles()
-			: []
-		);
-
-		css_text.push(...this.plugin.settings.FolderNote.Enable
-			? this.wrangler_folder_note.applyStyles()
-			: [] );
-
-		// actually generate the element
-        this.styleElement.innerHTML = css_text.join("");
-        document.head.appendChild(this.styleElement);
+		this.styleElement.innerHTML =  styleSets
+			.filter(set => set.enabled)
+			.flatMap(set => set.styles.applyStyles())
+			.join("");
+		
+		document.head.appendChild(this.styleElement);
 	}
 
 	public removeStyles(){
