@@ -2,9 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {CSSWrangler} from "src/plugin/style_manager/css_wranglers/CSSWrangler";
-import {RGB} from "obsidian";
 import ColoredTagWranglerPlugin from "src/main";
-import {get_tags} from "../../../api/tags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

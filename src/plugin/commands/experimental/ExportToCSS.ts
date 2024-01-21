@@ -7,7 +7,7 @@ import {Editor, MarkdownFileInfo, MarkdownView} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export async function ExportToCSS(editor: Editor, ctx: MarkdownView | MarkdownFileInfo, plugin: IColoredTagWrangler){
+export async function ExportToCSS(editor: Editor, _: MarkdownView | MarkdownFileInfo, plugin: IColoredTagWrangler){
     editor.replaceSelection(
         [
             "```css",

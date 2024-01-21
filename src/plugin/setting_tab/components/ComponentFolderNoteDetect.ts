@@ -1,12 +1,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Setting}
-	from "obsidian";
-import {SettingsTabComponent}
-	from "src/plugin/setting_tab/SettingsTabComponent";
-import {detect_all_links}
-	from "src/api/FolderNoteLogic"
+import {Setting} from "obsidian";
+import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
+import {detect_all_links} from "src/api/FolderNoteLogic"
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

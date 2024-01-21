@@ -1,12 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {
-    CachedMetadata,
-    TFile
-} from "obsidian";
+import {CachedMetadata, TFile} from "obsidian";
 import {file_is_folderNote, processTagColors} from "src/api/FolderNoteLogic";
-import {v4 as uuid4} from "uuid";
 import {EventHandler} from "src/plugin/event_handlers/EventHandler";
 
 // ---------------------------------------------------------------------------------------------------------------------

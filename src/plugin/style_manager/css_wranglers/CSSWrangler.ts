@@ -4,7 +4,6 @@
 import ColoredTagWranglerPlugin from "src/main";
 import {IStyleWrangler, SettingValues, StyleWrangler} from "../StyleWrangler";
 
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface & Support code
 // ---------------------------------------------------------------------------------------------------------------------
