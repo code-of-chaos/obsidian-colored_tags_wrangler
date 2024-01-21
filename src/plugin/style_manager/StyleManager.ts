@@ -35,7 +35,7 @@ export class StyleManager{
 	wrangler_note_background:IJqueryWrangler;
 	wrangler_canvas_node_background:IJqueryWrangler;
 
-	// private style_wranglers_css: Array<ICSSWrangler>;
+	private style_wranglers_css: Array<ICSSWrangler>;
 	// private style_wranglers_jquery: Array<IJqueryWrangler>;
 
 	styleElement:HTMLStyleElement;
@@ -53,15 +53,15 @@ export class StyleManager{
 		this.wrangler_kanban_lists = new CSSWranglerKanbanLists(plugin);
 		this.wrangler_folder_note = new CSSWranglerFolderNote(plugin);
 
-		// this.style_wranglers_css = new Array<ICSSWrangler>(
-		// 	this.wrangler_css_note_tags,
-		// 	this.wrangler_css_note_tags_no_wrap,
-		// 	this.wrangler_tags_canvas,
-		// 	this.wrangler_kanban_hashtags,
-		// 	this.wrangler_kanban_cards,
-		// 	this.wrangler_kanban_lists,
-		// 	this.wrangler_folder_note,
-		// )
+		this.style_wranglers_css = new Array<ICSSWrangler>(
+			this.wrangler_css_note_tags,
+			this.wrangler_css_note_tags_no_wrap,
+			this.wrangler_tags_canvas,
+			this.wrangler_kanban_hashtags,
+			this.wrangler_kanban_cards,
+			this.wrangler_kanban_lists,
+			this.wrangler_folder_note,
+		)
 
 		this.wrangler_note_property_tags = new JqueryWranglerNotePropertyTags(plugin);
 		this.wrangler_note_background = new JqueryWranglerNoteBackgrounds(plugin);
@@ -107,7 +107,7 @@ export class StyleManager{
 
 		this.styleElement.innerHTML =  styleSets
 			.filter(set => set.enabled)
-			.flatMap(set => set.styles.applyStyles())
+			.flatMap(set => set.styles.getCssStyling())
 			.join("");
 		
 		document.head.appendChild(this.styleElement);
@@ -115,5 +115,9 @@ export class StyleManager{
 
 	public removeStyles(){
 		document.head.removeChild(this.styleElement);
+	}
+
+	public getAllCssStyling():string[]{
+		return this.style_wranglers_css.flatMap(style => style.getCssStyling());
 	}
 }

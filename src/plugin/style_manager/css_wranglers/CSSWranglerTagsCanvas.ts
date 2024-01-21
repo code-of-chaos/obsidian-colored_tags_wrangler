@@ -14,7 +14,7 @@ export class CSSWranglerTagsCanvas extends CSSWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleTagsCanvasEl", plugin,plugin.settings.TagColors);
+		super(plugin,plugin.settings.TagColors);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
