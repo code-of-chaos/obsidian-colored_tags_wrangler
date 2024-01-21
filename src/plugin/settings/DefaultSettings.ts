@@ -12,9 +12,7 @@ export const DefaultSettings: ISettings = {
 		ColorPicker: [],
 
 		EnableMultipleTags:true,
-		EnableSeparateBackground:false,
-		EnableSeparateLuminanceOffset:false, 	// can be removed
-		EnableDarkLightDifference:true, 		// can be removed
+		EnableSeparateBackground:true,
 		EnableBackgroundOpacity:false,
 
 		Values:{
@@ -49,7 +47,7 @@ export const DefaultSettings: ISettings = {
 	},
 
 	Kanban:{
-		Enable:false,
+		Enable:true,
 		EnableCards:false,
 		EnableLists:false,
 		HideHashtags:false,
@@ -83,6 +81,6 @@ export const DefaultSettings: ISettings = {
 	},
 
 	Info: {
-		SettingsVersion: 13 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
+		SettingsVersion: 14 // UPDATE THIS WHEN YOU CHANGE ANYTHING IN THE SETTINGS!!!
 	}
 }
