@@ -12,6 +12,13 @@ A clear and concise description of what the bug is.
 
 **Versions (please complete the following information):**
 - Obsidian Version : ...
+- Obsidian Platfrom : 
+  - [ ] Windows
+  - [ ] Mobile Android
+  - [ ] Mobile iOS
+  - [ ] MacOS
+  - [ ] Linux
+
 - Plugin Version : ...
 
 **To Reproduce**
