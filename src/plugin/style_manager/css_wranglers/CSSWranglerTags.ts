@@ -32,7 +32,7 @@ export class CSSWranglerTags extends CSSWrangler {
 		return [
 			...this.getTags(false).map(
 				(v) => this._assembleCss(
-					theme, `.tag[href="#${v.tag_name}"]`, important, v.color, v.background_color)
+					theme, `.tag[href="#${v.tag_name}" i]`, important, v.color, v.background_color)
 			),
 			...this.getTags().map(
 				(v) => this._assembleCss(
