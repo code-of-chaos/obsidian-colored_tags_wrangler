@@ -23,6 +23,7 @@ export class ComponentTagsEnableAutoBackgroundButton extends SettingsTabComponen
 						.onChange(async state => {
 							this.plugin.settings.TagColors.EnableSeparateBackground = state;
 							await this.plugin.saveSettings();
+							this.settings_tab.display();
 						})
 				}
 			);

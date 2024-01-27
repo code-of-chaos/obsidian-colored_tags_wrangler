@@ -14,3 +14,4 @@ export * from 'src/plugin/settings/migrations/migrate_09_to_10';
 export * from 'src/plugin/settings/migrations/migrate_10_to_11';
 export * from 'src/plugin/settings/migrations/migrate_11_to_12';
 export * from 'src/plugin/settings/migrations/migrate_12_to_13';
+export * from 'src/plugin/settings/migrations/migrate_13_to_14';

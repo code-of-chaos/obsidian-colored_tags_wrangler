@@ -1,16 +1,19 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
+import {Editor, MarkdownFileInfo, MarkdownView} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function removeById (id:string) :void {
-	if (!id.startsWith("#")){
-		throw new DOMException("id did not start with a '#' ");
-	}
-	const existingStyle = document.querySelector(id);
-	if (existingStyle) {
-		existingStyle.remove();
-	}
+export async function ExportToCSS(editor: Editor, _: MarkdownView | MarkdownFileInfo, plugin: IColoredTagWrangler){
+    editor.replaceSelection(
+        [
+            "```css",
+			...plugin.style_manager.getAllCssStyling(),
+            "```",
+        ].join("\n")
+    )
+
 }
