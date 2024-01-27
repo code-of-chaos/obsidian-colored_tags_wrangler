@@ -2,9 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {CSSWrangler} from "src/plugin/style_manager/css_wranglers/CSSWrangler";
-import {RGB} from "obsidian";
 import ColoredTagWranglerPlugin from "src/main";
-import {get_tags} from "../../../api/tags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,7 +12,7 @@ export class CSSWranglerTagsCanvas extends CSSWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleTagsCanvasEl", plugin,plugin.settings.TagColors);
+		super(plugin,plugin.settings.TagColors);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

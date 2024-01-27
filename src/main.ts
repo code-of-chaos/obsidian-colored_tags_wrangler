@@ -59,6 +59,11 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 				name:"EXPERIMENTAL : export TAGS LINKED TO FOLDER NOTES to graph.json. This overwrites your current graph.json. Use at own risk!",
 				callback: async () => await experimental.exportGraphJsonFolderNotes(this)
 			})
+			this.addCommand({
+				id:"export-css-to-codeblock",
+				name:"EXPERIMENTAL : CSS Styling to code block.",
+				editorCallback: async (editor, ctx) => await experimental.ExportToCSS(editor, ctx, this)
+			})
 		}
 	}
 

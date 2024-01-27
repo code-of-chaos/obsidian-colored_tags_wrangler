@@ -13,19 +13,20 @@ export class CSSWranglerKanbanHashtags extends CSSWrangler {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin:ColoredTagWranglerPlugin) {
-		super("#styleKanbanEl", plugin, plugin.settings.Kanban);
+		super(plugin, plugin.settings.Kanban);
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assembleCss(_:string){
 		return[`
-		div[data-type="kanban"] a.tag>span,
-		div.kanban-plugin a.tag>span,
-		div[data-type="kanban"] .cm-hashtag-begin {
-			visibility: hidden;
-			position: absolute;
-		}`]
+			div[data-type="kanban"] a.tag>span,
+			div.kanban-plugin a.tag>span,
+			div[data-type="kanban"] .cm-hashtag-begin {
+				visibility: hidden;
+				position: absolute;
+			}`
+		]
 
 	}
 

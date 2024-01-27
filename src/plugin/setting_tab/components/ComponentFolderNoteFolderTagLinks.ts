@@ -1,10 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Setting}
-	from "obsidian";
-import {SettingsTabComponent}
-	from "src/plugin/setting_tab/SettingsTabComponent";
+import {Setting} from "obsidian";
+import {SettingsTabComponent} from "src/plugin/setting_tab/SettingsTabComponent";
 import {arrayMove} from "../../../api/ArrayUtils";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
