@@ -5,7 +5,6 @@ export * from './ComponentCSSTagsNoWrap';
 export * from './ComponentCSSNoteTags';
 export * from './ComponentCSSNoteBackground';
 export * from './ComponentCSSNoteProperties';
-export * from './ComponentCSSAlternativeTagsSelector';
 
 export * from './ComponentDebug';
 export * from './ComponentDebugReloadCSS';

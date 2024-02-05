@@ -18,6 +18,7 @@ export class CSSWranglerTagsCanvas extends CSSWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	assembleCss(theme:string){
+
 		const important:string = this.getImportant();
 		return this.getTags(false)
 			.map(
@@ -27,6 +28,9 @@ ${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag
 	background : ${this.getBackgroundWithOpacityString(background_color)} ${important};
 	border-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }`
-			);
+				);
+
+
+
 	}
 }

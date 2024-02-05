@@ -25,8 +25,6 @@ export interface ISettings {
 		NoteProperties:boolean,
 		NoteBackgrounds:boolean,
 
-		AlternativeTagsSelector:boolean,
-
 		TagsNoWrap:boolean,
 		TagsNoWrapText:string,
 	},

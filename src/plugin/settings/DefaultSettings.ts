@@ -26,8 +26,6 @@ export const DefaultSettings: ISettings = {
 		NoteProperties:true,
 		NoteBackgrounds:false,
 
-		AlternativeTagsSelector:false,
-
 		TagsNoWrap: true,
 		TagsNoWrapText: "pre",
 	},
