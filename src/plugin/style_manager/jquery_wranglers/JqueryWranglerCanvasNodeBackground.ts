@@ -19,22 +19,31 @@ export class JqueryWranglerCanvasNodeBackground extends JqueryWrangler{
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private findElement(tag_name:string|null):JQuery<HTMLElement>|null{
-        return $(`div.canvas-node > div.canvas-node-container:has(a.tag[href="#${tag_name}"])`)
-    }
+		if (!tag_name) return null;
+
+		const regex = new RegExp(`#${tag_name}`, 'i');
+
+		return $(`div.canvas-node > div.canvas-node-container:has(a.tag)`).filter((_, el) => {
+			const href = $(el).find('a.tag').attr('href');
+			if (href === undefined) return false;
+
+			return regex.test(href);
+		});
+	}
 
     assembleStyling(): void {
         this.getTags(false).map(
             ({tag_name, color, background_color}) =>{
                 const canvasNode  = this.findElement(tag_name);
-                // noinspection JSUnresolvedReference
-                if (canvasNode !== null) {
-                    // console.warn(canvasNode)
-                    canvasNode.css({"--canvas-color": `${color.r}, ${color.g}, ${color.b}`});
-                    canvasNode.css({"background-color": this.getBackgroundWithOpacityString(background_color)});
-                }
+				if (canvasNode === null) return;
+				canvasNode.css({
+					"--canvas-color": `${color.r}, ${color.g}, ${color.b}`,
+					"background-color": this.getBackgroundWithOpacityString(background_color)
+				});
             }
         )
     }
+	
     removeStyling(): void {
     }
 }
