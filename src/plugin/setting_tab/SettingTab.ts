@@ -28,7 +28,8 @@ import {
 	ComponentTagsEnableAutoBackgroundButton,
 	ComponentCanvasEnableBackgroundOpacity,
 	ComponentFolderNoteEnableBackgroundOpacity,
-	ComponentKanbanEnableBackgroundOpacity
+	ComponentKanbanEnableBackgroundOpacity,
+	ComponentCSSAlternativeTagsSelector
 } from "src/plugin/setting_tab/components";
 import {SettingsTabComponent} from "./SettingsTabComponent";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -44,6 +45,7 @@ export class SettingTab extends PluginSettingTab {
 		css_note_properties: 					SettingsTabComponent,
 		css_note_tags: 							SettingsTabComponent,
 		css_tags_no_wrap: 						SettingsTabComponent,
+		css_alternative_tags_selector:			SettingsTabComponent,
 
 		debug:									SettingsTabComponent,
 		debug_experimental_commands:			SettingsTabComponent,
@@ -78,6 +80,7 @@ export class SettingTab extends PluginSettingTab {
 			css_note_properties: 					new ComponentCSSNoteProperties(plugin,this),
 			css_note_tags: 							new ComponentCSSNoteTags(plugin,this),
 			css_tags_no_wrap: 						new ComponentCSSTagsNoWrap(plugin,this),
+			css_alternative_tags_selector:			new ComponentCSSAlternativeTagsSelector(plugin, this),
 
 			debug:									new ComponentDebug(plugin,this),
 			debug_experimental_commands:			new ComponentDebugExperimentalCommands(plugin, this),
@@ -135,6 +138,10 @@ export class SettingTab extends PluginSettingTab {
 		this._components.css_note_properties.create_component(containerEl);
 		this._components.css_tags_no_wrap.create_component(containerEl);
 		this._components.css_note_background.create_component(containerEl);
+
+		if (this.plugin.settings.Debug.Enable){
+			this._components.css_alternative_tags_selector.create_component(containerEl);
+		}
 
 		// Kanban Settings
 		// -------------------------------------------------------------------------------------------------------------

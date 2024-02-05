@@ -14,7 +14,7 @@ import {
 	CSSWranglerTagsNoWrap,
 } from "src/plugin/style_manager/css_wranglers";
 import {
-	IJqueryWrangler, JqueryWranglerCanvasNodeBackground, JqueryWranglerNoteBackgrounds,
+	IJqueryWrangler, JqueryWranglerAlternativeTags, JqueryWranglerCanvasNodeBackground, JqueryWranglerNoteBackgrounds,
 	JqueryWranglerNotePropertyTags
 } from "./jquery_wranglers";
 
@@ -34,6 +34,7 @@ export class StyleManager{
 	wrangler_note_property_tags:IJqueryWrangler;
 	wrangler_note_background:IJqueryWrangler;
 	wrangler_canvas_node_background:IJqueryWrangler;
+	wrangler_alternative_tags_selector: IJqueryWrangler;
 
 	private style_wranglers_css: Array<ICSSWrangler>;
 	// private style_wranglers_jquery: Array<IJqueryWrangler>;
@@ -66,6 +67,7 @@ export class StyleManager{
 		this.wrangler_note_property_tags = new JqueryWranglerNotePropertyTags(plugin);
 		this.wrangler_note_background = new JqueryWranglerNoteBackgrounds(plugin);
 		this.wrangler_canvas_node_background = new JqueryWranglerCanvasNodeBackground(plugin);
+		this.wrangler_alternative_tags_selector = new JqueryWranglerAlternativeTags(plugin);
 
 		// this.style_wranglers_jquery = new Array<IJqueryWrangler>(
 		// 	this.wrangler_note_property_tags,
@@ -81,7 +83,8 @@ export class StyleManager{
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	switchAllStyles():void {
-		const styleSets = [{
+		const styleSets = [
+			{
 				enabled: this.plugin.settings.TagColors.ColorPicker.length !== 0 && this.plugin.settings.CSS.NoteTags,
 				styles: this.wrangler_css_note_tags
 			}, {

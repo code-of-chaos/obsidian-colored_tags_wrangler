@@ -43,7 +43,7 @@ export class JqueryWranglerCanvasNodeBackground extends JqueryWrangler{
             }
         )
     }
-	
+
     removeStyling(): void {
     }
 }

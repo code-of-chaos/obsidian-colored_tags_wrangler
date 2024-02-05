@@ -18,13 +18,28 @@ export class EventHandlerActiveLeafChange extends EventHandler{
 				'active-leaf-change',
 				async (leaf) => {
 					if (this.plugin.settings.Canvas.Enable
-						&& leaf?.getViewState().type === "canvas"){
-							await delay(1000) // not perfect, but will have to do
-							// Now the leaf has finished loading, hopefully.
-							// Btw Andreas, you are a dumb-ass for using an await delay ... just so you know
- 							this.plugin.style_manager.wrangler_canvas_node_background.assembleStyling();
-						}
+						&& leaf?.getViewState().type === "canvas") {
+						await delay(1000) // not perfect, but will have to do
+						// Now the leaf has finished loading, hopefully.
+						// Btw Andreas, you are a dumb-ass for using an await delay ... just so you know
+						this.plugin.style_manager.wrangler_canvas_node_background.assembleStyling();
+					} else if (this.plugin.settings.CSS.AlternativeTagsSelector) {
+						await delay(1000)
+						this.plugin.style_manager.wrangler_alternative_tags_selector.assembleStyling()
 					}
-			))
+				}
+
+			)
+		);
+		this.plugin.registerEvent(
+			this.plugin.app.workspace.on(
+				'editor-change',
+				async () => {
+					if (this.plugin.settings.CSS.AlternativeTagsSelector) {
+						this.plugin.style_manager.wrangler_alternative_tags_selector.assembleStyling()
+					}
+				}
+			)
+		);
 	}
 }

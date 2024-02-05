@@ -6,7 +6,7 @@ import {IColorPicker} from "src/api/interfaces/IColorPicker";
 // ---------------------------------------------------------------------------------------------------------------------
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
-export interface ISettings {
+export interface ISettings_v014 {
 	// Main settings for colors to tags
 	TagColors:{
         ColorPicker: Array<IColorPicker>,
@@ -24,8 +24,6 @@ export interface ISettings {
 		NoteTags:boolean,
 		NoteProperties:boolean,
 		NoteBackgrounds:boolean,
-
-		AlternativeTagsSelector:boolean,
 
 		TagsNoWrap:boolean,
 		TagsNoWrapText:string,
