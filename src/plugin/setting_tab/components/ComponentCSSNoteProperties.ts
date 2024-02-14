@@ -11,7 +11,8 @@ import {SettingsTabComponent}
 export class ComponentCSSNoteProperties extends SettingsTabComponent{
 	public create_component(containerEL:HTMLElement): void {
 		new Setting(containerEL)
-			.setName("Apply Tag color to the tags in a note's properties")
+			.setName("Apply Tag color to note's properties 'tags' field")
+			.setDesc("Colors the tags in a note's properties.")
 			.addToggle(component => {
 					component
 						.setValue(this.plugin.settings.CSS.NoteProperties)

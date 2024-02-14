@@ -10,7 +10,7 @@ export class ComponentCSSNoteTags extends SettingsTabComponent{
 	public create_component(containerEL:HTMLElement): void {
 		new Setting(containerEL)
 			.setName("Apply Tag colors in notes")
-			.setDesc("Uses a tag set in the note's property Tags.")
+			.setDesc("Colors the tags in the body of a note. Main setting to disable most usages.")
 			.addToggle(component => {
 					component
 						.setValue(this.plugin.settings.CSS.NoteTags)
