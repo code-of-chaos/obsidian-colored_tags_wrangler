@@ -20,7 +20,6 @@ Go into the Settings tab, and start coloring to your heart's content!
 | Folder Note Integration                                                                                                                                                                                                                                   | ![foldernote_example.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/example-folder_note.png)      |
 | Note Background color, dependant on a tag in the note's properties. <br> (note: currently works when you refresh the page. This is in the works of being changed in the future)                                                                           | ![background_example.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/example-note_background.png)  |
 
-
 - The ability to define a tag with a Foreground and Background color by Color Pickers
 	- `Enable button for Auto Background coloring` : Enables a button next to the color pickers to automatically assign a background color based on the foreground color.
     - `Enable multiple tags per line` : Want to have multiple tags have the same color? Simply enable this button and write each tag on a different line or separate them by `;`
@@ -34,6 +33,10 @@ Go into the Settings tab, and start coloring to your heart's content!
   - Integration with tags within Folder Notes's properties
     - Setting to apply color to a folder, if the folder's note has a colored tag within its file's properties.
     - This isn't really tied to a single plugin. I use [AidenLX's FolderNote](https://github.com/aidenlx/alx-folder-note) for this, but any file that has the same name as the folder in which it is in will work
+
+## Example Vault
+If you want to mess around with the tags, an example vault has been created for you:
+[Colored Tags Wrangler Example Vault](https://github.com/code-of-chaos/obsidian-colored_tags_wrangler-example_vault)
 
 ## Known Issues
 The following is a list of known issues. If you know how to fix them, then all help is welcome.
