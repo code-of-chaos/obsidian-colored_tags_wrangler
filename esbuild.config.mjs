@@ -15,7 +15,7 @@ const context = await esbuild.context({
 	banner: {
 		js: banner,
 	},
-	entryPoints: ["old/ColoredTagWranglerPlugin.ts"],
+	entryPoints: ["src/plugin/ColoredTagWranglerPlugin.ts"],
 	bundle: true,
 	external: [
 		"obsidian",

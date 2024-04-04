@@ -2,11 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {Plugin} from "obsidian";
-import {IPluginSettings} from "./settings/IPluginSettings";
+import {ISettingsManager} from "./settings/ISettingsManager";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IColoredTagWranglerPlugin extends Plugin{
-	settings : IPluginSettings
+	settings : ISettingsManager
 }

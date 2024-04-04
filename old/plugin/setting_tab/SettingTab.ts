@@ -108,7 +108,7 @@ export class SettingTab extends PluginSettingTab {
 		containerEl.empty();
 		containerEl.addClass("cwt-settings-tab")
 
-		// Tags Settings
+		// Tags SettingsManager
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('h2', {text: "Obsidian tags"});
 		containerEl.createDiv({cls:"setting-item-description",text: `Don't add the '#' before the tag.`});
@@ -125,7 +125,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components.tags_enable_multiple_tags.create_component(containerEl);
 		this._components.tags_enable_background_opacity.create_component(containerEl);
 
-		// CSS Settings
+		// CSS SettingsManager
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
 		containerEl.createEl('h2', {text: "CSS options"});
@@ -136,7 +136,7 @@ export class SettingTab extends PluginSettingTab {
 		this._components.css_tags_no_wrap.create_component(containerEl);
 		this._components.css_note_background.create_component(containerEl);
 
-		// Kanban Settings
+		// Kanban SettingsManager
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
 		containerEl.createEl('h2', {text: "Kanban plugin integration"});
@@ -149,7 +149,7 @@ export class SettingTab extends PluginSettingTab {
 			this._components.kanban_enable_background_opacity.create_component(containerEl);
 		}
 
-		// Folder Note Settings
+		// Folder Note SettingsManager
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
 		containerEl.createEl('h2', {text: "Folder Note integration"});
@@ -164,7 +164,7 @@ export class SettingTab extends PluginSettingTab {
 
 		}
 
-		// Debug Settings
+		// Debug SettingsManager
 		// -------------------------------------------------------------------------------------------------------------
 		containerEl.createEl('br');
 		containerEl.createEl('h2', {text: "Debug options"});

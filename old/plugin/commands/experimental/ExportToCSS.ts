@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IColoredTagWrangler} from "old/old/plugin/IColoredTagWrangler";
+import {IColoredTagWrangler} from "old/plugin/IColoredTagWrangler";
 import {Editor, MarkdownFileInfo, MarkdownView} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -6,13 +6,13 @@
 
 Always wanted to assign specific colors to your tags? Then this is the plugin for you!
 
-Go into the Settings tab, and start coloring to your heart's content!
+Go into the SettingsManager tab, and start coloring to your heart's content!
 
 ### Features
 
 | Feature                                                                                                                                                                                                                                                   | Image                                                                                                                                                |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Settings for tags <br> (note: I've enable multiple tags for one line, seperated by a `;` and I've also enabled the `Enable separate background color` option as well. The first color picker is for the text color, the second one for background color.) | ![example-tags_settings.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/example-tags_settings.png) |
+| SettingsManager for tags <br> (note: I've enable multiple tags for one line, seperated by a `;` and I've also enabled the `Enable separate background color` option as well. The first color picker is for the text color, the second one for background color.) | ![example-tags_settings.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/example-tags_settings.png) |
 | colored tags                                                                                                                                                                                                                                              | ![tags_example.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/example-tags.png)                   |
 | Colored Tags in a note's properties                                                                                                                                                                                                                       | ![properties_example.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/example-properties.png)       |
 | Canvas Integration                                                                                                                                                                                                                                        | ![canvas_example.png](https://raw.githubusercontent.com/code-of-chaos/obsidian-colored_tags_wrangler/master/assets/example-canvas.png)               |

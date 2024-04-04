@@ -1,17 +1,15 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {RGB} from "obsidian";
+import {RGBA} from "../../types/RGBA";
+import {v4} from "uuid";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IColoredTagRecord {
-	tag : string,
-	color_foreground : RGB, // color for tag's text
-	color_background : RGB, // color for tag's background
-
-	// Extra options below this point.
-	allow_nested: boolean,
-	nested_offset: number,	// offset for nested tag's ( #a/b ) color. Default should be 0
+	id: string
+	tag_text : string,
+	color_foreground : RGBA, // color for tag's text
+	color_background : RGBA, // color for tag's background
 }
