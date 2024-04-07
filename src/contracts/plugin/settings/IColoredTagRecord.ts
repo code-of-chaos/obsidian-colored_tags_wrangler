@@ -2,14 +2,19 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {RGBA} from "../../types/RGBA";
-import {v4} from "uuid";
+import {IColoredTagRecordBoldifyExtension} from "../../../plugin/extensions/boldify/boldify";
+import {ExtraButtonComponent} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagRecord {
+export interface IColoredTagRecord extends IColoredTagRecordBoldifyExtension {
 	id: string
-	tag_text : string,
-	color_foreground : RGBA, // color for tag's text
-	color_background : RGBA, // color for tag's background
+	tagText : string,
+	color : RGBA, // color for tag's text
+	backgroundColor : RGBA, // color for tag's background
+	enabled : boolean,
 }
+
+
+export type IColoredTagRecordBooleanProperties = "enabled" | "ext_boldify"

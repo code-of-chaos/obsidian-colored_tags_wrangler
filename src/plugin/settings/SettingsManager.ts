@@ -7,7 +7,7 @@ import ColoredTagWranglerPlugin from "../ColoredTagWranglerPlugin";
 import {defaultSettings} from "./DefaultSettings";
 import {IColoredTagRecord} from "../../contracts/plugin/settings/IColoredTagRecord";
 import {Migrate} from "./migrator/Migrate";
-import {debounce} from "obsidian";
+import {debounce, Debouncer} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
@@ -21,12 +21,15 @@ const reSplit = /[\n;]/; // for organization, I added \n
 export class SettingsManager implements ISettingsManager {
 	public data: IPluginSettings;
 	private _loaded : boolean = false;
+	private DebounceRecordUpdate: Debouncer<[IColoredTagRecord], Promise<void>>;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// data.json manipulation
 	// -----------------------------------------------------------------------------------------------------------------
+
 	async loadFromFile(){
 		const plugin = ColoredTagWranglerPlugin.instance;
+		this.DebounceRecordUpdate = debounce(async (record) => await this.updateTag(record))
 
 		this.data = Object.assign(
 			{},
@@ -56,7 +59,7 @@ export class SettingsManager implements ISettingsManager {
 
 		return this.data.TagColors
 			.flatMap((record) => {
-				return record.tag_text // read the last line if you are confused why we are looping over the tag_name
+				return record.tagText // read the last line if you are confused why we are looping over the tag_name
 					.split(reSplit)
 					.map(tag => tag.trim())  // Also trim the tag for leading spaces & map everything to lowercase!
 					.filter(Boolean) // filter out empty lines
@@ -68,6 +71,10 @@ export class SettingsManager implements ISettingsManager {
 	async getTags() : Promise<IColoredTagRecord[]> {
 		if (!this._loaded) await this.loadFromFile();
 		return this.data.TagColors;
+	}
+
+	async updateTagDebounced(record:IColoredTagRecord):Promise<void> {
+		this.DebounceRecordUpdate(record)
 	}
 
 	async updateTag(record:IColoredTagRecord):Promise<void>{

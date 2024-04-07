@@ -1,38 +1,70 @@
+.scroll-area-container {
+	position: relative;
+}
+
 .scroll-container {
-	overflow-x: auto;
+	overflow: auto;
 	position: relative;
 
 	textarea {
-		width: 20rem;
 		height: auto;
+		width: 15rem;
 	}
 
 	input[type="color"] {
 		width: 5rem;
 	}
 
-	.tag-preview{
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
 	table {
 		border-collapse: separate;
-		border-spacing: 0 .25rem;
+		border-spacing: 0 0;
+
+		.sticky-column {
+			position: sticky;
+            z-index: 1;
+			left: 0;
+			top: 0;
+			/*noinspection CssUnresolvedCustomProperty*/
+			background: var(--background-primary);  /* Your desired background color */
+		}
+
+		.tag-preview-div{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		.tag-preview{
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.border-right {
+			/*noinspection CssUnresolvedCustomProperty*/
+			border-right: 1px solid var(--background-modifier-border);
+		}
+
+		.border-right-dotted {
+			/*noinspection CssUnresolvedCustomProperty*/
+			border-right: 1px dashed var(--background-secondary);
+		}
+
+		tr {
+			border-spacing: 0 1em;
+		}
+
+		td {
+			padding-left: .25rem;
+			padding-right: .25rem;
+			padding-top: .25rem;
+			/*noinspection CssUnresolvedCustomProperty*/
+			border-bottom: 1px solid var(--background-modifier-border);
+		}
 	}
 
-	tr {
-		border-spacing: 0 1em;
-		border-bottom: 2px solid transparent;
-	}
 
-	td {
-		padding-left: .25rem;
-		padding-right: .25rem;
-		/*noinspection CssUnresolvedCustomProperty*/
-		border-bottom: 1px solid var(--background-modifier-border);
-	}
 }
 
 .overlay-gradient {
@@ -43,5 +75,6 @@
 	will-change: opacity;
 	width: 50px;  /* Adjust as needed */
 	pointer-events: none;
-	background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+	background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 100%);
 }
+

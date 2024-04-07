@@ -12,5 +12,7 @@ export interface ISettingsManager {
 	saveToFile(): Promise<void>;
 	getTagsFlat(remove_slash : boolean):Promise<IColoredTagRecord[]>
 	getTags():Promise<IColoredTagRecord[]>
+
+	updateTagDebounced(record:IColoredTagRecord):Promise<void>;
 	updateTag(record:IColoredTagRecord):Promise<void>;
 }

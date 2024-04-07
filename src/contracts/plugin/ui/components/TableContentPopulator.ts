@@ -1,19 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {PluginSettingTab} from "obsidian";
-import {ISettingTab} from "../../../contracts/plugin/ui/ISettingTab";
-import {SettingTagTable} from "./components/tag_table/SettingTagTable";
+import {IColoredTagRecord} from "../../settings/IColoredTagRecord";
+import {ISettingTagRecordComponent} from "./tag_table/ISettingTagRecordComponent";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class SettingTab extends PluginSettingTab implements ISettingTab {
-	async display(): Promise<void> {
-		const { containerEl } = this;
-		containerEl.empty();
-
-		// Scrollable container for the table
-		await (new SettingTagTable(this)).display() // clumsy, but should work
-	}
+export type TableContentPopulator = {
+	title:string,
+	callback:(td:HTMLTableCellElement, record:IColoredTagRecord) => ISettingTagRecordComponent,
+	classes:string[]
 }
