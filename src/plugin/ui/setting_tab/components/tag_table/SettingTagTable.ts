@@ -1,13 +1,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {PluginSettingTab, Setting, SettingTab} from "obsidian";
+import {Setting, SettingTab} from "obsidian";
 import {TableContentPopulator} from "../../../../../contracts/plugin/ui/components/TableContentPopulator";
 import {SettingTagRecordTextAreaComponent} from "./SettingTagRecordTextAreaComponent";
 import {SettingTagRecordToggleComponent} from "./SettingTagRecordToggleComponent";
 import {SettingTagRecordColorComponent} from "./SettingTagRecordColorComponent";
 import {SettingTagRecordPreview} from "./SettingTagRecordPreview";
-import {Extensions} from "../../../../extensions/Extensions";
+import {ExtensionsList, ExtensionsDict} from "../../../../extensions/Extensions";
 import {updateTagRecordRow} from "../../../../../lib/ColoredTagRecordUtils";
 import ColoredTagWranglerPlugin from "../../../../ColoredTagWranglerPlugin";
 
@@ -17,6 +17,7 @@ import ColoredTagWranglerPlugin from "../../../../ColoredTagWranglerPlugin";
 export class SettingTagTable {
 	private parent: SettingTab;
 
+	private selectedExtension:string | undefined;
 	private settingEl: Setting;
 	private tableEl: HTMLElement;
 
@@ -59,12 +60,12 @@ export class SettingTagTable {
 			.setName("Custom color tags")
 			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `)
 			.addDropdown(component => {component
-				.addOptions({
-					"": "Default",
-					"ext_boldify": "Boldify"
-				})
+				.addOptions(Object
+					.keys(ExtensionsDict)
+					.reduce((acc, key) => ({...acc, [key]: ExtensionsDict[key].extensionName}), {}))
 				.onChange(async (value) => {
 					// UPDATE THE TABLE
+					this.selectedExtension = value;
 					await this.redrawTable()
 				})
 
@@ -82,29 +83,12 @@ export class SettingTagTable {
 		overlayGradient.addClass("overlay-gradient");
 
 		// Assign Table columns and callbacks for population
+		// 		This is the default which should be shown on every tab!
 		const content: TableContentPopulator[] = [
 			{
 				title:"Tag",
 				callback: (td, record) => {
-					return new SettingTagRecordTextAreaComponent(td, record);
-				},
-				classes:[]
-			},{
-				title:"Enabled",
-				callback:(td,record) => {
-					return new SettingTagRecordToggleComponent(td, record, "enabled");
-				},
-				classes:[]
-			},{
-				title:"Text",
-				callback:(td, record) => {
-					return new SettingTagRecordColorComponent(td, record, "color");
-				},
-				classes:[]
-			},{
-				title:"Background",
-				callback:(td, record) => {
-					return new SettingTagRecordColorComponent(td, record, "backgroundColor");
+					return new SettingTagRecordTextAreaComponent(td, record, "core_tagText");
 				},
 				classes:[]
 			},{
@@ -112,22 +96,19 @@ export class SettingTagTable {
 				callback:(td, record) => {
 					return new SettingTagRecordPreview(td, record);
 				},
-				classes:["border-right", "tag-preview", "sticky-column"]
-			},
+				classes:["tag-preview", "sticky-column","border-right"]
+			}
 		]
 
-		for (let i = 0; i < 20; i++) {
-			content.push({
-				title:"Enabled",
-				callback:(td,record) => {
-					return new SettingTagRecordToggleComponent(td, record, "enabled");
-				},
-				classes:["border-right-dotted"]
-			})
+		let populators: TableContentPopulator[];
+		if (this.selectedExtension != undefined){
+			populators = ExtensionsDict[this.selectedExtension].TableContentPopulators
+		} else {
+			populators = ExtensionsDict[ExtensionsList[0].constructor.name].TableContentPopulators
 		}
-
-		for (const extension of Extensions) {
-			content.push(extension.TableContentPopulator)
+		
+		for (const callback of populators){
+			content.push(callback)
 		}
 
 		// Actually create the table

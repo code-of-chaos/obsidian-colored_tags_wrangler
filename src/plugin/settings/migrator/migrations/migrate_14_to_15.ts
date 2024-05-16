@@ -6,7 +6,6 @@ import {IPluginSettings} from "../../../../contracts/plugin/settings/IPluginSett
 import {defaultSettings, defaultTagColorsRecord} from "../../DefaultSettings";
 import {IColoredTagRecord} from "../../../../contracts/plugin/settings/IColoredTagRecord";
 import {RGB} from "obsidian";
-import {v4 as uuidv4} from "uuid";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -26,14 +25,12 @@ export async function migrate_14_to_15(loaded_data:ISettings_v014):Promise<IPlug
 	// ingest the old data
 	new_data.TagColors = loaded_data.TagColors.ColorPicker.map(
 		(old_tag: OLD_IColorPicker) => {
-			const newTagColor: IColoredTagRecord = {
-				...defaultTagColorsRecord(),
+			const newTagColor: IColoredTagRecord = defaultTagColorsRecord();
 
-				tagText: old_tag.tag_name,
-				color: {...old_tag.color, a: 1.},
-				backgroundColor: {...old_tag.background_color, a: 1.},
+			newTagColor.core_tagText = old_tag.tag_name;
+			newTagColor.core_color_foreground = {...old_tag.color, a: 1.};
+			newTagColor.core_color_background = {...old_tag.background_color, a: 1.};
 
-			};
 			return newTagColor;
 		}
 	);

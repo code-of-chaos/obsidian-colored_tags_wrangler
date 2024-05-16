@@ -1,8 +1,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ToggleComponent} from "obsidian";
-import {IColoredTagRecord, IColoredTagRecordBooleanProperties} from "src/contracts/plugin/settings/IColoredTagRecord";
+import {Tasks, ToggleComponent} from "obsidian";
+import {
+	BooleanProperties,
+	IColoredTagRecord,
+} from "src/contracts/plugin/settings/IColoredTagRecord";
 import {updateRecord, updateTagRecordRow} from "src/lib/ColoredTagRecordUtils";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 
@@ -10,7 +13,7 @@ import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordToggleComponent extends ToggleComponent implements ISettingTagRecordComponent {
-	constructor(containerEl: HTMLElement, record:IColoredTagRecord, property_name: IColoredTagRecordBooleanProperties ) {
+	constructor(containerEl: HTMLElement, record:IColoredTagRecord, property_name: BooleanProperties ) {
 		super(containerEl); // Obsidian's stuff
 
 		if (property_name in record) {

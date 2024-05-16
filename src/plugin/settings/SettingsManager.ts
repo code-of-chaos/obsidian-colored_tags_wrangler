@@ -59,7 +59,7 @@ export class SettingsManager implements ISettingsManager {
 
 		return this.data.TagColors
 			.flatMap((record) => {
-				return record.tagText // read the last line if you are confused why we are looping over the tag_name
+				return record.core_tagText // read the last line if you are confused why we are looping over the tag_name
 					.split(reSplit)
 					.map(tag => tag.trim())  // Also trim the tag for leading spaces & map everything to lowercase!
 					.filter(Boolean) // filter out empty lines
@@ -78,7 +78,7 @@ export class SettingsManager implements ISettingsManager {
 	}
 
 	async updateTag(record:IColoredTagRecord):Promise<void>{
-		const index = this.data.TagColors.findIndex((r) => r.id === record.id);
+		const index = this.data.TagColors.findIndex((r) => r.core_id === record.core_id);
         if (index !== -1) {
           this.data.TagColors[index] = record;
         } else {

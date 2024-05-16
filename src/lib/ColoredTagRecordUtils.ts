@@ -5,21 +5,20 @@ import {IColoredTagRecord} from "../contracts/plugin/settings/IColoredTagRecord"
 import {reSplit} from "./RegexUtils";
 import ColoredTagWranglerPlugin from "../plugin/ColoredTagWranglerPlugin";
 import {rgbaToHex} from "./ColorConverters";
-import {debounce} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 
 export function getFirstTag(record:IColoredTagRecord):string {
-	return record.tagText.split(reSplit)[0]
+	return record.core_tagText.split(reSplit).first() ?? "UNDEFINED";
 }
 
 
 export function getTagPreviewIds(record:IColoredTagRecord):[string, string] {
 	return [
-		`tag-preview-being-${record.id}`,
-		`tag-preview-end-${record.id}`
+		`tag-preview-being-${record.core_id}`,
+		`tag-preview-end-${record.core_id}`
 	]
 }
 
@@ -43,14 +42,14 @@ export async function updateTagRecordRow(record: IColoredTagRecord) {
 
 	getTagPreviewEls(record).forEach(el => {
 		// Return to normal if disabled
-		if (!record.enabled){
+		if (!record.core_enabled){
 			el.removeAttribute("style")
 			return
 		}
 
-		el.style.fontWeight = record.ext_boldify ? "bold" : "normal";
-		el.style.color = rgbaToHex(record.color)
-		el.style.backgroundColor = rgbaToHex(record.backgroundColor)
+		el.style.fontWeight = record.boldify_enabled ? "bold" : "normal";
+		el.style.color = rgbaToHex(record.core_color_foreground)
+		el.style.backgroundColor = rgbaToHex(record.core_color_background)
 
 	});
 }

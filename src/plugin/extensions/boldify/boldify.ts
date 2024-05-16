@@ -5,26 +5,29 @@ import {TableContentPopulator} from "../../../contracts/plugin/ui/components/Tab
 import {
 	SettingTagRecordToggleComponent
 } from "../../ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
+import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagRecordBoldifyExtension {
-	ext_boldify: boolean;
+export interface RecordExtensionBoldify {
+	boldify_enabled: boolean;
 }
 
-export class BoldifyExtension {
-	public static extensionName = 'Boldify';
-	public static TableContentPopulator : TableContentPopulator = {
-		title: this.extensionName,
-		callback:(td,record) => {
-			return new SettingTagRecordToggleComponent(td, record, "ext_boldify");
-		},
-		classes:[]
-	}
+export class BoldifyExtension implements IExtension {
+	public extensionName = 'Boldify';
+	public TableContentPopulators : TableContentPopulator[] = [
+		{
+			title: this.extensionName,
+			callback:(td,record) => {
+				return new SettingTagRecordToggleComponent(td, record, "boldify_enabled");
+			},
+			classes:[]
+		}
+	]
 
-	public static getDefaultRecord():IColoredTagRecordBoldifyExtension{
-		return { ext_boldify: true };
+	public static getDefaultRecord():RecordExtensionBoldify{
+		return { boldify_enabled: false };
 	}
 }

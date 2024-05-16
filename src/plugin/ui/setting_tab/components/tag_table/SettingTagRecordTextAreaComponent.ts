@@ -2,7 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {TextAreaComponent} from "obsidian";
-import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
+import {
+	IColoredTagRecord,
+	RGBSelectorProperties,
+	TextAreaProperties
+} from "src/contracts/plugin/settings/IColoredTagRecord";
 import {updateRecord, updateTagRecordRow} from "src/lib/ColoredTagRecordUtils";
 import {
 	ISettingTagRecordComponent
@@ -12,17 +16,17 @@ import {
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordTextAreaComponent extends TextAreaComponent implements ISettingTagRecordComponent{
-	constructor(containerEl: HTMLElement, record:IColoredTagRecord) {
+	constructor(containerEl: HTMLElement, record:IColoredTagRecord, property_name: TextAreaProperties) {
 		super(containerEl); // Obsidian's stuff
 
-		this.setValue(record.tagText)
+		this.setValue(record[property_name])
 		this.onChange(async (newValue) => {
 			this.inputEl.style.height = 'auto'; // else it just keeps adding height
 			this.inputEl.style.height = this.calcHeight();
 
-			record.tagText = newValue;
-			await updateTagRecordRow(record) // Updates the preview element
+			record[property_name] = newValue;
 			await updateRecord(record)
+			await updateTagRecordRow(record) // Updates the preview element
 		})
 
 		this.inputEl.style.height = this.calcHeight();
