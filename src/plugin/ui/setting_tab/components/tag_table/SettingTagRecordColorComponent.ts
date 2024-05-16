@@ -2,7 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {ColorComponent} from "obsidian";
-import {IColoredTagRecord, RGBSelectorProperties} from "src/contracts/plugin/settings/IColoredTagRecord";
+import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
+import {RGBSelectorProperties} from "src/contracts/plugin/extensions/ExtensionProperties";
 import {hexToRGBA, rgbaToHex} from "../../../../../lib/ColorConverters";
 import {RGBA} from "../../../../../contracts/types/RGBA";
 import {updateRecord, updateTagRecordRow} from "../../../../../lib/ColoredTagRecordUtils";

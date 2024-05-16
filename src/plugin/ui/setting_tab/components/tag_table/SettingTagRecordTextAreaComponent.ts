@@ -4,10 +4,9 @@
 import {TextAreaComponent} from "obsidian";
 import {
 	IColoredTagRecord,
-	RGBSelectorProperties,
-	TextAreaProperties
 } from "src/contracts/plugin/settings/IColoredTagRecord";
 import {updateRecord, updateTagRecordRow} from "src/lib/ColoredTagRecordUtils";
+import {TextAreaProperties} from "src/contracts/plugin/extensions/ExtensionProperties";
 import {
 	ISettingTagRecordComponent
 } from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";

@@ -4,8 +4,6 @@
 import {Setting, SettingTab} from "obsidian";
 import {TableContentPopulator} from "../../../../../contracts/plugin/ui/components/TableContentPopulator";
 import {SettingTagRecordTextAreaComponent} from "./SettingTagRecordTextAreaComponent";
-import {SettingTagRecordToggleComponent} from "./SettingTagRecordToggleComponent";
-import {SettingTagRecordColorComponent} from "./SettingTagRecordColorComponent";
 import {SettingTagRecordPreview} from "./SettingTagRecordPreview";
 import {ExtensionsList, ExtensionsDict} from "../../../../extensions/Extensions";
 import {updateTagRecordRow} from "../../../../../lib/ColoredTagRecordUtils";
@@ -62,7 +60,7 @@ export class SettingTagTable {
 			.addDropdown(component => {component
 				.addOptions(Object
 					.keys(ExtensionsDict)
-					.reduce((acc, key) => ({...acc, [key]: ExtensionsDict[key].extensionName}), {}))
+					.reduce((acc, key) => ({...acc, [key]: key}), {}))
 				.onChange(async (value) => {
 					// UPDATE THE TABLE
 					this.selectedExtension = value;
@@ -104,7 +102,7 @@ export class SettingTagTable {
 		if (this.selectedExtension != undefined){
 			populators = ExtensionsDict[this.selectedExtension].TableContentPopulators
 		} else {
-			populators = ExtensionsDict[ExtensionsList[0].constructor.name].TableContentPopulators
+			populators = ExtensionsDict[ExtensionsList[0].extensionName].TableContentPopulators
 		}
 		
 		for (const callback of populators){
