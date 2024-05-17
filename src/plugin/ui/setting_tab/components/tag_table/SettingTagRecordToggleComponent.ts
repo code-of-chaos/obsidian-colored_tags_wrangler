@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {ToggleComponent} from "obsidian";
 import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
-import {BooleanProperties} from "src/contracts/plugin/extensions/ExtensionProperties";
+import {BooleanProperties} from "src/plugin/extensions/ExtensionProperties";
 import {updateRecord, updateTagRecordRow} from "src/lib/ColoredTagRecordUtils";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 

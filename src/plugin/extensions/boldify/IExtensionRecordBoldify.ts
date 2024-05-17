@@ -1,15 +1,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {TableContentPopulator} from "../ui/components/TableContentPopulator";
-import {IExtensionRecord} from "./IExtensionRecord";
+import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IExtension {
-	readonly TableContentPopulators: TableContentPopulator[];
-	readonly extensionName: string;
-
-	getDefaultRecord():IExtensionRecord;
+export interface IExtensionRecordBoldify extends IExtensionRecord{
+	boldify_enabled: boolean;
 }

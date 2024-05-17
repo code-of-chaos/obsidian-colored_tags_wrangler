@@ -9,19 +9,12 @@ import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 import {
 	SettingTagRecordToggleComponent
 } from "../../ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
+import {IExtensionRecordCore} from "./IExtensionRecordBoldify";
 
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface RecordExtensionCore {
-	core_enabled: boolean;
-	core_id: string
-	core_tagText : string,
-	core_color_foreground : RGBA, // color for tag's text
-	core_color_background : RGBA, // color for tag's background
-}
-
 export class CoreExtension implements IExtension{
 	public extensionName = 'Default';
 	public TableContentPopulators : TableContentPopulator[] = [
@@ -45,7 +38,7 @@ export class CoreExtension implements IExtension{
 			classes:[]
 		},]
 
-	public getDefaultRecord():RecordExtensionCore{
+	public getDefaultRecord():IExtensionRecordCore{
 		return {
 			core_enabled: true,
 			core_id: uuidV4(),
