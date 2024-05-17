@@ -62,6 +62,22 @@
 			/*noinspection CssUnresolvedCustomProperty*/
 			border-bottom: 1px solid var(--background-modifier-border);
 		}
+
+		td:has(.navigator-parent){
+			padding: 0;
+		}
+
+		.navigator-parent {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: repeat(2, 1fr);
+			grid-column-gap: 0;
+			grid-row-gap: 0;
+			justify-items: start;
+		}
+		.navigator-trash {grid-area: 1 / 1 / 3 / 2;}
+		.navigator-chevron-up {grid-area: 1 / 2 / 2 / 3;}
+		.navigator-chevron-down {grid-area: 2 / 2 / 3 / 3;}
 	}
 
 
@@ -75,6 +91,6 @@
 	will-change: opacity;
 	width: 50px;  /* Adjust as needed */
 	pointer-events: none;
-	background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 100%);
+	background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 100%);
 }
 

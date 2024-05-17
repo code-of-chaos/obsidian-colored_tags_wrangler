@@ -6,9 +6,7 @@ import {ISettingExtensions} from "../../contracts/plugin/settings/ISettingExtens
 import {ISettingInfo} from "../../contracts/plugin/settings/ISettingInfo";
 import {CURRENT_VERSION} from "./migrator/Migrate";
 import {IColoredTagRecord} from "../../contracts/plugin/settings/IColoredTagRecord";
-import {BoldifyExtension} from "../extensions/boldify/BoldifyExtension";
-import {CoreExtension} from "../extensions/core/CoreExtension";
-import {ExtensionsList} from "../extensions/Extensions";
+import {Extensions} from "../extensions/Extensions";
 import {IExtension} from "../../contracts/plugin/extensions/IExtension";
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -23,7 +21,7 @@ const defaultSettingsInfo : ISettingInfo = {
 }
 
 // @ts-ignore
-export const defaultTagColorsRecord : () => IColoredTagRecord = () => ExtensionsList
+export const defaultTagColorsRecord : () => IColoredTagRecord = () => Extensions.List
 	.reduce(
 		(acc:IColoredTagRecord, cur : IExtension) => ({...acc, ...cur.getDefaultRecord()}) ,
 		{} as IColoredTagRecord

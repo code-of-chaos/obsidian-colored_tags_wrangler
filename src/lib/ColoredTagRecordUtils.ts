@@ -37,8 +37,13 @@ export async function updateRecord(record:IColoredTagRecord):Promise<void> {
 }
 
 export async function updateTagRecordRow(record: IColoredTagRecord) {
+	const tag = getFirstTag(record);
+	const originalLength = tag.length;
+
 	getTagPreviewEls(record)[0].textContent = "#";
-	getTagPreviewEls(record)[1].textContent = getFirstTag(record);
+	getTagPreviewEls(record)[1].textContent = originalLength >= 9
+		? `${tag.substring(0,8)}...`
+		: tag
 
 	getTagPreviewEls(record).forEach(el => {
 		// Return to normal if disabled
@@ -52,4 +57,9 @@ export async function updateTagRecordRow(record: IColoredTagRecord) {
 		el.style.backgroundColor = rgbaToHex(record.core_color_background)
 
 	});
+}
+
+export async function removeRecord(record:IColoredTagRecord):Promise<void> {
+	ColoredTagWranglerPlugin.instance.settings.data.TagColors.remove(record)
+	ColoredTagWranglerPlugin.instance.settings.DebounceSaveToFile()
 }

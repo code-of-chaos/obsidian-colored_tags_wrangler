@@ -5,9 +5,10 @@ import {Setting, SettingTab} from "obsidian";
 import {TableContentPopulator} from "../../../../../contracts/plugin/ui/components/TableContentPopulator";
 import {SettingTagRecordTextAreaComponent} from "./SettingTagRecordTextAreaComponent";
 import {SettingTagRecordPreview} from "./SettingTagRecordPreview";
-import {ExtensionsList, ExtensionsDict} from "../../../../extensions/Extensions";
+import {Extensions} from "../../../../extensions/Extensions";
 import {updateTagRecordRow} from "../../../../../lib/ColoredTagRecordUtils";
 import ColoredTagWranglerPlugin from "../../../../ColoredTagWranglerPlugin";
+import {SettingTagRecordNavigators} from "./SettingTagRecordNavigators";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -59,7 +60,7 @@ export class SettingTagTable {
 			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `)
 			.addDropdown(component => {component
 				.addOptions(Object
-					.keys(ExtensionsDict)
+					.keys(Extensions.Dictionary)
 					.reduce((acc, key) => ({...acc, [key]: key}), {}))
 				.onChange(async (value) => {
 					// UPDATE THE TABLE
@@ -84,6 +85,15 @@ export class SettingTagTable {
 		// 		This is the default which should be shown on every tab!
 		const content: TableContentPopulator[] = [
 			{
+				title:"",
+				callback : (td, record) => {
+					return new SettingTagRecordNavigators(
+						td,
+						record, false, async () => await this.redrawTable())
+
+				},
+				classes:[]
+			}, {
 				title:"Tag",
 				callback: (td, record) => {
 					return new SettingTagRecordTextAreaComponent(td, record, "core_tagText");
@@ -100,9 +110,9 @@ export class SettingTagTable {
 
 		let populators: TableContentPopulator[];
 		if (this.selectedExtension != undefined){
-			populators = ExtensionsDict[this.selectedExtension].TableContentPopulators
+			populators = Extensions.Dictionary[this.selectedExtension].TableContentPopulators
 		} else {
-			populators = ExtensionsDict[ExtensionsList[0].extensionName].TableContentPopulators
+			populators = Extensions.Core.TableContentPopulators
 		}
 		
 		for (const callback of populators){
@@ -124,6 +134,7 @@ export class SettingTagTable {
 		let tbody = table.createEl('tbody');
 		for (let record of await plugin.settings.getTags()) {
 			let tr = tbody.createEl('tr');
+
 			for (let {callback,classes} of content){
 				let td = tr.createEl('td');
 				td.addClasses(classes)

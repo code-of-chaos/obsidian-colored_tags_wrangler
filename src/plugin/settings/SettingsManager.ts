@@ -22,6 +22,7 @@ export class SettingsManager implements ISettingsManager {
 	public data: IPluginSettings;
 	private _loaded : boolean = false;
 	private DebounceRecordUpdate: Debouncer<[IColoredTagRecord], Promise<void>>;
+	public DebounceSaveToFile: Debouncer<[], Promise<void>>;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// data.json manipulation
@@ -30,6 +31,7 @@ export class SettingsManager implements ISettingsManager {
 	async loadFromFile(){
 		const plugin = ColoredTagWranglerPlugin.instance;
 		this.DebounceRecordUpdate = debounce(async (record) => await this.updateTag(record))
+		this.DebounceSaveToFile = debounce(async () => await this.saveToFile(), 100)
 
 		this.data = Object.assign(
 			{},
@@ -72,19 +74,26 @@ export class SettingsManager implements ISettingsManager {
 		if (!this._loaded) await this.loadFromFile();
 		return this.data.TagColors;
 	}
+	async getTagCount() : Promise<number>{
+		return (await this.getTags()).length
+	}
 
 	async updateTagDebounced(record:IColoredTagRecord):Promise<void> {
 		this.DebounceRecordUpdate(record)
 	}
 
 	async updateTag(record:IColoredTagRecord):Promise<void>{
-		const index = this.data.TagColors.findIndex((r) => r.core_id === record.core_id);
+		const index = this.getTagIndex(record);
         if (index !== -1) {
           this.data.TagColors[index] = record;
         } else {
           this.data.TagColors.push(record);
         }
 
-		debounce(async () => await this.saveToFile(), 100)
+		this.DebounceSaveToFile()
+	}
+
+	getTagIndex(record: IColoredTagRecord): number {
+		return this.data.TagColors.findIndex((r) => r.core_id === record.core_id);
 	}
 }

@@ -17,15 +17,25 @@ export class Extensions {
 	//		- Style makeup, bold / italic / size / ...
 	//		-
 
+
+	private static _List : IExtension[] | undefined;
+	public static get List(): IExtension[] {
+		return this._List ??= Extensions.AsList();
+	}
+
+	private static _Dictionary : Record<string, IExtension> | undefined;
+	public static get Dictionary(): Record<string, IExtension> {
+		return this._Dictionary ??= Extensions.AsDictionary();
+	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Code
 	// -----------------------------------------------------------------------------------------------------------------
-	public static AsList() : IExtension[] {return[
+	private static AsList() : IExtension[] {return[
 		Extensions.Core,
 		Extensions.Boldify,
 	]}
 
-	public static AsDictionary() : Record<string, IExtension> {
+	private static AsDictionary() : Record<string, IExtension> {
 		return this.AsList().reduce(
 			(acc, e) => {
 				acc[e.extensionName] = e;
