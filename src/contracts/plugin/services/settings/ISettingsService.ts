@@ -1,18 +1,16 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {TableContentPopulator} from "../ui/components/TableContentPopulator";
-import {IExtensionRecord} from "./IExtensionRecord";
-import {ICssWrangler} from "../services/css_styler/ICssWrangler";
+import {IPluginSettings} from "../../settings/IPluginSettings";
+import {Debouncer} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IExtension {
-	readonly TableContentPopulators: TableContentPopulator[];
-	readonly extensionName: string;
-	readonly cssWrangler : ICssWrangler;
+export interface ISettingsService {
+	data: IPluginSettings;
+	debounceSaveToFile: Debouncer<[], Promise<void>>;
 
-	getDefaultRecord():IExtensionRecord;
-
+	loadFromFile() : Promise<void>;
+	saveToFile() : Promise<void>;
 }

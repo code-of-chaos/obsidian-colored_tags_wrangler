@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {TextAreaComponent} from "obsidian";
-import {TextAreaProperties} from "src/plugin/extensions/ExtensionProperties";
+import {TextAreaProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
 import {
 	ISettingTagRecordComponent
 } from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";

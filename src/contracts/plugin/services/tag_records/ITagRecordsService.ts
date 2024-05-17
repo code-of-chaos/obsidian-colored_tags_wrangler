@@ -1,18 +1,19 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {TableContentPopulator} from "../ui/components/TableContentPopulator";
-import {IExtensionRecord} from "./IExtensionRecord";
-import {ICssWrangler} from "../services/css_styler/ICssWrangler";
+import {IColoredTagRecord} from "../../settings/IColoredTagRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IExtension {
-	readonly TableContentPopulators: TableContentPopulator[];
-	readonly extensionName: string;
-	readonly cssWrangler : ICssWrangler;
+export interface ITagRecordsService {
+	getTagsFlat(remove_slash : boolean):IColoredTagRecord[]
+	getTags() : IColoredTagRecord[]
+	getTagCount() : number
 
-	getDefaultRecord():IExtensionRecord;
-
+	addOrUpdateTag(record:IColoredTagRecord) : Promise<void>
+	removeTag(record:IColoredTagRecord) : Promise<void>
+	getTagIndex(record: IColoredTagRecord): number
+	getFirstTag(record:IColoredTagRecord):string
+	getTagPreviewIds(record:IColoredTagRecord) : {begin:string, end:string}
 }

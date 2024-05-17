@@ -26,6 +26,7 @@ export class CSSWranglerTags extends CSSWrangler {
 					background-color: ${this.getBackgroundWithOpacityString(background_color)} ${important};
 				}`
 	}
+
 	assembleCss(theme:string){
 		const important:string = this.getImportant();
 

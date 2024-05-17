@@ -3,10 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import * as migrations from "./migrations";
 import {IPluginSettings} from "../../../contracts/plugin/settings/IPluginSettings";
-import ColoredTagWranglerPlugin from "../../ColoredTagWranglerPlugin";
 import {Notice} from "obsidian";
 import {IColoredTagWranglerPlugin} from "../../../contracts/plugin/IColoredTagWranglerPlugin";
-import {IMigratorService} from "../../../contracts/plugin/services/IMigratorService";
+import {IMigratorService} from "../../../contracts/plugin/services/migrator/IMigratorService";
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------

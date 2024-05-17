@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {ToggleComponent} from "obsidian";
-import {BooleanProperties} from "src/plugin/extensions/ExtensionProperties";
+import {BooleanProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 import {ServiceProvider} from "../../../../services/ServiceProvider";
 import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";

@@ -1,16 +1,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IPluginSettings} from "../settings/IPluginSettings";
-import {Debouncer} from "obsidian";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface ISettingsService {
-	data: IPluginSettings;
-	debounceSaveToFile: Debouncer<[], Promise<void>>;
-
-	loadFromFile() : Promise<void>;
-	saveToFile() : Promise<void>;
+export interface ICssStylerService {
+	processExtensions():void
+	cleanup():void;
 }

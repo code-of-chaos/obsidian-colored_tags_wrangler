@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ITagRecordsService} from "../../../contracts/plugin/services/ITagRecordsService";
-import {ISettingsService} from "../../../contracts/plugin/services/ISettingsService";
+import {ITagRecordsService} from "../../../contracts/plugin/services/tag_records/ITagRecordsService";
+import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
 import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagRecord";
 import {reSLASH, reSplit} from "../../../lib/RegexUtils";
 
@@ -12,6 +12,8 @@ import {reSLASH, reSplit} from "../../../lib/RegexUtils";
 export class TagRecordsService implements ITagRecordsService {
 	private _settings: ISettingsService;
 	private get _tagRecords(): IColoredTagRecord[] {return this._settings.data.TagColors;}
+
+	private _flatCache : IColoredTagRecord[] | null = null;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
@@ -24,14 +26,14 @@ export class TagRecordsService implements ITagRecordsService {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	getTagsFlat(remove_slash : boolean = true):IColoredTagRecord[] {
-		return this._tagRecords
+		return this._flatCache ??= this._tagRecords
 			.flatMap((record) => {
 				return record.core_tagText // read the last line if you are confused why we are looping over the tag_name
 					.split(reSplit)
 					.map(tag => tag.trim())  // Also trim the tag for leading spaces & map everything to lowercase!
 					.filter(Boolean) // filter out empty lines
 					.map(tag => remove_slash ? tag.replace(reSLASH, "") : tag)  // replace the "/"
-					.map(tag => ({...record, tag: tag}));
+					.map(tag => ({...record, core_tagText: tag}));
 			});
 	}
 
@@ -52,11 +54,13 @@ export class TagRecordsService implements ITagRecordsService {
 		}
 
 		await this._settings.debounceSaveToFile.run()
+		this._flatCache = null; // invalidate the cache
 	}
 
 	async removeTag(record:IColoredTagRecord) : Promise<void>{
 		this._tagRecords.remove(record)
         await this._settings.debounceSaveToFile.run();
+		this._flatCache = null; // invalidate the cache
 	}
 
 	getTagIndex(record: IColoredTagRecord): number {

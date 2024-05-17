@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {ColorComponent} from "obsidian";
-import {RGBSelectorProperties} from "src/plugin/extensions/ExtensionProperties";
+import {RGBSelectorProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
 import {hexToRGBA, rgbaToHex} from "../../../../../lib/ColorConverters";
 import {RGBA} from "../../../../../contracts/types/RGBA";
 import {

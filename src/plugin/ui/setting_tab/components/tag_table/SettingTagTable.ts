@@ -5,7 +5,6 @@ import {Setting, SettingTab} from "obsidian";
 import {TableContentPopulator} from "../../../../../contracts/plugin/ui/components/TableContentPopulator";
 import {SettingTagRecordTextAreaComponent} from "./SettingTagRecordTextAreaComponent";
 import {SettingTagRecordPreview} from "./SettingTagRecordPreview";
-import {Extensions} from "../../../../extensions/Extensions";
 import {SettingTagRecordNavigators} from "./SettingTagRecordNavigators";
 import {ServiceProvider} from "../../../../services/ServiceProvider";
 import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
@@ -62,7 +61,7 @@ export class SettingTagTable {
 			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `)
 			.addDropdown(component => {component
 				.addOptions(Object
-					.keys(Extensions.Dictionary)
+					.keys(ServiceProvider.extensions.Dictionary)
 					.reduce((acc, key) => ({...acc, [key]: key}), {}))
 				.onChange(async (value) => {
 					// UPDATE THE TABLE
@@ -76,7 +75,7 @@ export class SettingTagTable {
 	private async _DisplayTable() : Promise<void> {
 		let scrollAreaContainer = this.tableEl.createDiv();
 		scrollAreaContainer.addClass("scroll-area-container");
-		
+
 		let tableContainer = scrollAreaContainer.createDiv();
 		tableContainer.addClass("scroll-container");
 
@@ -111,9 +110,9 @@ export class SettingTagTable {
 
 		let populators: TableContentPopulator[];
 		if (this.selectedExtension != undefined){
-			populators = Extensions.Dictionary[this.selectedExtension].TableContentPopulators
+			populators = ServiceProvider.extensions.Dictionary[this.selectedExtension].TableContentPopulators
 		} else {
-			populators = Extensions.Core.TableContentPopulators
+			populators = ServiceProvider.extensions.Core.TableContentPopulators
 		}
 		
 		for (const callback of populators){
@@ -155,7 +154,7 @@ export class SettingTagTable {
 		}
 	}
 
-	public async UpdateRow(record:IColoredTagRecord, rowEl : HTMLElement): Promise<void>{
+	public async UpdateRow(record:IColoredTagRecord, _ : HTMLElement): Promise<void>{
 		const tag = ServiceProvider.tagRecords.getFirstTag(record);
 		const originalLength = tag.length;
 
@@ -180,6 +179,9 @@ export class SettingTagTable {
 				el.style.backgroundColor = rgbaToHex(record.core_color_background);
 			}
 		});
+
+		// ServiceProvider.cssStyler.cleanup()
+		// ServiceProvider.cssStyler.processExtensions()
 	}
 
 }

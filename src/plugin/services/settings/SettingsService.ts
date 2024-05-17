@@ -1,12 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ISettingsService} from "../../../contracts/plugin/services/ISettingsService";
+import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
 import {IColoredTagWranglerPlugin} from "../../../contracts/plugin/IColoredTagWranglerPlugin";
 import {debounce, Debouncer} from "obsidian";
 import {defaultSettings} from "./DefaultSettings";
 import {IPluginSettings} from "../../../contracts/plugin/settings/IPluginSettings";
-import {IMigratorService} from "../../../contracts/plugin/services/IMigratorService";
+import {IMigratorService} from "../../../contracts/plugin/services/migrator/IMigratorService";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -32,7 +32,6 @@ export class SettingsService implements ISettingsService {
 	// -----------------------------------------------------------------------------------------------------------------
 	public async loadFromFile(){
 		const tempData = await this._plugin.loadData()
-
 		this.data = Object.assign(
 			{},
 			defaultSettings,
