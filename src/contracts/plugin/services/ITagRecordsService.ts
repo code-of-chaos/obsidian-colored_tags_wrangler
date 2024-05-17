@@ -1,14 +1,19 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ISettingTagRecordComponent} from "./tag_table/ISettingTagRecordComponent";
-import {RowDataType} from "./RowDataType";
+import {IColoredTagRecord} from "../settings/IColoredTagRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export type TableContentPopulator = {
-	title:string,
-	callback: (rowData:RowDataType) => ISettingTagRecordComponent,
-	classes:string[]
+export interface ITagRecordsService {
+	getTagsFlat(remove_slash : boolean):IColoredTagRecord[]
+	getTags() : IColoredTagRecord[]
+	getTagCount() : number
+
+	addOrUpdateTag(record:IColoredTagRecord) : Promise<void>
+	removeTag(record:IColoredTagRecord) : Promise<void>
+	getTagIndex(record: IColoredTagRecord): number
+	getFirstTag(record:IColoredTagRecord):string
+	getTagPreviewIds(record:IColoredTagRecord) : {begin:string, end:string}
 }

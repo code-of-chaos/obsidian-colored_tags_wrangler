@@ -17,8 +17,8 @@ export class BoldifyExtension implements IExtension {
 	public TableContentPopulators : TableContentPopulator[] = [
 		{
 			title: this.extensionName,
-			callback:(td,record) => new SettingTagRecordToggleComponent(
-				td, record, "boldify_enabled"),
+			callback:(rowData) => new SettingTagRecordToggleComponent(rowData,
+				"boldify_enabled"),
 			classes:[]
 		}
 	]

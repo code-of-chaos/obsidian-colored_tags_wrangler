@@ -1,12 +1,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IColoredTagRecord} from "../../../../../contracts/plugin/settings/IColoredTagRecord";
 import {ISettingTagRecordComponent} from "../../../../../contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 import {ExtraButtonComponent} from "obsidian";
 import {arrayMove} from "../../../../../lib/ArrayUtils";
-import ColoredTagWranglerPlugin from "../../../../ColoredTagWranglerPlugin";
-import {removeRecord} from "../../../../../lib/ColoredTagRecordUtils";
+import {ServiceProvider} from "../../../../services/ServiceProvider";
+import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -19,22 +18,22 @@ export class SettingTagRecordNavigators implements ISettingTagRecordComponent{
 	//		Although I should be able to create some sort of system to update them easily?
 	//		Currently, this is done by giving them specific Ids tied to the uuid of the records.
 
-	constructor(parentEl : HTMLElement, record:IColoredTagRecord, enableRemove:boolean, redrawCallback : () => Promise<void>) {
-		this.El = parentEl.createDiv()
+	constructor(rowData:RowDataType, enableRemove:boolean=true, redrawCallback : () => Promise<void>) {
+		this.El = rowData.parentEl.createDiv()
 		this.El.addClass("navigator-parent");
-		const settingsManager = ColoredTagWranglerPlugin.instance.settings;
-		const recordIndex = settingsManager.getTagIndex(record)
+		const recordIndex = ServiceProvider.tagRecords.getTagIndex(rowData.record)
 
+		if (enableRemove){
+			new ExtraButtonComponent(this.El)
+				.setIcon("trash")
+				.setTooltip("Delete")
+				.onClick(async () => {
 
-		new ExtraButtonComponent(this.El)
-			.setIcon("trash")
-			.setTooltip("Delete")
-			.onClick(async () => {
-				await removeRecord(record)
-				await redrawCallback()
-			})
-			.setDisabled(!enableRemove)
-			.extraSettingsEl.classList.add("navigator-trash");
+					await ServiceProvider.tagRecords.removeTag(rowData.record)
+					await redrawCallback()
+				})
+				.extraSettingsEl.classList.add("navigator-trash");
+		}
 
 		if (recordIndex !== 0) {
 			new ExtraButtonComponent(this.El)
@@ -42,21 +41,23 @@ export class SettingTagRecordNavigators implements ISettingTagRecordComponent{
 				.setTooltip("Move up")
 				.onClick(async () => {
 					// reorder stuff here!!!
-					arrayMove(settingsManager.data.TagColors, recordIndex, recordIndex-1)
-					settingsManager.DebounceSaveToFile()
+					// console.warn(ServiceProvider.plugin.app.lastEvent)
+					// console.warn(ServiceProvider.plugin.app.lastEvent?.shiftKey)
+					arrayMove(ServiceProvider.tagRecords.getTags(), recordIndex, recordIndex-1)
+					ServiceProvider.settings.debounceSaveToFile()
 					await redrawCallback()
 				})
 				.extraSettingsEl.classList.add("navigator-chevron-up");
 		}
 
-		if (recordIndex !== settingsManager.data.TagColors.length -1) {
+		if (recordIndex !== ServiceProvider.tagRecords.getTagCount() -1) {
 			new ExtraButtonComponent(this.El)
 				.setIcon("down-chevron-glyph")
 				.setTooltip("Move down")
 				.onClick(async () => {
 					// reorder stuff here!!!
-					arrayMove(settingsManager.data.TagColors, recordIndex, recordIndex+1)
-					settingsManager.DebounceSaveToFile()
+					arrayMove(ServiceProvider.tagRecords.getTags(), recordIndex, recordIndex+1)
+					ServiceProvider.settings.debounceSaveToFile()
 					await redrawCallback()
 				})
 				.extraSettingsEl.classList.add("navigator-chevron-down");

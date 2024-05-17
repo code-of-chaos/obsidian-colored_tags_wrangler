@@ -2,26 +2,26 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {ToggleComponent} from "obsidian";
-import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
 import {BooleanProperties} from "src/plugin/extensions/ExtensionProperties";
-import {updateRecord, updateTagRecordRow} from "src/lib/ColoredTagRecordUtils";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
+import {ServiceProvider} from "../../../../services/ServiceProvider";
+import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordToggleComponent extends ToggleComponent implements ISettingTagRecordComponent {
-	constructor(containerEl: HTMLElement, record:IColoredTagRecord, property_name: BooleanProperties ) {
-		super(containerEl); // Obsidian's stuff
+	constructor(rowData:RowDataType, property_name: BooleanProperties ) {
+		super(rowData.parentEl); // Obsidian's stuff
 
-		if (property_name in record) {
-			this.setValue(record[property_name] as boolean);
+		if (property_name in rowData.record) {
+			this.setValue(rowData.record[property_name] as boolean);
 		}
 
 		this.onChange(async (newValue) => {
-			record[property_name] = newValue;
-			await updateRecord(record)
-			await updateTagRecordRow(record) // Updates the preview element
+			rowData.record[property_name] = newValue;
+			await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
+			await rowData.rowUpdateCallback() // Updates the preview element
 		})
 	}
 }

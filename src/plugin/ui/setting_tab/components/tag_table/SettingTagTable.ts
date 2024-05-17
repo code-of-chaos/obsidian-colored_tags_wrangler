@@ -6,9 +6,11 @@ import {TableContentPopulator} from "../../../../../contracts/plugin/ui/componen
 import {SettingTagRecordTextAreaComponent} from "./SettingTagRecordTextAreaComponent";
 import {SettingTagRecordPreview} from "./SettingTagRecordPreview";
 import {Extensions} from "../../../../extensions/Extensions";
-import {updateTagRecordRow} from "../../../../../lib/ColoredTagRecordUtils";
-import ColoredTagWranglerPlugin from "../../../../ColoredTagWranglerPlugin";
 import {SettingTagRecordNavigators} from "./SettingTagRecordNavigators";
+import {ServiceProvider} from "../../../../services/ServiceProvider";
+import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
+import {IColoredTagRecord} from "../../../../../contracts/plugin/settings/IColoredTagRecord";
+import {rgbaToHex} from "../../../../../lib/ColorConverters";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -74,11 +76,11 @@ export class SettingTagTable {
 	private async _DisplayTable() : Promise<void> {
 		let scrollAreaContainer = this.tableEl.createDiv();
 		scrollAreaContainer.addClass("scroll-area-container");
-
+		
 		let tableContainer = scrollAreaContainer.createDiv();
 		tableContainer.addClass("scroll-container");
 
-		let overlayGradient = scrollAreaContainer.createEl('div');
+		let overlayGradient = scrollAreaContainer.createDiv();
 		overlayGradient.addClass("overlay-gradient");
 
 		// Assign Table columns and callbacks for population
@@ -86,23 +88,22 @@ export class SettingTagTable {
 		const content: TableContentPopulator[] = [
 			{
 				title:"",
-				callback : (td, record) => {
-					return new SettingTagRecordNavigators(
-						td,
-						record, false, async () => await this.redrawTable())
-
+				callback : (rowData : RowDataType) => {
+					return new SettingTagRecordNavigators(rowData,
+						true, async () => await this.redrawTable())
 				},
 				classes:[]
-			}, {
+			},{
 				title:"Tag",
-				callback: (td, record) => {
-					return new SettingTagRecordTextAreaComponent(td, record, "core_tagText");
+				callback: (rowData : RowDataType) => {
+					return new SettingTagRecordTextAreaComponent(rowData,
+						"core_tagText");
 				},
 				classes:[]
 			},{
 				title:"Preview",
-				callback:(td, record) => {
-					return new SettingTagRecordPreview(td, record);
+				callback:(rowData : RowDataType) => {
+					return new SettingTagRecordPreview(rowData);
 				},
 				classes:["tag-preview", "sticky-column","border-right"]
 			}
@@ -129,20 +130,56 @@ export class SettingTagTable {
 		}
 
 		// Populate table with record rows
-		const plugin = ColoredTagWranglerPlugin.instance;
-
 		let tbody = table.createEl('tbody');
-		for (let record of await plugin.settings.getTags()) {
-			let tr = tbody.createEl('tr');
-
+		for (let record of ServiceProvider.tagRecords.getTags()) {
+			const tr = tbody.createEl('tr');
 			for (let {callback,classes} of content){
 				let td = tr.createEl('td');
 				td.addClasses(classes)
-				callback(td, record)
+				callback({
+					record: record,
+					rowUpdateCallback: (async () => await this.UpdateRow(record, tr)),
+					parentEl:td
+				})
 			}
 
-			await updateTagRecordRow(record)
+			await this.UpdateRow(record, tr)
 		}
+	}
+
+	private getTagPreviewEls(record: IColoredTagRecord): {begin:HTMLElement | null, end: HTMLElement | null} {
+		const ids = ServiceProvider.tagRecords.getTagPreviewIds(record)
+		return {
+			begin: document.getElementById(ids.begin),
+			end: document.getElementById(ids.end)
+		}
+	}
+
+	public async UpdateRow(record:IColoredTagRecord, rowEl : HTMLElement): Promise<void>{
+		const tag = ServiceProvider.tagRecords.getFirstTag(record);
+		const originalLength = tag.length;
+
+		let { begin, end } = this.getTagPreviewEls(record);
+		if (!begin || !end) {
+			console.warn(`The tag "${record}" BEGIN or END is empty.`);
+			return;
+		}
+
+		const displayTag = originalLength >= 9 ? `${tag.substring(0,8)}...` : tag;
+
+		begin.textContent = "#";
+		end.textContent = displayTag;
+
+		const elems = [begin, end];
+		elems.forEach(el => {
+			el.style.fontWeight = record.boldify_enabled ? 'bold' : 'normal';
+			if (!record.core_enabled) {
+				el.removeAttribute('style');
+			} else {
+				el.style.color = rgbaToHex(record.core_color_foreground);
+				el.style.backgroundColor = rgbaToHex(record.core_color_background);
+			}
+		});
 	}
 
 }

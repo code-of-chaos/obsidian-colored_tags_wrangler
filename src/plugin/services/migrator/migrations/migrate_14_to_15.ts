@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {ISettings_v014} from "../setting_versions";
 import {IPluginSettings} from "../../../../contracts/plugin/settings/IPluginSettings";
-import {defaultSettings, defaultTagColorsRecord} from "../../DefaultSettings";
 import {IColoredTagRecord} from "../../../../contracts/plugin/settings/IColoredTagRecord";
 import {RGB} from "obsidian";
+import {defaultSettings, defaultTagColorsRecord} from "../../settings/DefaultSettings";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

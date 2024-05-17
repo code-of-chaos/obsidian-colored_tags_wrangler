@@ -19,21 +19,24 @@ export class CoreExtension implements IExtension{
 	public extensionName = 'Default';
 	public TableContentPopulators : TableContentPopulator[] = [
 		{
-			title:"Enabled",
-			callback:(td,record) => {
-				return new SettingTagRecordToggleComponent(td, record, "core_enabled");
+			title:"Enable",
+			callback:(rowData) => {
+				return new SettingTagRecordToggleComponent(rowData,
+					"core_enabled");
 			},
 			classes:[]
 		},{
-			title:"Text Color",
-			callback:(td, record) => {
-				return new SettingTagRecordColorComponent(td, record, "core_color_foreground");
+			title:"Text",
+			callback:(rowData) => {
+				return new SettingTagRecordColorComponent(rowData,
+					"core_color_foreground");
 			},
 			classes:[]
 		},{
-			title:"Background Color",
-			callback:(td, record) => {
-				return new SettingTagRecordColorComponent(td, record, "core_color_background");
+			title:"Fill",
+			callback:(rowData) => {
+				return new SettingTagRecordColorComponent(rowData,
+					"core_color_background");
 			},
 			classes:[]
 		},]

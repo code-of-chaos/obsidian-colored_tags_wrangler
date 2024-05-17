@@ -8,7 +8,10 @@
 
 	textarea {
 		height: auto;
-		width: 15rem;
+		width: 12rem;
+		white-space: pre;
+		overflow-wrap: normal;
+		word-wrap: normal;
 	}
 
 	input[type="color"] {

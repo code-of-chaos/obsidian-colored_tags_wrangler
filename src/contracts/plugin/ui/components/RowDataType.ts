@@ -1,14 +1,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ISettingTagRecordComponent} from "./tag_table/ISettingTagRecordComponent";
-import {RowDataType} from "./RowDataType";
+import {IColoredTagRecord} from "../../settings/IColoredTagRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export type TableContentPopulator = {
-	title:string,
-	callback: (rowData:RowDataType) => ISettingTagRecordComponent,
-	classes:string[]
+export type RowDataType = {
+	parentEl:HTMLElement
+	record : IColoredTagRecord
+	rowUpdateCallback :() => Promise<void>
 }
