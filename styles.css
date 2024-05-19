@@ -78,7 +78,10 @@
 			grid-row-gap: 0;
 			justify-items: start;
 		}
-		.navigator-trash {grid-area: 1 / 1 / 3 / 2;}
+		.navigator-trash {
+			grid-area: 1 / 1 / 3 / 2;
+			color: var(--color-red)
+		}
 		.navigator-chevron-up {grid-area: 1 / 2 / 2 / 3;}
 		.navigator-chevron-down {grid-area: 2 / 2 / 3 / 3;}
 	}

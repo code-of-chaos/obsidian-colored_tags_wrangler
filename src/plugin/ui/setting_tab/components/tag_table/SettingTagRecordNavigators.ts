@@ -26,9 +26,8 @@ export class SettingTagRecordNavigators implements ISettingTagRecordComponent{
 		if (enableRemove){
 			new ExtraButtonComponent(this.El)
 				.setIcon("trash")
-				.setTooltip("Delete")
+				.setTooltip("Delete record")
 				.onClick(async () => {
-
 					await ServiceProvider.tagRecords.removeTag(rowData.record)
 					await redrawCallback()
 				})
