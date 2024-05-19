@@ -9,6 +9,7 @@ import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 import {IExtensionRecordBoldify} from "./IExtensionRecordBoldify";
 import { ICssWrangler } from "src/contracts/plugin/services/css_styler/ICssWrangler";
 import {BoldifyCssWrangler} from "./BoldifyCssWrangler";
+import {capitalizeFirstLetter} from "../../../lib/StringUtils";
 
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -16,10 +17,10 @@ import {BoldifyCssWrangler} from "./BoldifyCssWrangler";
 // ---------------------------------------------------------------------------------------------------------------------
 export class BoldifyExtension implements IExtension {
     public cssWrangler: ICssWrangler = new BoldifyCssWrangler();
-	public extensionName = 'Boldify';
+	public extensionName = 'boldify';
 	public TableContentPopulators : TableContentPopulator[] = [
 		{
-			title: this.extensionName,
+			title: capitalizeFirstLetter(this.extensionName),
 			callback:(rowData) => new SettingTagRecordToggleComponent(rowData,
 				"boldify_enabled"),
 			classes:[]

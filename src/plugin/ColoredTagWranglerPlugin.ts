@@ -20,9 +20,13 @@ export default class ColoredTagWranglerPlugin extends Plugin implements IColored
 	// -----------------------------------------------------------------------------------------------------------------
 	async onload() {
 		await ServiceProvider.settings.loadFromFile() // loads settings from file as well
-		this.addSettingTab(new SettingTab(this.app, this));
+
+		console.warn(ServiceProvider.settings.data.EnabledExtensions);
 
 		ServiceProvider.cssStyler.processExtensions()
+
+		this.addSettingTab(new SettingTab(this.app, this));
+
 	}
 
 	async onunload(){

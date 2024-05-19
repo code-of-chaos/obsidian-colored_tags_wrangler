@@ -15,6 +15,9 @@ const lineCleanup = (line: string) =>
 		.map(l => l.replace(rxCssComment, '').trim())  // Remove CSS comments
 		.join(" ");
 
+export const themeSelectorLight = "body.theme-light";
+export const themeSelectorDark = "body.theme-dark";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -36,13 +39,12 @@ export class CssStylerService implements ICssStylerService{
 	}
 
 	public processExtensions() {
-
-		this.styleElement.innerHTML = this.extensions.List
-			.flatMap(e =>
-				e.cssWrangler.getRulesThemeDark()
-				.concat(e.cssWrangler.getRulesThemeLight()))
-				.map(lineCleanup)
-			.join("")
+		this.styleElement.innerHTML = "";
+		this.styleElement.innerHTML = this.extensions.EnabledList
+			// Each extension should handle their own rules for filtering which records are applied to or not
+			.flatMap(e =>e.cssWrangler.getRules())
+			.map(lineCleanup)
+			.join(" ")
 
 		document.head.appendChild(this.styleElement);
 	}

@@ -30,7 +30,7 @@ export class TagRecordsService implements ITagRecordsService {
 			.flatMap((record) => {
 				return record.core_tagText // read the last line if you are confused why we are looping over the tag_name
 					.split(reSplit)
-					.map(tag => tag.trim())  // Also trim the tag for leading spaces & map everything to lowercase!
+					.map(tag => tag.trim().toLowerCase())  // Also trim the tag for leading spaces & map everything to lowercase!
 					.filter(Boolean) // filter out empty lines
 					.map(tag => remove_slash ? tag.replace(reSLASH, "") : tag)  // replace the "/"
 					.map(tag => ({...record, core_tagText: tag}));

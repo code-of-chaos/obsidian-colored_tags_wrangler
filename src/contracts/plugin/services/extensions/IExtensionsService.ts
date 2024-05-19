@@ -15,7 +15,11 @@ export interface IExtensionsService {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	get List(): IExtension[]
+	get FullList(): IExtension[]
+	get EnabledList(): IExtension[]
 	get Dictionary(): Record<string, IExtension>
 	getDefaultRecord() : IColoredTagRecord
+
+	EnableExtension(extension: IExtension): void
+	DisableExtension(extension: IExtension): void
 }

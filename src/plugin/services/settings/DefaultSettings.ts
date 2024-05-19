@@ -17,6 +17,6 @@ const defaultSettingsInfo : ISettingInfo = {
 // ---------------------------------------------------------------------------------------------------------------------
 export const defaultSettings : IPluginSettings = {
 	TagColors: [] ,
-	EnabledExtensions: [] ,
+	EnabledExtensions: ["core"] ,
 	Info : defaultSettingsInfo
 }

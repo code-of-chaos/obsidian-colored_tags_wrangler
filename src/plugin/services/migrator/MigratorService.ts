@@ -54,18 +54,23 @@ export class MigratorService implements IMigratorService{
 
 		// Set a default version, else the migrations won't work.
 		let version = data?.Info?.SettingsVersion ?? -1;
-		if (version === -1){
-			// Exit clause
-			console.warn("Version could not be established, assigning as is. Created a data_backup.json file.")
-			new Notice("ColoredTagsWrangler : <br>Version could not be read from data.json. Backup created as data_backup.json file.");
-
+		if (version === -1 || version <= 14){
 			// copy the data file to the backup location
 			await this.plugin.app.vault.adapter.copy(
 				`${this.plugin.manifest.dir}/data.json`,
 				`${this.plugin.manifest.dir}/data_backup.json`
 			);
+		}
 
-			return data
+		if (version === -1){
+			// Exit clause
+			console.warn("Version could not be established, assigning as is. Created a data_backup.json file.")
+			new Notice("ColoredTagsWrangler : <br>Version could not be read from data.json. Backup created as data_backup.json file.");
+			return data;
+		}
+
+		if (version <= 14){
+			new Notice("ColoredTagsWrangler : <br>data.json was made for a lower version, upgrading it to the newest version. Backup created as data_backup.json file.")
 		}
 
 		// Actual migrations

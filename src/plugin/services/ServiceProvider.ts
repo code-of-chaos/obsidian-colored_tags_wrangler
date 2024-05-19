@@ -31,10 +31,10 @@ export class ServiceProvider {
 	public static PopulateInstances(plugin: IColoredTagWranglerPlugin){
 		if (ServiceProvider.Instantiated) return;
 
-		ServiceProvider.extensions = new ExtensionsService()
 		ServiceProvider.plugin = plugin;
 		ServiceProvider.migrator = new MigratorService(plugin)
 		ServiceProvider.settings = new SettingsService(plugin, ServiceProvider.migrator)
+		ServiceProvider.extensions = new ExtensionsService(ServiceProvider.settings)
 		ServiceProvider.tagRecords = new TagRecordsService(ServiceProvider.settings)
 
 		ServiceProvider.cssStyler = new CssStylerService(ServiceProvider.extensions, ServiceProvider.tagRecords)

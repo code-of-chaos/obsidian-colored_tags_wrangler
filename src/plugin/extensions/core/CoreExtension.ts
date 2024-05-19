@@ -17,7 +17,7 @@ import {CoreCssWrangler} from "./CoreCssWrangler";
 // ---------------------------------------------------------------------------------------------------------------------
 export class CoreExtension implements IExtension {
     public cssWrangler = new CoreCssWrangler()
-	public extensionName = 'Default';
+	public extensionName = 'core';
 	public TableContentPopulators : TableContentPopulator[] = [
 		{
 			title:"Enable",

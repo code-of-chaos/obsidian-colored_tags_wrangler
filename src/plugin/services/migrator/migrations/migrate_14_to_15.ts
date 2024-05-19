@@ -21,8 +21,6 @@ interface OLD_IColorPicker {
 export async function migrate_14_to_15(loaded_data:ISettings_v014):Promise<IPluginSettings> {
     let new_data : IPluginSettings = Object.assign({}, defaultSettings); // TODO this is dangerous, change this to a specific pattern!
 
-	console.warn(loaded_data)
-
 	// ingest the old data
 	new_data.TagColors = loaded_data.TagColors.ColorPicker.map(
 		(old_tag: OLD_IColorPicker) => {
@@ -35,8 +33,6 @@ export async function migrate_14_to_15(loaded_data:ISettings_v014):Promise<IPlug
 			return newTagColor;
 		}
 	);
-
-	console.log(new_data.TagColors);
 
 	new_data.Info.SettingsVersion = 15;
     return new_data as unknown as IPluginSettings;

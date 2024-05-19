@@ -9,7 +9,7 @@ import {SettingTagRecordNavigators} from "./SettingTagRecordNavigators";
 import {ServiceProvider} from "../../../../services/ServiceProvider";
 import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
 import {IColoredTagRecord} from "../../../../../contracts/plugin/settings/IColoredTagRecord";
-import {rgbaToHex} from "../../../../../lib/ColorConverters";
+import {capitalizeFirstLetter} from "../../../../../lib/StringUtils";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -60,9 +60,15 @@ export class SettingTagTable {
 			.setName("Custom color tags")
 			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `)
 			.addDropdown(component => {component
-				.addOptions(Object
-					.keys(ServiceProvider.extensions.Dictionary)
-					.reduce((acc, key) => ({...acc, [key]: key}), {}))
+				.addOptions(
+					ServiceProvider.extensions.EnabledList
+					.map(extension => extension.extensionName)
+					.reduce(
+						(acc, key) => (
+							{...acc, [key]: capitalizeFirstLetter(key)}
+						), {}
+					)
+				)
 				.onChange(async (value) => {
 					// UPDATE THE TABLE
 					this.selectedExtension = value;
@@ -137,7 +143,11 @@ export class SettingTagTable {
 				td.addClasses(classes)
 				callback({
 					record: record,
-					rowUpdateCallback: (async () => await this.UpdateRow(record, tr)),
+					rowUpdateCallback: (async () => {
+							await this.UpdateRow(record, tr)
+							ServiceProvider.cssStyler.processExtensions() // This is so we can update all the styling when something changes
+						}
+					),
 					parentEl:td
 				})
 			}
@@ -159,29 +169,19 @@ export class SettingTagTable {
 		const originalLength = tag.length;
 
 		let { begin, end } = this.getTagPreviewEls(record);
+
 		if (!begin || !end) {
 			console.warn(`The tag "${record}" BEGIN or END is empty.`);
 			return;
 		}
 
-		const displayTag = originalLength >= 9 ? `${tag.substring(0,8)}...` : tag;
+		const displayTag = originalLength >= 9
+			? `${tag.substring(0,8)}...`
+			: tag;
+		if (begin.textContent !== "#") begin.textContent = "#";
+		if (end.textContent !== displayTag) end.textContent = displayTag;
 
-		begin.textContent = "#";
-		end.textContent = displayTag;
-
-		const elems = [begin, end];
-		elems.forEach(el => {
-			el.style.fontWeight = record.boldify_enabled ? 'bold' : 'normal';
-			if (!record.core_enabled) {
-				el.removeAttribute('style');
-			} else {
-				el.style.color = rgbaToHex(record.core_color_foreground);
-				el.style.backgroundColor = rgbaToHex(record.core_color_background);
-			}
-		});
-
-		// ServiceProvider.cssStyler.cleanup()
-		// ServiceProvider.cssStyler.processExtensions()
+		// Styling provided by record updater
 	}
 
 }
