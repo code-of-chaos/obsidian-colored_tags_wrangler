@@ -76,15 +76,14 @@ export class ExtensionsService implements IExtensionsService {
 		) as IColoredTagRecord
 	}
 
-	public EnableExtension(extension: IExtension): void {
-		this._settings.data.EnabledExtensions.push(extension.extensionName)
-		this._EnabledList = undefined // Invalidate it
-	}
-
-	public DisableExtension(extension: IExtension): void {
-		if (this._settings.data.EnabledExtensions.contains(extension.extensionName)) {
-			this._settings.data.EnabledExtensions.remove(extension.extensionName)
-			this._EnabledList = undefined // Invalidate it
+	public setExtension(extension: IExtension, value:boolean): void {
+		if (value){
+			this._settings.data.EnabledExtensions.push(extension.extensionName)
+		} else {
+			if (this._settings.data.EnabledExtensions.contains(extension.extensionName)) {
+				this._settings.data.EnabledExtensions.remove(extension.extensionName)
+			}
 		}
+		this._EnabledList = undefined // Invalidate it
 	}
 }

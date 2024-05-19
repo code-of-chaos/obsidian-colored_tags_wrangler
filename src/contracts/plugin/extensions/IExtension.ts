@@ -11,7 +11,11 @@ import {ICssWrangler} from "../services/css_styler/ICssWrangler";
 export interface IExtension {
 	readonly TableContentPopulators: TableContentPopulator[];
 	readonly extensionName: string;
+	readonly description: string;
 	readonly cssWrangler : ICssWrangler;
+
+	get isEnabled(): boolean
+	set isEnabled(value:boolean)
 
 	getDefaultRecord():IExtensionRecord;
 

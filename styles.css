@@ -99,16 +99,12 @@
 	.grid-container {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 10px;
-		width: 80%;
-		max-width: 600px;
-		margin: 20px;
+		gap: 5%;
+		width: 100%;
 	}
 
 	.grid-item {
-		background-color: #f0f0f0;
-		border: 1px solid #ccc;
-		padding: 20px;
-		text-align: center;
+		border:none;
+		padding: .75em;
 	}
 }

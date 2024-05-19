@@ -4,20 +4,21 @@
 import {TableContentPopulator} from "../../../contracts/plugin/ui/components/TableContentPopulator";
 import {v4 as uuidV4} from "uuid";
 import {SettingTagRecordColorComponent} from "../../ui/setting_tab/components/tag_table/SettingTagRecordColorComponent";
-import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 import {
 	SettingTagRecordToggleComponent
 } from "../../ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
 import {IExtensionRecordCore} from "./IExtensionRecordBoldify";
 import {CoreCssWrangler} from "./CoreCssWrangler";
+import {AbstractExtension} from "../AbstractExtension";
 
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class CoreExtension implements IExtension {
+export class CoreExtension extends AbstractExtension {
     public cssWrangler = new CoreCssWrangler()
 	public extensionName = 'core';
+	public description = "Core functionality of the plugin";
 	public TableContentPopulators : TableContentPopulator[] = [
 		{
 			title:"Enable",

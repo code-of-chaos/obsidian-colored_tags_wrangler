@@ -3,6 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {Setting, SettingTab} from "obsidian";
 import {IExtension} from "../../../../../contracts/plugin/extensions/IExtension";
+import {values} from "builtin-modules";
+import {ServiceProvider} from "../../../../services/ServiceProvider";
+import {capitalizeFirstLetter} from "../../../../../lib/StringUtils";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -35,13 +38,26 @@ export class SettingExtensionSelector {
 	}
 
 	private createExtensionGridItem(extension: IExtension): HTMLElement {
-		const gridItem = document.createElement('div');
-		gridItem.className = 'grid-item';
-		gridItem.innerHTML = `${extension.extensionName}`
+		const gridItem = new Setting(document.createElement('div'))
+			.setClass('grid-item')
+			.setName(capitalizeFirstLetter(extension.extensionName))
+			.setDesc(extension.description)
+			.addToggle(cb => {
+				cb.setValue(extension.isEnabled)
+				cb.onChange(value => {
+					extension.isEnabled = value;
+					ServiceProvider.cssStyler.processExtensions() // This is so we can update all the styling when something changes
 
-		return gridItem;
+					// TODO update the table's tab selector
+				})
+			})
+		return gridItem.settingEl;
 	}
 
 	public async display() : Promise<void> {
+		for (const iExtension of ServiceProvider.extensions.FullList) {
+			const el = this.createExtensionGridItem(iExtension)
+			this.gridContainerEl.appendChild(el)
+		}
 	}
 }

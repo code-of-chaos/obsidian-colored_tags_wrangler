@@ -20,6 +20,5 @@ export interface IExtensionsService {
 	get Dictionary(): Record<string, IExtension>
 	getDefaultRecord() : IColoredTagRecord
 
-	EnableExtension(extension: IExtension): void
-	DisableExtension(extension: IExtension): void
+	setExtension(extension: IExtension, value:boolean): void
 }
