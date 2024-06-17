@@ -6,6 +6,7 @@ import {ISettingsService} from "../../../contracts/plugin/services/settings/ISet
 import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagRecord";
 import {reSLASH, reSplit} from "../../../lib/RegexUtils";
 import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
+import {ServiceProvider} from "../ServiceProvider";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -100,6 +101,7 @@ export class TagRecordsService implements ITagRecordsService {
 
 		this._tagRecords.push(newRecord)
 		this._flatCache = null; // invalidate the cache
+		ServiceProvider.cssStyler.processExtensions() // Update to using the new tag
 	}
 
 }

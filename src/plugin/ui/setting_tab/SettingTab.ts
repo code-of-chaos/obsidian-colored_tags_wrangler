@@ -17,9 +17,8 @@ export class SettingTab extends PluginSettingTab implements ISettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		// Scrollable container for the table
 		new Setting(containerEl).setName("Tag table").setHeading()
-		await new SettingTagTable(this).display() // clumsy, but should work
+		await new SettingTagTable(this).display() // Scrollable container for the table
 
 		new Setting(containerEl).setName("Extension selector").setHeading()
 		await new SettingExtensionSelector(this).display()
