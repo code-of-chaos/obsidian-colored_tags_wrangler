@@ -29,6 +29,11 @@ export async function migrate_14_to_15(loaded_data: ISettings_v014): Promise<IPl
 			newTagColor.core_tagText = old_tag.tag_name;
 			newTagColor.core_color_foreground = {...old_tag.color};
 			newTagColor.core_color_background = {...old_tag.background_color};
+			
+			if (loaded_data.TagColors.EnableBackgroundOpacity){
+				newTagColor.css_styling_enabled = true
+				newTagColor.css_styling_opacity = loaded_data.TagColors.Values.BackgroundOpacity;
+			}
 
 			return newTagColor;
 		}
