@@ -7,6 +7,7 @@ import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagR
 import {reSLASH, reSplit} from "../../../lib/RegexUtils";
 import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
 import {ServiceProvider} from "../ServiceProvider";
+import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -82,8 +83,15 @@ export class TagRecordsService implements ITagRecordsService {
 		}
 	}
 
-	async createNewEmptyTag() : Promise<void> {
-		const newRecord = this._extensions.getDefaultRecord()
+	getDefaultRecord() : IColoredTagRecord {
+		return this._extensions.FullList.reduce(
+			(acc:IColoredTagRecord, cur : IExtension) => ({...acc, ...cur.getDefaultRecord()}) ,
+			{} as IColoredTagRecord
+		) as IColoredTagRecord
+	}
+
+	async createNewDefaultTag() : Promise<void> {
+		const newRecord = this.getDefaultRecord();
 
 		// Ensure _flatCache is populated
 		if (this._flatCache === null){
@@ -99,8 +107,7 @@ export class TagRecordsService implements ITagRecordsService {
 
 		newRecord.core_tagText += `-${defaultPresent}`;
 
-		this._tagRecords.push(newRecord)
-		this._flatCache = null; // invalidate the cache
+		await this.addOrUpdateTag(newRecord)
 		ServiceProvider.cssStyler.processExtensions() // Update to using the new tag
 	}
 

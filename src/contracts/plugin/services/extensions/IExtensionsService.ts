@@ -18,7 +18,6 @@ export interface IExtensionsService {
 	get FullList(): IExtension[]
 	get EnabledList(): IExtension[]
 	get Dictionary(): Record<string, IExtension>
-	getDefaultRecord() : IColoredTagRecord
 
 	setExtension(extension: IExtension, value:boolean): void
 }

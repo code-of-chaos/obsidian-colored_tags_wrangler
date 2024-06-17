@@ -16,5 +16,11 @@ export interface ITagRecordsService {
 	getTagIndex(record: IColoredTagRecord): number
 	getFirstTag(record:IColoredTagRecord):string
 	getTagPreviewIds(record:IColoredTagRecord) : {begin:string, end:string}
-	createNewEmptyTag() : Promise<void>
+	/**
+	 * Retrieves the default colored tag record.
+	 * Does not store this new record to the settings.
+	 * @returns {IColoredTagRecord} The default colored tag record.
+	 */
+	getDefaultRecord() : IColoredTagRecord
+	createNewDefaultTag() : Promise<void>
 }

@@ -88,7 +88,7 @@ export class SettingTagTable {
 			.setClass("mod-cta")
 			.setButtonText("New Tag")
 			.onClick(async () => {
-				await ServiceProvider.tagRecords.createNewEmptyTag()
+				await ServiceProvider.tagRecords.createNewDefaultTag()
 				await this.redrawTable()
 			})
 		})

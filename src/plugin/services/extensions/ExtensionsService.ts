@@ -5,7 +5,6 @@ import {IExtensionsService} from "../../../contracts/plugin/services/extensions/
 import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 import {CoreExtension} from "../../extensions/core/CoreExtension";
 import {BoldifyExtension} from "../../extensions/boldify/BoldifyExtension";
-import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagRecord";
 import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -67,13 +66,6 @@ export class ExtensionsService implements IExtensionsService {
 			},
 			{} as Record<string,IExtension>
 		);
-	}
-
-	public getDefaultRecord() : IColoredTagRecord {
-		return this.FullList.reduce(
-			(acc:IColoredTagRecord, cur : IExtension) => ({...acc, ...cur.getDefaultRecord()}) ,
-			{} as IColoredTagRecord
-		) as IColoredTagRecord
 	}
 
 	public setExtension(extension: IExtension, value:boolean): void {
