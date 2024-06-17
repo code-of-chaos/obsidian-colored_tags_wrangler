@@ -12,7 +12,7 @@ import {ISettingsService} from "../../../contracts/plugin/services/settings/ISet
 // ---------------------------------------------------------------------------------------------------------------------
 export class ExtensionsService implements IExtensionsService {
 	public readonly Core: IExtension
-	public readonly Boldify: IExtension
+	public readonly CssStyling: IExtension
 
 	// Extensions Ideas
 	//		- Switch between Light & dark mode
@@ -27,7 +27,7 @@ export class ExtensionsService implements IExtensionsService {
 	constructor(settings: ISettingsService) {
 		this._settings = settings;
 		this.Core = new CoreExtension();
-		this.Boldify = new CssStylingExtension();
+		this.CssStyling = new CssStylingExtension();
 	}
 
 	public get FullList(): IExtension[] {
@@ -55,7 +55,7 @@ export class ExtensionsService implements IExtensionsService {
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
-
+	// -----------------------------------------------------------------------------------------------------------------
 	public setExtension(extension: IExtension, value: boolean): void {
 		if (value) {
 			this._settings.data.EnabledExtensions.push(extension.extensionName)
@@ -67,11 +67,10 @@ export class ExtensionsService implements IExtensionsService {
 		this._EnabledList = undefined // Invalidate it
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------
 	private AsList(): IExtension[] {
 		return [
 			this.Core,
-			this.Boldify,
+			this.CssStyling,
 		]
 	}
 

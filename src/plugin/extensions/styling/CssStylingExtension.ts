@@ -31,8 +31,8 @@ export class CssStylingExtension extends AbstractExtension {
 			classes: ["header-wrap-every-word", "border-right-dotted"]
 		},
 		{
-			title: "Boldify",
-			callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "css_styling_boldify_enabled"),
+			title: "CssStyling",
+			callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "css_styling_bold_enabled"),
 			classes: []
 		},
 		{

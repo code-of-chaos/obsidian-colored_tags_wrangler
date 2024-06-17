@@ -30,7 +30,7 @@ const manifestJsonPath = path.join(dirname, '../manifest.json');
 	const version = await readManifestVersion(manifestJsonPath);
 
 	// Create a Git tag with the obtained version
-	exec(`git tag -a ${version} -m "Version ${version}"`, (error, stdout, stderr) => {
+	exec(`git tag -a ${version} -m "Version ${version}"`, (error) => {
 		if (error) {
 			console.error(`Error creating Git tag: ${error}`);
 			process.exit(1);
@@ -40,7 +40,7 @@ const manifestJsonPath = path.join(dirname, '../manifest.json');
 	});
 
 	// Push the Git tag to the remote repository
-	exec(`git push --tags`, (error, stdout, stderr) => {
+	exec(`git push --tags`, (error) => {
 		if (error) {
 			console.error(`Error Pushing Git tag: ${error}`);
 			process.exit(1);

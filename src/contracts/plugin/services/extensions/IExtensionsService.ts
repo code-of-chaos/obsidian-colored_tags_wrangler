@@ -9,7 +9,7 @@ import {IExtension} from "../../extensions/IExtension";
 
 export interface IExtensionsService {
 	readonly Core: IExtension
-	readonly Boldify: IExtension
+	readonly CssStyling: IExtension
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

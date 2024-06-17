@@ -32,7 +32,6 @@ export class TagRecordsService implements ITagRecordsService {
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
-
 	// -----------------------------------------------------------------------------------------------------------------
 	getTagsFlat(remove_slash: boolean = true): IColoredTagRecord[] {
 		return this._flatCache ??= this._tagRecords

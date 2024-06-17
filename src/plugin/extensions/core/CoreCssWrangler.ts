@@ -14,6 +14,7 @@ import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/C
 export class CoreCssWrangler implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
 	getRules(): Record<string, Record<string, string>> {
 		const dict: Record<string, Record<string, string>> = {};
 
@@ -34,7 +35,6 @@ export class CoreCssWrangler implements ICssWrangler {
 		return dict
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------
 	private _properties(record: IColoredTagRecord): Record<string, string> {
 		return {
 			"color": `${rgbaToString(record.core_color_foreground)} !important`,

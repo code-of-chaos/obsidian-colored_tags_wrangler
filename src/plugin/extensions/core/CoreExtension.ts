@@ -7,7 +7,7 @@ import {SettingTagRecordColorComponent} from "../../ui/setting_tab/components/ta
 import {
 	SettingTagRecordToggleComponent
 } from "../../ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
-import {IExtensionRecordCore} from "./IExtensionRecordBoldify";
+import {IExtensionRecordCore} from "./IExtensionRecordCssStyling";
 import {CoreCssWrangler} from "./CoreCssWrangler";
 import {AbstractExtension} from "../AbstractExtension";
 

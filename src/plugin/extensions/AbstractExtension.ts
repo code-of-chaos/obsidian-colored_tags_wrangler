@@ -10,7 +10,6 @@ import {ServiceProvider} from "../services/ServiceProvider";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-
 export abstract class AbstractExtension implements IExtension {
 	abstract readonly TableContentPopulators: TableContentPopulator[];
 	abstract readonly cssWrangler: ICssWrangler;
@@ -29,6 +28,4 @@ export abstract class AbstractExtension implements IExtension {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	abstract getDefaultRecord(): IExtensionRecord
-
-
 }

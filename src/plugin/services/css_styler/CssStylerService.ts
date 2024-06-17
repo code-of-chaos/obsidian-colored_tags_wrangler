@@ -7,14 +7,8 @@ import {IExtensionsService} from "../../../contracts/plugin/services/extensions/
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-const rxCssComment = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g;
-const lineCleanup = (line: string) =>
-	line.split("\n")
-		.map(l => l.replace(rxCssComment, '').trim())  // Remove CSS comments
-		.join(" ");
-
-export const themeSelectorLight = "body.theme-light";
-export const themeSelectorDark = "body.theme-dark";
+export const themeSelectorLight:string = "body.theme-light";
+export const themeSelectorDark:string = "body.theme-dark";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

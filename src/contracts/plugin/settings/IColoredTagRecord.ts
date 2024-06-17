@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IExtensionRecordCore} from "../../../plugin/extensions/core/IExtensionRecordBoldify";
+import {IExtensionRecordCore} from "../../../plugin/extensions/core/IExtensionRecordCssStyling";
 import {IExtensionRecordCssStyling} from "../../../plugin/extensions/styling/IExtensionRecordCssStyling";
 
 // ---------------------------------------------------------------------------------------------------------------------

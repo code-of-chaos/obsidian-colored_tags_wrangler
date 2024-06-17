@@ -32,7 +32,7 @@ export class SettingTagTable {
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
-
+	// -----------------------------------------------------------------------------------------------------------------
 	public async display(): Promise<void> {
 		if (this.settingEl == undefined && this.tableEl !== undefined) {
 			this._AssignEls()
@@ -72,7 +72,6 @@ export class SettingTagTable {
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
-
 	// -----------------------------------------------------------------------------------------------------------------
 	private _AssignEls() {
 		this.settingEl = new Setting(this.parent.containerEl)
@@ -80,7 +79,6 @@ export class SettingTagTable {
 		this.settingElBottom = new Setting(this.parent.containerEl)
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------
 	private async _DisplayExtensionSelector(): Promise<void> {
 		const element = this.settingEl
 			.setName("Custom color tags")

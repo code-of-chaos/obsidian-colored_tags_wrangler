@@ -10,7 +10,7 @@ export type BooleanProperties =
 
 	// Css Styling Extension
 	| "css_styling_enabled"
-	| "css_styling_boldify_enabled"
+	| "css_styling_bold_enabled"
 	| "css_styling_italic_enabled"
 
 export type NumberProperties =
