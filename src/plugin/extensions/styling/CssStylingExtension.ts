@@ -22,8 +22,8 @@ import {
 // ---------------------------------------------------------------------------------------------------------------------
 export class CssStylingExtension extends AbstractExtension {
 	public cssWrangler: ICssWrangler = new CssStylingCssWrangler();
-	public extensionName = 'styling';
-	public description = "TEMP extensions, used to styling tags";
+	public extensionName = "Styling";
+	public description = "Style your tags even more!";
 	public TableContentPopulators: TableContentPopulator[] = [
 		{
 			title: "Custom CSS styling",
@@ -31,17 +31,18 @@ export class CssStylingExtension extends AbstractExtension {
 			classes: ["header-wrap-every-word", "border-right-dotted"]
 		},
 		{
-			title: "Opacity",
+			title: "Background Opacity",
 			callback: (rowData) => new SettingTagRecordSliderComponent(
 				rowData,
 				"css_styling_opacity",
 				0.0, 1.0, .01,
-				true
+				true,
+				1.0
 			),
-			classes: []
+			classes: ["header-wrap-every-word"]
 		},
 		{
-			title: "CssStyling",
+			title: "Boldify",
 			callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "css_styling_bold_enabled"),
 			classes: []
 		},
@@ -60,8 +61,9 @@ export class CssStylingExtension extends AbstractExtension {
 			callback: (rowData) => new SettingTagRecordSliderComponent(
 				rowData,
 				"css_styling_font_size",
-				0., 10., .25,
-				true
+				0.5, 2., .05,
+				true,
+				1
 			),
 			classes: []
 		},
@@ -72,7 +74,7 @@ export class CssStylingExtension extends AbstractExtension {
 			css_styling_enabled: false,
 			css_styling_bold_enabled: false,
 			css_styling_font_family: "",
-			css_styling_font_size: 0,
+			css_styling_font_size: 1,
 			css_styling_italic_enabled: false,
 			css_styling_opacity: 1.0,
 		};

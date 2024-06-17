@@ -11,7 +11,7 @@ import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowData
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordSliderComponent extends SliderComponent implements ISettingTagRecordComponent {
-	constructor(rowData: RowDataType, property_name: NumberProperties, min: number, max: number, step: number, enableReset: boolean = false) {
+	constructor(rowData: RowDataType, property_name: NumberProperties, min: number, max: number, step: number, enableReset: boolean = false, resetValue:number|null=null) {
 		super(rowData.parentEl); // Obsidian's stuff
 
 		this.setLimits(min, max, step)
@@ -25,7 +25,7 @@ export class SettingTagRecordSliderComponent extends SliderComponent implements 
 			new ExtraButtonComponent(rowData.parentEl)
 				.setIcon("reset")
 				.onClick(async () => {
-					rowData.record[property_name] = min;
+					rowData.record[property_name] = resetValue == null ? min : resetValue;
 					this.setValue(rowData.record[property_name])
 					await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
 				})
