@@ -21,6 +21,12 @@
 	table {
 		border-collapse: separate;
 		border-spacing: 0 0;
+		align-items: center;
+
+		.header-wrap-every-word {
+			word-wrap: break-word;
+			white-space: break-spaces;
+		}
 
 		.sticky-column {
 			position: sticky;
@@ -51,7 +57,7 @@
 
 		.border-right-dotted {
 			/*noinspection CssUnresolvedCustomProperty*/
-			border-right: 1px dashed var(--background-secondary);
+			border-right: 2px dashed var(--background-secondary);
 		}
 
 		tr {
@@ -59,8 +65,8 @@
 		}
 
 		td {
-			padding-left: .25rem;
-			padding-right: .25rem;
+			padding-left: .5rem;
+			padding-right: .5rem;
 			padding-top: .25rem;
 			/*noinspection CssUnresolvedCustomProperty*/
 			border-bottom: 1px solid var(--background-modifier-border);

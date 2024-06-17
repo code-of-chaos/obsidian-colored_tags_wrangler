@@ -48,7 +48,7 @@ export class SettingExtensionSelector {
 					extension.isEnabled = value;
 					ServiceProvider.cssStyler.processExtensions() // This is so we can update all the styling when something changes
 
-					// TODO update the table's tab selector
+					this.parent.display() // Redraw entire settings
 				})
 			})
 		return gridItem.settingEl;

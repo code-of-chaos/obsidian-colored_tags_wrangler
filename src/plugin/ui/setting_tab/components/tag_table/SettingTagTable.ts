@@ -147,7 +147,7 @@ export class SettingTagTable {
 		let thead = table.createEl('thead');
 		let headersRow = thead.createEl('tr');
 		for (let {title, classes} of content) {
-			headersRow.createEl('th', { text: title});
+			headersRow.createEl('th', { text: title, cls : classes});
 			headersRow.addClasses(classes)
 		}
 

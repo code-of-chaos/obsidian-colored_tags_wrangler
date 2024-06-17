@@ -60,6 +60,7 @@ export class TagRecordsService implements ITagRecordsService {
 
 		await this._settings.debounceSaveToFile.run()
 		this._flatCache = null; // invalidate the cache
+		ServiceProvider.cssStyler.processExtensions() // Update to using the new tag
 	}
 
 	async removeTag(record:IColoredTagRecord) : Promise<void>{
@@ -108,7 +109,6 @@ export class TagRecordsService implements ITagRecordsService {
 		newRecord.core_tagText += `-${defaultPresent}`;
 
 		await this.addOrUpdateTag(newRecord)
-		ServiceProvider.cssStyler.processExtensions() // Update to using the new tag
 	}
 
 }

@@ -4,7 +4,7 @@
 import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
 import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 import {CoreExtension} from "../../extensions/core/CoreExtension";
-import {BoldifyExtension} from "../../extensions/boldify/BoldifyExtension";
+import {CssStylingExtension} from "../../extensions/styling/CssStylingExtension";
 import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ export class ExtensionsService implements IExtensionsService {
 	constructor(settings:ISettingsService ) {
 		this._settings = settings;
 		this.Core = new CoreExtension();
-		this.Boldify = new BoldifyExtension();
+		this.Boldify = new CssStylingExtension();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

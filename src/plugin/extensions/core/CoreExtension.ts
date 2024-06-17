@@ -21,12 +21,12 @@ export class CoreExtension extends AbstractExtension {
 	public description = "Core functionality of the plugin";
 	public TableContentPopulators : TableContentPopulator[] = [
 		{
-			title:"Enable",
+			title:"Enable Colors",
 			callback:(rowData) => {
 				return new SettingTagRecordToggleComponent(rowData,
 					"core_enabled");
 			},
-			classes:[]
+			classes:["header-wrap-every-word", "border-right-dotted"]
 		},{
 			title:"Text",
 			callback:(rowData) => {

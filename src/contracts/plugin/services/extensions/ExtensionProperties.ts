@@ -5,10 +5,23 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export type BooleanProperties = "core_enabled"
+export type BooleanProperties =
+	"core_enabled"
 
-	// Add extension enablers
-	| "boldify_enabled"
+	// Css Styling Extension
+	| "css_styling_enabled"
+	| "css_styling_boldify_enabled"
+	| "css_styling_italic_enabled"
+
+export type NumberProperties =
+
+	// Css Styling Extension
+	"css_styling_font_size"
+
+export type TextProperties =
+
+	// Css Styling Extension
+	"css_styling_font_family"
 
 export type TextAreaProperties = "core_tagText";
 

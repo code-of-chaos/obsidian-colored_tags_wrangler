@@ -2,12 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IExtensionRecordCore} from "../../../plugin/extensions/core/IExtensionRecordBoldify";
-import {IExtensionRecordBoldify} from "../../../plugin/extensions/boldify/IExtensionRecordBoldify";
+import {IExtensionRecordCssStyling} from "../../../plugin/extensions/styling/IExtensionRecordCssStyling";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IColoredTagRecord extends
 	IExtensionRecordCore,
-	IExtensionRecordBoldify
+	IExtensionRecordCssStyling
 {}
