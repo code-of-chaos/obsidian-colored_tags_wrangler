@@ -27,8 +27,8 @@ export async function migrate_14_to_15(loaded_data: ISettings_v014): Promise<IPl
 			const newTagColor: IColoredTagRecord = ServiceProvider.tagRecords.getDefaultRecord();
 
 			newTagColor.core_tagText = old_tag.tag_name;
-			newTagColor.core_color_foreground = {...old_tag.color, a: 1.};
-			newTagColor.core_color_background = {...old_tag.background_color, a: 1.};
+			newTagColor.core_color_foreground = {...old_tag.color};
+			newTagColor.core_color_background = {...old_tag.background_color};
 
 			return newTagColor;
 		}

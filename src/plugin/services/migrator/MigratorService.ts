@@ -57,7 +57,7 @@ export class MigratorService implements IMigratorService {
 			// copy the data file to the backup location
 			await this.plugin.app.vault.adapter.copy(
 				`${this.plugin.manifest.dir}/data.json`,
-				`${this.plugin.manifest.dir}/data_backup.json`
+				`${this.plugin.manifest.dir}/data_backup-${Date.now().toString()}.json`
 			);
 		}
 
