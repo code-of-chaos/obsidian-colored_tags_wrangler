@@ -5,12 +5,16 @@ import {ITagRecordsService} from "../../../contracts/plugin/services/tag_records
 import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
 import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagRecord";
 import {reSLASH, reSplit} from "../../../lib/RegexUtils";
+import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
+import {ServiceProvider} from "../ServiceProvider";
+import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class TagRecordsService implements ITagRecordsService {
 	private _settings: ISettingsService;
+	private _extensions: IExtensionsService;
 	private get _tagRecords(): IColoredTagRecord[] {return this._settings.data.TagColors;}
 
 	private _flatCache : IColoredTagRecord[] | null = null;
@@ -18,14 +22,15 @@ export class TagRecordsService implements ITagRecordsService {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(settings: ISettingsService) {
+	constructor(settings: ISettingsService, extensions: IExtensionsService) {
 		this._settings = settings;
+		this._extensions = extensions;
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	getTagsFlat(remove_slash : boolean = true):IColoredTagRecord[] {
+		getTagsFlat(remove_slash : boolean = true):IColoredTagRecord[] {
 		return this._flatCache ??= this._tagRecords
 			.flatMap((record) => {
 				return record.core_tagText // read the last line if you are confused why we are looping over the tag_name
@@ -77,4 +82,33 @@ export class TagRecordsService implements ITagRecordsService {
 			end : `tag-preview-end-${record.core_id}`
 		}
 	}
+
+	getDefaultRecord() : IColoredTagRecord {
+		return this._extensions.FullList.reduce(
+			(acc:IColoredTagRecord, cur : IExtension) => ({...acc, ...cur.getDefaultRecord()}) ,
+			{} as IColoredTagRecord
+		) as IColoredTagRecord
+	}
+
+	async createNewDefaultTag() : Promise<void> {
+		const newRecord = this.getDefaultRecord();
+
+		// Ensure _flatCache is populated
+		if (this._flatCache === null){
+			this.getTagsFlat();
+		}
+
+		// Check for duplicate names
+		//		The way we are doing this is by getting all the records which already start with the default tagText
+		//		The count of this +1 is the new suffix for the new record
+		const defaultPresent = this._flatCache!
+			.filter(record => record.core_tagText.startsWith(newRecord.core_tagText))
+			.length;
+
+		newRecord.core_tagText += `-${defaultPresent}`;
+
+		await this.addOrUpdateTag(newRecord)
+		ServiceProvider.cssStyler.processExtensions() // Update to using the new tag
+	}
+
 }

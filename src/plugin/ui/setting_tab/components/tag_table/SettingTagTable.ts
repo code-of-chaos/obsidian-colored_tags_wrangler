@@ -19,6 +19,7 @@ export class SettingTagTable {
 
 	private selectedExtension:string | undefined;
 	private settingEl: Setting;
+	private settingElBottom: Setting;
 	private tableEl: HTMLElement;
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -35,6 +36,7 @@ export class SettingTagTable {
 	private _AssignEls(){
 		this.settingEl = new Setting(this.parent.containerEl)
 		this.tableEl = this.parent.containerEl.createDiv();
+		this.settingElBottom = new Setting(this.parent.containerEl)
 	}
 
 	public async display() : Promise<void> {
@@ -44,6 +46,8 @@ export class SettingTagTable {
 
 		await this._DisplayExtensionSelector();
 		await this._DisplayTable()
+
+		await this.addNewButton(this.settingElBottom)
 
 	}
 
@@ -56,28 +60,41 @@ export class SettingTagTable {
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	private async _DisplayExtensionSelector() : Promise<void> {
-		this.settingEl
+		const element = this.settingEl
 			.setName("Custom color tags")
 			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `)
 			.addDropdown(component => {component
 				.addOptions(
 					ServiceProvider.extensions.EnabledList
-					.map(extension => extension.extensionName)
-					.reduce(
-						(acc, key) => (
-							{...acc, [key]: capitalizeFirstLetter(key)}
-						), {}
-					)
+						.map(extension => extension.extensionName)
+						.reduce(
+							(acc, key) => (
+								{...acc, [key]: capitalizeFirstLetter(key)}
+							), {}
+						)
 				)
 				.onChange(async (value) => {
 					// UPDATE THE TABLE
 					this.selectedExtension = value;
 					await this.redrawTable()
 				})
+			})
+		;
+		await this.addNewButton(element) // add a bottom button, for navigation
+	}
 
-			});
+	private async addNewButton(settingEl : Setting){
+		settingEl.addButton(component => {component
+			.setClass("mod-cta")
+			.setButtonText("New Tag")
+			.onClick(async () => {
+				await ServiceProvider.tagRecords.createNewDefaultTag()
+				await this.redrawTable()
+			})
+		})
 
 	}
+
 	private async _DisplayTable() : Promise<void> {
 		let scrollAreaContainer = this.tableEl.createDiv();
 		scrollAreaContainer.addClass("scroll-area-container");
