@@ -35,7 +35,7 @@ export class ServiceProvider {
 		ServiceProvider.migrator = new MigratorService(plugin)
 		ServiceProvider.settings = new SettingsService(plugin, ServiceProvider.migrator)
 		ServiceProvider.extensions = new ExtensionsService(ServiceProvider.settings)
-		ServiceProvider.tagRecords = new TagRecordsService(ServiceProvider.settings)
+		ServiceProvider.tagRecords = new TagRecordsService(ServiceProvider.settings, ServiceProvider.extensions)
 
 		ServiceProvider.cssStyler = new CssStylerService(ServiceProvider.extensions, ServiceProvider.tagRecords)
 

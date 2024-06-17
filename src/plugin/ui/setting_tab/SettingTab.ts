@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {PluginSettingTab} from "obsidian";
+import {PluginSettingTab, Setting} from "obsidian";
 import {ISettingTab} from "../../../contracts/plugin/ui/ISettingTab";
 import {SettingTagTable} from "./components/tag_table/SettingTagTable";
 import {SettingExtensionSelector} from "./components/extension_selector/SettingExtensionSelector";
@@ -18,7 +18,10 @@ export class SettingTab extends PluginSettingTab implements ISettingTab {
 		containerEl.empty();
 
 		// Scrollable container for the table
-		await new SettingExtensionSelector(this).display()
+		new Setting(containerEl).setName("Tag table").setHeading()
 		await new SettingTagTable(this).display() // clumsy, but should work
+
+		new Setting(containerEl).setName("Extension selector").setHeading()
+		await new SettingExtensionSelector(this).display()
 	}
 }

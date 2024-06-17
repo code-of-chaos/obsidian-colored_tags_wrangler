@@ -16,4 +16,5 @@ export interface ITagRecordsService {
 	getTagIndex(record: IColoredTagRecord): number
 	getFirstTag(record:IColoredTagRecord):string
 	getTagPreviewIds(record:IColoredTagRecord) : {begin:string, end:string}
+	createNewEmptyTag() : Promise<void>
 }
