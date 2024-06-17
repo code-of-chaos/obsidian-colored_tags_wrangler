@@ -12,16 +12,16 @@ import {IMigratorService} from "../../../contracts/plugin/services/migrator/IMig
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingsService implements ISettingsService {
-	private _plugin : IColoredTagWranglerPlugin;
-	private _migrator : IMigratorService;
-
 	public data: IPluginSettings;
 	public debounceSaveToFile: Debouncer<[], Promise<void>>;
+	private _plugin: IColoredTagWranglerPlugin;
+	private _migrator: IMigratorService;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
+
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin : IColoredTagWranglerPlugin, migrator : IMigratorService) {
+	constructor(plugin: IColoredTagWranglerPlugin, migrator: IMigratorService) {
 		this._plugin = plugin;
 		this._migrator = migrator;
 		this.debounceSaveToFile = debounce(this.saveToFile, 100)
@@ -30,7 +30,7 @@ export class SettingsService implements ISettingsService {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public async loadFromFile(){
+	public async loadFromFile() {
 		const tempData = await this._plugin.loadData()
 		this.data = Object.assign(
 			{},
@@ -41,7 +41,7 @@ export class SettingsService implements ISettingsService {
 		this.debounceSaveToFile()
 	}
 
-	public async saveToFile(){
+	public async saveToFile() {
 		await this._plugin.saveData(this.data);
 	}
 }

@@ -13,13 +13,14 @@ export class CSSWranglerTags extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin) {
+	constructor(plugin: ColoredTagWranglerPlugin) {
 		super(plugin, plugin.settings.TagColors);
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	private _assembleCss(theme:string, selector:string, important:string, color:RGB, background_color:RGB):string {
+	private _assembleCss(theme: string, selector: string, important: string, color: RGB, background_color: RGB): string {
 		return ` 
 				${theme} ${selector} { 
 					color: ${this.getForegroundString(color)} ${important};
@@ -27,8 +28,8 @@ export class CSSWranglerTags extends CSSWrangler {
 				}`
 	}
 
-	assembleCss(theme:string){
-		const important:string = this.getImportant();
+	assembleCss(theme: string) {
+		const important: string = this.getImportant();
 
 		return [
 			...this.getTags(false).map(
@@ -37,7 +38,7 @@ export class CSSWranglerTags extends CSSWrangler {
 			),
 			...this.getTags().map(
 				(v) => this._assembleCss(
-					theme, `.cm-tag-${v.tag_name}`,important, v.color, v.background_color)
+					theme, `.cm-tag-${v.tag_name}`, important, v.color, v.background_color)
 			)]
 	}
 

@@ -19,37 +19,19 @@ export const themeSelectorDark = "body.theme-dark";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class CssStylerService implements ICssStylerService{
+export class CssStylerService implements ICssStylerService {
 	private readonly styleElement: HTMLStyleElement;
 
-	private extensions : IExtensionsService
+	private extensions: IExtensionsService
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(extensions : IExtensionsService) {
+	constructor(extensions: IExtensionsService) {
 		this.extensions = extensions;
 
 		this.styleElement = document.createElement("style");
 		this.styleElement.id = "colored-tags-wrangler"
-	}
-
-	private createCSS() : string {
-		let dict : Record<string, Record<string, string>> = {};
-
-		this.extensions.EnabledList
-			// Each extension should handle their own rules for filtering which records are applied to or not
-			.forEach(e => {
-				const rules: Record<string, Record<string, string>> = e.cssWrangler.getRules();
-				Object.keys(rules).forEach((key) => {
-					dict[key] = Object.assign(dict[key] || {}, rules[key]);
-				});
-			} )
-
-		return Object.keys(dict)
-			.map(
-				selector => `${selector} { ${Object.keys(dict[selector]).map(property => `${property}: ${dict[selector][property]};`).join("")} }`
-			).join("\n");
 	}
 
 	public processExtensions() {
@@ -59,8 +41,26 @@ export class CssStylerService implements ICssStylerService{
 		document.head.appendChild(this.styleElement);
 	}
 
-	public cleanup(){
+	public cleanup() {
 		document.head.removeChild(this.styleElement);
+	}
+
+	private createCSS(): string {
+		let dict: Record<string, Record<string, string>> = {};
+
+		this.extensions.EnabledList
+			// Each extension should handle their own rules for filtering which records are applied to or not
+			.forEach(e => {
+				const rules: Record<string, Record<string, string>> = e.cssWrangler.getRules();
+				Object.keys(rules).forEach((key) => {
+					dict[key] = Object.assign(dict[key] || {}, rules[key]);
+				});
+			})
+
+		return Object.keys(dict)
+			.map(
+				selector => `${selector} { ${Object.keys(dict[selector]).map(property => `${property}: ${dict[selector][property]};`).join("")} }`
+			).join("\n");
 	}
 
 }

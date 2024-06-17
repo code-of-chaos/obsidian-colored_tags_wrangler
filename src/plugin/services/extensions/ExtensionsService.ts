@@ -21,12 +21,21 @@ export class ExtensionsService implements IExtensionsService {
 
 	private _settings: ISettingsService;
 
-	private _List : IExtension[] | undefined;
+	private _List: IExtension[] | undefined;
+
+	// -----------------------------------------------------------------------------------------------------------------
+	constructor(settings: ISettingsService) {
+		this._settings = settings;
+		this.Core = new CoreExtension();
+		this.Boldify = new CssStylingExtension();
+	}
+
 	public get FullList(): IExtension[] {
 		return this._List ??= this.AsList();
 	}
 
 	private _EnabledList: IExtension[] | undefined;
+
 	public get EnabledList(): IExtension[] {
 
 		console.warn(this._settings.data.EnabledExtensions)
@@ -35,41 +44,20 @@ export class ExtensionsService implements IExtensionsService {
 			.filter(e => this._settings.data.EnabledExtensions.contains(e.extensionName));
 	}
 
+	private _Dictionary: Record<string, IExtension> | undefined;
 
-	private _Dictionary : Record<string, IExtension> | undefined;
+	// -----------------------------------------------------------------------------------------------------------------
+	// Constructors
+
 	public get Dictionary(): Record<string, IExtension> {
 		return this._Dictionary ??= this.AsDictionary();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// Constructors
-	// -----------------------------------------------------------------------------------------------------------------
-	constructor(settings:ISettingsService ) {
-		this._settings = settings;
-		this.Core = new CoreExtension();
-		this.Boldify = new CssStylingExtension();
-	}
-
-	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
-	// -----------------------------------------------------------------------------------------------------------------
-	private AsList() : IExtension[] {return[
-		this.Core,
-		this.Boldify,
-	]}
 
-	private AsDictionary() : Record<string, IExtension> {
-		return this.AsList().reduce(
-			(acc, e) => {
-				acc[e.extensionName] = e;
-				return acc;
-			},
-			{} as Record<string,IExtension>
-		);
-	}
-
-	public setExtension(extension: IExtension, value:boolean): void {
-		if (value){
+	public setExtension(extension: IExtension, value: boolean): void {
+		if (value) {
 			this._settings.data.EnabledExtensions.push(extension.extensionName)
 		} else {
 			if (this._settings.data.EnabledExtensions.contains(extension.extensionName)) {
@@ -77,5 +65,23 @@ export class ExtensionsService implements IExtensionsService {
 			}
 		}
 		this._EnabledList = undefined // Invalidate it
+	}
+
+	// -----------------------------------------------------------------------------------------------------------------
+	private AsList(): IExtension[] {
+		return [
+			this.Core,
+			this.Boldify,
+		]
+	}
+
+	private AsDictionary(): Record<string, IExtension> {
+		return this.AsList().reduce(
+			(acc, e) => {
+				acc[e.extensionName] = e;
+				return acc;
+			},
+			{} as Record<string, IExtension>
+		);
 	}
 }

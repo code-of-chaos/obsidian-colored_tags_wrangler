@@ -3,17 +3,15 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {TextAreaComponent} from "obsidian";
 import {TextAreaProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
-import {
-	ISettingTagRecordComponent
-} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
+import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 import {ServiceProvider} from "../../../../services/ServiceProvider";
 import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class SettingTagRecordTextAreaComponent extends TextAreaComponent implements ISettingTagRecordComponent{
-	constructor(rowData:RowDataType, property_name: TextAreaProperties) {
+export class SettingTagRecordTextAreaComponent extends TextAreaComponent implements ISettingTagRecordComponent {
+	constructor(rowData: RowDataType, property_name: TextAreaProperties) {
 		super(rowData.parentEl); // Obsidian's stuff
 
 		this.setValue(rowData.record[property_name])
@@ -29,7 +27,7 @@ export class SettingTagRecordTextAreaComponent extends TextAreaComponent impleme
 		this.inputEl.style.height = this.calcHeight();
 	}
 
-	private calcHeight(){
+	private calcHeight() {
 		return `${this.inputEl.scrollHeight + 5}px`;
 	}
 }

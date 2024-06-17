@@ -6,8 +6,8 @@ import {SettingsTabComponent} from ".old/plugin/setting_tab/SettingsTabComponent
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentCSSNoteTags extends SettingsTabComponent{
-	public create_component(containerEL:HTMLElement): void {
+export class ComponentCSSNoteTags extends SettingsTabComponent {
+	public create_component(containerEL: HTMLElement): void {
 		new Setting(containerEL)
 			.setName("Apply Tag colors in notes")
 			.setDesc("Colors the tags in the body of a note. Main setting to disable most usages.")

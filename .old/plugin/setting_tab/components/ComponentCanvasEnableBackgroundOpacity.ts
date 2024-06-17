@@ -10,7 +10,7 @@ export class ComponentCanvasEnableBackgroundOpacity extends SettingsTabComponent
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): void {
+	public create_component(containerEL: HTMLElement): void {
 		let setting = new Setting(containerEL)
 			.setName("Apply Opacity to Canvas component's background color")
 			.setDesc("Allows you define if an item's background should have an opacity offset")
@@ -25,7 +25,7 @@ export class ComponentCanvasEnableBackgroundOpacity extends SettingsTabComponent
 				}
 			)
 
-		if (this.plugin.settings.Canvas.EnableBackgroundOpacity){
+		if (this.plugin.settings.Canvas.EnableBackgroundOpacity) {
 			setting.addText((text) => {
 				text
 					.setPlaceholder(this.plugin.settings.Canvas.Values.BackgroundOpacity.toString())
@@ -33,7 +33,7 @@ export class ComponentCanvasEnableBackgroundOpacity extends SettingsTabComponent
 					.onChange(async state => {
 						// Because this is a text component it needs to be cast to a number
 						let state_as_number = Number(state)
-						if (isNaN(state_as_number) || state_as_number === null){
+						if (isNaN(state_as_number) || state_as_number === null) {
 							state_as_number = 0
 						}
 

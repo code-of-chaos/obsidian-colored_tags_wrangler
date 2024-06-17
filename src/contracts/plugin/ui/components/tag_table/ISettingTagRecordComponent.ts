@@ -6,4 +6,5 @@ import {BaseComponent} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface ISettingTagRecordComponent extends BaseComponent {}
+export interface ISettingTagRecordComponent extends BaseComponent {
+}

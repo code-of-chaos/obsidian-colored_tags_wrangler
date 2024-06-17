@@ -15,10 +15,10 @@ import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowData
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordColorComponent extends ColorComponent implements ISettingTagRecordComponent {
-	constructor(rowData:RowDataType, property_name: RGBSelectorProperties ) {
+	constructor(rowData: RowDataType, property_name: RGBSelectorProperties) {
 		super(rowData.parentEl); // Obsidian's stuff
 
-		let value : RGBA = rowData.record[property_name] as RGBA;
+		let value: RGBA = rowData.record[property_name] as RGBA;
 		this.setValue(rgbaToHex(value))
 
 		this.onChange(async (newValue) => {

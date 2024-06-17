@@ -6,11 +6,11 @@ import {SettingsTabComponent} from ".old/plugin/setting_tab/SettingsTabComponent
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentKanban extends SettingsTabComponent{
+export class ComponentKanban extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): void {
+	public create_component(containerEL: HTMLElement): void {
 		new Setting(containerEL)
 			.setName("Enable Kanban integration")
 			.addToggle(component => {

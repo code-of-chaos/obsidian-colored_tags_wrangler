@@ -21,7 +21,7 @@ import {
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class StyleManager{
+export class StyleManager {
 	plugin: ColoredTagWranglerPlugin;
 	wrangler_css_note_tags: ICSSWrangler;
 	wrangler_css_note_tags_no_wrap: ICSSWrangler;
@@ -31,14 +31,14 @@ export class StyleManager{
 	wrangler_kanban_lists: ICSSWrangler;
 	wrangler_folder_note: ICSSWrangler;
 
-	wrangler_note_property_tags:IJqueryWrangler;
-	wrangler_note_background:IJqueryWrangler;
-	wrangler_canvas_node_background:IJqueryWrangler;
+	wrangler_note_property_tags: IJqueryWrangler;
+	wrangler_note_background: IJqueryWrangler;
+	wrangler_canvas_node_background: IJqueryWrangler;
 
 	private style_wranglers_css: Array<ICSSWrangler>;
 	// private style_wranglers_jquery: Array<IJqueryWrangler>;
 
-	styleElement:HTMLStyleElement;
+	styleElement: HTMLStyleElement;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
@@ -77,47 +77,48 @@ export class StyleManager{
 		this.styleElement.id = "colored-tags-wrangler"
 
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	switchAllStyles():void {
+	switchAllStyles(): void {
 		const styleSets = [{
-				enabled: this.plugin.settings.TagColors.ColorPicker.length !== 0 && this.plugin.settings.CSS.NoteTags,
-				styles: this.wrangler_css_note_tags
-			}, {
-				enabled: this.plugin.settings.CSS.TagsNoWrap,
-				styles: this.wrangler_css_note_tags_no_wrap
-			}, {
-				enabled: this.plugin.settings.Canvas.Enable,
-				styles: this.wrangler_tags_canvas
-			}, {
-				enabled: this.plugin.settings.Kanban.HideHashtags,
-				styles: this.wrangler_kanban_hashtags
-			}, {
-				enabled: this.plugin.settings.Kanban.EnableCards,
-				styles: this.wrangler_kanban_cards
-			}, {
-				enabled: this.plugin.settings.Kanban.EnableLists,
-				styles: this.wrangler_kanban_lists
-			}, {
-				enabled: this.plugin.settings.FolderNote.Enable,
-				styles: this.wrangler_folder_note
-			},
+			enabled: this.plugin.settings.TagColors.ColorPicker.length !== 0 && this.plugin.settings.CSS.NoteTags,
+			styles: this.wrangler_css_note_tags
+		}, {
+			enabled: this.plugin.settings.CSS.TagsNoWrap,
+			styles: this.wrangler_css_note_tags_no_wrap
+		}, {
+			enabled: this.plugin.settings.Canvas.Enable,
+			styles: this.wrangler_tags_canvas
+		}, {
+			enabled: this.plugin.settings.Kanban.HideHashtags,
+			styles: this.wrangler_kanban_hashtags
+		}, {
+			enabled: this.plugin.settings.Kanban.EnableCards,
+			styles: this.wrangler_kanban_cards
+		}, {
+			enabled: this.plugin.settings.Kanban.EnableLists,
+			styles: this.wrangler_kanban_lists
+		}, {
+			enabled: this.plugin.settings.FolderNote.Enable,
+			styles: this.wrangler_folder_note
+		},
 		];
 
-		this.styleElement.innerHTML =  styleSets
+		this.styleElement.innerHTML = styleSets
 			.filter(set => set.enabled)
 			.flatMap(set => set.styles.getCssStyling())
 			.join("");
-		
+
 		document.head.appendChild(this.styleElement);
 	}
 
-	public removeStyles(){
+	public removeStyles() {
 		document.head.removeChild(this.styleElement);
 	}
 
-	public getAllCssStyling():string[]{
+	public getAllCssStyling(): string[] {
 		return this.style_wranglers_css.flatMap(style => style.getCssStyling());
 	}
 }

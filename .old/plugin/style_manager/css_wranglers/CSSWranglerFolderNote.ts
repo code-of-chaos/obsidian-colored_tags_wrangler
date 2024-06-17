@@ -14,13 +14,14 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin) {
+	constructor(plugin: ColoredTagWranglerPlugin) {
 		super(plugin, plugin.settings.FolderNote);
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCss(theme:string) {
+	assembleCss(theme: string) {
 		const important: string = this.getImportant();
 		let all_tags = this.getTags();
 		let border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
@@ -46,8 +47,8 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 
 	private createCss(theme: string, folder_path: string, color: RGB, background_color: RGB, important: string, border_radius: string, padding: string) {
 		// noinspection CssInvalidFunction,CssUnusedSymbol,CssInvalidPropertyValue
-		const string_color= this.getForegroundString(color);
-		const string_background =  this.getBackgroundWithOpacityString(background_color)
+		const string_color = this.getForegroundString(color);
+		const string_background = this.getBackgroundWithOpacityString(background_color)
 
 		return `
 /* Apply color to drop down triangle */

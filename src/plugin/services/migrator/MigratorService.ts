@@ -9,10 +9,8 @@ import {IMigratorService} from "../../../contracts/plugin/services/migrator/IMig
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class MigratorService implements IMigratorService{
-	private plugin: IColoredTagWranglerPlugin;
-
-	private static MIGRATION_STEPS: ((data : any) => Promise<any>)[] = [ // Using any's isn't perfect but will do for now
+export class MigratorService implements IMigratorService {
+	private static MIGRATION_STEPS: ((data: any) => Promise<any>)[] = [ // Using any's isn't perfect but will do for now
 		// Add more lambdas in order.
 		//      Btw this only works because I am dumb enough to start from 0,
 		//      that way I don't need to do any other steps in the for loop
@@ -32,12 +30,13 @@ export class MigratorService implements IMigratorService{
 		async (data) => await migrations.migrate_13_to_14(data), // 13
 		async (data) => await migrations.migrate_14_to_15(data), // 14
 	];
-
 	// I have become too lazy to keep track of which version we are on.
 	public static CURRENT_VERSION = MigratorService.MIGRATION_STEPS.length + 1
+	private plugin: IColoredTagWranglerPlugin;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
+
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin: IColoredTagWranglerPlugin) {
 		this.plugin = plugin;
@@ -46,15 +45,15 @@ export class MigratorService implements IMigratorService{
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public async migrateData(data: any, ): Promise<any> {
+	public async migrateData(data: any,): Promise<any> {
 		// If the plugin hasn't been used before, no data will be present aka no migrations needed
-		if (data === null){
+		if (data === null) {
 			return null
 		}
 
 		// Set a default version, else the migrations won't work.
 		let version = data?.Info?.SettingsVersion ?? -1;
-		if (version === -1 || version <= 14){
+		if (version === -1 || version <= 14) {
 			// copy the data file to the backup location
 			await this.plugin.app.vault.adapter.copy(
 				`${this.plugin.manifest.dir}/data.json`,
@@ -62,14 +61,14 @@ export class MigratorService implements IMigratorService{
 			);
 		}
 
-		if (version === -1){
+		if (version === -1) {
 			// Exit clause
 			console.warn("Version could not be established, assigning as is. Created a data_backup.json file.")
 			new Notice("ColoredTagsWrangler : <br>Version could not be read from data.json. Backup created as data_backup.json file.");
 			return data;
 		}
 
-		if (version <= 14){
+		if (version <= 14) {
 			new Notice("ColoredTagsWrangler : <br>data.json was made for a lower version, upgrading it to the newest version. Backup created as data_backup.json file.")
 		}
 

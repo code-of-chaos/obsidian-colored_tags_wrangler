@@ -8,30 +8,30 @@ import {EventHandler} from ".old/plugin/event_handlers/EventHandler";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class EventHandlerMetadataChange extends EventHandler{
-    public async register(){
-        this.plugin.registerEvent(
-            this.plugin.app.metadataCache.on(
-                "changed",
-                async (file, __, cache: CachedMetadata) => {
-                    if (this.plugin.settings.FolderNote.Enable && this.plugin.settings.FolderNote.EnableAutoDetect) {
-                        await this.callback(file, cache)
+export class EventHandlerMetadataChange extends EventHandler {
+	public async register() {
+		this.plugin.registerEvent(
+			this.plugin.app.metadataCache.on(
+				"changed",
+				async (file, __, cache: CachedMetadata) => {
+					if (this.plugin.settings.FolderNote.Enable && this.plugin.settings.FolderNote.EnableAutoDetect) {
+						await this.callback(file, cache)
 						await this.debounced_save_settings.call(this)
-                        this.plugin.style_manager.wrangler_note_property_tags.assembleStyling();
-                    } else {
-                        this.plugin.style_manager.wrangler_note_property_tags.removeStyling();
-                    }
-                }
-            ));
-    }
+						this.plugin.style_manager.wrangler_note_property_tags.assembleStyling();
+					} else {
+						this.plugin.style_manager.wrangler_note_property_tags.removeStyling();
+					}
+				}
+			));
+	}
 
-    private async callback(file:TFile, cache: CachedMetadata):Promise<void>{
-        const folder_path = file.path.replace(`/${file.name}`, "")
-        const tags = cache.frontmatter?.tags as string[] | undefined;
+	private async callback(file: TFile, cache: CachedMetadata): Promise<void> {
+		const folder_path = file.path.replace(`/${file.name}`, "")
+		const tags = cache.frontmatter?.tags as string[] | undefined;
 
-        if (!file_is_folderNote(file) || tags === undefined){
-            return
-        }
+		if (!file_is_folderNote(file) || tags === undefined) {
+			return
+		}
 
 		// Filter out links associated with the current file
 		const linksToKeep = Object
@@ -47,9 +47,9 @@ export class EventHandlerMetadataChange extends EventHandler{
 				folder_path: folder_path
 			}));
 
-        this.plugin.settings.FolderNote.FolderTagLinks = [...linksToKeep, ...newLinks]
+		this.plugin.settings.FolderNote.FolderTagLinks = [...linksToKeep, ...newLinks]
 			.sort((a, b) => a.folder_path.localeCompare(b.folder_path))
 
 		;
-    }
+	}
 }

@@ -7,73 +7,73 @@ import {RGB} from "obsidian";
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export interface ISettings_v009 {
-    TagColors:{
-        ColorPicker: Record<
-            string,
-            {tag_name:string, color:RGB, background_color:RGB,luminance_offset:number}
-        >,
+	TagColors: {
+		ColorPicker: Record<
+			string,
+			{ tag_name: string, color: RGB, background_color: RGB, luminance_offset: number }
+		>,
 
-        EnableMultipleTags:boolean,
-        EnableSeparateBackground:boolean,
-        EnableSeparateLuminanceOffset:boolean,
-        EnableDarkLightDifference:boolean,
-        EnableBackgroundOpacity:boolean,
-        Values:{
-            BackgroundOpacity:number,
-            LuminanceOffset:number,
-        }
-    },
+		EnableMultipleTags: boolean,
+		EnableSeparateBackground: boolean,
+		EnableSeparateLuminanceOffset: boolean,
+		EnableDarkLightDifference: boolean,
+		EnableBackgroundOpacity: boolean,
+		Values: {
+			BackgroundOpacity: number,
+			LuminanceOffset: number,
+		}
+	},
 
-    FolderNote:{
-        Enable:boolean
-        FolderTagLinks:Record<
-            string,
-            {folder_path:string, tag_name:string}
-        >,
+	FolderNote: {
+		Enable: boolean
+		FolderTagLinks: Record<
+			string,
+			{ folder_path: string, tag_name: string }
+		>,
 
-        EnableAutoDetect:boolean,
+		EnableAutoDetect: boolean,
 
-        Values:{
-            ForceImportant:boolean,
-            BorderRadius:string,
-            Padding:string,
-        }
-    },
+		Values: {
+			ForceImportant: boolean,
+			BorderRadius: string,
+			Padding: string,
+		}
+	},
 
-    Kanban:{
-        Enable: boolean,
-        EnableCards:boolean,
-        EnableLists:boolean,
-        HideHashtags:boolean,
+	Kanban: {
+		Enable: boolean,
+		EnableCards: boolean,
+		EnableLists: boolean,
+		HideHashtags: boolean,
 
-        Values:{
-            CardBackgroundOpacity:number,
-            CardBorderOpacity:number,
-            ListBackgroundOpacity:number,
-            ListBorderOpacity:number,
-        },
-    },
+		Values: {
+			CardBackgroundOpacity: number,
+			CardBorderOpacity: number,
+			ListBackgroundOpacity: number,
+			ListBorderOpacity: number,
+		},
+	},
 
-    CSS:{
-        Enable: boolean,
-        TagsNoWrap:boolean,
-        TagsNoWrapText:string,
-    },
+	CSS: {
+		Enable: boolean,
+		TagsNoWrap: boolean,
+		TagsNoWrapText: string,
+	},
 
-    Debug:{
-        Enable:boolean,
-    },
+	Debug: {
+		Enable: boolean,
+	},
 
-    Canvas:{
-        Enable:boolean,
+	Canvas: {
+		Enable: boolean,
 
-        Values:{
-            CardBorderOpacity:number,
-            CardBackgroundLuminanceOffset:number,
-        },
-    },
+		Values: {
+			CardBorderOpacity: number,
+			CardBackgroundLuminanceOffset: number,
+		},
+	},
 
-    Info: {
-        SettingsVersion: number
-    }
+	Info: {
+		SettingsVersion: number
+	}
 }

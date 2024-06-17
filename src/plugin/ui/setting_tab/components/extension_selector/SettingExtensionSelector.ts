@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {Setting, SettingTab} from "obsidian";
 import {IExtension} from "../../../../../contracts/plugin/extensions/IExtension";
-import {values} from "builtin-modules";
 import {ServiceProvider} from "../../../../services/ServiceProvider";
 import {capitalizeFirstLetter} from "../../../../../lib/StringUtils";
 
@@ -28,7 +27,14 @@ export class SettingExtensionSelector {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	private _AssignEls(){
+	public async display(): Promise<void> {
+		for (const iExtension of ServiceProvider.extensions.FullList) {
+			const el = this.createExtensionGridItem(iExtension)
+			this.gridContainerEl.appendChild(el)
+		}
+	}
+
+	private _AssignEls() {
 		// this.settingEl = new Setting(this.parent.containerEl)
 		this.masterEl = this.parent.containerEl.createDiv();
 		this.masterEl.addClass("extension-selector");
@@ -52,12 +58,5 @@ export class SettingExtensionSelector {
 				})
 			})
 		return gridItem.settingEl;
-	}
-
-	public async display() : Promise<void> {
-		for (const iExtension of ServiceProvider.extensions.FullList) {
-			const el = this.createExtensionGridItem(iExtension)
-			this.gridContainerEl.appendChild(el)
-		}
 	}
 }

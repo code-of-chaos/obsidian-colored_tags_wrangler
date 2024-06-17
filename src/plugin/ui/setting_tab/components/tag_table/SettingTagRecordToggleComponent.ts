@@ -11,7 +11,7 @@ import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowData
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordToggleComponent extends ToggleComponent implements ISettingTagRecordComponent {
-	constructor(rowData:RowDataType, property_name: BooleanProperties ) {
+	constructor(rowData: RowDataType, property_name: BooleanProperties) {
 		super(rowData.parentEl); // Obsidian's stuff
 
 		if (property_name in rowData.record) {

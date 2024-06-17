@@ -7,8 +7,8 @@ import {SettingsTabComponent} from ".old/plugin/setting_tab/SettingsTabComponent
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentCSSTagsNoWrap extends SettingsTabComponent{
-	public create_component(containerEL:HTMLElement): void {
+export class ComponentCSSTagsNoWrap extends SettingsTabComponent {
+	public create_component(containerEL: HTMLElement): void {
 		let setting = new Setting(containerEL)
 			.setName("Enable 'No text Wrapping' for tags")
 			.addToggle(component => {
@@ -21,7 +21,7 @@ export class ComponentCSSTagsNoWrap extends SettingsTabComponent{
 				}
 			);
 
-		if(this.plugin.settings.Debug.Enable){
+		if (this.plugin.settings.Debug.Enable) {
 			setting
 				.setDesc(`
 					You can specify which value to use for the CSS property 'white-space'. 

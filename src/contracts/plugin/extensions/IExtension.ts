@@ -12,11 +12,12 @@ export interface IExtension {
 	readonly TableContentPopulators: TableContentPopulator[];
 	readonly extensionName: string;
 	readonly description: string;
-	readonly cssWrangler : ICssWrangler;
+	readonly cssWrangler: ICssWrangler;
 
 	get isEnabled(): boolean
-	set isEnabled(value:boolean)
 
-	getDefaultRecord():IExtensionRecord;
+	set isEnabled(value: boolean)
+
+	getDefaultRecord(): IExtensionRecord;
 
 }

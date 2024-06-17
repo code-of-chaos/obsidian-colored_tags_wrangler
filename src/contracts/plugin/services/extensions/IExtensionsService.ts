@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IExtension} from "../../extensions/IExtension";
-import {IColoredTagRecord} from "../../settings/IColoredTagRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -16,8 +15,10 @@ export interface IExtensionsService {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	get FullList(): IExtension[]
+
 	get EnabledList(): IExtension[]
+
 	get Dictionary(): Record<string, IExtension>
 
-	setExtension(extension: IExtension, value:boolean): void
+	setExtension(extension: IExtension, value: boolean): void
 }

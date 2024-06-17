@@ -9,6 +9,6 @@ import {ISettingInfo} from "./ISettingInfo";
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IPluginSettings {
 	TagColors: IColoredTagRecord[],
-	EnabledExtensions : string[]
+	EnabledExtensions: string[]
 	Info: ISettingInfo,
 }

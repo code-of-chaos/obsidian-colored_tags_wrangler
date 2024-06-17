@@ -17,8 +17,13 @@ export abstract class AbstractExtension implements IExtension {
 	abstract readonly extensionName: string;
 	abstract readonly description: string;
 
-	public get isEnabled() : boolean {return ServiceProvider.extensions.EnabledList.contains(this)}
-	public set isEnabled(value:boolean) {ServiceProvider.extensions.setExtension(this, value)}
+	public get isEnabled(): boolean {
+		return ServiceProvider.extensions.EnabledList.contains(this)
+	}
+
+	public set isEnabled(value: boolean) {
+		ServiceProvider.extensions.setExtension(this, value)
+	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

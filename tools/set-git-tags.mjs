@@ -1,9 +1,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import { promises as fsPromises } from 'fs';
+import {promises as fsPromises} from 'fs';
 import path from 'path';
-import { exec } from 'child_process';
+import {exec} from 'child_process';
 import {fileURLToPath} from "url";
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
@@ -18,6 +18,7 @@ async function readManifestVersion(filepath) {
 		process.exit(1);
 	}
 }
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ const manifestJsonPath = path.join(dirname, '../manifest.json');
 	});
 
 	// Push the Git tag to the remote repository
-	exec(`git push --tags`,(error, stdout, stderr) => {
+	exec(`git push --tags`, (error, stdout, stderr) => {
 		if (error) {
 			console.error(`Error Pushing Git tag: ${error}`);
 			process.exit(1);

@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Platform, Plugin } from "obsidian";
+import {Platform, Plugin} from "obsidian";
 import {Migrate} from "./plugin/settings/Migrate";
 import {EventHandlerMetadataChange} from "./plugin/event_handlers/MetadataChange";
 import {IColoredTagWrangler} from "./plugin/IColoredTagWrangler";
@@ -19,7 +19,7 @@ import {EventHandlerActiveLeafChange} from "./plugin/event_handlers/ActiveLeafCh
 // ---------------------------------------------------------------------------------------------------------------------
 export default class ColoredTagWrangler extends Plugin implements IColoredTagWrangler {
 	settings: ISettings;
-	style_manager:StyleManager;
+	style_manager: StyleManager;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
@@ -38,30 +38,30 @@ export default class ColoredTagWrangler extends Plugin implements IColoredTagWra
 		// Load the styles
 		this.app.workspace.onLayoutReady(() => {
 			this.style_manager.switchAllStyles();
-        });
+		});
 
 		// Commands
 		this.addCommand({
-			id:"export-tags-to-graph-codeblock",
-			name:"Creates a code block at caret of color groups, which you can manually copy into the graph.json file.",
+			id: "export-tags-to-graph-codeblock",
+			name: "Creates a code block at caret of color groups, which you can manually copy into the graph.json file.",
 			editorCallback: async (editor, ctx) => await commands.ExportGraphJsonTagsCodeblock(editor, ctx, this)
 		})
 
 		// Experimental Commands
-		if (Platform.isDesktopApp && this.settings.Debug.EnableExperimentalCommands){
+		if (Platform.isDesktopApp && this.settings.Debug.EnableExperimentalCommands) {
 			this.addCommand({
-				id:"export-tags-to-graph",
-				name:"EXPERIMENTAL : export tags to graph.json. This overwrites your current graph.json. Use at own risk!",
+				id: "export-tags-to-graph",
+				name: "EXPERIMENTAL : export tags to graph.json. This overwrites your current graph.json. Use at own risk!",
 				callback: async () => await experimental.exportGraphJsonTags(this)
 			})
 			this.addCommand({
-				id:"export-FOLDER-to-graph",
-				name:"EXPERIMENTAL : export TAGS LINKED TO FOLDER NOTES to graph.json. This overwrites your current graph.json. Use at own risk!",
+				id: "export-FOLDER-to-graph",
+				name: "EXPERIMENTAL : export TAGS LINKED TO FOLDER NOTES to graph.json. This overwrites your current graph.json. Use at own risk!",
 				callback: async () => await experimental.exportGraphJsonFolderNotes(this)
 			})
 			this.addCommand({
-				id:"export-css-to-codeblock",
-				name:"EXPERIMENTAL : CSS Styling to code block.",
+				id: "export-css-to-codeblock",
+				name: "EXPERIMENTAL : CSS Styling to code block.",
 				editorCallback: async (editor, ctx) => await experimental.ExportToCSS(editor, ctx, this)
 			})
 		}

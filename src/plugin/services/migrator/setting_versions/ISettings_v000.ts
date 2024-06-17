@@ -6,41 +6,41 @@
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface ISettings_v000 {
-	TagColors:{
+	TagColors: {
 		ColorPicker: Record<string, { r: number, g: number, b: number }>,
 		SemanticObsidianColors: Record<string, string>,
-		CssVars: Record<string, {color:string, background:string}>,
+		CssVars: Record<string, { color: string, background: string }>,
 
-		Values:{
-			BackgroundOpacity:number,
-			BackgroundOpacityHover:number,
-			SemanticColorsLuminanceOffset:number,
+		Values: {
+			BackgroundOpacity: number,
+			BackgroundOpacityHover: number,
+			SemanticColorsLuminanceOffset: number,
 		}
 	},
 
-	Kanban:{
+	Kanban: {
 		Enable: boolean,
-		EnableCards:boolean,
-		EnableLists:boolean,
+		EnableCards: boolean,
+		EnableLists: boolean,
 
-		Values:{
-			CardBackgroundOpacity:number,
-			CardBorderOpacity:number,
-			ListBackgroundOpacity:number,
-			ListBorderOpacity:number,
+		Values: {
+			CardBackgroundOpacity: number,
+			CardBorderOpacity: number,
+			ListBackgroundOpacity: number,
+			ListBorderOpacity: number,
 		},
 	},
 
-	Debug:{
-		Enable:boolean,
+	Debug: {
+		Enable: boolean,
 	},
 
-	Canvas:{
-		Enable:boolean,
+	Canvas: {
+		Enable: boolean,
 
-		Values:{
-			CardBorderOpacity:number,
-			CardBackgroundLuminanceOffset:number,
+		Values: {
+			CardBorderOpacity: number,
+			CardBackgroundLuminanceOffset: number,
 		},
 	},
 	Info: {

@@ -15,12 +15,12 @@ export type BooleanProperties =
 
 export type NumberProperties =
 
-	// Css Styling Extension
+// Css Styling Extension
 	"css_styling_font_size"
 
 export type TextProperties =
 
-	// Css Styling Extension
+// Css Styling Extension
 	"css_styling_font_family"
 
 export type TextAreaProperties = "core_tagText";
