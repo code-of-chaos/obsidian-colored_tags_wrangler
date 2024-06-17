@@ -5,6 +5,7 @@ import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord
 import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
 import {ServiceProvider} from "../../services/ServiceProvider";
 import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
+import {rgbaToString, rgbopacityToString} from "../../../lib/ColorConverters";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -48,6 +49,10 @@ export class CssStylingCssWrangler implements ICssWrangler {
 		}
 		if (record.css_styling_font_size !== undefined && record.css_styling_font_size !== null && record.css_styling_font_size !== 0) {
 			dict["font-size"] = `${record.css_styling_font_size}rem !important`
+		}
+		if (record.css_styling_opacity !== undefined && record.css_styling_opacity !== null && record.css_styling_opacity !== 1) {
+			dict["color"] = `${rgbopacityToString(record.core_color_foreground, record.css_styling_opacity)} !important`
+			dict["background-color"] = `${rgbopacityToString(record.core_color_background, record.css_styling_opacity)} !important`
 		}
 
 		return dict;

@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
 import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
-import {rgbaToString} from "../../../lib/ColorConverters";
+import {rgbaToString, rgbToString} from "../../../lib/ColorConverters";
 import {ServiceProvider} from "../../services/ServiceProvider";
 import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
 
@@ -37,8 +37,8 @@ export class CoreCssWrangler implements ICssWrangler {
 
 	private _properties(record: IColoredTagRecord): Record<string, string> {
 		return {
-			"color": `${rgbaToString(record.core_color_foreground)} !important`,
-			"background": `${rgbaToString(record.core_color_background)} !important`,
+			"color": `${rgbToString(record.core_color_foreground)} !important`,
+			"background": `${rgbToString(record.core_color_background)} !important`,
 		}
 	}
 

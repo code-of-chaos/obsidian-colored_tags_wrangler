@@ -17,6 +17,7 @@ export type NumberProperties =
 
 // Css Styling Extension
 	"css_styling_font_size"
+	| "css_styling_opacity"
 
 export type TextProperties =
 

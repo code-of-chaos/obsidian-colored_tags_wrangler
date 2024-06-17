@@ -31,6 +31,16 @@ export class CssStylingExtension extends AbstractExtension {
 			classes: ["header-wrap-every-word", "border-right-dotted"]
 		},
 		{
+			title: "Opacity",
+			callback: (rowData) => new SettingTagRecordSliderComponent(
+				rowData,
+				"css_styling_opacity",
+				0.0, 1.0, .01,
+				true
+			),
+			classes: []
+		},
+		{
 			title: "CssStyling",
 			callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "css_styling_bold_enabled"),
 			classes: []
@@ -50,7 +60,7 @@ export class CssStylingExtension extends AbstractExtension {
 			callback: (rowData) => new SettingTagRecordSliderComponent(
 				rowData,
 				"css_styling_font_size",
-				0, 10, .25,
+				0., 10., .25,
 				true
 			),
 			classes: []
@@ -64,6 +74,7 @@ export class CssStylingExtension extends AbstractExtension {
 			css_styling_font_family: "",
 			css_styling_font_size: 0,
 			css_styling_italic_enabled: false,
+			css_styling_opacity: 1.0,
 		};
 	}
 }

@@ -168,6 +168,9 @@ export function rgbToString(color: RGB): string {
 	return `rgb(${color.r}, ${color.g}, ${color.b})`
 }
 
+export function rgbopacityToString(color: RGB, opacity:number): string {
+	return `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`
+}
 export function rgbaToString(color: RGBA): string {
 	return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
 }
