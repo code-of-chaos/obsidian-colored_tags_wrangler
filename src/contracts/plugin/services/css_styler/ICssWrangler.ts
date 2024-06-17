@@ -7,5 +7,5 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 export interface ICssWrangler {
-	getRules() : string[]
+	getRules(): Record<string, Record<string, string>>
 }

@@ -37,7 +37,7 @@ export class ServiceProvider {
 		ServiceProvider.extensions = new ExtensionsService(ServiceProvider.settings)
 		ServiceProvider.tagRecords = new TagRecordsService(ServiceProvider.settings, ServiceProvider.extensions)
 
-		ServiceProvider.cssStyler = new CssStylerService(ServiceProvider.extensions, ServiceProvider.tagRecords)
+		ServiceProvider.cssStyler = new CssStylerService(ServiceProvider.extensions)
 
 		ServiceProvider.Instantiated = true;
 	}

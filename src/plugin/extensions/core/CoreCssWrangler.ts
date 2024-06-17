@@ -16,33 +16,37 @@ export class CoreCssWrangler implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	private _assembleCss(selectors:string[], color:RGBA, background_color:RGBA):string {
-		return `
-			${selectors.join(",\n")} {
-				color: ${rgbaToString(color)} !important;
-				background-color: ${rgbaToString(background_color)} !important;
-			}
-		`
+	private _properties(record:IColoredTagRecord):Record<string, string> {
+		return {
+			"color" : `${rgbaToString(record.core_color_foreground)} !important`,
+			"background" : `${rgbaToString(record.core_color_background)} !important`,
+		}
 	}
 
-	private _assembleRules(theme:string, record:IColoredTagRecord):string{
-		return this._assembleCss(
-			[
-				`${theme} .tag[href="#${record.core_tagText}" i]`,
-				`${theme} .cm-tag-${record.core_tagText}`,
-			],
-			record.core_color_foreground,
-			record.core_color_background,
-		)
+	private _selectors(theme:string, record:IColoredTagRecord):string[]{
+		return [
+			`${theme} .tag[href="#${record.core_tagText}" i]`,
+			`${theme} .cm-tag-${record.core_tagText}`,
+		]
 	}
 
-	getRules(): string[] {
-		return ServiceProvider.tagRecords
+	getRules(): Record<string, Record<string, string>> {
+		const dict : Record<string, Record<string, string>> = {};
+
+		ServiceProvider.tagRecords
 			.getTagsFlat(false)
 			.filter(record => record.core_enabled)
-			.flatMap(record => [
-				this._assembleRules(themeSelectorLight, record),
-				this._assembleRules(themeSelectorDark, record)
-			])
+			.forEach(record => {
+				this._selectors(themeSelectorLight, record)
+					.forEach((rule) => {
+						dict[rule] = this._properties(record)
+					})
+				this._selectors(themeSelectorDark, record)
+					.forEach((rule) => {
+						dict[rule] = this._properties(record)
+					})
+				}
+			)
+		return dict
 	}
 }
