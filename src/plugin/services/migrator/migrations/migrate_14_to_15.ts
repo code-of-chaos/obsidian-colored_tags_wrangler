@@ -21,7 +21,7 @@ interface OLD_IColorPicker {
 export async function migrate_14_to_15(loaded_data:ISettings_v014):Promise<IPluginSettings> {
     let new_data : IPluginSettings = Object.assign({}, defaultSettings); // TODO this is dangerous, change this to a specific pattern!
 
-	// ingest the old data
+	// ingest the .old data
 	new_data.TagColors = loaded_data.TagColors.ColorPicker.map(
 		(old_tag: OLD_IColorPicker) => {
 			const newTagColor: IColoredTagRecord = ServiceProvider.tagRecords.getDefaultRecord();
