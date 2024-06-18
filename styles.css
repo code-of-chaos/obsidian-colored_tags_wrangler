@@ -1,3 +1,7 @@
+.text-color-red {
+	color: var(--color-red)
+}
+
 .scroll-area-container {
 	position: relative;
 }

@@ -15,9 +15,12 @@ import {
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class CanvasCardExtension extends AbstractExtension<IExtensionRecordCanvasCard> {
-	public cssWrangler = new CanvasCardCssWrangler();
-	public extensionName = 'canvas cards';
-	public description = "Apply Tag formatting to Canvas Cards";
+	public override cssWrangler = new CanvasCardCssWrangler();
+	public override extensionName = 'canvas cards';
+	public override description = "Apply Tag formatting to Canvas Cards";
+
+	public extensionRequirements = ["core"]
+
 	public TableContentPopulators: TableContentPopulator[] = [
 		{
 			title: "Enable Border",

@@ -25,5 +25,7 @@ export interface IExtensionsService {
 
 	get Dictionary(): Record<string, IExtension<IExtensionRecord>>
 
+	get EnabledListAsStrings(): string[]
+
 	setExtension(extension: IExtension<IExtensionRecord>, value: boolean): void
 }

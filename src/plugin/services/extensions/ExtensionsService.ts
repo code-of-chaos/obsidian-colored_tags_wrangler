@@ -39,6 +39,10 @@ export class ExtensionsService implements IExtensionsService {
 		return this._Dictionary ??= this.AsDictionary();
 	}
 
+	public get EnabledListAsStrings(): string[] {
+		return this.EnabledList.map(e => e.extensionName);
+	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
 	// -----------------------------------------------------------------------------------------------------------------

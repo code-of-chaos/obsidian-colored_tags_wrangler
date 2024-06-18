@@ -13,6 +13,7 @@ export interface IExtension<T extends IExtensionRecord> {
 	readonly extensionName: string;
 	readonly description: string;
 	readonly cssWrangler: ICssWrangler;
+	readonly extensionRequirements: string[];
 
 	get isEnabled(): boolean
 	set isEnabled(value: boolean)
