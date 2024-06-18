@@ -26,4 +26,5 @@ data.json
 .obsidian/core-plugins-migration.json
 .obsidian/appearance.json
 .obsidian/app.json
-data_backup.json
+data_backup*.json
+/.old/

@@ -1,0 +1,29 @@
+// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+import {IColoredTagWrangler} from ".old/plugin/IColoredTagWrangler";
+import {IColorGroup, IGraphJSON, readGraphJson, writeGraphJson} from ".old/api/graph";
+import {get_tags} from ".old/api/tags";
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+export async function exportGraphJsonTags(plugin: IColoredTagWrangler) {
+	let graph_data: IGraphJSON | null = await readGraphJson(plugin.app.vault);
+	if (graph_data === null) {
+		return
+	}
+
+	graph_data.colorGroups = get_tags(plugin.settings.TagColors.ColorPicker, plugin.settings?.TagColors.EnableMultipleTags)
+		.map(({tag_name, color}) => {
+			return {
+				"query": `tag:#${tag_name}`,
+				"color": {
+					"a": 1,
+					"rgb": Number.parseInt(`${(color.r << 16) + (color.g << 8) + color.b}`)
+				}
+			} as IColorGroup
+		})
+
+	await writeGraphJson(graph_data, plugin.app.vault)
+}
