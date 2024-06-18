@@ -14,14 +14,12 @@ export class SettingTagRecordToggleComponent extends ToggleComponent implements 
 	constructor(rowData: RowDataType, property_name: BooleanProperties) {
 		super(rowData.parentEl); // Obsidian's stuff
 
-		if (property_name in rowData.record) {
-			this.setValue(rowData.record[property_name] as boolean);
-		}
-
+		// @ts-ignore
+		this.setValue(rowData.record[property_name] as boolean)
 		this.onChange(async (newValue) => {
+			// @ts-ignore
 			rowData.record[property_name] = newValue;
 			await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
-			await rowData.rowUpdateCallback() // Updates the preview element
 		})
 	}
 }

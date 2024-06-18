@@ -11,6 +11,11 @@ import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowData
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordSliderComponent extends SliderComponent implements ISettingTagRecordComponent {
+	public buttonEl:ExtraButtonComponent;
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// Constructors
+	// -----------------------------------------------------------------------------------------------------------------
 	constructor(rowData: RowDataType, property_name: NumberProperties, min: number, max: number, step: number, enableReset: boolean = false, resetValue:number|null=null) {
 		super(rowData.parentEl); // Obsidian's stuff
 
@@ -22,7 +27,7 @@ export class SettingTagRecordSliderComponent extends SliderComponent implements 
 		})
 
 		if (enableReset) {
-			new ExtraButtonComponent(rowData.parentEl)
+			this.buttonEl = new ExtraButtonComponent(rowData.parentEl)
 				.setIcon("reset")
 				.onClick(async () => {
 					rowData.record[property_name] = resetValue == null ? min : resetValue;

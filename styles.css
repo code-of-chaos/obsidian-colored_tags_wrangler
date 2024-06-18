@@ -70,6 +70,10 @@
 			padding-top: .25rem;
 			/*noinspection CssUnresolvedCustomProperty*/
 			border-bottom: 1px solid var(--background-modifier-border);
+
+			input.slider:disabled{
+				color: rgb(84, 84, 84) !important;
+			}
 		}
 
 		td:has(.navigator-parent) {

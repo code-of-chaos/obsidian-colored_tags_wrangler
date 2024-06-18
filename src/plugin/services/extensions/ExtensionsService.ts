@@ -37,9 +37,6 @@ export class ExtensionsService implements IExtensionsService {
 	private _EnabledList: IExtension[] | undefined;
 
 	public get EnabledList(): IExtension[] {
-
-		console.warn(this._settings.data.EnabledExtensions)
-
 		return this._EnabledList ?? this.FullList
 			.filter(e => this._settings.data.EnabledExtensions.contains(e.extensionName));
 	}
@@ -48,7 +45,7 @@ export class ExtensionsService implements IExtensionsService {
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
-
+	// -----------------------------------------------------------------------------------------------------------------
 	public get Dictionary(): Record<string, IExtension> {
 		return this._Dictionary ??= this.AsDictionary();
 	}

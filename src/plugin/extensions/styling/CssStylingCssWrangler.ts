@@ -58,8 +58,12 @@ export class CssStylingCssWrangler implements ICssWrangler {
 			dict["font-size"] = `${record.css_styling_font_size}rem !important`
 		}
 		if (record.css_styling_opacity !== undefined && record.css_styling_opacity !== null && record.css_styling_opacity !== 1) {
-			// dict["color"] = `${rgbopacityToString(record.core_color_foreground, record.css_styling_opacity)} !important`
-			dict["background-color"] = `${rgbopacityToString(record.core_color_background, record.css_styling_opacity)} !important`
+			if (record.core_enabled){
+				dict["background-color"] = `${rgbopacityToString(record.core_color_background, record.css_styling_opacity)} !important`
+			} else {
+				dict["background-color"] = `hsla(var(--accent-h), var(--accent-s), var(--accent-l), ${record.css_styling_opacity})`
+			}
+
 		}
 
 		return dict;

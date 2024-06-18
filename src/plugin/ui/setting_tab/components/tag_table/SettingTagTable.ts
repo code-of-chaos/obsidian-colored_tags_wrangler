@@ -82,8 +82,10 @@ export class SettingTagTable {
 	private async _DisplayExtensionSelector(): Promise<void> {
 		const element = this.settingEl
 			.setName("Custom color tags")
-			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `)
-			.addDropdown(component => {
+			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `);
+
+		if (ServiceProvider.extensions.EnabledList.length > 1){
+			element.addDropdown(component => {
 				component
 					.addOptions(
 						ServiceProvider.extensions.EnabledList
@@ -100,7 +102,7 @@ export class SettingTagTable {
 						await this.redrawTable()
 					})
 			})
-		;
+		}
 		await this.addNewButton(element) // add a bottom button, for navigation
 	}
 
@@ -153,16 +155,11 @@ export class SettingTagTable {
 			}
 		]
 
-		let populators: TableContentPopulator[];
-		if (this.selectedExtension != undefined) {
-			populators = ServiceProvider.extensions.Dictionary[this.selectedExtension].TableContentPopulators
-		} else {
-			populators = ServiceProvider.extensions.Core.TableContentPopulators
-		}
+		const selectedExt = this.selectedExtension != undefined
+			? ServiceProvider.extensions.Dictionary[this.selectedExtension]
+			: ServiceProvider.extensions.EnabledList.first()
 
-		for (const callback of populators) {
-			content.push(callback)
-		}
+		selectedExt?.TableContentPopulators.forEach((callback => content.push(callback)))
 
 		// Actually create the table
 		let table = tableContainer.createEl('table');
