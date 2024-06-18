@@ -1,3 +1,7 @@
+.text-color-red {
+	color: var(--color-red)
+}
+
 .scroll-area-container {
 	position: relative;
 }
@@ -70,6 +74,7 @@
 			padding-top: .25rem;
 			/*noinspection CssUnresolvedCustomProperty*/
 			border-bottom: 1px solid var(--background-modifier-border);
+			align-items: center;
 
 			input.slider:disabled{
 				color: rgb(84, 84, 84) !important;
@@ -78,6 +83,11 @@
 			div.slider-box{
 				display: flex;
                 align-items: center;
+			}
+
+			input.settingTagRecordNumberInputComponent {
+				width: 5em;
+				text-align: center;
 			}
 		}
 

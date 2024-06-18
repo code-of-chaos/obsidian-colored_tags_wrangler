@@ -45,6 +45,21 @@ export class SettingExtensionSelector {
 			.addToggle(cb => {
 				cb.setValue(extension.isEnabled)
 				cb.onChange(value => {
+					if (extension.extensionRequirements.length != 0 && value) {
+						const notFoundRequirements = extension.extensionRequirements.filter(ext => !ServiceProvider.extensions.EnabledListAsStrings.includes(ext));
+						if (notFoundRequirements.length > 0) {
+							const values = notFoundRequirements.map(capitalizeFirstLetter).join(", ")
+							const doc = new DocumentFragment();
+							doc.createSpan({}).innerText = extension.description;
+							doc.createSpan({"cls":"text-color-red"}).innerHTML = `<br>The following extension requirements were not set: <b>${values}</b>`;
+
+							gridItem.setDesc(doc)
+
+							return;
+						}
+					}
+
+					gridItem.setDesc(extension.description)
 					extension.isEnabled = value;
 					ServiceProvider.cssStyler.processExtensions() // This is so we can update all the styling when something changes
 

@@ -1,12 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IExtensionRecordCore} from "../../../plugin/extensions/core/IExtensionRecordCssStyling";
-import {IExtensionRecordCssStyling} from "../../../plugin/extensions/styling/IExtensionRecordCssStyling";
-import {IExtensionRecordCanvasCard} from "../../../plugin/extensions/canvas_card/IExtensionRecordCanvasCard";
+import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagRecord extends IExtensionRecordCore, IExtensionRecordCssStyling,IExtensionRecordCanvasCard {
+export interface IExtensionRecordCanvasCard extends IExtensionRecord {
+	canvas_card_enable_border: boolean,
+	canvas_card_enable_background: boolean,
+	canvas_card_background_opacity: number,
+	canvas_card_priority: number|undefined,
 }

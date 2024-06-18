@@ -29,19 +29,28 @@ export class SettingTagRecordSliderComponent extends BaseComponent implements IS
 				.setTooltip("restore defaults")
 				.onClick(async () => {
 					rowData.record[property_name] = resetValue == null ? min : resetValue;
-					this.sliderEl.setValue(rowData.record[property_name])
+					this.sliderEl.setValue(rowData.record[property_name] ?? min)
 					await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
 				})
 		}
 
 		this.sliderEl = new SliderComponent(this.boxEl)
 			.setLimits(min, max, step)
-			.setValue(rowData.record[property_name])
+			.setValue(rowData.record[property_name] ?? min)
 			.setDynamicTooltip()
 			.onChange(async (newValue) => {
 				rowData.record[property_name] = newValue;
 				await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
 			})
 
+	}
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
+	public hide(){
+		this.buttonEl.extraSettingsEl.hide()
+		this.sliderEl.sliderEl.hide()
+		this.boxEl.hide()
 	}
 }

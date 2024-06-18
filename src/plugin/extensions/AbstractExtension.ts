@@ -15,6 +15,7 @@ export abstract class AbstractExtension<T extends IExtensionRecord> implements I
 	abstract readonly cssWrangler: ICssWrangler;
 	abstract readonly extensionName: string;
 	abstract readonly description: string;
+	readonly extensionRequirements: string[] = []
 
 	public get isEnabled(): boolean {
 		return ServiceProvider.extensions.EnabledList.contains(this)
