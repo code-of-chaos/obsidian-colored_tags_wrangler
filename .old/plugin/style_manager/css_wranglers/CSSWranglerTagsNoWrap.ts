@@ -12,13 +12,14 @@ export class CSSWranglerTagsNoWrap extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin) {
+	constructor(plugin: ColoredTagWranglerPlugin) {
 		super(plugin, plugin.settings.TagColors);
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCss(_:string){
+	assembleCss(_: string) {
 		return [this.plugin.settings.CSS.TagsNoWrap
 			? `a.tag {white-space: ${this.plugin.settings.CSS.TagsNoWrapText};}`!
 			: ""]

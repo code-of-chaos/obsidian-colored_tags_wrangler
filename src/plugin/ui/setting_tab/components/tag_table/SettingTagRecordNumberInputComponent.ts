@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ToggleComponent} from "obsidian";
-import {BooleanProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
+import {TextComponent} from "obsidian";
+import {NumberProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 import {ServiceProvider} from "../../../../services/ServiceProvider";
 import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
@@ -10,15 +10,13 @@ import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowData
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class SettingTagRecordToggleComponent extends ToggleComponent implements ISettingTagRecordComponent {
-	constructor(rowData: RowDataType, property_name: BooleanProperties) {
+export class SettingTagRecordNumberInputComponent extends TextComponent implements ISettingTagRecordComponent {
+	constructor(rowData: RowDataType, property_name: NumberProperties) {
 		super(rowData.parentEl); // Obsidian's stuff
 
-		// @ts-ignore
-		this.setValue(rowData.record[property_name] as boolean)
+		this.setValue(rowData.record[property_name].toString())
 		this.onChange(async (newValue) => {
-			// @ts-ignore // I still don't get why???
-			rowData.record[property_name] = newValue;
+			rowData.record[property_name] = Number.parseInt(newValue);
 			await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
 		})
 	}

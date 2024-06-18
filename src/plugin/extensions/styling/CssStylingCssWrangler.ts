@@ -3,23 +3,40 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
 import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
-import {rgbToString} from "../../../lib/ColorConverters";
 import {ServiceProvider} from "../../services/ServiceProvider";
 import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
+import {rgbopacityToString} from "../../../lib/ColorConverters";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-
-export class CoreCssWrangler implements ICssWrangler {
+export class CssStylingCssWrangler implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Helper Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	private _properties(record: IColoredTagRecord): Record<string, string> {
-		return {
-			"color": `${rgbToString(record.core_color_foreground)} !important`,
-			"background": `${rgbToString(record.core_color_background)} !important`,
+		const dict: Record<string, string> = {}
+		if (record.css_styling_bold_enabled) {
+			dict["font-weight"] = "bold"
 		}
+		if (record.css_styling_italic_enabled) {
+			dict["font-style"] = "italic"
+		}
+		if (record.css_styling_font_family !== undefined && record.css_styling_font_family !== null && record.css_styling_font_family !== "") {
+			dict["font-family"] = `${record.css_styling_font_family}`
+		}
+		if (record.css_styling_font_size !== undefined && record.css_styling_font_size !== null && record.css_styling_font_size !== 1) {
+			dict["font-size"] = `${record.css_styling_font_size}em`
+		}
+		if (record.css_styling_opacity !== undefined && record.css_styling_opacity !== null && record.css_styling_opacity !== 1) {
+			if (record.core_enabled){
+				dict["background-color"] = `${rgbopacityToString(record.core_color_background, record.css_styling_opacity)} !important`
+			} else {
+				dict["background-color"] = `hsla(var(--accent-h), var(--accent-s), var(--accent-l), ${record.css_styling_opacity})`
+			}
+		}
+
+		return dict;
 	}
 
 	private _selectors(theme: string, record: IColoredTagRecord): string[] {
@@ -34,9 +51,16 @@ export class CoreCssWrangler implements ICssWrangler {
 	public getRules(): Record<string, Record<string, string>> {
 		const dict: Record<string, Record<string, string>> = {};
 
+		// Only use the default record for the specific extension we are in,
+		//		No need to check all the available keys in all available extensions
+		const defaultRecord = ServiceProvider.extensions.CssStyling.getDefaultRecord()
+
 		ServiceProvider.tagRecords
 			.getTagsFlat(false)
-			.filter(record => record.core_enabled)
+			.filter(record => {
+				// @ts-ignore
+				return Object.keys(defaultRecord).first(key => record[key] !== defaultRecord[key])
+			})
 			.forEach(record => {
 					this._selectors(themeSelectorLight, record)
 						.forEach((rule) => {

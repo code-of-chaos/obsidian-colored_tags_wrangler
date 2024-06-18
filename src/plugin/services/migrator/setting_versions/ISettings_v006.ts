@@ -7,53 +7,58 @@ import {RGB} from "obsidian";
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export interface ISettings_v006 {
-	TagColors:{
-		ColorPicker: Record<string, {tag_name:string, color:RGB, background_color:RGB,background_opacity:number}>,
+	TagColors: {
+		ColorPicker: Record<string, {
+			tag_name: string,
+			color: RGB,
+			background_color: RGB,
+			background_opacity: number
+		}>,
 
-		EnableMultipleTags:boolean,
-		EnableSeparateBackground:boolean,
-		Values:{
-			BackgroundOpacity:number,
-			BackgroundOpacityHover:number,
-			SemanticColorsLuminanceOffset:number,
+		EnableMultipleTags: boolean,
+		EnableSeparateBackground: boolean,
+		Values: {
+			BackgroundOpacity: number,
+			BackgroundOpacityHover: number,
+			SemanticColorsLuminanceOffset: number,
 		}
 	},
 
-	FolderNote:{
-		Enable:boolean
-		FolderTagLinks:Record<string, {folder_path:string, tag_name:string}>,
+	FolderNote: {
+		Enable: boolean
+		FolderTagLinks: Record<string, { folder_path: string, tag_name: string }>,
 
-		Values:{
-			ForceImportant:boolean,
-			BorderRadius:string,
-			Padding:string,
+		Values: {
+			ForceImportant: boolean,
+			BorderRadius: string,
+			Padding: string,
 		}
 	},
 
-	Kanban:{
+	Kanban: {
 		Enable: boolean,
-		EnableCards:boolean,
-		EnableLists:boolean,
-		HideHashtags:boolean,
+		EnableCards: boolean,
+		EnableLists: boolean,
+		HideHashtags: boolean,
 
-		Values:{
-			CardBackgroundOpacity:number,
-			CardBorderOpacity:number,
-			ListBackgroundOpacity:number,
-			ListBorderOpacity:number,
+		Values: {
+			CardBackgroundOpacity: number,
+			CardBorderOpacity: number,
+			ListBackgroundOpacity: number,
+			ListBorderOpacity: number,
 		},
 	},
 
-	Debug:{
-		Enable:boolean,
+	Debug: {
+		Enable: boolean,
 	},
 
-	Canvas:{
-		Enable:boolean,
+	Canvas: {
+		Enable: boolean,
 
-		Values:{
-			CardBorderOpacity:number,
-			CardBackgroundLuminanceOffset:number,
+		Values: {
+			CardBorderOpacity: number,
+			CardBackgroundLuminanceOffset: number,
 		},
 	},
 	Info: {

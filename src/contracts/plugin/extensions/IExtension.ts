@@ -8,15 +8,17 @@ import {ICssWrangler} from "../services/css_styler/ICssWrangler";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IExtension {
+export interface IExtension<T extends IExtensionRecord> {
 	readonly TableContentPopulators: TableContentPopulator[];
 	readonly extensionName: string;
 	readonly description: string;
-	readonly cssWrangler : ICssWrangler;
+	readonly cssWrangler: ICssWrangler;
 
 	get isEnabled(): boolean
-	set isEnabled(value:boolean)
+	set isEnabled(value: boolean)
 
-	getDefaultRecord():IExtensionRecord;
-
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
+	getDefaultRecord(): T;
 }

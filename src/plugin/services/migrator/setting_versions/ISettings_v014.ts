@@ -7,77 +7,77 @@
 // ---------------------------------------------------------------------------------------------------------------------
 export interface ISettings_v014 {
 	// Main settings for colors to tags
-	TagColors:{
-        ColorPicker: Array<object>,
+	TagColors: {
+		ColorPicker: Array<object>,
 
-        EnableMultipleTags:boolean,
-        EnableSeparateBackground:boolean,
-        EnableBackgroundOpacity:boolean,
-        Values:{
-            BackgroundOpacity:number,
-            LuminanceOffset:number,
-        }
-    },
+		EnableMultipleTags: boolean,
+		EnableSeparateBackground: boolean,
+		EnableBackgroundOpacity: boolean,
+		Values: {
+			BackgroundOpacity: number,
+			LuminanceOffset: number,
+		}
+	},
 
-	CSS:{
-		NoteTags:boolean,
-		NoteProperties:boolean,
-		NoteBackgrounds:boolean,
+	CSS: {
+		NoteTags: boolean,
+		NoteProperties: boolean,
+		NoteBackgrounds: boolean,
 
-		TagsNoWrap:boolean,
-		TagsNoWrapText:string,
+		TagsNoWrap: boolean,
+		TagsNoWrapText: string,
 	},
 
 	// Extra integrations
-	FolderNote:{
-        Enable:boolean
-        FolderTagLinks:Array<{folder_path:string, tag_name:string}>,
+	FolderNote: {
+		Enable: boolean
+		FolderTagLinks: Array<{ folder_path: string, tag_name: string }>,
 
-        EnableAutoDetect:boolean,
-        EnableBackgroundOpacity:boolean,
+		EnableAutoDetect: boolean,
+		EnableBackgroundOpacity: boolean,
 
-        Values:{
-            BackgroundOpacity:number,
-            ForceImportant:boolean,
-            BorderRadius:string,
-            Padding:string,
-        }
-    },
+		Values: {
+			BackgroundOpacity: number,
+			ForceImportant: boolean,
+			BorderRadius: string,
+			Padding: string,
+		}
+	},
 
-    Kanban:{
-        Enable: boolean,
-        EnableCards:boolean,
-        EnableLists:boolean,
-        HideHashtags:boolean,
-        EnableBackgroundOpacity:boolean,
+	Kanban: {
+		Enable: boolean,
+		EnableCards: boolean,
+		EnableLists: boolean,
+		HideHashtags: boolean,
+		EnableBackgroundOpacity: boolean,
 
-        Values:{
-            BackgroundOpacity:number,
-            CardBackgroundOpacity:number,
-            CardBorderOpacity:number,
-            ListBackgroundOpacity:number,
-            ListBorderOpacity:number,
-        },
-    },
+		Values: {
+			BackgroundOpacity: number,
+			CardBackgroundOpacity: number,
+			CardBorderOpacity: number,
+			ListBackgroundOpacity: number,
+			ListBorderOpacity: number,
+		},
+	},
 
-    Canvas:{
-        Enable:boolean,
-        EnableBackgroundOpacity:boolean,
+	Canvas: {
+		Enable: boolean,
+		EnableBackgroundOpacity: boolean,
 
-        Values:{
-            BackgroundOpacity:number,
-            CardBorderOpacity:number,
-            CardBackgroundLuminanceOffset:number,
-        },
-    },
+		Values: {
+			BackgroundOpacity: number,
+			CardBorderOpacity: number,
+			CardBackgroundLuminanceOffset: number,
+		},
+	},
 
 	// Extra stuff
-	Debug:{
-		Enable:boolean,
-        EnableExperimentalCommands:boolean,
+	Debug: {
+		Enable: boolean,
+		EnableExperimentalCommands: boolean,
 	},
 
 	Info: {
-        SettingsVersion: number
-    }
+		SettingsVersion: number
+	}
 }

@@ -3,36 +3,26 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {ICssStylerService} from "../../../contracts/plugin/services/css_styler/ICssStylerService";
 import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
-import {ITagRecordsService} from "../../../contracts/plugin/services/tag_records/ITagRecordsService";
-import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-const rxCssComment = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g;
-const lineCleanup = (line: string) =>
-	line.split("\n")
-		.map(l => l.replace(rxCssComment, '').trim())  // Remove CSS comments
-		.join(" ");
-
-export const themeSelectorLight = "body.theme-light";
-export const themeSelectorDark = "body.theme-dark";
+export const themeSelectorLight:string = "body.theme-light";
+export const themeSelectorDark:string = "body.theme-dark";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class CssStylerService implements ICssStylerService{
-	private styleElement: HTMLStyleElement;
+export class CssStylerService implements ICssStylerService {
+	private readonly styleElement: HTMLStyleElement;
 
-	private extensions : IExtensionsService
-	private tagRecords : ITagRecordsService
+	private extensions: IExtensionsService
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(extensions : IExtensionsService, tagRecords:ITagRecordsService) {
+	constructor(extensions: IExtensionsService) {
 		this.extensions = extensions;
-		this.tagRecords = tagRecords;
 
 		this.styleElement = document.createElement("style");
 		this.styleElement.id = "colored-tags-wrangler"
@@ -40,17 +30,32 @@ export class CssStylerService implements ICssStylerService{
 
 	public processExtensions() {
 		this.styleElement.innerHTML = "";
-		this.styleElement.innerHTML = this.extensions.EnabledList
-			// Each extension should handle their own rules for filtering which records are applied to or not
-			.flatMap(e =>e.cssWrangler.getRules())
-			.map(lineCleanup)
-			.join(" ")
+		this.styleElement.innerHTML = this.createCSS()
 
 		document.head.appendChild(this.styleElement);
 	}
 
-	public cleanup(){
+	public cleanup() {
 		document.head.removeChild(this.styleElement);
+	}
+
+	private createCSS(): string {
+		let dict: Record<string, Record<string, string>> = {};
+
+		this.extensions.EnabledList
+			// Each extension should handle their own rules for filtering which records are applied to or not
+			.forEach(e => {
+				const rules: Record<string, Record<string, string>> = e.cssWrangler.getRules();
+				// Because each extension is loaded in order, we can override behaviours from a previous plugin one by one
+				Object.keys(rules).forEach((key) => {
+					dict[key] = Object.assign(dict[key] || {}, rules[key]); // overwrite or create new object
+				});
+			})
+
+		return Object.keys(dict)
+			.map(
+				selector => `${selector} { ${Object.keys(dict[selector]).map(property => `${property}: ${dict[selector][property]};`).join("")} }`
+			).join("\n");
 	}
 
 }

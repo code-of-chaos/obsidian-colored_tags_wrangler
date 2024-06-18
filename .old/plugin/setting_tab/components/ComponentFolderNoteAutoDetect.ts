@@ -10,7 +10,7 @@ export class ComponentFolderNoteAutoDetect extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): void {
+	public create_component(containerEL: HTMLElement): void {
 		new Setting(containerEL)
 			.setName("Enable auto detection")
 			.setDesc("Auto detects changes in a file's property's tags and updates the file viewer.")

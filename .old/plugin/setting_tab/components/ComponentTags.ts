@@ -14,19 +14,19 @@ import {arrayMove} from ".old/api/ArrayUtils"
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
-const _NEW_TAG_NAME:string = "new-tag";
-const _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
-const _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 100, g: 100, b: 100 };
+const _NEW_TAG_NAME: string = "new-tag";
+const _NEW_DEFAULT_COLOR: RGB = {r: 255, g: 255, b: 255};
+const _NEW_DEFAULT_BACKGROUND_COLOR: RGB = {r: 100, g: 100, b: 100};
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentTags extends SettingsTabComponent{
+export class ComponentTags extends SettingsTabComponent {
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): void {
+	public create_component(containerEL: HTMLElement): void {
 		let setting = new Setting(containerEL)
 			.setName("Custom color tags")
 			.setDesc(`Define custom colors for tags.`)
@@ -34,7 +34,7 @@ export class ComponentTags extends SettingsTabComponent{
 			.addButton((button) => this._add_new_tag_button(button));
 
 		// Only when Debug settings are on, allow the "Clear all" button to appear
-		if(this.plugin.settings.Debug.Enable){
+		if (this.plugin.settings.Debug.Enable) {
 			setting.addButton((button) =>
 				button
 					.setButtonText('Clear all')
@@ -62,7 +62,7 @@ export class ComponentTags extends SettingsTabComponent{
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	private _add_new_tag_button(button:ButtonComponent){
+	private _add_new_tag_button(button: ButtonComponent) {
 		button
 			.setButtonText("Add new tag")
 			.onClick(async () => {
@@ -80,7 +80,12 @@ export class ComponentTags extends SettingsTabComponent{
 			.setClass("mod-cta")
 	}
 
-	private _text_callback(text:TextComponent|TextAreaComponent, tag_id:number, new_tag_content:{tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}) {
+	private _text_callback(text: TextComponent | TextAreaComponent, tag_id: number, new_tag_content: {
+		tag_name: string,
+		color: RGB,
+		background_color: RGB,
+		luminance_offset: number
+	}) {
 		return text
 			.setPlaceholder(_NEW_TAG_NAME)
 			.setValue(new_tag_content.tag_name)
@@ -95,19 +100,25 @@ export class ComponentTags extends SettingsTabComponent{
 				await this.plugin.saveSettings();
 			});
 	}
-	private _createTagColorSetting(tag_id: number, tag_content: {tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}, containerEL:HTMLElement) {
+
+	private _createTagColorSetting(tag_id: number, tag_content: {
+		tag_name: string,
+		color: RGB,
+		background_color: RGB,
+		luminance_offset: number
+	}, containerEL: HTMLElement) {
 		let new_tag_id = tag_id;
 		let new_tag_content = tag_content;
 
 		const setting = new Setting(containerEL);
-		if (Platform.isMobileApp || Platform.isMobile){
+		if (Platform.isMobileApp || Platform.isMobile) {
 			setting.setClass("cwt-setting-tags")
 		}
 
-		if (this.plugin.settings.TagColors.EnableMultipleTags){
-			setting.addTextArea((text) => this._text_callback(text,tag_id, new_tag_content));
+		if (this.plugin.settings.TagColors.EnableMultipleTags) {
+			setting.addTextArea((text) => this._text_callback(text, tag_id, new_tag_content));
 		} else {
-			setting.addText((text) => this._text_callback(text,tag_id, new_tag_content));
+			setting.addText((text) => this._text_callback(text, tag_id, new_tag_content));
 		}
 
 		setting.addColorPicker((colorPicker) =>
@@ -121,8 +132,8 @@ export class ComponentTags extends SettingsTabComponent{
 				})
 		);
 
-		let colorPickerBackground :ColorComponent;
-		setting.addColorPicker((colorPicker) =>{
+		let colorPickerBackground: ColorComponent;
+		setting.addColorPicker((colorPicker) => {
 			colorPickerBackground = colorPicker;
 			colorPickerBackground
 				.setValueRgb(new_tag_content.background_color)
@@ -134,7 +145,7 @@ export class ComponentTags extends SettingsTabComponent{
 				})
 		});
 
-		if(this.plugin.settings.TagColors.EnableSeparateBackground){
+		if (this.plugin.settings.TagColors.EnableSeparateBackground) {
 			setting.addButton((cb) => {
 				cb.setIcon("paintbrush")
 					.setTooltip("Automatically generate a background color")
@@ -156,7 +167,7 @@ export class ComponentTags extends SettingsTabComponent{
 				.setTooltip("Move up")
 				.onClick(async () => {
 					// reorder stuff here!!!
-					arrayMove(this.plugin.settings.TagColors.ColorPicker, new_tag_id, new_tag_id-1)
+					arrayMove(this.plugin.settings.TagColors.ColorPicker, new_tag_id, new_tag_id - 1)
 					await this.plugin.saveSettings();
 					this.settings_tab.display() // Yes, because this alters the list
 				});
@@ -166,24 +177,24 @@ export class ComponentTags extends SettingsTabComponent{
 				.setTooltip("Move down")
 				.onClick(async () => {
 					// reorder stuff here!!!
-					arrayMove(this.plugin.settings.TagColors.ColorPicker, new_tag_id, new_tag_id+1)
+					arrayMove(this.plugin.settings.TagColors.ColorPicker, new_tag_id, new_tag_id + 1)
 					await this.plugin.saveSettings();
 					this.settings_tab.display() // Yes, because this alters the list
 				});
 		})
 
 		setting.addExtraButton((cb) =>
-				cb.setIcon("trash")
-					.setTooltip("Delete")
-					.onClick(async () => {
-						// Remove the tag and color
-						this.plugin.settings.TagColors.ColorPicker.splice(new_tag_id, 1);
-						await Promise.all([
-							this.plugin.saveSettings(),
-							this.settings_tab.display() // Yes, because this alters the list
-						]);
-					})
-			);
+			cb.setIcon("trash")
+				.setTooltip("Delete")
+				.onClick(async () => {
+					// Remove the tag and color
+					this.plugin.settings.TagColors.ColorPicker.splice(new_tag_id, 1);
+					await Promise.all([
+						this.plugin.saveSettings(),
+						this.settings_tab.display() // Yes, because this alters the list
+					]);
+				})
+		);
 
 		containerEL.appendChild(setting.settingEl);
 	}

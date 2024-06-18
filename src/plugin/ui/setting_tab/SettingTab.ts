@@ -14,7 +14,7 @@ export class SettingTab extends PluginSettingTab implements ISettingTab {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	async display(): Promise<void> {
-		const { containerEl } = this;
+		const {containerEl} = this;
 		containerEl.empty();
 
 		new Setting(containerEl).setName("Tag table").setHeading()

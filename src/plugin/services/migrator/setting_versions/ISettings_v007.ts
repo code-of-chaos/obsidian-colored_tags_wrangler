@@ -7,55 +7,55 @@ import {RGB} from "obsidian";
 // Interface
 // ---------------------------------------------------------------------------------------------------------------------
 export interface ISettings_v007 {
-	TagColors:{
-		ColorPicker: Record<string, {tag_name:string, color:RGB, background_color:RGB,luminance_offset:number}>,
+	TagColors: {
+		ColorPicker: Record<string, { tag_name: string, color: RGB, background_color: RGB, luminance_offset: number }>,
 
-		EnableMultipleTags:boolean,
-		EnableSeparateBackground:boolean,
-		EnableSeparateLuminanceOffset:boolean,
-		EnableDarkLightDifference:boolean,
-		EnableBackgroundOpacity:boolean,
-		Values:{
-			BackgroundOpacity:number,
-			LuminanceOffset:number,
+		EnableMultipleTags: boolean,
+		EnableSeparateBackground: boolean,
+		EnableSeparateLuminanceOffset: boolean,
+		EnableDarkLightDifference: boolean,
+		EnableBackgroundOpacity: boolean,
+		Values: {
+			BackgroundOpacity: number,
+			LuminanceOffset: number,
 		}
 	},
 
-	FolderNote:{
-		Enable:boolean
-		FolderTagLinks:Record<string, {folder_path:string, tag_name:string}>,
+	FolderNote: {
+		Enable: boolean
+		FolderTagLinks: Record<string, { folder_path: string, tag_name: string }>,
 
-		Values:{
-			ForceImportant:boolean,
-			BorderRadius:string,
-			Padding:string,
+		Values: {
+			ForceImportant: boolean,
+			BorderRadius: string,
+			Padding: string,
 		}
 	},
 
-	Kanban:{
+	Kanban: {
 		Enable: boolean,
-		EnableCards:boolean,
-		EnableLists:boolean,
-		HideHashtags:boolean,
+		EnableCards: boolean,
+		EnableLists: boolean,
+		HideHashtags: boolean,
 
-		Values:{
-			CardBackgroundOpacity:number,
-			CardBorderOpacity:number,
-			ListBackgroundOpacity:number,
-			ListBorderOpacity:number,
+		Values: {
+			CardBackgroundOpacity: number,
+			CardBorderOpacity: number,
+			ListBackgroundOpacity: number,
+			ListBorderOpacity: number,
 		},
 	},
 
-	Debug:{
-		Enable:boolean,
+	Debug: {
+		Enable: boolean,
 	},
 
-	Canvas:{
-		Enable:boolean,
+	Canvas: {
+		Enable: boolean,
 
-		Values:{
-			CardBorderOpacity:number,
-			CardBackgroundLuminanceOffset:number,
+		Values: {
+			CardBorderOpacity: number,
+			CardBackgroundLuminanceOffset: number,
 		},
 	},
 	Info: {

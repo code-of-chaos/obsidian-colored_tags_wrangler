@@ -17,18 +17,18 @@ import {ICssStylerService} from "../../contracts/plugin/services/css_styler/ICss
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ServiceProvider {
-	public static plugin : IColoredTagWranglerPlugin
-	public static extensions : IExtensionsService
-	public static settings : ISettingsService;
-	public static tagRecords : ITagRecordsService;
-	public static migrator : IMigratorService;
-	public static cssStyler : ICssStylerService
+	public static plugin: IColoredTagWranglerPlugin
+	public static extensions: IExtensionsService
+	public static settings: ISettingsService;
+	public static tagRecords: ITagRecordsService;
+	public static migrator: IMigratorService;
+	public static cssStyler: ICssStylerService
 
-	private static Instantiated : boolean = false;
+	private static Instantiated: boolean = false;
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public static PopulateInstances(plugin: IColoredTagWranglerPlugin){
+	public static PopulateInstances(plugin: IColoredTagWranglerPlugin) {
 		if (ServiceProvider.Instantiated) return;
 
 		ServiceProvider.plugin = plugin;
@@ -37,7 +37,7 @@ export class ServiceProvider {
 		ServiceProvider.extensions = new ExtensionsService(ServiceProvider.settings)
 		ServiceProvider.tagRecords = new TagRecordsService(ServiceProvider.settings, ServiceProvider.extensions)
 
-		ServiceProvider.cssStyler = new CssStylerService(ServiceProvider.extensions, ServiceProvider.tagRecords)
+		ServiceProvider.cssStyler = new CssStylerService(ServiceProvider.extensions)
 
 		ServiceProvider.Instantiated = true;
 	}

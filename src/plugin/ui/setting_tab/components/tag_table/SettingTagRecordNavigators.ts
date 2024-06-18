@@ -10,20 +10,20 @@ import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowData
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class SettingTagRecordNavigators implements ISettingTagRecordComponent{
-	private El: HTMLElement;
+export class SettingTagRecordNavigators implements ISettingTagRecordComponent {
 	disabled: boolean;
+	private El: HTMLElement;
 
 	// This is just a recreation of the obsidian tag spans
 	//		Although I should be able to create some sort of system to update them easily?
 	//		Currently, this is done by giving them specific Ids tied to the uuid of the records.
 
-	constructor(rowData:RowDataType, enableRemove:boolean=true, redrawCallback : () => Promise<void>) {
+	constructor(rowData: RowDataType, enableRemove: boolean = true, redrawCallback: () => Promise<void>) {
 		this.El = rowData.parentEl.createDiv()
 		this.El.addClass("navigator-parent");
 		const recordIndex = ServiceProvider.tagRecords.getTagIndex(rowData.record)
 
-		if (enableRemove){
+		if (enableRemove) {
 			new ExtraButtonComponent(this.El)
 				.setIcon("trash")
 				.setTooltip("Delete record")
@@ -42,20 +42,20 @@ export class SettingTagRecordNavigators implements ISettingTagRecordComponent{
 					// reorder stuff here!!!
 					// console.warn(ServiceProvider.plugin.app.lastEvent)
 					// console.warn(ServiceProvider.plugin.app.lastEvent?.shiftKey)
-					arrayMove(ServiceProvider.tagRecords.getTags(), recordIndex, recordIndex-1)
+					arrayMove(ServiceProvider.tagRecords.getTags(), recordIndex, recordIndex - 1)
 					ServiceProvider.settings.debounceSaveToFile()
 					await redrawCallback()
 				})
 				.extraSettingsEl.classList.add("navigator-chevron-up");
 		}
 
-		if (recordIndex !== ServiceProvider.tagRecords.getTagCount() -1) {
+		if (recordIndex !== ServiceProvider.tagRecords.getTagCount() - 1) {
 			new ExtraButtonComponent(this.El)
 				.setIcon("down-chevron-glyph")
 				.setTooltip("Move down")
 				.onClick(async () => {
 					// reorder stuff here!!!
-					arrayMove(ServiceProvider.tagRecords.getTags(), recordIndex, recordIndex+1)
+					arrayMove(ServiceProvider.tagRecords.getTags(), recordIndex, recordIndex + 1)
 					ServiceProvider.settings.debounceSaveToFile()
 					await redrawCallback()
 				})

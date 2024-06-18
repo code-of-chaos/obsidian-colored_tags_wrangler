@@ -11,15 +11,16 @@ export class CSSWranglerTagsCanvas extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin) {
-		super(plugin,plugin.settings.TagColors);
+	constructor(plugin: ColoredTagWranglerPlugin) {
+		super(plugin, plugin.settings.TagColors);
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCss(theme:string){
+	assembleCss(theme: string) {
 
-		const important:string = this.getImportant();
+		const important: string = this.getImportant();
 		return this.getTags(false)
 			.map(
 				({tag_name, color, background_color}) => `
@@ -28,8 +29,7 @@ ${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${tag
 	background : ${this.getBackgroundWithOpacityString(background_color)} ${important};
 	border-color: rgb(${color.r}, ${color.g}, ${color.b}) ${important};
 }`
-				);
-
+			);
 
 
 	}

@@ -6,5 +6,5 @@
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IMigratorService {
-	migrateData(data: any, ): Promise<any>;
+	migrateData(data: any,): Promise<any>;
 }

@@ -1,16 +1,16 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {RGBA} from "../../../contracts/types/RGBA";
 import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IExtensionRecordCore extends IExtensionRecord {
-	core_enabled: boolean;
-	core_id: string
-	core_tagText : string,
-	core_color_foreground : RGBA, // color for tag's text
-	core_color_background : RGBA, // color for tag's background
+export interface IExtensionRecordCssStyling extends IExtensionRecord {
+	// css_styling_enabled: boolean // No longer present as this is handled differently
+	css_styling_bold_enabled: boolean;
+	css_styling_font_family: string;
+	css_styling_font_size: number;
+	css_styling_italic_enabled: boolean;
+	css_styling_opacity:number;
 }

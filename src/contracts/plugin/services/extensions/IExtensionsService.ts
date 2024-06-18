@@ -2,22 +2,26 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IExtension} from "../../extensions/IExtension";
-import {IColoredTagRecord} from "../../settings/IColoredTagRecord";
+import {IExtensionRecord} from "../../extensions/IExtensionRecord";
+import {IExtensionRecordCore} from "../../../../plugin/extensions/core/IExtensionRecordCssStyling";
+import {IExtensionRecordCssStyling} from "../../../../plugin/extensions/styling/IExtensionRecordCssStyling";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 
 export interface IExtensionsService {
-	readonly Core: IExtension
-	readonly Boldify: IExtension
+	readonly Core: IExtension<IExtensionRecordCore>
+	readonly CssStyling: IExtension<IExtensionRecordCssStyling>
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	get FullList(): IExtension[]
-	get EnabledList(): IExtension[]
-	get Dictionary(): Record<string, IExtension>
+	get FullList(): IExtension<IExtensionRecord>[]
 
-	setExtension(extension: IExtension, value:boolean): void
+	get EnabledList(): IExtension<IExtensionRecord>[]
+
+	get Dictionary(): Record<string, IExtension<IExtensionRecord>>
+
+	setExtension(extension: IExtension<IExtensionRecord>, value: boolean): void
 }

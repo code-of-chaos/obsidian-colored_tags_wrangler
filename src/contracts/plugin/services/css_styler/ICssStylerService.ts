@@ -6,6 +6,6 @@
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface ICssStylerService {
-	processExtensions():void
-	cleanup():void;
+	processExtensions(): void
+	cleanup(): void;
 }

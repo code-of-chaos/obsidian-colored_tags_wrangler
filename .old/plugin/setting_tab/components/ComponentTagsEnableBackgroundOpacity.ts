@@ -10,7 +10,7 @@ export class ComponentTagsEnableBackgroundOpacity extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): void {
+	public create_component(containerEL: HTMLElement): void {
 		let setting = new Setting(containerEL)
 			.setName("Apply Opacity to tag background color")
 			.setDesc(`Enables an opacity offset for a tag's background color`)
@@ -25,7 +25,7 @@ export class ComponentTagsEnableBackgroundOpacity extends SettingsTabComponent {
 				}
 			)
 
-		if (this.plugin.settings.TagColors.EnableBackgroundOpacity){
+		if (this.plugin.settings.TagColors.EnableBackgroundOpacity) {
 			setting.addText((text) => {
 				text
 					.setPlaceholder(this.plugin.settings.TagColors.Values.BackgroundOpacity.toString())
@@ -33,7 +33,7 @@ export class ComponentTagsEnableBackgroundOpacity extends SettingsTabComponent {
 					.onChange(async state => {
 						// Because this is a text component it needs to be cast to a number
 						let state_as_number = Number(state)
-						if (isNaN(state_as_number) || state_as_number === null){
+						if (isNaN(state_as_number) || state_as_number === null) {
 							state_as_number = 0
 						}
 

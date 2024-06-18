@@ -10,7 +10,7 @@ export class ComponentTagsEnableAutoBackgroundButton extends SettingsTabComponen
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): void {
+	public create_component(containerEL: HTMLElement): void {
 		new Setting(containerEL)
 			.setName("Enable button for Auto Background coloring")
 			.setDesc(`

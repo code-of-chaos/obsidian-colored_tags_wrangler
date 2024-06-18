@@ -10,20 +10,22 @@ import {ServiceProvider} from "../services/ServiceProvider";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-
-export abstract class AbstractExtension implements IExtension {
+export abstract class AbstractExtension<T extends IExtensionRecord> implements IExtension<T> {
 	abstract readonly TableContentPopulators: TableContentPopulator[];
 	abstract readonly cssWrangler: ICssWrangler;
 	abstract readonly extensionName: string;
 	abstract readonly description: string;
 
-	public get isEnabled() : boolean {return ServiceProvider.extensions.EnabledList.contains(this)}
-	public set isEnabled(value:boolean) {ServiceProvider.extensions.setExtension(this, value)}
+	public get isEnabled(): boolean {
+		return ServiceProvider.extensions.EnabledList.contains(this)
+	}
+
+	public set isEnabled(value: boolean) {
+		ServiceProvider.extensions.setExtension(this, value)
+	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	abstract getDefaultRecord(): IExtensionRecord
-
-
+	abstract getDefaultRecord(): T
 }

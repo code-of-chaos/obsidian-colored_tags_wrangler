@@ -8,8 +8,8 @@ import {SettingsTabComponent}
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentCSSNoteProperties extends SettingsTabComponent{
-	public create_component(containerEL:HTMLElement): void {
+export class ComponentCSSNoteProperties extends SettingsTabComponent {
+	public create_component(containerEL: HTMLElement): void {
 		new Setting(containerEL)
 			.setName("Apply Tag color to note's properties 'tags' field")
 			.setDesc("Colors the tags in a note's properties.")

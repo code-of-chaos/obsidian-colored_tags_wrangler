@@ -7,7 +7,7 @@ import {IColoredTagRecord} from "../../settings/IColoredTagRecord";
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export type RowDataType = {
-	parentEl:HTMLElement
-	record : IColoredTagRecord
-	rowUpdateCallback :() => Promise<void>
+	parentEl: HTMLElement
+	record: IColoredTagRecord
+	rowUpdateCallback: () => Promise<void>
 }

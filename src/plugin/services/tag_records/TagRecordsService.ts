@@ -8,6 +8,7 @@ import {reSLASH, reSplit} from "../../../lib/RegexUtils";
 import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
 import {ServiceProvider} from "../ServiceProvider";
 import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
+import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -15,9 +16,11 @@ import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
 export class TagRecordsService implements ITagRecordsService {
 	private _settings: ISettingsService;
 	private _extensions: IExtensionsService;
-	private get _tagRecords(): IColoredTagRecord[] {return this._settings.data.TagColors;}
+	private _flatCache: IColoredTagRecord[] | null = null;
 
-	private _flatCache : IColoredTagRecord[] | null = null;
+	private get _tagRecords(): IColoredTagRecord[] {
+		return this._settings.data.TagColors;
+	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
@@ -30,7 +33,7 @@ export class TagRecordsService implements ITagRecordsService {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-		getTagsFlat(remove_slash : boolean = true):IColoredTagRecord[] {
+	getTagsFlat(remove_slash: boolean = true): IColoredTagRecord[] {
 		return this._flatCache ??= this._tagRecords
 			.flatMap((record) => {
 				return record.core_tagText // read the last line if you are confused why we are looping over the tag_name
@@ -42,15 +45,15 @@ export class TagRecordsService implements ITagRecordsService {
 			});
 	}
 
-	getTags() : IColoredTagRecord[] {
+	getTags(): IColoredTagRecord[] {
 		return this._tagRecords;
 	}
 
-	getTagCount() : number{
+	getTagCount(): number {
 		return this._tagRecords.length
 	}
 
-	async addOrUpdateTag(record:IColoredTagRecord) : Promise<void>{
+	async addOrUpdateTag(record: IColoredTagRecord): Promise<void> {
 		const index = this.getTagIndex(record);
 		if (index !== -1) {
 			this._tagRecords[index] = record;
@@ -60,11 +63,12 @@ export class TagRecordsService implements ITagRecordsService {
 
 		await this._settings.debounceSaveToFile.run()
 		this._flatCache = null; // invalidate the cache
+		ServiceProvider.cssStyler.processExtensions() // Update to using the new tag
 	}
 
-	async removeTag(record:IColoredTagRecord) : Promise<void>{
+	async removeTag(record: IColoredTagRecord): Promise<void> {
 		this._tagRecords.remove(record)
-        await this._settings.debounceSaveToFile.run();
+		await this._settings.debounceSaveToFile.run();
 		this._flatCache = null; // invalidate the cache
 	}
 
@@ -76,25 +80,25 @@ export class TagRecordsService implements ITagRecordsService {
 		return record.core_tagText.split(reSplit).first() ?? "UNDEFINED";
 	}
 
-	getTagPreviewIds(record:IColoredTagRecord) : {begin:string, end:string} {
+	getTagPreviewIds(record: IColoredTagRecord): { begin: string, end: string } {
 		return {
-			begin : `tag-preview-being-${record.core_id}`,
-			end : `tag-preview-end-${record.core_id}`
+			begin: `tag-preview-being-${record.core_id}`,
+			end: `tag-preview-end-${record.core_id}`
 		}
 	}
 
-	getDefaultRecord() : IColoredTagRecord {
+	getDefaultRecord(): IColoredTagRecord {
 		return this._extensions.FullList.reduce(
-			(acc:IColoredTagRecord, cur : IExtension) => ({...acc, ...cur.getDefaultRecord()}) ,
+			(acc: IColoredTagRecord, cur: IExtension<IExtensionRecord>) => ({...acc, ...cur.getDefaultRecord()}),
 			{} as IColoredTagRecord
 		) as IColoredTagRecord
 	}
 
-	async createNewDefaultTag() : Promise<void> {
+	async createNewDefaultTag(): Promise<void> {
 		const newRecord = this.getDefaultRecord();
 
 		// Ensure _flatCache is populated
-		if (this._flatCache === null){
+		if (this._flatCache === null) {
 			this.getTagsFlat();
 		}
 
@@ -108,7 +112,6 @@ export class TagRecordsService implements ITagRecordsService {
 		newRecord.core_tagText += `-${defaultPresent}`;
 
 		await this.addOrUpdateTag(newRecord)
-		ServiceProvider.cssStyler.processExtensions() // Update to using the new tag
 	}
 
 }

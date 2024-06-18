@@ -12,14 +12,15 @@ export class CSSWranglerKanbanLists extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
-	constructor(plugin:ColoredTagWranglerPlugin) {
+	constructor(plugin: ColoredTagWranglerPlugin) {
 		super(plugin, plugin.settings.Kanban);
 	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	assembleCss(theme:string){
-		const important:string = this.getImportant();
+	assembleCss(theme: string) {
+		const important: string = this.getImportant();
 		return this.getTags(false)
 			.map(
 				({tag_name, color, background_color}) => `
@@ -30,6 +31,6 @@ ${theme} div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a[href="
 ${theme} div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a[href="#${tag_name}"]){
 	border-color: rgba(${color.r}, ${color.g}, ${color.b},0.3) ${important};
 }`
-				);
+			);
 	}
 }

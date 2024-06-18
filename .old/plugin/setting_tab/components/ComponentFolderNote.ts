@@ -6,11 +6,11 @@ import {SettingsTabComponent} from ".old/plugin/setting_tab/SettingsTabComponent
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class ComponentFolderNote extends SettingsTabComponent{
+export class ComponentFolderNote extends SettingsTabComponent {
 	// -----------------------------------------------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public create_component(containerEL:HTMLElement): void {
+	public create_component(containerEL: HTMLElement): void {
 		new Setting(containerEL)
 			.setName("Enable Folder Note integration")
 			.setDesc(`
@@ -18,15 +18,15 @@ export class ComponentFolderNote extends SettingsTabComponent{
 				It is recommended that you enable 'Enable Multiple Tags' as well, to easily reuse colors for multiple folders.
 				The order of these lines is important, as they influence which CSS is eventually used.
 			`).addToggle(component => {
-					component
-						.setValue(this.plugin.settings.FolderNote.Enable)
-						.onChange(async state => {
-							this.plugin.settings.FolderNote.Enable = state;
-							await this.plugin.saveSettings();
-							this.settings_tab.display();  // Yes, because this displays more settings when enabled
-						})
-				}
-			);
+				component
+					.setValue(this.plugin.settings.FolderNote.Enable)
+					.onChange(async state => {
+						this.plugin.settings.FolderNote.Enable = state;
+						await this.plugin.saveSettings();
+						this.settings_tab.display();  // Yes, because this displays more settings when enabled
+					})
+			}
+		);
 	}
 }
 

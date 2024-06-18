@@ -47,6 +47,7 @@ function process_file(filepath, new_version = null, version_bump_type) {
 		process.exit(1);
 	}
 }
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -63,6 +64,6 @@ if (!['full', 'change', 'fix'].includes(versionBumpType)) {
 let new_version = null;
 
 new_version = process_file(packageJsonPath, new_version, versionBumpType);
-new_version = process_file(manifestJsonPath, new_version,versionBumpType);
+new_version = process_file(manifestJsonPath, new_version, versionBumpType);
 
 console.log(`Version bumped to ${new_version}`);

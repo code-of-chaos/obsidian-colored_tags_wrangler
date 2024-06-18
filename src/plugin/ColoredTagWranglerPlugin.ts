@@ -9,7 +9,8 @@ import {ServiceProvider} from "./services/ServiceProvider";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export default class ColoredTagWranglerPlugin extends Plugin implements IColoredTagWranglerPlugin{
+// noinspection JSUnusedGlobalSymbols
+export default class ColoredTagWranglerPlugin extends Plugin implements IColoredTagWranglerPlugin {
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
 		ServiceProvider.PopulateInstances(this);
@@ -27,12 +28,8 @@ export default class ColoredTagWranglerPlugin extends Plugin implements IColored
 
 	}
 
-	async onunload(){
+	async onunload() {
 		await ServiceProvider.settings.saveToFile()
 		ServiceProvider.cssStyler.cleanup()
 	}
-
-	// -----------------------------------------------------------------------------------------------------------------
-	// SettingsManager
-	// -----------------------------------------------------------------------------------------------------------------
 }

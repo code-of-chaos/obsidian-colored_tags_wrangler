@@ -8,17 +8,18 @@ import {IColoredTagWrangler} from ".old/plugin/IColoredTagWrangler";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class JqueryWranglerCanvasNodeBackground extends JqueryWrangler{
-    // -----------------------------------------------------------------------------------------------------------------
-    // Constructor
-    // -----------------------------------------------------------------------------------------------------------------
-    constructor(plugin:IColoredTagWrangler) {
-        super(plugin, plugin.settings.TagColors);
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    private findElement(tag_name:string|null):JQuery<HTMLElement>|null{
+export class JqueryWranglerCanvasNodeBackground extends JqueryWrangler {
+	// -----------------------------------------------------------------------------------------------------------------
+	// Constructor
+	// -----------------------------------------------------------------------------------------------------------------
+	constructor(plugin: IColoredTagWrangler) {
+		super(plugin, plugin.settings.TagColors);
+	}
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
+	private findElement(tag_name: string | null): JQuery<HTMLElement> | null {
 		if (!tag_name) return null;
 
 		const regex = new RegExp(`#${tag_name}`, 'i');
@@ -31,19 +32,19 @@ export class JqueryWranglerCanvasNodeBackground extends JqueryWrangler{
 		});
 	}
 
-    assembleStyling(): void {
-        this.getTags(false).map(
-            ({tag_name, color, background_color}) =>{
-                const canvasNode  = this.findElement(tag_name);
+	assembleStyling(): void {
+		this.getTags(false).map(
+			({tag_name, color, background_color}) => {
+				const canvasNode = this.findElement(tag_name);
 				if (canvasNode === null) return;
 				canvasNode.css({
 					"--canvas-color": `${color.r}, ${color.g}, ${color.b}`,
 					"background-color": this.getBackgroundWithOpacityString(background_color)
 				});
-            }
-        )
-    }
-	
-    removeStyling(): void {
-    }
+			}
+		)
+	}
+
+	removeStyling(): void {
+	}
 }
