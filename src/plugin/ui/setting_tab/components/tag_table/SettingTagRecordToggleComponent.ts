@@ -17,7 +17,7 @@ export class SettingTagRecordToggleComponent extends ToggleComponent implements 
 		// @ts-ignore
 		this.setValue(rowData.record[property_name] as boolean)
 		this.onChange(async (newValue) => {
-			// @ts-ignore
+			// @ts-ignore // I still don't get why???
 			rowData.record[property_name] = newValue;
 			await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
 		})

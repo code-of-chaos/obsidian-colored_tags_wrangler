@@ -7,6 +7,5 @@
 // ---------------------------------------------------------------------------------------------------------------------
 export interface ICssStylerService {
 	processExtensions(): void
-
 	cleanup(): void;
 }

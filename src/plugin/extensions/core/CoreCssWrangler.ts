@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
 import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
-import {rgbaToString, rgbToString} from "../../../lib/ColorConverters";
+import {rgbToString} from "../../../lib/ColorConverters";
 import {ServiceProvider} from "../../services/ServiceProvider";
 import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
 
@@ -13,9 +13,25 @@ import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/C
 
 export class CoreCssWrangler implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
+	// Helper Methods
+	// -----------------------------------------------------------------------------------------------------------------
+	private _properties(record: IColoredTagRecord): Record<string, string> {
+		return {
+			"color": `${rgbToString(record.core_color_foreground)} !important`,
+			"background": `${rgbToString(record.core_color_background)} !important`,
+		}
+	}
+
+	private _selectors(theme: string, record: IColoredTagRecord): string[] {
+		return [
+			`${theme} .tag[href="#${record.core_tagText}" i]`,
+			`${theme} .cm-tag-${record.core_tagText}`,
+		]
+	}
+	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	getRules(): Record<string, Record<string, string>> {
+	public getRules(): Record<string, Record<string, string>> {
 		const dict: Record<string, Record<string, string>> = {};
 
 		ServiceProvider.tagRecords
@@ -33,19 +49,5 @@ export class CoreCssWrangler implements ICssWrangler {
 				}
 			)
 		return dict
-	}
-
-	private _properties(record: IColoredTagRecord): Record<string, string> {
-		return {
-			"color": `${rgbToString(record.core_color_foreground)} !important`,
-			"background": `${rgbToString(record.core_color_background)} !important`,
-		}
-	}
-
-	private _selectors(theme: string, record: IColoredTagRecord): string[] {
-		return [
-			`${theme} .tag[href="#${record.core_tagText}" i]`,
-			`${theme} .cm-tag-${record.core_tagText}`,
-		]
 	}
 }

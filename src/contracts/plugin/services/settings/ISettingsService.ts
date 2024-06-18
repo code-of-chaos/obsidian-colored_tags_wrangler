@@ -11,7 +11,9 @@ export interface ISettingsService {
 	data: IPluginSettings;
 	debounceSaveToFile: Debouncer<[], Promise<void>>;
 
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
 	loadFromFile(): Promise<void>;
-
 	saveToFile(): Promise<void>;
 }

@@ -8,6 +8,7 @@ import {reSLASH, reSplit} from "../../../lib/RegexUtils";
 import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
 import {ServiceProvider} from "../ServiceProvider";
 import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
+import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -17,17 +18,16 @@ export class TagRecordsService implements ITagRecordsService {
 	private _extensions: IExtensionsService;
 	private _flatCache: IColoredTagRecord[] | null = null;
 
-	// -----------------------------------------------------------------------------------------------------------------
-	constructor(settings: ISettingsService, extensions: IExtensionsService) {
-		this._settings = settings;
-		this._extensions = extensions;
+	private get _tagRecords(): IColoredTagRecord[] {
+		return this._settings.data.TagColors;
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
-
-	private get _tagRecords(): IColoredTagRecord[] {
-		return this._settings.data.TagColors;
+	// -----------------------------------------------------------------------------------------------------------------
+	constructor(settings: ISettingsService, extensions: IExtensionsService) {
+		this._settings = settings;
+		this._extensions = extensions;
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ export class TagRecordsService implements ITagRecordsService {
 
 	getDefaultRecord(): IColoredTagRecord {
 		return this._extensions.FullList.reduce(
-			(acc: IColoredTagRecord, cur: IExtension) => ({...acc, ...cur.getDefaultRecord()}),
+			(acc: IColoredTagRecord, cur: IExtension<IExtensionRecord>) => ({...acc, ...cur.getDefaultRecord()}),
 			{} as IColoredTagRecord
 		) as IColoredTagRecord
 	}

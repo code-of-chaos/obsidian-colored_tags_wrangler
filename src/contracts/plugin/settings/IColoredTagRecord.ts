@@ -7,6 +7,5 @@ import {IExtensionRecordCssStyling} from "../../../plugin/extensions/styling/IEx
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IColoredTagRecord extends IExtensionRecordCore,
-	IExtensionRecordCssStyling {
+export interface IColoredTagRecord extends IExtensionRecordCore, IExtensionRecordCssStyling {
 }

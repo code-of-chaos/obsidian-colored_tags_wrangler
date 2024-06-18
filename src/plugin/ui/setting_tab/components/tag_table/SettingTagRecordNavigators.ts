@@ -1,9 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {
-	ISettingTagRecordComponent
-} from "../../../../../contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
+import {ISettingTagRecordComponent} from "../../../../../contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 import {ExtraButtonComponent} from "obsidian";
 import {arrayMove} from "../../../../../lib/ArrayUtils";
 import {ServiceProvider} from "../../../../services/ServiceProvider";

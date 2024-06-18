@@ -5,6 +5,7 @@ import {Setting, SettingTab} from "obsidian";
 import {IExtension} from "../../../../../contracts/plugin/extensions/IExtension";
 import {ServiceProvider} from "../../../../services/ServiceProvider";
 import {capitalizeFirstLetter} from "../../../../../lib/StringUtils";
+import {IExtensionRecord} from "../../../../../contracts/plugin/extensions/IExtensionRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -25,15 +26,8 @@ export class SettingExtensionSelector {
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// Methods
+	// Helper Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public async display(): Promise<void> {
-		for (const iExtension of ServiceProvider.extensions.FullList) {
-			const el = this.createExtensionGridItem(iExtension)
-			this.gridContainerEl.appendChild(el)
-		}
-	}
-
 	private _AssignEls() {
 		// this.settingEl = new Setting(this.parent.containerEl)
 		this.masterEl = this.parent.containerEl.createDiv();
@@ -43,7 +37,7 @@ export class SettingExtensionSelector {
 		this.gridContainerEl.addClass("grid-container");
 	}
 
-	private createExtensionGridItem(extension: IExtension): HTMLElement {
+	private createExtensionGridItem(extension: IExtension<IExtensionRecord>): HTMLElement {
 		const gridItem = new Setting(document.createElement('div'))
 			.setClass('grid-item')
 			.setName(capitalizeFirstLetter(extension.extensionName))
@@ -58,5 +52,15 @@ export class SettingExtensionSelector {
 				})
 			})
 		return gridItem.settingEl;
+	}
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
+	public async display(): Promise<void> {
+		for (const iExtension of ServiceProvider.extensions.FullList) {
+			const el = this.createExtensionGridItem(iExtension)
+			this.gridContainerEl.appendChild(el)
+		}
 	}
 }

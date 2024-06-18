@@ -15,13 +15,12 @@ import {
 import {
 	SettingTagRecordTextInputComponent
 } from "../../ui/setting_tab/components/tag_table/SettingTagRecordTextInputComponent";
-import {ServiceProvider} from "../../services/ServiceProvider";
 
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export class CssStylingExtension extends AbstractExtension {
+export class CssStylingExtension extends AbstractExtension<IExtensionRecordCssStyling> {
 	public cssWrangler: ICssWrangler = new CssStylingCssWrangler();
 	public extensionName = "Styling";
 	public description = "Style your tags even more!";
@@ -85,7 +84,7 @@ export class CssStylingExtension extends AbstractExtension {
 		return {
 			css_styling_bold_enabled: false,
 			css_styling_font_family: "",
-			css_styling_font_size: 1,
+			css_styling_font_size: 1.0,
 			css_styling_italic_enabled: false,
 			css_styling_opacity: 1.0,
 		};

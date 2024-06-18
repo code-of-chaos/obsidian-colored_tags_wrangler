@@ -19,7 +19,6 @@ export class SettingsService implements ISettingsService {
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
-
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin: IColoredTagWranglerPlugin, migrator: IMigratorService) {
 		this._plugin = plugin;

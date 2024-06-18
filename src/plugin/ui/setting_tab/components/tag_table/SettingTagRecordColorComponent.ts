@@ -5,9 +5,7 @@ import {ColorComponent} from "obsidian";
 import {RGBSelectorProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
 import {hexToRGBA, rgbaToHex} from "../../../../../lib/ColorConverters";
 import {RGBA} from "../../../../../contracts/types/RGBA";
-import {
-	ISettingTagRecordComponent
-} from "../../../../../contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
+import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 import {ServiceProvider} from "../../../../services/ServiceProvider";
 import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
 

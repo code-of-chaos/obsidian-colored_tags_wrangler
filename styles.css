@@ -65,14 +65,19 @@
 		}
 
 		td {
-			padding-left: .5rem;
-			padding-right: .5rem;
+			padding-left: 1.0rem;
+			padding-right: 1.0rem;
 			padding-top: .25rem;
 			/*noinspection CssUnresolvedCustomProperty*/
 			border-bottom: 1px solid var(--background-modifier-border);
 
 			input.slider:disabled{
 				color: rgb(84, 84, 84) !important;
+			}
+
+			div.slider-box{
+				display: flex;
+                align-items: center;
 			}
 		}
 
