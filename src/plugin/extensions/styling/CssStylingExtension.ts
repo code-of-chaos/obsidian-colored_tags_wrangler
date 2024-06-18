@@ -32,24 +32,14 @@ export class CssStylingExtension extends AbstractExtension<IExtensionRecordCssSt
 		// },
 		{
 			title: "Background Opacity",
-			callback: (rowData) => {
-				const el = new SettingTagRecordSliderComponent(
+			callback: (rowData) =>
+				new SettingTagRecordSliderComponent(
 					rowData,
 					"css_styling_opacity",
 					0.0, 1.0, .01,
 					true,
 					1.0
-				);
-
-				// Future me: This is kinda necessary as the opacity works by adding a alpha value to the stored background_color
-				//		Find a fix for this maybe, so it can use the default obsidian color?
-				// if (!rowData.record.core_enabled){
-				// 	el.sliderEl.hide()
-				// 	el.buttonEl.extraSettingsEl.hide()
-				// }
-
-				return el
-			},
+				),
 			classes: ["header-wrap-every-word"]
 		},
 		{

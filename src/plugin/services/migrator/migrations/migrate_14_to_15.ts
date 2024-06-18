@@ -34,6 +34,12 @@ export async function migrate_14_to_15(loaded_data: ISettings_v014): Promise<IPl
 				newTagColor.css_styling_opacity = loaded_data.TagColors.Values.BackgroundOpacity;
 			}
 
+			if (loaded_data.Canvas.Enable){
+				newTagColor.canvas_card_enable_background = true;
+				newTagColor.canvas_card_enable_border = true;
+				newTagColor.canvas_card_background_opacity = loaded_data.Canvas.Values.BackgroundOpacity;
+			}
+
 			return newTagColor;
 		}
 	);

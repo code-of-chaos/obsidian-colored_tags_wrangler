@@ -70,6 +70,7 @@
 			padding-top: .25rem;
 			/*noinspection CssUnresolvedCustomProperty*/
 			border-bottom: 1px solid var(--background-modifier-border);
+			align-items: center;
 
 			input.slider:disabled{
 				color: rgb(84, 84, 84) !important;
@@ -78,6 +79,11 @@
 			div.slider-box{
 				display: flex;
                 align-items: center;
+			}
+
+			input.settingTagRecordNumberInputComponent {
+				width: 5em;
+				text-align: center;
 			}
 		}
 

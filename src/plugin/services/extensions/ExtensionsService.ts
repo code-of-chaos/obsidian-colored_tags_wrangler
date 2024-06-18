@@ -9,6 +9,8 @@ import {ISettingsService} from "../../../contracts/plugin/services/settings/ISet
 import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
 import {IExtensionRecordCore} from "../../extensions/core/IExtensionRecordCssStyling";
 import {IExtensionRecordCssStyling} from "../../extensions/styling/IExtensionRecordCssStyling";
+import {IExtensionRecordCanvasCard} from "../../extensions/canvas_card/IExtensionRecordCanvasCard";
+import {CanvasCardExtension} from "../../extensions/canvas_card/CanvasCardExtension";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -16,6 +18,7 @@ import {IExtensionRecordCssStyling} from "../../extensions/styling/IExtensionRec
 export class ExtensionsService implements IExtensionsService {
 	public readonly Core: IExtension<IExtensionRecordCore>
 	public readonly CssStyling: IExtension<IExtensionRecordCssStyling>
+	public readonly CanvasCards: IExtension<IExtensionRecordCanvasCard>
 
 	private _settings: ISettingsService;
 	private _List: IExtension<IExtensionRecord>[] | undefined;
@@ -43,6 +46,7 @@ export class ExtensionsService implements IExtensionsService {
 		this._settings = settings;
 		this.Core = new CoreExtension();
 		this.CssStyling = new CssStylingExtension();
+		this.CanvasCards = new CanvasCardExtension();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -63,6 +67,7 @@ export class ExtensionsService implements IExtensionsService {
 		return [
 			this.Core,
 			this.CssStyling,
+			this.CanvasCards
 		]
 	}
 

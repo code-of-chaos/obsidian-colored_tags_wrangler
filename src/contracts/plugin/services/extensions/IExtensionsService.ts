@@ -5,6 +5,7 @@ import {IExtension} from "../../extensions/IExtension";
 import {IExtensionRecord} from "../../extensions/IExtensionRecord";
 import {IExtensionRecordCore} from "../../../../plugin/extensions/core/IExtensionRecordCssStyling";
 import {IExtensionRecordCssStyling} from "../../../../plugin/extensions/styling/IExtensionRecordCssStyling";
+import {IExtensionRecordCanvasCard} from "../../../../plugin/extensions/canvas_card/IExtensionRecordCanvasCard";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -13,6 +14,7 @@ import {IExtensionRecordCssStyling} from "../../../../plugin/extensions/styling/
 export interface IExtensionsService {
 	readonly Core: IExtension<IExtensionRecordCore>
 	readonly CssStyling: IExtension<IExtensionRecordCssStyling>
+	readonly CanvasCards: IExtension<IExtensionRecordCanvasCard>
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

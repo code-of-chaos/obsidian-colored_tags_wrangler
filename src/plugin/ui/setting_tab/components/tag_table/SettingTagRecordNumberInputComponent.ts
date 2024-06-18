@@ -11,10 +11,12 @@ import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowData
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordNumberInputComponent extends TextComponent implements ISettingTagRecordComponent {
-	constructor(rowData: RowDataType, property_name: NumberProperties) {
+	constructor(rowData: RowDataType, property_name: NumberProperties, placeholder:number = 0) {
 		super(rowData.parentEl); // Obsidian's stuff
 
-		this.setValue(rowData.record[property_name].toString())
+		this.inputEl.classList.add("settingTagRecordNumberInputComponent");
+		this.setPlaceholder(placeholder.toString())
+		this.setValue(rowData.record[property_name]?.toString() ?? "")
 		this.onChange(async (newValue) => {
 			rowData.record[property_name] = Number.parseInt(newValue);
 			await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
