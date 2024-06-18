@@ -25,11 +25,11 @@ export class CssStylingExtension extends AbstractExtension {
 	public extensionName = "Styling";
 	public description = "Style your tags even more!";
 	public TableContentPopulators: TableContentPopulator[] = [
-		{
-			title: "Custom CSS styling",
-			callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "css_styling_enabled"),
-			classes: ["header-wrap-every-word", "border-right-dotted"]
-		},
+		// {
+		// 	title: "Custom CSS styling",
+		// 	callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "css_styling_enabled"),
+		// 	classes: ["header-wrap-every-word", "border-right-dotted"]
+		// },
 		{
 			title: "Background Opacity",
 			callback: (rowData) => new SettingTagRecordSliderComponent(
@@ -71,7 +71,6 @@ export class CssStylingExtension extends AbstractExtension {
 
 	public getDefaultRecord(): IExtensionRecordCssStyling {
 		return {
-			css_styling_enabled: false,
 			css_styling_bold_enabled: false,
 			css_styling_font_family: "",
 			css_styling_font_size: 1,

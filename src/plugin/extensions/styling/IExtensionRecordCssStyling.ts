@@ -7,7 +7,7 @@ import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionR
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IExtensionRecordCssStyling extends IExtensionRecord {
-	css_styling_enabled: boolean
+	// css_styling_enabled: boolean // No longer present as this is handled differently
 	css_styling_bold_enabled: boolean;
 	css_styling_font_family: string;
 	css_styling_font_size: number;

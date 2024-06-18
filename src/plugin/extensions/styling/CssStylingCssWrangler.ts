@@ -19,9 +19,16 @@ export class CssStylingCssWrangler implements ICssWrangler {
 	getRules(): Record<string, Record<string, string>> {
 		const dict: Record<string, Record<string, string>> = {};
 
+		// Only use the default record for the specific extension we are in,
+		//		No need to check all the available keys in all available extensions
+		const defaultRecord = ServiceProvider.extensions.CssStyling.getDefaultRecord()
+
 		ServiceProvider.tagRecords
 			.getTagsFlat(false)
-			.filter(record => record.css_styling_enabled)
+			.filter(record => {
+				// @ts-ignore
+				return Object.keys(defaultRecord).first(key => record[key] !== defaultRecord[key])
+			})
 			.forEach(record => {
 					this._selectors(themeSelectorLight, record)
 						.forEach((rule) => {
