@@ -6,6 +6,11 @@ import {TagCache} from "obsidian";
 import {IVaultTags} from "../../../contracts/plugin/services/tag_records/IVaultTags";
 
 // ---------------------------------------------------------------------------------------------------------------------
+// support Code
+// ---------------------------------------------------------------------------------------------------------------------
+const Slash = /\//gim;
+
+// ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class VaultTags implements IVaultTags{
@@ -16,13 +21,21 @@ export class VaultTags implements IVaultTags{
 		return this._tagsCache ??= this.getAllTags()
 	}
 
-	private _nestedTagsCache : Record<string, unknown> | undefined;
-	public get allNestedTags() : Record<string, unknown> {
-		return this._nestedTagsCache ??= this.getAllNestedTags()
+	private _nestedTagsAsDictCache : Record<string, unknown> | undefined;
+	public get allNestedTagsAsDict() : Record<string, unknown> {
+		return this._nestedTagsAsDictCache ??= this.getAllNestedTagsAsDict()
+	}
+
+	private _nestedTagsCache :  string[][] | undefined;
+	public get allNestedTags() : string[][] {
+		return this._nestedTagsCache ??= this.getAllTags()
+			.filter(tag => tag.match(Slash))
+			.map(tag => tag.split(Slash))
 	}
 
 
-	// -----------------------------------------------------------------------------------------------------------------
+
+		// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(plugin : IColoredTagWranglerPlugin,) {
@@ -44,11 +57,11 @@ export class VaultTags implements IVaultTags{
 			.map(tag => tag.tag.replace("#", ""))
 	}
 
-	private getAllNestedTags() : Record<string, unknown> {
+	private getAllNestedTagsAsDict() : Record<string, unknown> {
 		const dict : Record<string, unknown> = {}
 		this.allTags
-			.filter(tag => tag.match(/\//gim))
-			.map(tag => tag.split(/\//gim))
+			.filter(tag => tag.match(Slash))
+			.map(tag => tag.split(Slash))
 			.forEach(parts => {
 				let currentLevel = dict; // Start at the top level of the dictionary
 
@@ -64,5 +77,6 @@ export class VaultTags implements IVaultTags{
 	invalidate(){
 		this._nestedTagsCache = undefined;
 		this._tagsCache = undefined;
+		this._nestedTagsAsDictCache = undefined;
 	}
 }

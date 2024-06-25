@@ -7,7 +7,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IVaultTags {
 	get allTags() : string[]
-	get allNestedTags() : Record<string, unknown>
+	get allNestedTags() : string[][]
+	get allNestedTagsAsDict() : Record<string, unknown>
 
 	invalidate() : void
 }

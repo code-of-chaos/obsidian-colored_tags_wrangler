@@ -25,9 +25,6 @@ export default class ColoredTagWranglerPlugin extends Plugin implements IColored
 		ServiceProvider.cssStyler.processExtensions()
 
 		this.addSettingTab(new SettingTab(this.app, this));
-
-		console.log(ServiceProvider.vaultTags.getAllTags())
-		console.log(ServiceProvider.vaultTags.getAllNestedTags())
 	}
 
 	async onunload() {

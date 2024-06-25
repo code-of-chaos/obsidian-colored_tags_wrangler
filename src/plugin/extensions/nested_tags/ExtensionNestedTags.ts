@@ -7,6 +7,8 @@ import {CssWranglerNestedTags} from "./CssWranglerNestedTags";
 import {IExtensionRecordNestedTags} from "./IExtensionRecordNestedTags";
 import {ServiceProvider} from "../../services/ServiceProvider";
 import {debounce, Debouncer} from "obsidian";
+import {DropDownOptions, DropDownOptionsAsRecord, DropdownOptionsFromString} from "./DropDownOptions";
+import {SettingTagRecordDropdownComponent} from "../../ui/setting_tab/components/tag_table/SettingTagRecordDropdown";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -19,6 +21,16 @@ export class ExtensionNestedTags extends AbstractExtension<IExtensionRecordNeste
 	public extensionRequirements = ["core"]
 
 	public TableContentPopulators: TableContentPopulator[] = [
+		{
+			title: "Select Color progression",
+			callback: (rowData) => new SettingTagRecordDropdownComponent(
+				rowData,
+				"nested_tags_dropdown",
+				DropDownOptionsAsRecord(),
+				DropdownOptionsFromString
+			),
+			classes: ["header-wrap-every-word", "border-right-dotted"]
+		}
 
 	]
 
@@ -35,7 +47,7 @@ export class ExtensionNestedTags extends AbstractExtension<IExtensionRecordNeste
 			if (ServiceProvider.extensions.EnabledListAsStrings.contains(ServiceProvider.extensions.Extensions.NestedTags.extensionName)) {
 				ServiceProvider.cssStyler.processExtensions()
 			}
-		}, 1000, true)
+		}, 100, true)
 
 		ServiceProvider.plugin.registerEvent(ServiceProvider.plugin.app.vault.on("modify", this.debouncedUpdate))
 	}
@@ -45,7 +57,7 @@ export class ExtensionNestedTags extends AbstractExtension<IExtensionRecordNeste
 	// -----------------------------------------------------------------------------------------------------------------
 	public getDefaultRecord(): IExtensionRecordNestedTags {
 		return {
-
+			nested_tags_dropdown: DropDownOptions.Same
 		}
 	}
 }

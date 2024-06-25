@@ -39,3 +39,6 @@ export type RGBSelectorProperties =
 	"core_color_foreground"
 	| "core_color_background"
 ;
+
+export type DropdownProperties =
+	"nested_tags_dropdown"

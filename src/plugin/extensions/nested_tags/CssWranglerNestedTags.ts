@@ -4,21 +4,52 @@
 import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
 import {ServiceProvider} from "../../services/ServiceProvider";
 import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagRecord";
-import {rgbToString} from "../../../lib/ColorConverters";
+import {hslToRgb, rgbToHsl, rgbToString} from "../../../lib/ColorConverters";
 import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
+import {HSL} from "obsidian";
+import {DropDownOptions, DropdownOptionsFromString} from "./DropDownOptions";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-
 export class CssWranglerNestedTags implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Helper Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	private _properties(record: IColoredTagRecord): Record<string, string> {
+	private _getHsl(record: IColoredTagRecord) : [HSL, HSL] {
+		return [
+			rgbToHsl(record.core_color_foreground),
+			rgbToHsl(record.core_color_background)
+		]
+	}
+	private _propertiesSame(record: IColoredTagRecord, length:number): Record<string, string> {
 		return {
 			"color": `${rgbToString(record.core_color_foreground)} !important`,
 			"background": `${rgbToString(record.core_color_background)} !important`,
+		}
+	}
+
+	private _propertiesDarker(record: IColoredTagRecord, length:number): Record<string, string> {
+		const [foreHsl, backHsl] = this._getHsl(record)
+
+		const foreLum = foreHsl.l - (0.05 * length)
+		const backLum = backHsl.l - (0.05 * length)
+
+		return {
+			"color": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
+			"background": `${rgbToString(hslToRgb({...backHsl, l : backLum}))} !important`,
+		}
+	}
+
+	private _propertiesLighter(record: IColoredTagRecord, length:number): Record<string, string> {
+		const [foreHsl, backHsl] = this._getHsl(record)
+
+		const foreLum = foreHsl.l + (0.05 * length)
+		const backLum = backHsl.l + (0.05 * length)
+
+		return {
+			"color": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
+			"background": `${rgbToString(hslToRgb({...backHsl, l : backLum}))} !important`,
 		}
 	}
 
@@ -32,39 +63,57 @@ export class CssWranglerNestedTags implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public getRules(): Record<string, Record<string, string>> {
-		const dict: Record<string, Record<string, string>> = {};
+	public getRules(): Record < string, Record < string, string >> {
+		const dict: Record < string, Record < string, string >> = {};
+		const allTagsInPlugin = ServiceProvider.tagRecords.getTagsFlat(false);
 
-		const allTagsInPlugin: IColoredTagRecord[] = ServiceProvider.tagRecords.getTagsFlat(false)
-		const allTagNamesInPlugin: Record<string, IColoredTagRecord> = {};
-		allTagsInPlugin.forEach(tag => allTagNamesInPlugin[tag.core_tagText] = tag);
+		const allTagNamesInPlugin = allTagsInPlugin.reduce(
+			(acc: Record<string, IColoredTagRecord>, curr: IColoredTagRecord) => {
+				acc[curr.core_tagText] = curr;
+				return acc;
+			}, {}
+		);
 
-		const allNestedTagsInVault: Record<string, unknown> = ServiceProvider.vaultTags.allNestedTags;
+		const allNestedTagsInVault = ServiceProvider.vaultTags.allNestedTagsAsDict;
+		for (let tag of Object.keys(allNestedTagsInVault)) {
+			if (allTagNamesInPlugin[tag]) {
+				const record = allTagNamesInPlugin[tag];
 
-		const tags = ServiceProvider.vaultTags.allTags
-			.filter(tag => tag.match(/\//gim))
-			.map(tag => tag.split(/\//gim))
+				ServiceProvider.vaultTags.allNestedTags
+					.filter(t => t[0] === record.core_tagText)
+					.forEach(tag => {
+						let cssProperties: Record<string, string>
+						let dropdownValue: DropDownOptions | undefined;
 
-		Object.keys(allNestedTagsInVault)
-			.filter(tag => allTagNamesInPlugin[tag])
-			.forEach(tag => {
-				const record = allTagNamesInPlugin[tag]
+						if (typeof record.nested_tags_dropdown === "string"){
+							dropdownValue = DropdownOptionsFromString(record.nested_tags_dropdown);
+						} else if (typeof record.nested_tags_dropdown === typeof DropDownOptions){
+							dropdownValue = record.nested_tags_dropdown
+						}
 
-				const nestedRecordTags = tags.filter(t => t[0] == record.core_tagText)
-				nestedRecordTags.forEach(tag => {
-					this._selectors(themeSelectorLight, tag)
-						.forEach((rule) => {
-							dict[rule] = this._properties(record)
-						})
-					this._selectors(themeSelectorDark, tag)
-						.forEach((rule) => {
-							dict[rule] = this._properties(record)
-						})
-				})
-			})
+						console.log(dropdownValue)
 
+						switch (dropdownValue){
+							case DropDownOptions.Darker:
+								cssProperties = this._propertiesDarker(record,tag.length)
+								break;
 
+							case DropDownOptions.Lighter:
+								cssProperties = this._propertiesLighter(record,tag.length)
+								break;
 
-		return dict
+							case undefined:
+							case DropDownOptions.Same:
+								cssProperties = this._propertiesSame(record,tag.length)
+								break;
+						}
+
+						this._selectors(themeSelectorLight, tag)
+							.concat(this._selectors(themeSelectorDark, tag))
+							.forEach((rule) => {dict[rule] = cssProperties;});
+					});
+			}
+		}
+		return dict;
 	}
 }

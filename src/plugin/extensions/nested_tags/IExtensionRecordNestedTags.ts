@@ -2,10 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
+import {DropDownOptions} from "./DropDownOptions";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IExtensionRecordNestedTags extends IExtensionRecord {
-
+	nested_tags_dropdown : DropDownOptions
 }
