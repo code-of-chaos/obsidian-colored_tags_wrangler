@@ -53,7 +53,7 @@ export class CssWranglerStyling implements ICssWrangler {
 
 		// Only use the default record for the specific extension we are in,
 		//		No need to check all the available keys in all available extensions
-		const defaultRecord = ServiceProvider.extensions.CssStyling.getDefaultRecord()
+		const defaultRecord = ServiceProvider.extensions.Extensions.Styling.getDefaultRecord()
 
 		ServiceProvider.tagRecords
 			.getTagsFlat(false)

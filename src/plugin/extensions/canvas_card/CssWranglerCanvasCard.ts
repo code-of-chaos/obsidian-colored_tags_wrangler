@@ -47,7 +47,7 @@ export class CssWranglerCanvasCard implements ICssWrangler {
 			.filter(record => {
 				return record.canvas_card_enable_border
 					|| record.canvas_card_enable_background
-					|| record.canvas_card_background_opacity !== ServiceProvider.extensions.CanvasCards.getDefaultRecord().canvas_card_background_opacity;
+					|| record.canvas_card_background_opacity !== ServiceProvider.extensions.Extensions.CanvasCards.getDefaultRecord().canvas_card_background_opacity;
 			})
 			// Sort of lowest to highest priority
 			.sort((a, b) => {

@@ -7,24 +7,25 @@ import {ExtensionCore} from "../../extensions/core/ExtensionCore";
 import {ExtensionStyling} from "../../extensions/styling/ExtensionStyling";
 import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
 import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
-import {IExtensionRecordCore} from "../../extensions/core/IExtensionRecordCssStyling";
-import {IExtensionRecordStyling} from "../../extensions/styling/IExtensionRecordStyling";
-import {IExtensionRecordCanvasCard} from "../../extensions/canvas_card/IExtensionRecordCanvasCard";
 import {ExtensionCanvasCard} from "../../extensions/canvas_card/ExtensionCanvasCard";
+import {ExtensionNestedTags} from "../../extensions/nested_tags/ExtensionNestedTags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ExtensionsService implements IExtensionsService {
-	public readonly Core: IExtension<IExtensionRecordCore>
-	public readonly Styling: IExtension<IExtensionRecordStyling>
-	public readonly CanvasCards: IExtension<IExtensionRecordCanvasCard>
+	public readonly Extensions = {
+		Core : new ExtensionCore(),
+		Styling: new ExtensionStyling(),
+		CanvasCards: new ExtensionCanvasCard(),
+		NestedTags:  new ExtensionNestedTags(),
+	}
 
 	private _settings: ISettingsService;
 	private _List: IExtension<IExtensionRecord>[] | undefined;
 
 	public get FullList(): IExtension<IExtensionRecord>[] {
-		return this._List ??= this.AsList();
+		return this._List ??= Object.values(this.Extensions);
 	}
 
 	private _EnabledList: IExtension<IExtensionRecord>[] | undefined;
@@ -48,9 +49,6 @@ export class ExtensionsService implements IExtensionsService {
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(settings: ISettingsService) {
 		this._settings = settings;
-		this.Core = new ExtensionCore();
-		this.Styling = new ExtensionStyling();
-		this.CanvasCards = new ExtensionCanvasCard();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -67,16 +65,8 @@ export class ExtensionsService implements IExtensionsService {
 		this._EnabledList = undefined // Invalidate it
 	}
 
-	private AsList(): IExtension<IExtensionRecord>[] {
-		return [
-			this.Core,
-			this.Styling,
-			this.CanvasCards
-		]
-	}
-
 	private AsDictionary(): Record<string, IExtension<IExtensionRecord>> {
-		return this.AsList().reduce(
+		return Object.values(this.Extensions).reduce(
 			(acc, e) => {
 				acc[e.extensionName] = e;
 				return acc;
