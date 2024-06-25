@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App, Plugin, PluginManifest} from "obsidian";
+import {App, getAllTags, Plugin, PluginManifest} from "obsidian";
 import {IColoredTagWranglerPlugin} from "../contracts/plugin/IColoredTagWranglerPlugin";
 import {SettingTab} from "./ui/setting_tab/SettingTab";
 import {ServiceProvider} from "./services/ServiceProvider";

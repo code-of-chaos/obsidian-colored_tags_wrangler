@@ -12,12 +12,15 @@ import {IExtensionsService} from "../../contracts/plugin/services/extensions/IEx
 import {ExtensionsService} from "./extensions/ExtensionsService";
 import {CssStylerService} from "./css_styler/CssStylerService";
 import {ICssStylerService} from "../../contracts/plugin/services/css_styler/ICssStylerService";
+import {IVaultTags} from "../../contracts/plugin/services/tag_records/IVaultTags";
+import {VaultTags} from "./tag_records/VaultTags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ServiceProvider {
 	public static plugin: IColoredTagWranglerPlugin
+	public static vaultTags: IVaultTags
 	public static extensions: IExtensionsService
 	public static settings: ISettingsService;
 	public static tagRecords: ITagRecordsService;
@@ -32,6 +35,7 @@ export class ServiceProvider {
 		if (ServiceProvider.Instantiated) return;
 
 		ServiceProvider.plugin = plugin;
+		ServiceProvider.vaultTags = new VaultTags(plugin);
 		ServiceProvider.migrator = new MigratorService(plugin)
 		ServiceProvider.settings = new SettingsService(plugin, ServiceProvider.migrator)
 		ServiceProvider.extensions = new ExtensionsService(ServiceProvider.settings)
