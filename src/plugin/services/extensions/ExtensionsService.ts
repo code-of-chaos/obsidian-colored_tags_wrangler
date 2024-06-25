@@ -3,21 +3,21 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
 import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
-import {CoreExtension} from "../../extensions/core/CoreExtension";
-import {CssStylingExtension} from "../../extensions/styling/CssStylingExtension";
+import {ExtensionCore} from "../../extensions/core/ExtensionCore";
+import {ExtensionStyling} from "../../extensions/styling/ExtensionStyling";
 import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
 import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
 import {IExtensionRecordCore} from "../../extensions/core/IExtensionRecordCssStyling";
-import {IExtensionRecordCssStyling} from "../../extensions/styling/IExtensionRecordCssStyling";
+import {IExtensionRecordStyling} from "../../extensions/styling/IExtensionRecordStyling";
 import {IExtensionRecordCanvasCard} from "../../extensions/canvas_card/IExtensionRecordCanvasCard";
-import {CanvasCardExtension} from "../../extensions/canvas_card/CanvasCardExtension";
+import {ExtensionCanvasCard} from "../../extensions/canvas_card/ExtensionCanvasCard";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ExtensionsService implements IExtensionsService {
 	public readonly Core: IExtension<IExtensionRecordCore>
-	public readonly CssStyling: IExtension<IExtensionRecordCssStyling>
+	public readonly Styling: IExtension<IExtensionRecordStyling>
 	public readonly CanvasCards: IExtension<IExtensionRecordCanvasCard>
 
 	private _settings: ISettingsService;
@@ -48,9 +48,9 @@ export class ExtensionsService implements IExtensionsService {
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(settings: ISettingsService) {
 		this._settings = settings;
-		this.Core = new CoreExtension();
-		this.CssStyling = new CssStylingExtension();
-		this.CanvasCards = new CanvasCardExtension();
+		this.Core = new ExtensionCore();
+		this.Styling = new ExtensionStyling();
+		this.CanvasCards = new ExtensionCanvasCard();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ export class ExtensionsService implements IExtensionsService {
 	private AsList(): IExtension<IExtensionRecord>[] {
 		return [
 			this.Core,
-			this.CssStyling,
+			this.Styling,
 			this.CanvasCards
 		]
 	}
