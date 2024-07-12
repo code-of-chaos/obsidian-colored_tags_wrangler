@@ -1,9 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
-import {DropDownOptions} from "./DropDownOptions";
-
+import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord";
+import {DropDownOptions} from "src/plugin/extensions/nested_tags/DropDownOptions";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

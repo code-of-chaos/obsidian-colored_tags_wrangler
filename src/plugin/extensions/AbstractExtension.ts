@@ -1,22 +1,21 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IExtension} from "../../contracts/plugin/extensions/IExtension";
-import {TableContentPopulator} from "../../contracts/plugin/ui/components/TableContentPopulator";
-import {ICssWrangler} from "../../contracts/plugin/services/css_styler/ICssWrangler";
-import {IExtensionRecord} from "../../contracts/plugin/extensions/IExtensionRecord";
-import {ServiceProvider} from "../services/ServiceProvider";
-
+import {IExtension} from "src/contracts/plugin/extensions/IExtension";
+import {TableContentPopulator} from "src/contracts/plugin/ui/components/TableContentPopulator";
+import {ICssWrangler} from "src/contracts/plugin/services/css_styler/ICssWrangler";
+import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export abstract class AbstractExtension<T extends IExtensionRecord> implements IExtension<T> {
-	abstract readonly TableContentPopulators: TableContentPopulator[];
-	abstract readonly cssWrangler: ICssWrangler;
-	abstract readonly extensionName: string;
-	abstract readonly description: string;
-	readonly extensionRequirements: string[] = []
-
+	public abstract readonly TableContentPopulators: TableContentPopulator[];
+	public abstract readonly cssWrangler: ICssWrangler;
+	public abstract readonly extensionName: string;
+	public abstract readonly description: string;
+	public readonly extensionRequirements: string[] = [];
+	
 	public get isEnabled(): boolean {
 		return ServiceProvider.extensions.EnabledList.contains(this)
 	}

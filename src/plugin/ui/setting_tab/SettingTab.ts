@@ -2,10 +2,9 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {PluginSettingTab, Setting} from "obsidian";
-import {ISettingTab} from "../../../contracts/plugin/ui/ISettingTab";
-import {SettingTagTable} from "./components/tag_table/SettingTagTable";
-import {SettingExtensionSelector} from "./components/extension_selector/SettingExtensionSelector";
-
+import {ISettingTab} from "src/contracts/plugin/ui/ISettingTab";
+import {SettingTagTable} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagTable";
+import {SettingExtensionSelector} from "src/plugin/ui/setting_tab/components/extension_selector/SettingExtensionSelector";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

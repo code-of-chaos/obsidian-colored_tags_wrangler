@@ -2,11 +2,10 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
-import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
-import {ServiceProvider} from "../../services/ServiceProvider";
-import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
-import {rgbopacityToString} from "../../../lib/ColorConverters";
-
+import {ICssWrangler} from "src/contracts/plugin/services/css_styler/ICssWrangler";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {themeSelectorDark, themeSelectorLight} from "src/plugin/services/css_styler/CssStylerService";
+import {rgbopacityToString} from "src/lib/ColorConverters";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -16,25 +15,16 @@ export class CssWranglerStyling implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	private _properties(record: IColoredTagRecord): Record<string, string> {
 		const dict: Record<string, string> = {}
-		if (record.css_styling_bold_enabled) {
-			dict["font-weight"] = "bold"
-		}
-		if (record.css_styling_italic_enabled) {
-			dict["font-style"] = "italic"
-		}
-		if (record.css_styling_font_family !== undefined && record.css_styling_font_family !== null && record.css_styling_font_family !== "") {
+		if (record.css_styling_bold_enabled) dict["font-weight"] = "bold"
+		if (record.css_styling_italic_enabled) dict["font-style"] = "italic"
+		if (record.css_styling_font_family !== undefined && record.css_styling_font_family !== null && record.css_styling_font_family !== "") 
 			dict["font-family"] = `${record.css_styling_font_family}`
-		}
-		if (record.css_styling_font_size !== undefined && record.css_styling_font_size !== null && record.css_styling_font_size !== 1) {
+		if (record.css_styling_font_size !== undefined && record.css_styling_font_size !== null && record.css_styling_font_size !== 1) 
 			dict["font-size"] = `${record.css_styling_font_size}em`
-		}
-		if (record.css_styling_opacity !== undefined && record.css_styling_opacity !== null && record.css_styling_opacity !== 1) {
-			if (record.core_enabled){
-				dict["background-color"] = `${rgbopacityToString(record.core_color_background, record.css_styling_opacity)} !important`
-			} else {
-				dict["background-color"] = `hsla(var(--accent-h), var(--accent-s), var(--accent-l), ${record.css_styling_opacity})`
-			}
-		}
+		if (record.css_styling_opacity !== undefined && record.css_styling_opacity !== null && record.css_styling_opacity !== 1) 
+			dict["background-color"] = record.core_enabled 
+				? `${rgbopacityToString(record.core_color_background, record.css_styling_opacity)} !important`
+				: `hsla(var(--accent-h), var(--accent-s), var(--accent-l), ${record.css_styling_opacity})`;
 
 		return dict;
 	}
@@ -58,7 +48,7 @@ export class CssWranglerStyling implements ICssWrangler {
 		ServiceProvider.tagRecords
 			.getTagsFlat(false)
 			.filter(record => {
-				// @ts-ignore
+				// @ts-ignore // Yes I know, but it works, so shush!
 				return Object.keys(defaultRecord).first(key => record[key] !== defaultRecord[key])
 			})
 			.forEach(record => {

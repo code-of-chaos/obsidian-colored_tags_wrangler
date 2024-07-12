@@ -1,47 +1,58 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ISettingTagRecordComponent} from "../../../../../contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
-import {ServiceProvider} from "../../../../services/ServiceProvider";
-import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
-
+import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {RowDataType} from "src/contracts/plugin/ui/components/RowDataType";
+import {IColoredTagRecord} from "../../../../../contracts/plugin/settings/IColoredTagRecord";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordPreview implements ISettingTagRecordComponent {
 	disabled: boolean;
 	private El: HTMLElement;
-
-	// This is just a recreation of the obsidian tag spans
-	//		Although I should be able to create some sort of system to update them easily?
-	//		Currently, this is done by giving them specific Ids tied to the uuid of the records.
-
+	rowDataType: RowDataType;
+	
+	// -----------------------------------------------------------------------------------------------------------------
+	// Constructor
+	// -----------------------------------------------------------------------------------------------------------------
 	constructor(rowData: RowDataType) {
+		this.rowDataType = rowData;
 		this.El = rowData.parentEl.createDiv()
 		this.El.addClass("tag-preview-div");
 		let el2 = this.El.createDiv()
 
 		const previewIds = ServiceProvider.tagRecords.getTagPreviewIds(rowData.record)
-		const firstTag = ServiceProvider.tagRecords.getFirstTag(rowData.record)
 
-		const elBegin = el2.createEl("span")
-		elBegin.addClasses(["cm-hashtag", "cm-hashtag-begin", "cm-meta", `cm-tag-${firstTag}`]);
-		elBegin.id = previewIds.begin
+		this.ElBegin = el2.createEl("span")
+		this.ElBegin.id = previewIds.begin
 
-		const elEnd = el2.createEl("span")
-		elEnd.addClasses(["cm-hashtag", "cm-hashtag-end", "cm-meta", `cm-tag-${firstTag}`]);
-		elEnd.id = previewIds.end
+		this.ElEnd = el2.createEl("span")
+		this.ElEnd.id = previewIds.end
 
 		// Colors are applied after the fact by the table rendering
+		SettingTagRecordPreview.setClasses(this.ElBegin, this.ElEnd, rowData.record);
 	}
 
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
+	static setClasses(elBegin: HTMLElement, elEnd: HTMLElement, record: IColoredTagRecord) {
+		const firstTag = ServiceProvider.tagRecords.getFirstTag(record)
+		elBegin.className = '';
+		elEnd.className = '';
+		
+		elBegin.addClasses(["cm-hashtag", "cm-hashtag-begin", "cm-meta", `cm-tag-${firstTag}`]);
+		elEnd.addClasses(["cm-hashtag", "cm-hashtag-end", "cm-meta", `cm-tag-${firstTag}`]);
+	}
+	
 	setDisabled(disabled: boolean): this {
 		this.disabled = disabled;
 		this.El.hidden = disabled;
 		return this;
 	}
 
-	then(cb: (component: this) => any): this {
+	then(_cb: (component: this) => any): this {
 		return this;
 	}
 }

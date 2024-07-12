@@ -1,15 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ICssStylerService} from "../../../contracts/plugin/services/css_styler/ICssStylerService";
-import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
+import {ICssStylerService} from "src/contracts/plugin/services/css_styler/ICssStylerService";
+import {IExtensionsService} from "src/contracts/plugin/services/extensions/IExtensionsService";
 
 // ---------------------------------------------------------------------------------------------------------------------
-// Code
+// Support Code
 // ---------------------------------------------------------------------------------------------------------------------
 export const themeSelectorLight:string = "body.theme-light";
 export const themeSelectorDark:string = "body.theme-dark";
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -28,6 +27,9 @@ export class CssStylerService implements ICssStylerService {
 		this.styleElement.id = "colored-tags-wrangler"
 	}
 
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------------------------------------------------------
 	public processExtensions() {
 		this.styleElement.innerHTML = "";
 		this.styleElement.innerHTML = this.createCSS()

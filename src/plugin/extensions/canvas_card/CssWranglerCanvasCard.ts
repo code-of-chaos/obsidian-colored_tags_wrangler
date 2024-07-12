@@ -2,15 +2,13 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
-import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
-import {rgbopacityToString, rgbToString} from "../../../lib/ColorConverters";
-import {ServiceProvider} from "../../services/ServiceProvider";
-import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
-
+import {ICssWrangler} from "src/contracts/plugin/services/css_styler/ICssWrangler";
+import {rgbopacityToString, rgbToString} from "src/lib/ColorConverters";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {themeSelectorDark, themeSelectorLight} from "src/plugin/services/css_styler/CssStylerService";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-
 export class CssWranglerCanvasCard implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Helper Methods
@@ -22,7 +20,6 @@ export class CssWranglerCanvasCard implements ICssWrangler {
 			dict["border-color"] = `${rgbToString(record.core_color_foreground)} !important`
 		}
 		if (record.canvas_card_enable_background){
-			// dict["--canvas-color"] = `${record.core_color_foreground.r}, ${record.core_color_foreground.g}, ${record.core_color_foreground.b}`
 			dict["background-color"] = `${rgbopacityToString(record.core_color_background, record.canvas_card_background_opacity)} !important`
 		}
 

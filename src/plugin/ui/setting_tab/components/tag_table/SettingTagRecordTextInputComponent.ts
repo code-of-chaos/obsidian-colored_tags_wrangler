@@ -4,8 +4,8 @@
 import {TextComponent} from "obsidian";
 import {TextProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
-import {ServiceProvider} from "../../../../services/ServiceProvider";
-import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {RowDataType} from "src/contracts/plugin/ui/components/RowDataType";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

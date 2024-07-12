@@ -1,13 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
-import {IColoredTagWranglerPlugin} from "../../../contracts/plugin/IColoredTagWranglerPlugin";
+import {ISettingsService} from "src/contracts/plugin/services/settings/ISettingsService";
+import {IColoredTagWranglerPlugin} from "src/contracts/plugin/IColoredTagWranglerPlugin";
 import {debounce, Debouncer} from "obsidian";
-import {defaultSettings} from "./DefaultSettings";
-import {IPluginSettings} from "../../../contracts/plugin/settings/IPluginSettings";
-import {IMigratorService} from "../../../contracts/plugin/services/migrator/IMigratorService";
-
+import {defaultSettings} from "src/plugin/services/settings/DefaultSettings";
+import {IPluginSettings} from "src/contracts/plugin/settings/IPluginSettings";
+import {IMigratorService} from "src/contracts/plugin/services/migrator/IMigratorService";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

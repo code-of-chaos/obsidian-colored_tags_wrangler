@@ -2,15 +2,14 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {Setting, SettingTab} from "obsidian";
-import {TableContentPopulator} from "../../../../../contracts/plugin/ui/components/TableContentPopulator";
-import {SettingTagRecordTextAreaComponent} from "./SettingTagRecordTextAreaComponent";
-import {SettingTagRecordPreview} from "./SettingTagRecordPreview";
-import {SettingTagRecordNavigators} from "./SettingTagRecordNavigators";
-import {ServiceProvider} from "../../../../services/ServiceProvider";
-import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
-import {IColoredTagRecord} from "../../../../../contracts/plugin/settings/IColoredTagRecord";
-import {capitalizeFirstLetter} from "../../../../../lib/StringUtils";
-
+import {TableContentPopulator} from "src/contracts/plugin/ui/components/TableContentPopulator";
+import {SettingTagRecordTextAreaComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordTextAreaComponent";
+import {SettingTagRecordPreview} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordPreview";
+import {SettingTagRecordNavigators} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordNavigators";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {RowDataType} from "src/contracts/plugin/ui/components/RowDataType";
+import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
+import {capitalizeFirstLetter} from "src/lib/StringUtils";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -67,6 +66,7 @@ export class SettingTagTable {
 		if (begin.textContent !== "#") begin.textContent = "#";
 		if (end.textContent !== displayTag) end.textContent = displayTag;
 
+		SettingTagRecordPreview.setClasses(begin, end, record);
 		// Styling provided by record updater
 	}
 

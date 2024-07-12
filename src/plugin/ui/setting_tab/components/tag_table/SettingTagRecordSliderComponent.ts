@@ -1,12 +1,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {BaseComponent, ExtraButtonComponent, SliderComponent, TextAreaComponent} from "obsidian";
+import {BaseComponent, ExtraButtonComponent, SliderComponent} from "obsidian";
 import {NumberProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
-import {ServiceProvider} from "../../../../services/ServiceProvider";
-import {RowDataType} from "../../../../../contracts/plugin/ui/components/RowDataType";
-
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {RowDataType} from "src/contracts/plugin/ui/components/RowDataType";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -43,14 +42,5 @@ export class SettingTagRecordSliderComponent extends BaseComponent implements IS
 				await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
 			})
 
-	}
-
-	// -----------------------------------------------------------------------------------------------------------------
-	// Methods
-	// -----------------------------------------------------------------------------------------------------------------
-	public hide(){
-		this.buttonEl.extraSettingsEl.hide()
-		this.sliderEl.sliderEl.hide()
-		this.boxEl.hide()
 	}
 }

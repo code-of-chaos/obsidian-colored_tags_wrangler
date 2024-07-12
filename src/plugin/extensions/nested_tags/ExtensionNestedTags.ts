@@ -1,15 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {TableContentPopulator} from "../../../contracts/plugin/ui/components/TableContentPopulator";
-import {AbstractExtension} from "../AbstractExtension";
-import {CssWranglerNestedTags} from "./CssWranglerNestedTags";
-import {IExtensionRecordNestedTags} from "./IExtensionRecordNestedTags";
-import {ServiceProvider} from "../../services/ServiceProvider";
+import {TableContentPopulator} from "src/contracts/plugin/ui/components/TableContentPopulator";
+import {AbstractExtension} from "src/plugin/extensions/AbstractExtension";
+import {CssWranglerNestedTags} from "src/plugin/extensions/nested_tags/CssWranglerNestedTags";
+import {IExtensionRecordNestedTags} from "src/plugin/extensions/nested_tags/IExtensionRecordNestedTags";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
 import {debounce, Debouncer} from "obsidian";
-import {DropDownOptions, DropDownOptionsAsRecord, DropdownOptionsFromString} from "./DropDownOptions";
-import {SettingTagRecordDropdownComponent} from "../../ui/setting_tab/components/tag_table/SettingTagRecordDropdown";
-
+import {DropDownOptions, DropDownOptionsAsRecord, DropdownOptionsFromString} from "src/plugin/extensions/nested_tags/DropDownOptions";
+import {SettingTagRecordDropdownComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordDropdown";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

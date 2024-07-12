@@ -12,6 +12,8 @@ export type BooleanProperties =
 	| "css_styling_enabled"
 	| "css_styling_bold_enabled"
 	| "css_styling_italic_enabled"
+
+	// Canvas Card Extension
 	| "canvas_card_enable_border"
 	| "canvas_card_enable_background"
 ;
@@ -21,6 +23,8 @@ export type NumberProperties =
 	// Css Styling Extension
 	"css_styling_font_size"
 	| "css_styling_opacity"
+	
+	// Canvas Card Extension
 	| "canvas_card_background_opacity"
 	| "canvas_card_priority"
 ;
@@ -41,4 +45,5 @@ export type RGBSelectorProperties =
 ;
 
 export type DropdownProperties =
+	// Nested Tags Extension
 	"nested_tags_dropdown"

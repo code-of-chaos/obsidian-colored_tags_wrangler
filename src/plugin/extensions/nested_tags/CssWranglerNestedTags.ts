@@ -1,14 +1,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
-import {ServiceProvider} from "../../services/ServiceProvider";
-import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagRecord";
-import {hslToRgb, rgbToHsl, rgbToString} from "../../../lib/ColorConverters";
-import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
+import {ICssWrangler} from "src/contracts/plugin/services/css_styler/ICssWrangler";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
+import {hslToRgb, rgbToHsl, rgbToString} from "src/lib/ColorConverters";
+import {themeSelectorDark, themeSelectorLight} from "src/plugin/services/css_styler/CssStylerService";
 import {HSL} from "obsidian";
-import {DropDownOptions, DropdownOptionsFromString} from "./DropDownOptions";
-
+import {DropDownOptions, DropdownOptionsFromString} from "src/plugin/extensions/nested_tags/DropDownOptions";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

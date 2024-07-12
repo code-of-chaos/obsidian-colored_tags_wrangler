@@ -1,14 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {ITagRecordsService} from "../../../contracts/plugin/services/tag_records/ITagRecordsService";
-import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
-import {IColoredTagRecord} from "../../../contracts/plugin/settings/IColoredTagRecord";
-import {reSLASH, reSplit} from "../../../lib/RegexUtils";
-import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
-import {ServiceProvider} from "../ServiceProvider";
-import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
-import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
+import {ITagRecordsService} from "src/contracts/plugin/services/tag_records/ITagRecordsService";
+import {ISettingsService} from "src/contracts/plugin/services/settings/ISettingsService";
+import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
+import {reSLASH, reSplit} from "src/lib/RegexUtils";
+import {IExtensionsService} from "src/contracts/plugin/services/extensions/IExtensionsService";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {IExtension} from "src/contracts/plugin/extensions/IExtension";
+import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -55,10 +55,10 @@ export class TagRecordsService implements ITagRecordsService {
 
 	async addOrUpdateTag(record: IColoredTagRecord): Promise<void> {
 		const index = this.getTagIndex(record);
-		if (index !== -1) {
-			this._tagRecords[index] = record;
-		} else {
+		if (index === -1) {
 			this._tagRecords.push(record);
+		} else {
+			this._tagRecords[index] = record;
 		}
 
 		await this._settings.debounceSaveToFile.run()

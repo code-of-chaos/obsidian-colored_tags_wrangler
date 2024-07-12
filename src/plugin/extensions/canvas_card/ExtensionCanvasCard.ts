@@ -1,12 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {TableContentPopulator} from "../../../contracts/plugin/ui/components/TableContentPopulator";
-import {SettingTagRecordToggleComponent} from "../../ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
-import {AbstractExtension} from "../AbstractExtension";
-import {CssWranglerCanvasCard} from "./CssWranglerCanvasCard";
-import {IExtensionRecordCanvasCard} from "./IExtensionRecordCanvasCard";
-import {SettingTagRecordSliderComponent} from "../../ui/setting_tab/components/tag_table/SettingTagRecordSliderComponent";
+import {TableContentPopulator} from "src/contracts/plugin/ui/components/TableContentPopulator";
+import {SettingTagRecordToggleComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
+import {AbstractExtension} from "src/plugin/extensions/AbstractExtension";
+import {CssWranglerCanvasCard} from "src/plugin/extensions/canvas_card/CssWranglerCanvasCard";
+import {IExtensionRecordCanvasCard} from "src/plugin/extensions/canvas_card/IExtensionRecordCanvasCard";
+import {SettingTagRecordSliderComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordSliderComponent";
 import {
 	SettingTagRecordNumberInputComponent
 } from "../../ui/setting_tab/components/tag_table/SettingTagRecordNumberInputComponent";

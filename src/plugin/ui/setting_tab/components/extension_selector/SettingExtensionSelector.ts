@@ -2,18 +2,15 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {Setting, SettingTab} from "obsidian";
-import {IExtension} from "../../../../../contracts/plugin/extensions/IExtension";
-import {ServiceProvider} from "../../../../services/ServiceProvider";
-import {capitalizeFirstLetter} from "../../../../../lib/StringUtils";
-import {IExtensionRecord} from "../../../../../contracts/plugin/extensions/IExtensionRecord";
-
+import {IExtension} from "src/contracts/plugin/extensions/IExtension";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {capitalizeFirstLetter} from "src/lib/StringUtils";
+import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingExtensionSelector {
 	private parent: SettingTab;
-
-	// private settingEl: Setting;
 	private masterEl: HTMLElement;
 	private gridContainerEl: HTMLElement;
 

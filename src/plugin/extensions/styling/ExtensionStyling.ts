@@ -1,22 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {TableContentPopulator} from "../../../contracts/plugin/ui/components/TableContentPopulator";
-import {
-	SettingTagRecordToggleComponent
-} from "../../ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
-import {IExtensionRecordStyling} from "./IExtensionRecordStyling";
+import {TableContentPopulator} from "src/contracts/plugin/ui/components/TableContentPopulator";
+import {SettingTagRecordToggleComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
+import {IExtensionRecordStyling} from "src/plugin/extensions/styling/IExtensionRecordStyling";
 import {ICssWrangler} from "src/contracts/plugin/services/css_styler/ICssWrangler";
-import {CssWranglerStyling} from "./CssWranglerStyling";
-import {AbstractExtension} from "../AbstractExtension";
-import {
-	SettingTagRecordSliderComponent
-} from "../../ui/setting_tab/components/tag_table/SettingTagRecordSliderComponent";
-import {
-	SettingTagRecordTextInputComponent
-} from "../../ui/setting_tab/components/tag_table/SettingTagRecordTextInputComponent";
-
-
+import {CssWranglerStyling} from "src/plugin/extensions/styling/CssWranglerStyling";
+import {AbstractExtension} from "src/plugin/extensions/AbstractExtension";
+import {SettingTagRecordSliderComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordSliderComponent";
+import {SettingTagRecordTextInputComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordTextInputComponent";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -25,11 +17,6 @@ export class ExtensionStyling extends AbstractExtension<IExtensionRecordStyling>
 	public extensionName = "Styling";
 	public description = "Style your tags even more!";
 	public TableContentPopulators: TableContentPopulator[] = [
-		// {
-		// 	title: "Custom CSS styling",
-		// 	callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "css_styling_enabled"),
-		// 	classes: ["header-wrap-every-word", "border-right-dotted"]
-		// },
 		{
 			title: "Background Opacity",
 			callback: (rowData) =>

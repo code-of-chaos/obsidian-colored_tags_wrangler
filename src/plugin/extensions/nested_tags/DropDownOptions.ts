@@ -11,7 +11,6 @@ export enum DropDownOptions {
 	Darker = "Darker",
 }
 
-
 export function DropDownOptionsAsRecord() : Record<string, string>{
 	return Object.keys(DropDownOptions).reduce((acc, key) => {
 		acc[key] = DropDownOptions[key as keyof typeof DropDownOptions];

@@ -1,15 +1,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IExtensionsService} from "../../../contracts/plugin/services/extensions/IExtensionsService";
-import {IExtension} from "../../../contracts/plugin/extensions/IExtension";
-import {ExtensionCore} from "../../extensions/core/ExtensionCore";
-import {ExtensionStyling} from "../../extensions/styling/ExtensionStyling";
-import {ISettingsService} from "../../../contracts/plugin/services/settings/ISettingsService";
-import {IExtensionRecord} from "../../../contracts/plugin/extensions/IExtensionRecord";
-import {ExtensionCanvasCard} from "../../extensions/canvas_card/ExtensionCanvasCard";
-import {ExtensionNestedTags} from "../../extensions/nested_tags/ExtensionNestedTags";
-
+import {IExtensionsService} from "src/contracts/plugin/services/extensions/IExtensionsService";
+import {IExtension} from "src/contracts/plugin/extensions/IExtension";
+import {ExtensionCore} from "src/plugin/extensions/core/ExtensionCore";
+import {ExtensionStyling} from "src/plugin/extensions/styling/ExtensionStyling";
+import {ISettingsService} from "src/contracts/plugin/services/settings/ISettingsService";
+import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord";
+import {ExtensionCanvasCard} from "src/plugin/extensions/canvas_card/ExtensionCanvasCard";
+import {ExtensionNestedTags} from "src/plugin/extensions/nested_tags/ExtensionNestedTags";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -35,7 +34,6 @@ export class ExtensionsService implements IExtensionsService {
 	}
 
 	private _Dictionary: Record<string, IExtension<IExtensionRecord>> | undefined;
-
 	public get Dictionary(): Record<string, IExtension<IExtensionRecord>> {
 		return this._Dictionary ??= this.AsDictionary();
 	}

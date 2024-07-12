@@ -1,15 +1,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {App, getAllTags, Plugin, PluginManifest} from "obsidian";
-import {IColoredTagWranglerPlugin} from "../contracts/plugin/IColoredTagWranglerPlugin";
-import {SettingTab} from "./ui/setting_tab/SettingTab";
-import {ServiceProvider} from "./services/ServiceProvider";
-
+import {App, Plugin, PluginManifest} from "obsidian";
+import {IColoredTagWranglerPlugin} from "src/contracts/plugin/IColoredTagWranglerPlugin";
+import {SettingTab} from "src/plugin/ui/setting_tab/SettingTab";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-// noinspection JSUnusedGlobalSymbols
 export default class ColoredTagWranglerPlugin extends Plugin implements IColoredTagWranglerPlugin {
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);

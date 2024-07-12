@@ -1,14 +1,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {TableContentPopulator} from "../../../contracts/plugin/ui/components/TableContentPopulator";
+import {TableContentPopulator} from "src/contracts/plugin/ui/components/TableContentPopulator";
 import {v4 as uuidV4} from "uuid";
-import {SettingTagRecordColorComponent} from "../../ui/setting_tab/components/tag_table/SettingTagRecordColorComponent";
-import {SettingTagRecordToggleComponent} from "../../ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
-import {IExtensionRecordCore} from "./IExtensionRecordCssStyling";
-import {CssWranglerCore} from "./CssWranglerCore";
-import {AbstractExtension} from "../AbstractExtension";
-
+import {SettingTagRecordColorComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordColorComponent";
+import {SettingTagRecordToggleComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordToggleComponent";
+import {IExtensionRecordCore} from "src/plugin/extensions/core/IExtensionRecordCssStyling";
+import {CssWranglerCore} from "src/plugin/extensions/core/CssWranglerCore";
+import {AbstractExtension} from "src/plugin/extensions/AbstractExtension";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

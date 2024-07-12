@@ -2,15 +2,13 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
-import {ICssWrangler} from "../../../contracts/plugin/services/css_styler/ICssWrangler";
-import {rgbToString} from "../../../lib/ColorConverters";
-import {ServiceProvider} from "../../services/ServiceProvider";
-import {themeSelectorDark, themeSelectorLight} from "../../services/css_styler/CssStylerService";
-
+import {ICssWrangler} from "src/contracts/plugin/services/css_styler/ICssWrangler";
+import {rgbToString} from "src/lib/ColorConverters";
+import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {themeSelectorDark, themeSelectorLight} from "src/plugin/services/css_styler/CssStylerService";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-
 export class CssWranglerCore implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Helper Methods
@@ -38,14 +36,14 @@ export class CssWranglerCore implements ICssWrangler {
 			.getTagsFlat(false)
 			.filter(record => record.core_enabled)
 			.forEach(record => {
-					this._selectors(themeSelectorLight, record)
-						.forEach((rule) => {
-							dict[rule] = this._properties(record)
-						})
-					this._selectors(themeSelectorDark, record)
-						.forEach((rule) => {
-							dict[rule] = this._properties(record)
-						})
+				this._selectors(themeSelectorLight, record)
+					.forEach((rule) => {
+						dict[rule] = this._properties(record)
+					})
+				this._selectors(themeSelectorDark, record)
+					.forEach((rule) => {
+						dict[rule] = this._properties(record)
+					})
 				}
 			)
 		return dict
