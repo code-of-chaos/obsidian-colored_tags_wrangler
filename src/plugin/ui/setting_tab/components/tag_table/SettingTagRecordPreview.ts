@@ -33,7 +33,7 @@ export class SettingTagRecordPreview implements ISettingTagRecordComponent {
 		this.ElEnd = el2.createEl("span")
 		this.ElEnd.id = previewIds.end
 
-		// Colors are applied after the fact by the table rendering
+		// Colors are applied with the css styler
 		SettingTagRecordPreview.setClasses(this.ElBegin, this.ElEnd, rowData.record);
 	}
 

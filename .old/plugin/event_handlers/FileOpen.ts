@@ -14,9 +14,7 @@ export class EventHandlerFileOpen extends EventHandler {
 				'file-open',
 				async (file) => {
 					// Exit clause
-					if (file === null) {
-						return
-					}
+					if (file === null) return
 
 					this.plugin.settings.CSS.NoteProperties
 						? await this.apply_css_note_properties(file)

@@ -1,20 +1,17 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Debouncer, debounce} from "obsidian";
-import {IColoredTagWrangler} from ".old/plugin/IColoredTagWrangler";
+import {IColoredTagWranglerPlugin} from "src/contracts/plugin/IColoredTagWranglerPlugin";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export abstract class EventHandler {
-	plugin: IColoredTagWrangler;
-	debounced_save_settings: Debouncer<any, any>
+	plugin: IColoredTagWranglerPlugin;
 
-	public constructor(plugin: IColoredTagWrangler,) {
+	public constructor(plugin: IColoredTagWranglerPlugin,) {
 		this.plugin = plugin;
-		this.debounced_save_settings = debounce(plugin.saveSettings.bind(plugin), 100);
 	}
 
-	abstract register(): void;
+	abstract register(): Promise<void>;
 }
