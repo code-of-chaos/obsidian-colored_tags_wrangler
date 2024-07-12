@@ -13,6 +13,9 @@ export class SettingTagRecordPreview implements ISettingTagRecordComponent {
 	private El: HTMLElement;
 	rowDataType: RowDataType;
 	
+	private readonly ElBegin : HTMLSpanElement
+	private readonly ElEnd : HTMLSpanElement
+	
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
