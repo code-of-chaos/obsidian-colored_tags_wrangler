@@ -1,11 +1,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IEventHandlerPopulator} from "./IEventHandlerPopulator";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export interface IEventHandler {
-	register(populator: IEventHandlerPopulator[]) : void;
+import {TFile} from "obsidian";
+
+export interface IEventHandlerPopulator {
+	FileOpenMd: (file: TFile ) => void;
+	FileOpenCanvas: (file: TFile ) => void;
 }

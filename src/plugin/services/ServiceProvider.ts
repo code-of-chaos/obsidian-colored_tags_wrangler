@@ -14,17 +14,20 @@ import {CssStylerService} from "src/plugin/services/css_styler/CssStylerService"
 import {ICssStylerService} from "src/contracts/plugin/services/css_styler/ICssStylerService";
 import {IVaultTags} from "src/contracts/plugin/services/tag_records/IVaultTags";
 import {VaultTags} from "src/plugin/services/tag_records/VaultTags";
+import {IEventHandlerService} from "../../contracts/plugin/services/event_handlers/IEventHandlerService";
+import {EventHandlerService} from "./event_handlers/EventHandlerService";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class ServiceProvider {
-	public static plugin:	  IColoredTagWranglerPlugin
-	public static vaultTags:  IVaultTags
-	public static extensions: IExtensionsService
-	public static settings:   ISettingsService;
-	public static tagRecords: ITagRecordsService;
-	public static migrator:   IMigratorService;
-	public static cssStyler:  ICssStylerService
+	public static plugin:	  		IColoredTagWranglerPlugin;
+	public static vaultTags:  		IVaultTags;
+	public static extensions: 		IExtensionsService;
+	public static settings:   		ISettingsService;
+	public static tagRecords: 		ITagRecordsService;
+	public static migrator:   		IMigratorService;
+	public static cssStyler:  		ICssStylerService;
+	public static eventHandlers :   IEventHandlerService;
 
 	private static Instantiated: boolean = false;
 	// -----------------------------------------------------------------------------------------------------------------
@@ -40,6 +43,7 @@ export class ServiceProvider {
 		ServiceProvider.extensions = new ExtensionsService(ServiceProvider.settings)
 		ServiceProvider.tagRecords = new TagRecordsService(ServiceProvider.settings, ServiceProvider.extensions)
 		ServiceProvider.cssStyler = new CssStylerService(ServiceProvider.extensions)
+		ServiceProvider.eventHandlers = new EventHandlerService(plugin)
 
 		ServiceProvider.Instantiated = true;
 	}

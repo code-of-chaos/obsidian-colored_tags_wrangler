@@ -6,12 +6,13 @@ import {TableContentPopulator} from "src/contracts/plugin/ui/components/TableCon
 import {ICssWrangler} from "src/contracts/plugin/services/css_styler/ICssWrangler";
 import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord";
 import {ServiceProvider} from "src/plugin/services/ServiceProvider";
+import {IEventHandlerPopulator} from "../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export abstract class AbstractExtension<T extends IExtensionRecord> implements IExtension<T> {
 	public abstract readonly TableContentPopulators: TableContentPopulator[];
-	public abstract readonly cssWrangler: ICssWrangler;
+	public abstract readonly cssWrangler: ICssWrangler | undefined;
 	public abstract readonly extensionName: string;
 	public abstract readonly description: string;
 	public readonly extensionRequirements: string[] = [];
@@ -28,4 +29,7 @@ export abstract class AbstractExtension<T extends IExtensionRecord> implements I
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	abstract getDefaultRecord(): T
+	populateEventHandlers() : IEventHandlerPopulator | undefined {
+		return undefined;
+	}
 }

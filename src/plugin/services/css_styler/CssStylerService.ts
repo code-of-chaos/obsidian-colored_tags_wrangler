@@ -47,6 +47,8 @@ export class CssStylerService implements ICssStylerService {
 		this.extensions.EnabledList
 			// Each extension should handle their own rules for filtering which records are applied to or not
 			.forEach(e => {
+				if (e.cssWrangler === undefined) return;
+
 				const rules: Record<string, Record<string, string>> = e.cssWrangler.getRules();
 				// Because each extension is loaded in order, we can override behaviours from a previous plugin one by one
 				Object.keys(rules).forEach((key) => {

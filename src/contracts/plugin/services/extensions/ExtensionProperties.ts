@@ -16,6 +16,10 @@ export type BooleanProperties =
 	// Canvas Card Extension
 	| "canvas_card_enable_border"
 	| "canvas_card_enable_background"
+
+	// Properties Extension
+	| "properties_folder_note_enabled"
+ 	| "properties_note_background_enabled"
 ;
 
 export type NumberProperties =
