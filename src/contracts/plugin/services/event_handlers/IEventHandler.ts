@@ -7,5 +7,5 @@ import {IEventHandlerPopulator} from "./IEventHandlerPopulator";
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IEventHandler {
-	register(populator: IEventHandlerPopulator[]) : void;
+	register(populator: IEventHandlerPopulator[]) : Promise<void>;
 }

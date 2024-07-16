@@ -25,7 +25,7 @@ export class EventHandlerService implements IEventHandlerService {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	public registerEvents(){
+	public async registerEvents(){
 		const populators = ServiceProvider.extensions.EnabledList
 			.map((extension) => extension.populateEventHandlers())
 			.filter((eventPopulator) => {
@@ -33,6 +33,6 @@ export class EventHandlerService implements IEventHandlerService {
 			})
 			.map((eventPopulator) => eventPopulator as IEventHandlerPopulator)
 
-		this.fileOpen.register(populators)
+		await this.fileOpen.register(populators)
 	}
 }

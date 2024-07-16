@@ -10,6 +10,7 @@ import {IExtensionRecordProperties} from "./IExtensionRecordProperties";
 import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
 import {TFile} from "obsidian";
 import {ServiceProvider} from "../../services/ServiceProvider";
+import {rgbToString} from "../../../lib/ColorConverters";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -29,6 +30,11 @@ export class ExtensionProperties extends AbstractExtension<IExtensionRecordPrope
 			callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "properties_note_background_enabled"),
 			classes: []
 		},
+		{
+			title: "Use tag color as property tag",
+			callback: (rowData) => new SettingTagRecordToggleComponent(rowData, "properties_note_tags_enabled"),
+			classes: []
+		},
 	]
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -38,21 +44,29 @@ export class ExtensionProperties extends AbstractExtension<IExtensionRecordPrope
 		return {
 			properties_folder_note_enabled : true,
 			properties_note_background_enabled : false,
+			properties_note_tags_enabled : true,
 		};
 	}
 
 	public override populateEventHandlers() : IEventHandlerPopulator | undefined {
 		return {
-			FileOpenCanvas(file: TFile): void {
+			FileOpenCanvas: async (_: TFile)=> {
 
 			},
-			FileOpenMd(file: TFile): void {
+			FileOpenMd: async (_: TFile)=> {
 				ServiceProvider.tagRecords.getTagsFlat(false)
-					.map(record => record.core_tagText)
-					.forEach(tag_name => {
+					.filter(record => record.properties_note_tags_enabled)
+					.forEach(record => {
 						$('div[data-property-key="tags"]')
-							.find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
-							.addClass(`cm-tag-${tag_name}`)
+							.find(`div.multi-select-pill:has(span:contains("${record.core_tagText}"))`)
+							.css('background-color', rgbToString(record.core_color_background))
+							.css('color', rgbToString(record.core_color_foreground))
+
+							// Find the svg element within the tag, so it can color the X
+							// noinspection JSUnresolvedReference
+							.find('svg')
+							.css('stroke', rgbToString(record.core_color_foreground))
+
 					})
 			}
 

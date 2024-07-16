@@ -8,4 +8,5 @@ import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord
 export interface IExtensionRecordProperties extends IExtensionRecord {
 	properties_folder_note_enabled: boolean;
 	properties_note_background_enabled: boolean;
+	properties_note_tags_enabled: boolean;
 }

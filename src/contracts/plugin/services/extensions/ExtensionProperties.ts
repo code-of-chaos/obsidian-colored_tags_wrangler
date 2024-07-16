@@ -20,6 +20,7 @@ export type BooleanProperties =
 	// Properties Extension
 	| "properties_folder_note_enabled"
  	| "properties_note_background_enabled"
+	| "properties_note_tags_enabled"
 ;
 
 export type NumberProperties =

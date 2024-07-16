@@ -9,7 +9,7 @@ import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_h
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class EventHandlerFileOpen extends EventHandler implements IEventHandler {
-	public override register(populators:IEventHandlerPopulator[]) : void {
+	public override async register(populators:IEventHandlerPopulator[]) : Promise<void> {
 		this.plugin.registerEvent(
 			this.plugin.app.workspace.on(
 				'file-open',
@@ -19,17 +19,18 @@ export class EventHandlerFileOpen extends EventHandler implements IEventHandler 
 
 					switch (file.extension) {
 						case "md": {
-							console.log("opened MD file")
-							populators.forEach(populator => populator.FileOpenMd(file))
+							for (const populator of populators) {
+								await populator.FileOpenMd(file);
+							}
 							break;
 						}
 						case "canvas":{
-							console.log("opened CANVAS file")
-							populators.forEach(populator => populator.FileOpenCanvas(file))
+							for (const populator of populators) {
+								await populator.FileOpenCanvas(file);
+							}
 							break;
 						}
 						default : {
-							console.log("opened unknown filetype")
 							break;
 						}
 					}
