@@ -15,18 +15,21 @@ export class EventHandlerCanvasCard extends EventHandlerPopulator{
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	private async processor(){
-		await sleep(1000);
+		await sleep(500); // eh, it works because we need to wait a bit for all items to load
 		ServiceProvider.tagRecords.getTagsFlat(false)
 			.filter(record => record.properties_note_tags_enabled)
 			.forEach(record => {
-				// noinspection CssUnusedSymbol
-				$(`div.canvas-node > div.canvas-node-container:has(a.tag[href="#${record.core_tagText}"]), 
-				   div.canvas-node:has(div.canvas-node-container:has(a.tag[href="#${record.core_tagText}"])), 
-				   div.canvas-node-container:has(div.markdown-embed-content a[href="#${record.core_tagText}"])`)
+				$(`div.canvas-node-container:has(div.markdown-embed-content a[href="#${record.core_tagText}"])`)
 					.each((_, domElement) => {
-						console.warn(domElement)
 						domElement.addClass(`ctw-canvas-${record.core_tagText.replace(/\//g, '-')}`);
 					});
+
+				if (ServiceProvider.extensions.Extensions.NestedTags.isEnabled){
+					$(`div.canvas-node-container:has(div.markdown-embed-content a[href^="#${record.core_tagText}/"])`)
+						.each((_, domElement) => {
+							domElement.addClass(`ctw-canvas-${record.core_tagText.replace(/\//g, '-')}`);
+						});
+				}
 			})
 	}
 }

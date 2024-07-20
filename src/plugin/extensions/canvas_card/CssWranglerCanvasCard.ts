@@ -27,12 +27,21 @@ export class CssWranglerCanvasCard implements ICssWrangler {
 	}
 
 	private _selectors(theme: string, record: IColoredTagRecord): string[] {
-		return [
+		let selectors = [
 			`${theme} div.canvas-node > div.canvas-node-container:has(a.tag)[href="#${record.core_tagText}" i]`,
 			`${theme} div.canvas-node:has(div.canvas-node-container:has(a.tag)[href="#${record.core_tagText}" i])`,
 			`${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${record.core_tagText}" i])`,
 			`${theme} .ctw-canvas-${record.core_tagText}`,
 		]
+
+		if (ServiceProvider.extensions.Extensions.NestedTags.isEnabled){
+			selectors.push(
+				`${theme} div.canvas-node > div.canvas-node-container:has(a.tag)[href^="#${record.core_tagText}/" i]`,
+				`${theme} div.canvas-node:has(div.canvas-node-container:has(a.tag)[href^="#${record.core_tagText}/" i])`,
+				`${theme} div.canvas-node-container:has(div.markdown-embed-content a[href^="#${record.core_tagText}/" i])`
+			)
+		}
+		return selectors
 	}
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
