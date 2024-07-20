@@ -26,6 +26,7 @@ export class CssWranglerNestedTags implements ICssWrangler {
 			"color": `${rgbToString(record.core_color_foreground)} !important`,
 			"background": `${rgbToString(record.core_color_background)} !important`,
 			"stroke": `${rgbToString(record.core_color_foreground)} !important`,
+			"transition": "color 0.5s ease, background 0.5s ease, stroke 0.5s ease",
 		}
 	}
 
@@ -39,6 +40,7 @@ export class CssWranglerNestedTags implements ICssWrangler {
 			"color": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
 			"background": `${rgbToString(hslToRgb({...backHsl, l : backLum}))} !important`,
 			"stroke": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
+			"transition": "color 0.25s ease-in-out, background 0.25s ease-in-out",
 		}
 	}
 
@@ -52,6 +54,7 @@ export class CssWranglerNestedTags implements ICssWrangler {
 			"color": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
 			"background": `${rgbToString(hslToRgb({...backHsl, l : backLum}))} !important`,
 			"stroke": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
+			"transition": "color 0.25s ease-in-out, background 0.25s ease-in-out",
 		}
 	}
 

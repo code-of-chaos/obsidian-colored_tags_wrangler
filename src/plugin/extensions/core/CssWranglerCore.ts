@@ -18,6 +18,7 @@ export class CssWranglerCore implements ICssWrangler {
 			"color": `${rgbToString(record.core_color_foreground)} !important`,
 			"background": `${rgbToString(record.core_color_background)} !important`,
 			"stroke": `${rgbToString(record.core_color_foreground)} !important`,
+			"transition": "color 0.25s ease-in-out, background 0.25s ease-in-out",
 		}
 	}
 
