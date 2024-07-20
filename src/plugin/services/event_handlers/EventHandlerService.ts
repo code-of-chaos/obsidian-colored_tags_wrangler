@@ -8,6 +8,8 @@ import {ServiceProvider} from "../ServiceProvider";
 import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
 import {EventHandlerActiveLeafChange} from "./registrars/EventHandlerActiveLeafChange";
 import {EventHandlerMetaDataCacheChanged} from "./registrars/EventHandlerMetaDataCacheChanged";
+import {EventHandlerEditorChange} from "./registrars/EventHandlerEditorChange";
+import {EventHandlerCodeMirror} from "./registrars/EventHandlerCodeMirror";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -17,6 +19,8 @@ export class EventHandlerService implements IEventHandlerService {
 	fileOpen : EventHandlerFileOpen;
 	activeLeafChange : EventHandlerFileOpen;
 	metaDataCacheChanged : EventHandlerMetaDataCacheChanged;
+	editorChanged : EventHandlerEditorChange;
+	codeMirror: EventHandlerCodeMirror;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
@@ -26,6 +30,8 @@ export class EventHandlerService implements IEventHandlerService {
 		this.fileOpen = new EventHandlerFileOpen(plugin)
 		this.activeLeafChange = new EventHandlerActiveLeafChange(plugin)
 		this.metaDataCacheChanged = new EventHandlerMetaDataCacheChanged(plugin)
+		this.editorChanged = new EventHandlerEditorChange(plugin)
+		this.codeMirror = new EventHandlerCodeMirror(plugin)
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -35,8 +41,12 @@ export class EventHandlerService implements IEventHandlerService {
 		const populators = ServiceProvider.extensions.EnabledList
 			.map((extension) => extension.eventHandlerPopulator)
 
-		await this.fileOpen.register(populators)
-		await this.activeLeafChange.register(populators)
-		await this.metaDataCacheChanged.register(populators)
+		return Promise.all([
+			this.fileOpen.register(populators),
+			this.activeLeafChange.register(populators),
+			this.metaDataCacheChanged.register(populators),
+			this.editorChanged.register(populators),
+			this.codeMirror.register(populators)
+		]);
 	}
 }

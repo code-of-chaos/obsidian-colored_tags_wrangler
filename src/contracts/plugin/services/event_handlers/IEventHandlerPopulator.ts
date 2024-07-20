@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {TFile, WorkspaceLeaf} from "obsidian";
+import {Editor, MarkdownFileInfo, MarkdownView, TFile, WorkspaceLeaf} from "obsidian";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -10,4 +10,6 @@ export interface IEventHandlerPopulator {
 	FileOpenCanvas(file: TFile) : Promise<void> | void;
 	ActiveLeafChange(leaf : WorkspaceLeaf) : Promise<void> | void;
 	MetaDataCacheChanged(file: TFile) : Promise<void> | void;
+	EditorChange(editor: Editor, info: MarkdownView | MarkdownFileInfo): void | Promise<void>;
+	CodeMirror() : Promise<void> | void;
 }
