@@ -59,7 +59,7 @@ export class CssWranglerNestedTags implements ICssWrangler {
 		return [
 			`${theme} .tag[href="#${tagParts.join('/')}" i]`,
 			`${theme} .cm-tag-${tagParts.join('')}`,
-			`${theme} .ctw-tag-${tagParts.join('-')}`,
+			`${theme} .ctw-tag-${tagParts.join('-')}`, // Used for fixes
 		]
 	}
 
@@ -93,8 +93,6 @@ export class CssWranglerNestedTags implements ICssWrangler {
 						} else if (typeof record.nested_tags_dropdown === typeof DropDownOptions){
 							dropdownValue = record.nested_tags_dropdown
 						}
-
-						console.log(dropdownValue)
 
 						switch (dropdownValue){
 							case DropDownOptions.Darker:

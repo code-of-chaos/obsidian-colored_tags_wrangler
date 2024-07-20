@@ -30,7 +30,8 @@ export class CssWranglerCanvasCard implements ICssWrangler {
 		return [
 			`${theme} div.canvas-node > div.canvas-node-container:has(a.tag)[href="#${record.core_tagText}" i]`,
 			`${theme} div.canvas-node:has(div.canvas-node-container:has(a.tag)[href="#${record.core_tagText}" i])`,
-			`${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${record.core_tagText}" i])`
+			`${theme} div.canvas-node-container:has(div.markdown-embed-content a[href="#${record.core_tagText}" i])`,
+			`${theme} .ctw-canvas-${record.core_tagText}`,
 		]
 	}
 	// -----------------------------------------------------------------------------------------------------------------
