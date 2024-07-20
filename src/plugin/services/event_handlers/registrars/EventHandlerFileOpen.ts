@@ -1,9 +1,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {EventHandler} from "./EventHandler";
-import {IEventHandler} from "../../../contracts/plugin/services/event_handlers/IEventHandler";
-import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
+import {EventHandler} from "../EventHandler";
+import {IEventHandler} from "../../../../contracts/plugin/services/event_handlers/IEventHandler";
+import {IEventHandlerPopulator} from "../../../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

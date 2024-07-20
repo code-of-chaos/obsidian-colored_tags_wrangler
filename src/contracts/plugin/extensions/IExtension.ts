@@ -19,9 +19,10 @@ export interface IExtension<T extends IExtensionRecord> {
 	get isEnabled(): boolean
 	set isEnabled(value: boolean)
 
+	get eventHandlerPopulator() : IEventHandlerPopulator;
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	getDefaultRecord(): T;
-	populateEventHandlers() : IEventHandlerPopulator | undefined;
 }

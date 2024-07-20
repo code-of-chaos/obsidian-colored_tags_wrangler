@@ -7,10 +7,12 @@ import {ICssWrangler} from "src/contracts/plugin/services/css_styler/ICssWrangle
 import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord";
 import {ServiceProvider} from "src/plugin/services/ServiceProvider";
 import {IEventHandlerPopulator} from "../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
+import {EventHandlerPopulator} from "../services/event_handlers/EventHandlerPopulator";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export abstract class AbstractExtension<T extends IExtensionRecord> implements IExtension<T> {
+
 	public abstract readonly TableContentPopulators: TableContentPopulator[];
 	public abstract readonly cssWrangler: ICssWrangler | undefined;
 	public abstract readonly extensionName: string;
@@ -25,11 +27,11 @@ export abstract class AbstractExtension<T extends IExtensionRecord> implements I
 		ServiceProvider.extensions.setExtension(this, value)
 	}
 
+	public eventHandlerPopulator: IEventHandlerPopulator = new EventHandlerPopulator();
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	abstract getDefaultRecord(): T
-	populateEventHandlers() : IEventHandlerPopulator | undefined {
-		return undefined;
-	}
+
 }

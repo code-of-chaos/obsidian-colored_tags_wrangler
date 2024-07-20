@@ -2,10 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IEventHandlerService} from "../../../contracts/plugin/services/event_handlers/IEventHandlerService";
-import {EventHandlerFileOpen} from "./EventHandlerFileOpen";
+import {EventHandlerFileOpen} from "./registrars/EventHandlerFileOpen";
 import {IColoredTagWranglerPlugin} from "../../../contracts/plugin/IColoredTagWranglerPlugin";
 import {ServiceProvider} from "../ServiceProvider";
 import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
+import {EventHandlerActiveLeafChange} from "./registrars/EventHandlerActiveLeafChange";
+import {EventHandlerMetaDataCacheChanged} from "./registrars/EventHandlerMetaDataCacheChanged";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -13,6 +15,8 @@ import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_h
 export class EventHandlerService implements IEventHandlerService {
 	plugin: IColoredTagWranglerPlugin;
 	fileOpen : EventHandlerFileOpen;
+	activeLeafChange : EventHandlerFileOpen;
+	metaDataCacheChanged : EventHandlerMetaDataCacheChanged;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructors
@@ -20,6 +24,8 @@ export class EventHandlerService implements IEventHandlerService {
 	public constructor(plugin: IColoredTagWranglerPlugin,) {
 		this.plugin = plugin;
 		this.fileOpen = new EventHandlerFileOpen(plugin)
+		this.activeLeafChange = new EventHandlerActiveLeafChange(plugin)
+		this.metaDataCacheChanged = new EventHandlerMetaDataCacheChanged(plugin)
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -27,12 +33,10 @@ export class EventHandlerService implements IEventHandlerService {
 	// -----------------------------------------------------------------------------------------------------------------
 	public async registerEvents(){
 		const populators = ServiceProvider.extensions.EnabledList
-			.map((extension) => extension.populateEventHandlers())
-			.filter((eventPopulator) => {
-				return eventPopulator !== undefined;
-			})
-			.map((eventPopulator) => eventPopulator as IEventHandlerPopulator)
+			.map((extension) => extension.eventHandlerPopulator)
 
 		await this.fileOpen.register(populators)
+		await this.activeLeafChange.register(populators)
+		await this.metaDataCacheChanged.register(populators)
 	}
 }

@@ -17,6 +17,7 @@ export class CssWranglerCore implements ICssWrangler {
 		return {
 			"color": `${rgbToString(record.core_color_foreground)} !important`,
 			"background": `${rgbToString(record.core_color_background)} !important`,
+			"stroke": `${rgbToString(record.core_color_foreground)} !important`,
 		}
 	}
 
@@ -24,6 +25,7 @@ export class CssWranglerCore implements ICssWrangler {
 		return [
 			`${theme} .tag[href="#${record.core_tagText}" i]`,
 			`${theme} .cm-tag-${record.core_tagText}`,
+			`${theme} .ctw-tag-${record.core_tagText}`,
 		]
 	}
 	// -----------------------------------------------------------------------------------------------------------------

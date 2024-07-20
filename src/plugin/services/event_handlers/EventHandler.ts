@@ -14,5 +14,5 @@ export abstract class EventHandler implements IEventHandler{
 	public constructor(plugin: IColoredTagWranglerPlugin,) {
 		this.plugin = plugin;
 	}
-	public abstract register(populator:IEventHandlerPopulator[]) : void;
+	public abstract register(populator:IEventHandlerPopulator[]) : Promise<void>;
 }
