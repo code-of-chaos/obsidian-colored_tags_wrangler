@@ -33,6 +33,7 @@ export class CssWranglerStyling implements ICssWrangler {
 		return [
 			`${theme} .tag[href="#${record.core_tagText}" i]`,
 			`${theme} .cm-tag-${record.core_tagText}`,
+			`${theme} .ctw-tag-${record.core_tagText}`,
 		]
 	}
 	// -----------------------------------------------------------------------------------------------------------------

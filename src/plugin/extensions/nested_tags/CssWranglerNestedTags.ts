@@ -25,6 +25,7 @@ export class CssWranglerNestedTags implements ICssWrangler {
 		return {
 			"color": `${rgbToString(record.core_color_foreground)} !important`,
 			"background": `${rgbToString(record.core_color_background)} !important`,
+			"stroke": `${rgbToString(record.core_color_foreground)} !important`,
 		}
 	}
 
@@ -37,6 +38,7 @@ export class CssWranglerNestedTags implements ICssWrangler {
 		return {
 			"color": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
 			"background": `${rgbToString(hslToRgb({...backHsl, l : backLum}))} !important`,
+			"stroke": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
 		}
 	}
 
@@ -49,6 +51,7 @@ export class CssWranglerNestedTags implements ICssWrangler {
 		return {
 			"color": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
 			"background": `${rgbToString(hslToRgb({...backHsl, l : backLum}))} !important`,
+			"stroke": `${rgbToString(hslToRgb({...foreHsl, l : foreLum}))} !important`,
 		}
 	}
 
@@ -56,6 +59,7 @@ export class CssWranglerNestedTags implements ICssWrangler {
 		return [
 			`${theme} .tag[href="#${tagParts.join('/')}" i]`,
 			`${theme} .cm-tag-${tagParts.join('')}`,
+			`${theme} .ctw-tag-${tagParts.join('-')}`, // Used for fixes
 		]
 	}
 
@@ -89,8 +93,6 @@ export class CssWranglerNestedTags implements ICssWrangler {
 						} else if (typeof record.nested_tags_dropdown === typeof DropDownOptions){
 							dropdownValue = record.nested_tags_dropdown
 						}
-
-						console.log(dropdownValue)
 
 						switch (dropdownValue){
 							case DropDownOptions.Darker:

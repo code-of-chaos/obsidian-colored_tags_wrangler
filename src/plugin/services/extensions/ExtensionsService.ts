@@ -9,6 +9,7 @@ import {ISettingsService} from "src/contracts/plugin/services/settings/ISettings
 import {IExtensionRecord} from "src/contracts/plugin/extensions/IExtensionRecord";
 import {ExtensionCanvasCard} from "src/plugin/extensions/canvas_card/ExtensionCanvasCard";
 import {ExtensionNestedTags} from "src/plugin/extensions/nested_tags/ExtensionNestedTags";
+import {ExtensionProperties} from "../../extensions/properties/ExtensionProperties";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,6 +19,7 @@ export class ExtensionsService implements IExtensionsService {
 		Styling: new ExtensionStyling(),
 		CanvasCards: new ExtensionCanvasCard(),
 		NestedTags:  new ExtensionNestedTags(),
+		Properties:  new ExtensionProperties(),
 	}
 
 	private _settings: ISettingsService;

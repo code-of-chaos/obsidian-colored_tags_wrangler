@@ -23,6 +23,8 @@ export default class ColoredTagWranglerPlugin extends Plugin implements IColored
 		ServiceProvider.cssStyler.processExtensions()
 
 		this.addSettingTab(new SettingTab(this.app, this));
+
+		ServiceProvider.eventHandlers.registerEvents();
 	}
 
 	async onunload() {

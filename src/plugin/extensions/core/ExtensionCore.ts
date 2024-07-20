@@ -8,6 +8,8 @@ import {SettingTagRecordToggleComponent} from "src/plugin/ui/setting_tab/compone
 import {IExtensionRecordCore} from "src/plugin/extensions/core/IExtensionRecordCssStyling";
 import {CssWranglerCore} from "src/plugin/extensions/core/CssWranglerCore";
 import {AbstractExtension} from "src/plugin/extensions/AbstractExtension";
+import {EventHandlerCore} from "./EventHandlerCore";
+import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -38,6 +40,8 @@ export class ExtensionCore extends AbstractExtension<IExtensionRecordCore> {
 			},
 			classes: []
 		},]
+
+	public override eventHandlerPopulator:IEventHandlerPopulator = new EventHandlerCore()
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

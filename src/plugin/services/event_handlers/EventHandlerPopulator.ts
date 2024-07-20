@@ -1,18 +1,18 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {IColoredTagWranglerPlugin} from "src/contracts/plugin/IColoredTagWranglerPlugin";
-import {IEventHandler} from "../../../contracts/plugin/services/event_handlers/IEventHandler";
+import {Editor, MarkdownFileInfo, MarkdownView, TFile, WorkspaceLeaf} from "obsidian";
 import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export abstract class EventHandler implements IEventHandler{
-	plugin: IColoredTagWranglerPlugin;
 
-	public constructor(plugin: IColoredTagWranglerPlugin,) {
-		this.plugin = plugin;
-	}
-	public abstract register(populator:IEventHandlerPopulator[]) : Promise<void>;
+export class EventHandlerPopulator implements IEventHandlerPopulator {
+    CodeMirror(): void | Promise<void> {return}
+    FileOpenMd(file: TFile): void | Promise<void> {return}
+    FileOpenCanvas(file: TFile): void | Promise<void> {return}
+    ActiveLeafChange(leaf: WorkspaceLeaf): void | Promise<void> {return}
+    MetaDataCacheChanged(file: TFile): void | Promise<void> {return}
+    EditorChange(editor: Editor, info: MarkdownView | MarkdownFileInfo): void | Promise<void> {return}
 }

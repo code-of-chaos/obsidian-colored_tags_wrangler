@@ -10,6 +10,8 @@ import {SettingTagRecordSliderComponent} from "src/plugin/ui/setting_tab/compone
 import {
 	SettingTagRecordNumberInputComponent
 } from "../../ui/setting_tab/components/tag_table/SettingTagRecordNumberInputComponent";
+import {IEventHandlerPopulator} from "../../../contracts/plugin/services/event_handlers/IEventHandlerPopulator";
+import {EventHandlerCanvasCard} from "./EventHandlerCanvasCard";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -57,6 +59,8 @@ export class ExtensionCanvasCard extends AbstractExtension<IExtensionRecordCanva
 			classes: ["header-wrap-every-word"]
 		},
 	]
+
+	public override eventHandlerPopulator : IEventHandlerPopulator = new EventHandlerCanvasCard();
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods

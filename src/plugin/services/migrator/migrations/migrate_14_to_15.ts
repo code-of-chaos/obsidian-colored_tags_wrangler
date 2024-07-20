@@ -40,6 +40,9 @@ export async function migrate_14_to_15(loaded_data: ISettings_v014): Promise<IPl
 				newTagColor.canvas_card_background_opacity = loaded_data.Canvas.Values.BackgroundOpacity;
 			}
 
+			if (loaded_data.CSS.NoteProperties) newTagColor.properties_note_tags_enabled;
+			if (loaded_data.CSS.NoteBackgrounds) newTagColor.properties_note_background_enabled;
+
 			return newTagColor;
 		}
 	);
