@@ -16,6 +16,9 @@ export class ExtensionProperties extends AbstractExtension<IExtensionRecordPrope
 	public cssWrangler: ICssWrangler | undefined = undefined;
 	public extensionName = "Properties";
 	public description = "Apply Tag Coloring to file note properties";
+	
+	public extensionRequirements = ["core"]
+
 	public TableContentPopulators: TableContentPopulator[] = [
 		{
 			title: "Use tag color in file viewer",

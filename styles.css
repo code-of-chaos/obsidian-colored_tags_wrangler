@@ -134,6 +134,8 @@
 }
 
 .extension-selector {
+	padding-bottom: 1rem;
+
 	.grid-container {
 		display: grid;
 		grid-template-columns: 1fr 1fr;

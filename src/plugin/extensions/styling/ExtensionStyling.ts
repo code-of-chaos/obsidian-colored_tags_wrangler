@@ -16,6 +16,9 @@ export class ExtensionStyling extends AbstractExtension<IExtensionRecordStyling>
 	public cssWrangler: ICssWrangler = new CssWranglerStyling();
 	public extensionName = "Styling";
 	public description = "Style your tags even more!";
+
+	public extensionRequirements = ["core"]
+
 	public TableContentPopulators: TableContentPopulator[] = [
 		{
 			title: "Background Opacity",
