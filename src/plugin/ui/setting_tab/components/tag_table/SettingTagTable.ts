@@ -117,8 +117,9 @@ export class SettingTagTable {
 		this.settingElFilter
 			.setName("Search and Filters")
 			.addText(text => {
+				text.inputEl.addClass("regex-search-input");
 				text
-					.setPlaceholder("Enter tag name...")
+					.setPlaceholder("Search (regex supported)...") // Updated placeholder
 					.onChange(async (value) => {
 						this.searchQuery = value.trim().toLowerCase();
 						await this.redrawTable();
@@ -138,12 +139,11 @@ export class SettingTagTable {
 					});
 			});
 
-		// Adding "Only show Enabled" checkbox
+		// Adding "Only show Enabled" checkbox with spacing
 		const div = this.settingElOptions.settingEl.createDiv();
-
 		const checkboxLabel = div.createEl('label', { text: 'Only show Enabled' });
-		checkboxLabel.addClass('checkbox-label');
-
+		checkboxLabel.addClass('checkbox-label'); // Applying the CSS class
+		checkboxLabel.style.marginRight = '8px'; // Adding space between label and checkbox
 		const checkbox = div.createEl('input', { type: 'checkbox' });
 		checkbox.onchange = async () => {
 			this.showOnlyEnabled = checkbox.checked;
@@ -214,9 +214,15 @@ export class SettingTagTable {
 		}
 
 		if (this.searchQuery) {
-			filteredRecords = filteredRecords.filter(record =>
-				record.core_tagText.toLowerCase().includes(this.searchQuery)
-			);
+			try {
+				const regex = new RegExp(this.searchQuery); // Create regex from search
+				filteredRecords = filteredRecords.filter(record =>
+					regex.test(record.core_tagText.toLowerCase())
+				);
+			} catch (e) {
+				// Invalid regex, skip filtering
+				console.warn(`Invalid regex pattern: ${this.searchQuery}`);
+			}
 		}
 
 		filteredRecords.sort((a, b) => {
@@ -224,9 +230,8 @@ export class SettingTagTable {
 				case 'name':
 					return a.core_tagText.localeCompare(b.core_tagText);
 				case 'id':
+				default :
 					return a.core_id.localeCompare(b.core_id);
-				default:
-					return 0;
 			}
 		});
 
