@@ -149,8 +149,24 @@
 	}
 }
 
-.checkbox-label {
-	margin-right: 8px; /* Adjust the spacing as needed */
+.setting-selections {
+	border-top: transparent;
+
+	/*noinspection CssUnresolvedCustomProperty*/
+	.checkbox-label {
+		margin-right: 8px; /* Adjust the spacing as needed */
+	}
+	.checkbox-input {
+		position: relative;
+		top: 3px;
+	}
+
+	.setting-item-control {
+		display: contents;
+		margin-left: auto;
+	}
+
+
 }
 
 .regex-search-input {

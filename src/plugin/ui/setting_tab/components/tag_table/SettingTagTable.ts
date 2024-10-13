@@ -140,17 +140,21 @@ export class SettingTagTable {
 			});
 
 		// Adding "Only show Enabled" checkbox with spacing
-		const div = this.settingElOptions.settingEl.createDiv();
+		this.settingElOptions.settingEl.addClasses(["setting-selections"])
+		const div = this.settingElOptions.descEl;
+
 		const checkboxLabel = div.createEl('label', { text: 'Only show Enabled' });
-		checkboxLabel.addClass('checkbox-label'); // Applying the CSS class
+		checkboxLabel.addClasses(["checkbox-label"])
 		checkboxLabel.style.marginRight = '8px'; // Adding space between label and checkbox
+
 		const checkbox = div.createEl('input', { type: 'checkbox' });
+		checkbox.addClasses(["checkbox-input"])
 		checkbox.onchange = async () => {
 			this.showOnlyEnabled = checkbox.checked;
 			await this.redrawTable();
 		};
 
-		await this.addNewButton(element); // add a bottom button, for navigation
+		await this.addNewButton(this.settingElOptions); // add a bottom button, for navigation
 	}
 
 	private async addNewButton(settingEl: Setting) {
