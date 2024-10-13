@@ -1,32 +1,40 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {Setting, SettingTab} from "obsidian";
-import {TableContentPopulator} from "src/contracts/plugin/ui/components/TableContentPopulator";
-import {SettingTagRecordTextAreaComponent} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordTextAreaComponent";
-import {SettingTagRecordPreview} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordPreview";
-import {SettingTagRecordNavigators} from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordNavigators";
-import {ServiceProvider} from "src/plugin/services/ServiceProvider";
-import {RowDataType} from "src/contracts/plugin/ui/components/RowDataType";
-import {IColoredTagRecord} from "src/contracts/plugin/settings/IColoredTagRecord";
-import {capitalizeFirstLetter} from "src/lib/StringUtils";
+import { Setting, SettingTab } from "obsidian";
+import { TableContentPopulator } from "src/contracts/plugin/ui/components/TableContentPopulator";
+import { SettingTagRecordTextAreaComponent } from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordTextAreaComponent";
+import { SettingTagRecordPreview } from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordPreview";
+import { SettingTagRecordNavigators } from "src/plugin/ui/setting_tab/components/tag_table/SettingTagRecordNavigators";
+import { ServiceProvider } from "src/plugin/services/ServiceProvider";
+import { RowDataType } from "src/contracts/plugin/ui/components/RowDataType";
+import { IColoredTagRecord } from "src/contracts/plugin/settings/IColoredTagRecord";
+import { capitalizeFirstLetter } from "src/lib/StringUtils";
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagTable {
 	private parent: SettingTab;
-
 	private selectedExtension: string | undefined;
 	private settingEl: Setting;
+	private settingElFilter: Setting;
+	private settingElOptions: Setting;
 	private settingElBottom: Setting;
 	private tableEl: HTMLElement;
+	private sortCriterion: string;
+	private searchQuery: string;
+	private showOnlyEnabled: boolean;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------------------------------------------------------
 	constructor(parent: SettingTab) {
 		this.parent = parent;
-		this._AssignEls()
+		this.sortCriterion = "default"; // default sort criterion
+		this.searchQuery = ""; // default search query
+		this.showOnlyEnabled = false; // default state for the "Only show Enabled" filter
+		this._AssignEls();
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -34,26 +42,25 @@ export class SettingTagTable {
 	// -----------------------------------------------------------------------------------------------------------------
 	public async display(): Promise<void> {
 		if (this.settingEl == undefined && this.tableEl !== undefined) {
-			this._AssignEls()
+			this._AssignEls();
 		}
 
 		await this._DisplayExtensionSelector();
-		await this._DisplayTable()
+		await this._DisplayTable();
 
-		await this.addNewButton(this.settingElBottom)
-
+		await this.addNewButton(this.settingElBottom);
 	}
 
 	public async redrawTable() {
-		this.tableEl.empty()
-		await this._DisplayTable()
+		this.tableEl.empty();
+		await this._DisplayTable();
 	}
 
 	public async UpdateRow(record: IColoredTagRecord, _: HTMLElement): Promise<void> {
 		const tag = ServiceProvider.tagRecords.getFirstTag(record);
 		const originalLength = tag.length;
 
-		let {begin, end} = this.getTagPreviewEls(record);
+		let { begin, end } = this.getTagPreviewEls(record);
 
 		if (!begin || !end) {
 			console.warn(`The tag "${record}" BEGIN or END is empty.`);
@@ -74,9 +81,11 @@ export class SettingTagTable {
 	// Helper Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	private _AssignEls() {
-		this.settingEl = new Setting(this.parent.containerEl)
+		this.settingEl = new Setting(this.parent.containerEl);
+		this.settingElFilter = new Setting(this.parent.containerEl);
+		this.settingElOptions = new Setting(this.parent.containerEl);
 		this.tableEl = this.parent.containerEl.createDiv();
-		this.settingElBottom = new Setting(this.parent.containerEl)
+		this.settingElBottom = new Setting(this.parent.containerEl);
 	}
 
 	private async _DisplayExtensionSelector(): Promise<void> {
@@ -84,7 +93,7 @@ export class SettingTagTable {
 			.setName("Custom color tags")
 			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `);
 
-		if (ServiceProvider.extensions.EnabledList.length > 1){
+		if (ServiceProvider.extensions.EnabledList.length > 1) {
 			element.addDropdown(component => {
 				component
 					.addOptions(
@@ -92,18 +101,56 @@ export class SettingTagTable {
 							.map(extension => extension.extensionName)
 							.reduce(
 								(acc, key) => (
-									{...acc, [key]: capitalizeFirstLetter(key)}
+									{ ...acc, [key]: capitalizeFirstLetter(key) }
 								), {}
 							)
 					)
 					.onChange(async (value) => {
 						// UPDATE THE TABLE
 						this.selectedExtension = value;
-						await this.redrawTable()
-					})
-			})
+						await this.redrawTable();
+					});
+			});
 		}
-		await this.addNewButton(element) // add a bottom button, for navigation
+
+		// Adding search input and sort dropdown
+		this.settingElFilter
+			.setName("Search and Filters")
+			.addText(text => {
+				text
+					.setPlaceholder("Enter tag name...")
+					.onChange(async (value) => {
+						this.searchQuery = value.trim().toLowerCase();
+						await this.redrawTable();
+					});
+			})
+			.addDropdown(component => {
+				component
+					.addOptions({
+						"default": "Default",
+						"name": "Sort by Name",
+						"id": "Sort by ID",
+					})
+					.setValue("default") // Default sorting
+					.onChange(async (value) => {
+						this.sortCriterion = value;
+						await this.redrawTable();
+					});
+			});
+
+		// Adding "Only show Enabled" checkbox
+		const div = this.settingElOptions.settingEl.createDiv();
+
+		const checkboxLabel = div.createEl('label', { text: 'Only show Enabled' });
+		checkboxLabel.addClass('checkbox-label');
+
+		const checkbox = div.createEl('input', { type: 'checkbox' });
+		checkbox.onchange = async () => {
+			this.showOnlyEnabled = checkbox.checked;
+			await this.redrawTable();
+		};
+
+		await this.addNewButton(element); // add a bottom button, for navigation
 	}
 
 	private async addNewButton(settingEl: Setting) {
@@ -112,11 +159,10 @@ export class SettingTagTable {
 				.setClass("mod-cta")
 				.setButtonText("New Tag")
 				.onClick(async () => {
-					await ServiceProvider.tagRecords.createNewDefaultTag()
-					await this.redrawTable()
-				})
-		})
-
+					await ServiceProvider.tagRecords.createNewDefaultTag();
+					await this.redrawTable();
+				});
+		});
 	}
 
 	private async _DisplayTable(): Promise<void> {
@@ -129,14 +175,12 @@ export class SettingTagTable {
 		let overlayGradient = scrollAreaContainer.createDiv();
 		overlayGradient.addClass("overlay-gradient");
 
-		// Assign Table columns and callbacks for population
-		// 		This is the default which should be shown on every tab!
 		const content: TableContentPopulator[] = [
 			{
 				title: "",
 				callback: (rowData: RowDataType) => {
 					return new SettingTagRecordNavigators(rowData,
-						true, async () => await this.redrawTable())
+						true, async () => await this.redrawTable());
 				},
 				classes: []
 			}, {
@@ -153,51 +197,74 @@ export class SettingTagTable {
 				},
 				classes: ["tag-preview", "sticky-column", "border-right"]
 			}
-		]
+		];
 
-		const selectedExt = this.selectedExtension != undefined
+		const selectedExt = this.selectedExtension !== undefined
 			? ServiceProvider.extensions.Dictionary[this.selectedExtension]
-			: ServiceProvider.extensions.EnabledList.first()
+			: ServiceProvider.extensions.EnabledList.first();
 
-		selectedExt?.TableContentPopulators.forEach((callback => content.push(callback)))
+		selectedExt?.TableContentPopulators.forEach(callback => content.push(callback));
 
-		// Actually create the table
+		// Sort and filter the records based on the selected criterion, search query, and "Only show Enabled" checkbox
+		const records = ServiceProvider.tagRecords.getTags();
+
+		let filteredRecords = records;
+		if (this.showOnlyEnabled) {
+			filteredRecords = records.filter(record => record.core_enabled);
+		}
+
+		if (this.searchQuery) {
+			filteredRecords = filteredRecords.filter(record =>
+				record.core_tagText.toLowerCase().includes(this.searchQuery)
+			);
+		}
+
+		filteredRecords.sort((a, b) => {
+			switch (this.sortCriterion) {
+				case 'name':
+					return a.core_tagText.localeCompare(b.core_tagText);
+				case 'id':
+					return a.core_id.localeCompare(b.core_id);
+				default:
+					return 0;
+			}
+		});
+
+		// Create table headers
 		let table = tableContainer.createEl('table');
 		let thead = table.createEl('thead');
 		let headersRow = thead.createEl('tr');
-		for (let {title, classes} of content) {
-			headersRow.createEl('th', {text: title, cls: classes});
-			headersRow.addClasses(classes)
+		for (let { title, classes } of content) {
+			headersRow.createEl('th', { text: title, cls: classes });
+			headersRow.addClasses(classes);
 		}
 
 		// Populate table with record rows
 		let tbody = table.createEl('tbody');
-		for (let record of ServiceProvider.tagRecords.getTags()) {
+		for (let record of filteredRecords) {
 			const tr = tbody.createEl('tr');
-			for (let {callback, classes} of content) {
+			for (let { callback, classes } of content) {
 				let td = tr.createEl('td');
-				td.addClasses(classes)
+				td.addClasses(classes);
 				callback({
 					record: record,
 					rowUpdateCallback: (async () => {
-							await this.UpdateRow(record, tr)
-							ServiceProvider.cssStyler.processExtensions() // This is so we can update all the styling when something changes
-						}
-					),
+						await this.UpdateRow(record, tr);
+						ServiceProvider.cssStyler.processExtensions(); // This is so we can update all the styling when something changes
+					}),
 					parentEl: td
-				})
+				});
 			}
 
-			await this.UpdateRow(record, tr)
+			await this.UpdateRow(record, tr);
 		}
 	}
 
 	private getTagPreviewEls(record: IColoredTagRecord): { begin: HTMLElement | null, end: HTMLElement | null } {
-		const ids = ServiceProvider.tagRecords.getTagPreviewIds(record)
+		const ids = ServiceProvider.tagRecords.getTagPreviewIds(record);
 		return {
 			begin: document.getElementById(ids.begin),
 			end: document.getElementById(ids.end)
-		}
+		};
 	}
-
 }

@@ -146,3 +146,7 @@
 		padding: .75em;
 	}
 }
+
+.checkbox-label {
+	margin-right: 8px; /* Adjust the spacing as needed */
+}
