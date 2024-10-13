@@ -56,10 +56,14 @@ export class CssStylerService implements ICssStylerService {
 				});
 			})
 
-		return Object.keys(dict)
+		let data = Object.keys(dict)
 			.map(
 				selector => `${selector} { ${Object.keys(dict[selector]).map(property => `${property}: ${dict[selector][property]};`).join("")} }`
-			).join("\n");
+			).join("\n")
+
+		console.log(data);
+
+		return data;
 	}
 
 }

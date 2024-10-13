@@ -27,8 +27,27 @@ export class CssWranglerCore implements ICssWrangler {
 			`${theme} .tag[href="#${record.core_tagText}" i]`,
 			`${theme} .cm-tag-${record.core_tagText}`,
 			`${theme} .ctw-tag-${record.core_tagText}`,
+
+			...this._additionalUnderscoredTagSelectors(theme, record, "cm"),
+			...this._additionalUnderscoredTagSelectors(theme, record, "ctw"),
 		]
 	}
+
+	private _additionalUnderscoredTagSelectors(theme:string, record: IColoredTagRecord, prefix:string) : string[] {
+		const underscores = (record.core_tagText.match(/_/g) || []).length;
+		if (underscores == 0) return [];
+
+		console.warn(record.core_tagText, underscores)
+
+		return Array.from(
+			{ length: underscores + 1 },
+			(_, i) => {
+				const spanSelectors = Array.from({ length: i + 1 }, () => "span.cm-hashtag").join(" + ");
+				return `${theme} .${prefix}-tag-${record.core_tagText.replace("/","")} + ${spanSelectors}`;
+			}
+		);
+	}
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
