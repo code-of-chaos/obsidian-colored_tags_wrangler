@@ -28,3 +28,7 @@ data.json
 .obsidian/app.json
 data_backup*.json
 /.old/
+/workfloor/live-testing/.obsidian/plugins/dataview
+/workfloor/live-testing/.obsidian/plugins/obsidian-excalidraw-plugin
+/workfloor/live-testing/.obsidian/plugins/colored-tags-wrangler
+/workfloor/live-testing/.obsidian/plugins/colored-tags-wrangler
