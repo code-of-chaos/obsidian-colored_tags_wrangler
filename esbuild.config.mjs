@@ -1,6 +1,9 @@
 import esbuild from "esbuild";
 import process from "process";
 import builtins from "builtin-modules";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from 'url';
 
 const banner =
 	`/*
@@ -11,6 +14,24 @@ if you want to view the source, please visit the github repository of this plugi
 
 const prod = (process.argv[2] === "production");
 
+const __filename = fileURLToPath(import.meta.url); // Current file path
+const __dirname = path.dirname(__filename); // Directory of the current file
+const outputPath = "main.js";
+const cssPath = "styles.css"; // Replace with the actual path of your styles.css
+const pluginTargetDirectory = path.join(__dirname, "workfloor/live-testing/.obsidian/plugins/colored-tags-wrangler");
+
+// Helper function to copy any file
+const copyFile = (source, destinationDir) => {
+	const targetFilePath = path.join(destinationDir, path.basename(source));
+	fs.copyFile(source, targetFilePath, (err) => {
+		if (err) {
+			console.error(`Error copying file ${source} to ${targetFilePath}:`, err);
+		} else {
+			console.log(`File copied to: ${targetFilePath}`);
+		}
+	});
+};
+
 const context = await esbuild.context({
 	banner: {
 		js: banner,
@@ -18,6 +39,7 @@ const context = await esbuild.context({
 	entryPoints: ["src/plugin/ColoredTagWranglerPlugin.ts"],
 	bundle: true,
 	external: [
+		// List of external dependencies
 		"obsidian",
 		"electron",
 		"@codemirror/autocomplete",
@@ -31,18 +53,37 @@ const context = await esbuild.context({
 		"@lezer/common",
 		"@lezer/highlight",
 		"@lezer/lr",
-		...builtins],
+		...builtins
+	],
 	format: "cjs",
 	target: "es2018",
 	logLevel: "info",
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
-	outfile: "main.js",
+	outfile: outputPath, // Main output file
 });
 
 if (prod) {
+	// Build once for production and copy files
 	await context.rebuild();
+	copyFile(outputPath, pluginTargetDirectory); // Copy main.js
+	copyFile(cssPath, pluginTargetDirectory);    // Copy styles.css
 	process.exit(0);
+	
 } else {
+	// Watch for changes and copy files on modification
 	await context.watch();
+	copyFile(cssPath, pluginTargetDirectory);
+
+	// Watch files
+	fs.watch(outputPath, (event) => {
+		if (event === "change") {
+			copyFile(outputPath, pluginTargetDirectory);
+		}
+	});
+	fs.watch(cssPath, (event) => {
+		if (event === "change") {
+			copyFile(cssPath, pluginTargetDirectory);
+		}
+	});
 }

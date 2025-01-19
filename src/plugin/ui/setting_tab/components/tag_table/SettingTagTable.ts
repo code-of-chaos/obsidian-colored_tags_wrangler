@@ -90,8 +90,8 @@ export class SettingTagTable {
 
 	private async _DisplayExtensionSelector(): Promise<void> {
 		const element = this.settingEl
-			.setName("Custom color tags")
-			.setDesc(`Define custom colors for tags. Select which extension to edit, dependant on the `);
+			.setName("Section Selector")
+			.setDesc(`To limit the complexity of the table, you can select which section of the table you want to see. If you only have Core enabled, no other options will show. If you have multiple sections enabled, you can select which one you want to see here.`);
 
 		if (ServiceProvider.extensions.EnabledList.length > 1) {
 			element.addDropdown(component => {
@@ -234,8 +234,9 @@ export class SettingTagTable {
 				case 'name':
 					return a.core_tagText.localeCompare(b.core_tagText);
 				case 'id':
-				default :
 					return a.core_id.localeCompare(b.core_id);
+				default :
+					return a.core_dateGenerated - b.core_dateGenerated;
 			}
 		});
 

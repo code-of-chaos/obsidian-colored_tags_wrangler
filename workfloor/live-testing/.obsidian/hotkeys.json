@@ -1,0 +1,10 @@
+{
+  "plugin-reloader:colored-tags-wrangler": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "R"
+    }
+  ]
+}

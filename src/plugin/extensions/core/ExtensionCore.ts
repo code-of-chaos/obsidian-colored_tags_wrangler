@@ -50,6 +50,7 @@ export class ExtensionCore extends AbstractExtension<IExtensionRecordCore> {
 		return {
 			core_enabled: true,
 			core_id: uuidV4(),
+			core_dateGenerated: Date.now(),
 			core_tagText: "new-tag",
 			core_color_foreground: {r: 255, g: 255, b: 255},
 			core_color_background: {r: 0, g: 0, b: 0},
