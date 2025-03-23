@@ -12,7 +12,7 @@ import {RowDataType} from "src/contracts/plugin/ui/components/RowDataType";
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordColorComponent extends ColorComponent implements ISettingTagRecordComponent {
-	private hexInput: HTMLInputElement;
+	private readonly hexInput: HTMLInputElement;
 	private isMouseInside: boolean = false;
 
 	constructor(rowData: RowDataType, property_name: RGBSelectorProperties) {
@@ -37,10 +37,9 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 		// Show hex input on hover/focus
 		wrapper.addEventListener("mouseenter", (event: MouseEvent) => {
 			this.isMouseInside = true;
-			if (event.ctrlKey) {
-				this.hexInput.style.display = "inline-block";
-				colorInputEl.style.display = "none";
-			}
+			if (!event.ctrlKey) return;
+			this.hexInput.style.display = "inline-block";
+			colorInputEl.style.display = "none";
 		});
 		wrapper.addEventListener("mouseleave", () => { // Doesnt need the MouseEvent arg
 			this.isMouseInside = false;
@@ -48,16 +47,14 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 			colorInputEl.style.display = "inline-block";
 		});
 		document.addEventListener("keydown", (event: KeyboardEvent) => {
-			if (event.key === "Control" && this.isMouseInside) {
-				this.hexInput.style.display = "inline-block";
-				colorInputEl.style.display = "none";
-			}
+			if (!(event.key === "Control" && this.isMouseInside)) return;
+			this.hexInput.style.display = "inline-block";
+			colorInputEl.style.display = "none";
 		});
 		document.addEventListener("keyup", (event: KeyboardEvent) => {
-			if (event.key === "Control" && !this.isMouseInside) {
-				this.hexInput.style.display = "none";
-				colorInputEl.style.display = "inline-block";
-			}
+			if (!(event.key === "Control" && !this.isMouseInside)) return;
+			this.hexInput.style.display = "none";
+			colorInputEl.style.display = "inline-block";
 		});
 
 		// Sync color input with hex field
