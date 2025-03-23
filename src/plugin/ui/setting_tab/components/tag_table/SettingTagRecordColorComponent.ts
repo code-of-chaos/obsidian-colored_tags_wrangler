@@ -32,12 +32,7 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 		this.hexInput = document.createElement("input");
 		this.hexInput.type = "text";
 		this.hexInput.value = hexValue;
-		this.hexInput.style.width = "80px";
-		this.hexInput.style.border = "none";
-		this.hexInput.style.background = "transparent";
-		this.hexInput.style.color = "inherit";
-		this.hexInput.style.textAlign = "center";
-		this.hexInput.style.display = "none"; // Initially hidden
+		this.hexInput.addClass("hex-color-input"); // Initially hidden
 
 		// Show hex input on hover/focus
 		wrapper.addEventListener("mouseenter", (event: MouseEvent) => {
@@ -47,7 +42,7 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 				colorInputEl.style.display = "none";
 			}
 		});
-		wrapper.addEventListener("mouseleave", (event: MouseEvent) => {
+		wrapper.addEventListener("mouseleave", () => { // Doesnt need the MouseEvent arg
 			this.isMouseInside = false;
 			this.hexInput.style.display = "none";
 			colorInputEl.style.display = "inline-block";
@@ -65,12 +60,10 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 			}
 		});
 
-
 		// Sync color input with hex field
 		this.hexInput.addEventListener("change", async () => {
-			const newValue = this.hexInput.value;
-			this.setValue(newValue);
-			rowData.record[property_name] = hexToRGBA(newValue, 1);
+			this.setValue(this.hexInput.value);
+			rowData.record[property_name] = hexToRGBA(this.hexInput.value, 1);
 			await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record);
 			await rowData.rowUpdateCallback();
 		});

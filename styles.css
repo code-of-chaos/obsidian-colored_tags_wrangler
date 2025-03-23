@@ -89,6 +89,16 @@
 				width: 5em;
 				text-align: center;
 			}
+
+			.hex-color-input {
+				width: 80px;
+				border: var(--input-border-width) solid var(--background-modifier-border);
+				background: var(--background-modifier-form-field);
+				color: var(--text-normal);
+				text-align: center;
+				display: none; /* Initially hidden */
+			}
+
 		}
 
 		td:has(.navigator-parent) {
