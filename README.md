@@ -35,5 +35,5 @@ The following is a list of known issues. If you know how to fix them, then all h
 
 
 ## Support
-If you like the plugin, and would like to support its development. You can support me on [twitch](https://www.twitch.tv/andreassasdev) or donate on [Ko-fi](https://www.twitch.tv/andreassasdev).
+If you like the plugin, and would like to support its development. You can support me on [twitch](https://www.twitch.tv/AnnaSasDev) or donate on [Ko-fi](https://www.twitch.tv/AnnaSasDev).
 All donations are welcome, but never feel pressured to give.

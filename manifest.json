@@ -4,8 +4,8 @@
     "version": "0.19.3",
     "minAppVersion": "0.15.0",
     "description": "Assign colors to tags. Has integrations with other plugins, like Kanban.",
-    "author": "AndreasSasDev",
-    "authorUrl": "https://github.com/AndreasSas",
-    "fundingUrl": "https://ko-fi.com/andreassasdev",
+    "author": "AnnaSasDev",
+    "authorUrl": "https://github.com/AnnaSasDev",
+    "fundingUrl": "https://ko-fi.com/AnnaSasDev",
     "isDesktopOnly": false
 }

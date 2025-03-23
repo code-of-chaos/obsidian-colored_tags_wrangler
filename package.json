@@ -15,7 +15,7 @@
         "update-git-tag": "npx ts-node tools/set-git-tags.mjs"
     },
     "keywords": [],
-    "author": "AndreasSasDev",
+    "author": "AnnaSasDev",
     "license": "GPL-3.0",
     "devDependencies": {
         "@types/jquery": "^3.5.29",
