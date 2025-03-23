@@ -15,9 +15,9 @@ export class CssWranglerCore implements ICssWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	private _properties(record: IColoredTagRecord): Record<string, string> {
 		return {
-			"color": `${rgbToString(record.core_color_foreground)} !important`,
-			"background": `${rgbToString(record.core_color_background)} !important`,
-			"stroke": `${rgbToString(record.core_color_foreground)} !important`,
+			"color": `${rgbToString(record.core_color_foreground)}`,
+			"background": `${rgbToString(record.core_color_background)}`,
+			"stroke": `${rgbToString(record.core_color_foreground)}`,
 			"transition": "color 0.25s ease-in-out, background 0.25s ease-in-out",
 		}
 	}
