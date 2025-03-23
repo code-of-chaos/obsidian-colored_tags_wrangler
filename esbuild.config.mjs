@@ -66,24 +66,24 @@ const context = await esbuild.context({
 if (prod) {
 	// Build once for production and copy files
 	await context.rebuild();
-	copyFile(outputPath, pluginTargetDirectory); // Copy main.js
-	copyFile(cssPath, pluginTargetDirectory);    // Copy styles.css
+	// copyFile(outputPath, pluginTargetDirectory); // Copy main.js
+	// copyFile(cssPath, pluginTargetDirectory);    // Copy styles.css
 	process.exit(0);
 	
 } else {
 	// Watch for changes and copy files on modification
 	await context.watch();
-	copyFile(cssPath, pluginTargetDirectory);
+	// copyFile(cssPath, pluginTargetDirectory);
 
-	// Watch files
-	fs.watch(outputPath, (event) => {
-		if (event === "change") {
-			copyFile(outputPath, pluginTargetDirectory);
-		}
-	});
-	fs.watch(cssPath, (event) => {
-		if (event === "change") {
-			copyFile(cssPath, pluginTargetDirectory);
-		}
-	});
+	// // Watch files
+	// fs.watch(outputPath, (event) => {
+	// 	if (event === "change") {
+	// 		copyFile(outputPath, pluginTargetDirectory);
+	// 	}
+	// });
+	// fs.watch(cssPath, (event) => {
+	// 	if (event === "change") {
+	// 		copyFile(cssPath, pluginTargetDirectory);
+	// 	}
+	// });
 }
