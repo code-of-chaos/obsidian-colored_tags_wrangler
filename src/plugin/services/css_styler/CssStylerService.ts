@@ -61,8 +61,6 @@ export class CssStylerService implements ICssStylerService {
 				selector => `${selector} { ${Object.keys(dict[selector]).map(property => `${property}: ${dict[selector][property]};`).join("")} }`
 			).join("\n")
 
-		console.log(data);
-
 		return data;
 	}
 
