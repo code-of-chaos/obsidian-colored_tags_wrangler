@@ -82,11 +82,11 @@ export class CssWranglerNestedTags implements ICssWrangler {
 
 		const allNestedTagsInVault = ServiceProvider.vaultTags.allNestedTagsAsDict;
 		for (let tag of Object.keys(allNestedTagsInVault)) {
-			if (allTagNamesInPlugin[tag.toLowerCase()]) {
-				const record = allTagNamesInPlugin[tag.toLowerCase()];
+			if (allTagNamesInPlugin[tag]) {
+				const record = allTagNamesInPlugin[tag];
 
 				ServiceProvider.vaultTags.allNestedTags
-					.filter(t => t[0].toLowerCase() === record.core_tagText)
+					.filter(t => t[0] === record.core_tagText)
 					.forEach(tag => {
 						let cssProperties: Record<string, string>
 						let dropdownValue: DropDownOptions | undefined;
