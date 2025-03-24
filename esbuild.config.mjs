@@ -3,7 +3,7 @@ import process from "process";
 import builtins from "builtin-modules";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from 'url';
+// import { fileURLToPath } from 'url';
 
 const banner =
 	`/*
@@ -14,11 +14,11 @@ if you want to view the source, please visit the github repository of this plugi
 
 const prod = (process.argv[2] === "production");
 
-const __filename = fileURLToPath(import.meta.url); // Current file path
-const __dirname = path.dirname(__filename); // Directory of the current file
+// const __filename = fileURLToPath(import.meta.url); // Current file path
+// const __dirname = path.dirname(__filename); // Directory of the current file
 const outputPath = "main.js";
 const cssPath = "styles.css"; // Replace with the actual path of your styles.css
-const pluginTargetDirectory = path.join(__dirname, "workfloor/live-testing/.obsidian/plugins/colored-tags-wrangler");
+// const pluginTargetDirectory = path.join(__dirname, "workfloor/live-testing/.obsidian/plugins/colored-tags-wrangler");
 
 // Helper function to copy any file
 const copyFile = (source, destinationDir) => {

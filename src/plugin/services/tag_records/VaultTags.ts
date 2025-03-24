@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagWranglerPlugin} from "src/contracts/plugin/IColoredTagWranglerPlugin";
-import {TagCache} from "obsidian";
+import {TagCache, getAllTags, MetadataCache, TFile, CachedMetadata} from "obsidian";
 import {IVaultTags} from "src/contracts/plugin/services/tag_records/IVaultTags";
 // ---------------------------------------------------------------------------------------------------------------------
 // support Code
@@ -46,11 +46,13 @@ export class VaultTags implements IVaultTags{
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	private getAllTags() : string[] {
+	private getAllTags(): string[] {
 		return this._plugin.app.vault.getFiles()
-			.flatMap(file => this._plugin.app.metadataCache.getFileCache(file)?.tags )
-			.filter((tag): tag is TagCache => tag !== undefined)
-			.map(tag => tag.tag.replace("#", ""))
+			.map((file: TFile) => this._plugin.app.metadataCache.getFileCache(file))
+			.filter((cache: CachedMetadata | null): cache is CachedMetadata => cache !== null && cache.tags !== undefined)
+			.flatMap((cache: CachedMetadata) => getAllTags(cache)) // Get all tags from each cache
+			.filter((tag: string | null): tag is string => tag !== null) // Filter out null tags
+			.map((tag: string) => tag.replace("#", ""));
 	}
 
 	private getAllNestedTagsAsDict() : Record<string, unknown> {
