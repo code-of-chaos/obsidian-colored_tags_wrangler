@@ -13,7 +13,11 @@ import {RowDataType} from "src/contracts/plugin/ui/components/RowDataType";
 // ---------------------------------------------------------------------------------------------------------------------
 export class SettingTagRecordColorComponent extends ColorComponent implements ISettingTagRecordComponent {
 	private readonly hexInput: HTMLInputElement;
+	private readonly tooltipEl: HTMLElement;
 	private isMouseInside: boolean = false;
+	private get tooltipEnabled(): boolean {
+		return ServiceProvider.settings.data.Config.SettingsTooltipEnabled;
+	}
 
 	constructor(rowData: RowDataType, property_name: RGBSelectorProperties) {
 		const wrapper = rowData.parentEl.createDiv();
@@ -25,8 +29,12 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 		this.setValue(hexValue);
 
 		// Wrapper to align inputs
-		wrapper.style.display = "flex";
-		wrapper.style.alignItems = "center";
+		wrapper.addClass("hex-color-wrapper");
+
+		// Tooltip
+		this.tooltipEl = wrapper.createDiv();
+		this.tooltipEl.innerText = "press Ctrl to edit hex value";
+		this.tooltipEl.addClass("hex-color-tooltip");
 
 		// Hex input field
 		this.hexInput = document.createElement("input");
@@ -37,12 +45,15 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 		// Show hex input on hover/focus
 		wrapper.addEventListener("mouseenter", (event: MouseEvent) => {
 			this.isMouseInside = true;
+			if (this.tooltipEnabled) this.tooltipEl.style.display = "block";
 			if (!event.ctrlKey) return;
 			this.hexInput.style.display = "inline-block";
 			colorInputEl.style.display = "none";
 		});
 		wrapper.addEventListener("mouseleave", () => { // Doesnt need the MouseEvent arg
 			this.isMouseInside = false;
+			if (this.tooltipEnabled) this.tooltipEl.style.display = "none";
+
 			this.hexInput.style.display = "none";
 			colorInputEl.style.display = "inline-block";
 		});
@@ -50,6 +61,7 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 			if (!(event.key === "Control" && this.isMouseInside)) return;
 			this.hexInput.style.display = "inline-block";
 			colorInputEl.style.display = "none";
+			if (this.tooltipEnabled) this.tooltipEl.style.display = "none";
 		});
 		document.addEventListener("keyup", (event: KeyboardEvent) => {
 			if (!(event.key === "Control" && !this.isMouseInside)) return;

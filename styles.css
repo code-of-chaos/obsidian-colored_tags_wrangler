@@ -1,3 +1,4 @@
+/*noinspection CssUnresolvedCustomProperty*/
 .text-color-red {
 	color: var(--color-red)
 }
@@ -68,16 +69,17 @@
 			border-spacing: 0 1em;
 		}
 
+		/*noinspection CssUnresolvedCustomProperty*/
 		td {
 			padding-left: 1.0rem;
 			padding-right: 1.0rem;
 			padding-top: .25rem;
-			/*noinspection CssUnresolvedCustomProperty*/
 			border-bottom: 1px solid var(--background-modifier-border);
 			align-items: center;
 
+			/*noinspection CssUnresolvedCustomProperty*/
 			input.slider:disabled{
-				color: rgb(84, 84, 84) !important;
+				color: var(--color-base-40) !important;
 			}
 
 			div.slider-box{
@@ -90,13 +92,49 @@
 				text-align: center;
 			}
 
-			.hex-color-input {
-				width: 80px;
-				border: var(--input-border-width) solid var(--background-modifier-border);
-				background: var(--background-modifier-form-field);
-				color: var(--text-normal);
-				text-align: center;
-				display: none; /* Initially hidden */
+			.hex-color-wrapper {
+				display: flex;
+				align-items: center;
+				position: relative;
+
+				/*noinspection CssUnresolvedCustomProperty*/
+				.hex-color-tooltip{
+					position: absolute;
+					top: -25px; /* Adjust position above the input */
+					left: 0;
+					background-color: var(--background-modifier-form-field);
+					color: var(--color-base-70);
+					padding: 5px 8px;
+					font-size: 12px;
+					border-radius: 4px;
+					box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+					white-space: nowrap;
+					display: none; /* Hidden by default */
+					z-index: 1000;
+				}
+
+				/*noinspection CssUnresolvedCustomProperty*/
+				.hex-color-tooltip::after {
+					content: "";
+					position: absolute;
+					bottom: -5px;
+					left: 10px; /* Adjust to align with tooltip */
+					width: 0;
+					height: 0;
+					border-style: solid;
+					border-width: 5px 5px 0 5px;
+					border-color: var(--background-modifier-form-field) transparent transparent transparent;
+				}
+
+				/*noinspection CssUnresolvedCustomProperty*/
+				.hex-color-input {
+					width: 80px;
+					border: var(--input-border-width) solid var(--background-modifier-border);
+					background: var(--background-modifier-form-field);
+					color: var(--text-normal);
+					text-align: center;
+					display: none; /* Initially hidden */
+				}
 			}
 
 		}
