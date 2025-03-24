@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {ColorComponent, TextComponent} from "obsidian";
 import {RGBSelectorProperties} from "src/contracts/plugin/services/extensions/ExtensionProperties";
-import {hexToRGBA, rgbaToHex} from "src/lib/ColorConverters";
+import {hexToHEX, hexToRGBA, rgbaToHex} from "src/lib/ColorConverters";
 import {RGBA} from "src/contracts/types/RGBA";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 import {ServiceProvider} from "src/plugin/services/ServiceProvider";
@@ -71,7 +71,7 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 
 		// Sync color input with hex field
 		this.hexInput.addEventListener("change", async () => {
-			this.setValue(this.hexInput.value);
+			this.setValue(hexToHEX(this.hexInput.value, true));
 			rowData.record[property_name] = hexToRGBA(this.hexInput.value, 1);
 			await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record);
 			await rowData.rowUpdateCallback();

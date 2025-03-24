@@ -104,7 +104,7 @@ export function hslToRgb(hsl: { h: number; s: number; l: number }): RGB {
 // ---------------------------------------------------------------------------------------------------------------------
 export function hexToRGBA(hex: string, alpha: number): RGBA {
 	// Remove the hash (#) from the beginning of the HEX string
-	hex = hex.replace(/^#/, '');
+	hex = hexToHEX(hex);
 
 	// Ensure the alpha value is between 0 and 1
 	if (alpha < 0) alpha = 0;
@@ -118,6 +118,23 @@ export function hexToRGBA(hex: string, alpha: number): RGBA {
 	// Convert the RGB values and alpha to the rgba format
 	return {r, g, b, a: alpha}
 }
+
+export function hexToHEX(hex: string, keepHash: boolean = false): string {
+	// Remove the hash if present and not required
+	let cleanHex = hex.replace(/^#/, '');
+
+	// If it's shorthand hex (3 characters), expand it to full (6 characters)
+	if (cleanHex.length === 3) {
+		cleanHex = cleanHex
+			.split('')
+			.map((char) => char + char)
+			.join('');
+	}
+
+	// Prepend the hash if needed
+	return keepHash ? `#${cleanHex}` : cleanHex;
+}
+
 
 // ---------------------------------------------------------------------------------------------------------------------
 export function stringToHsl(txt: string): HSL {
