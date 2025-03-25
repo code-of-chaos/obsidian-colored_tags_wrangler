@@ -2,13 +2,12 @@ name: BETA Obsidian plugin
 
 on:
     push:
-        branches:
-            - development
         tags:
             - "[0-9]+.[0-9]+.[0-9]+-BETA-*"
 
 jobs:
     build:
+        if: startsWith(github.ref, 'refs/tags/') && github.event.repository.default_branch == 'development'
         runs-on: ubuntu-latest
 
         steps:
