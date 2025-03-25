@@ -7,11 +7,13 @@ on:
 
 jobs:
     build:
-        if: startsWith(github.ref, 'refs/tags/') && github.event.repository.default_branch == 'development'
         runs-on: ubuntu-latest
 
         steps:
-            -   uses: actions/checkout@v3
+            -   name: Checkout development branch
+                uses: actions/checkout@v3
+                with:
+                    ref: development  # Ensures we build from the development branch
 
             -   name: Use Node.js
                 uses: actions/setup-node@v3
