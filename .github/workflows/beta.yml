@@ -2,6 +2,8 @@ name: BETA Obsidian plugin
 
 on:
     push:
+        branches:
+            - development
         tags:
             - "[0-9]+.[0-9]+.[0-9]+-BETA-*"
 
