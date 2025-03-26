@@ -8,6 +8,7 @@ import {RGBA} from "src/contracts/types/RGBA";
 import {ISettingTagRecordComponent} from "src/contracts/plugin/ui/components/tag_table/ISettingTagRecordComponent";
 import {ServiceProvider} from "src/plugin/services/ServiceProvider";
 import {RowDataType} from "src/contracts/plugin/ui/components/RowDataType";
+import {ISettingsService} from "../../../../../contracts/plugin/services/settings/ISettingsService";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -15,9 +16,7 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 	private readonly hexInput: HTMLInputElement;
 	private readonly tooltipEl: HTMLElement;
 	private isMouseInside: boolean = false;
-	private get tooltipEnabled(): boolean {
-		return ServiceProvider.settings.data.Config.SettingsTooltipEnabled;
-	}
+	private readonly settings : ISettingsService = ServiceProvider.settings;
 
 	constructor(rowData: RowDataType, property_name: RGBSelectorProperties) {
 		const wrapper = rowData.parentEl.createDiv();
@@ -45,14 +44,14 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 		// Show hex input on hover/focus
 		wrapper.addEventListener("mouseenter", (event: MouseEvent) => {
 			this.isMouseInside = true;
-			if (this.tooltipEnabled) this.tooltipEl.style.display = "block";
+			if (this.settings.tooltipEnabled) this.tooltipEl.style.display = "block";
 			if (!event.ctrlKey) return;
 			this.hexInput.style.display = "inline-block";
 			colorInputEl.style.display = "none";
 		});
 		wrapper.addEventListener("mouseleave", () => { // Doesnt need the MouseEvent arg
 			this.isMouseInside = false;
-			if (this.tooltipEnabled) this.tooltipEl.style.display = "none";
+			if (this.settings.tooltipEnabled) this.tooltipEl.style.display = "none";
 
 			this.hexInput.style.display = "none";
 			colorInputEl.style.display = "inline-block";
@@ -61,7 +60,7 @@ export class SettingTagRecordColorComponent extends ColorComponent implements IS
 			if (!(event.key === "Control" && this.isMouseInside)) return;
 			this.hexInput.style.display = "inline-block";
 			colorInputEl.style.display = "none";
-			if (this.tooltipEnabled) this.tooltipEl.style.display = "none";
+			if (this.settings.tooltipEnabled) this.tooltipEl.style.display = "none";
 		});
 		document.addEventListener("keyup", (event: KeyboardEvent) => {
 			if (!(event.key === "Control" && !this.isMouseInside)) return;

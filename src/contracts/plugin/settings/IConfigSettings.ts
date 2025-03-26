@@ -7,4 +7,5 @@
 // ---------------------------------------------------------------------------------------------------------------------
 export interface IConfigSettings {
 	SettingsTooltipEnabled : boolean,
+	SpaceReplacement : string,
 }

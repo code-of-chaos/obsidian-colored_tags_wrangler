@@ -12,8 +12,9 @@ const defaultSettingsInfo: ISettingInfo = {
 	SettingsVersion: MigratorService.CURRENT_VERSION // just add a migration and we are up to a new version number.
 }
 
-const defaultConfigSettings : IConfigSettings = {
-	SettingsTooltipEnabled: true
+export const defaultConfigSettings : IConfigSettings = {
+	SettingsTooltipEnabled: true,
+	SpaceReplacement: "-"
 }
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

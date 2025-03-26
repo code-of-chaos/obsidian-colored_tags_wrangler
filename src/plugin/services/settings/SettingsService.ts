@@ -4,7 +4,7 @@
 import {ISettingsService} from "src/contracts/plugin/services/settings/ISettingsService";
 import {IColoredTagWranglerPlugin} from "src/contracts/plugin/IColoredTagWranglerPlugin";
 import {debounce, Debouncer} from "obsidian";
-import {defaultSettings} from "src/plugin/services/settings/DefaultSettings";
+import {defaultConfigSettings, defaultSettings} from "src/plugin/services/settings/DefaultSettings";
 import {IPluginSettings} from "src/contracts/plugin/settings/IPluginSettings";
 import {IMigratorService} from "src/contracts/plugin/services/migrator/IMigratorService";
 // ---------------------------------------------------------------------------------------------------------------------
@@ -41,5 +41,21 @@ export class SettingsService implements ISettingsService {
 
 	public async saveToFile() {
 		await this._plugin.saveData(this.data);
+	}
+
+	public get tagSpaceReplacement() : string {
+		if (this.data.Config.SpaceReplacement == undefined) {
+			this.data.Config.SpaceReplacement = defaultConfigSettings.SpaceReplacement;
+			this.debounceSaveToFile();
+		}
+		return this.data.Config.SpaceReplacement;
+	}
+
+	public get tooltipEnabled() : boolean {
+		if (this.data.Config.SettingsTooltipEnabled == undefined) {
+			this.data.Config.SettingsTooltipEnabled = defaultConfigSettings.SettingsTooltipEnabled;
+			this.debounceSaveToFile();
+		}
+		return this.data.Config.SettingsTooltipEnabled;
 	}
 }

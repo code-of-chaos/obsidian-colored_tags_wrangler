@@ -16,4 +16,7 @@ export interface ISettingsService {
 	// -----------------------------------------------------------------------------------------------------------------
 	loadFromFile(): Promise<void>;
 	saveToFile(): Promise<void>;
+
+	get tagSpaceReplacement() : string;
+	get tooltipEnabled() : boolean;
 }

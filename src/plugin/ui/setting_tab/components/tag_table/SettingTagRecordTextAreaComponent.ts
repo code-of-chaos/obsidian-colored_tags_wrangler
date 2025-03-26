@@ -19,6 +19,12 @@ export class SettingTagRecordTextAreaComponent extends TextAreaComponent impleme
 			this.inputEl.style.height = 'auto'; // else it just keeps adding height
 			this.inputEl.style.height = this.calcHeight();
 
+			// Tags need to be normalized so they don't have spaces
+			if (property_name === "core_tagText") {
+				const settings = ServiceProvider.settings;
+				newValue = newValue.replace(/(?<=\S) (?=\S)/g, settings.tagSpaceReplacement);
+			}
+
 			rowData.record[property_name] = newValue;
 			await ServiceProvider.tagRecords.addOrUpdateTag(rowData.record)
 			await rowData.rowUpdateCallback() // Updates the preview element
