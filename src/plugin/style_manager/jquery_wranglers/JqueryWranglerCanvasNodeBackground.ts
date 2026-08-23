@@ -4,6 +4,7 @@
 import {JqueryWrangler} from "src/plugin/style_manager/jquery_wranglers/JqueryWrangler";
 import $ from "jquery";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
+import {tagMatchesPattern} from "src/api/tags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -21,13 +22,11 @@ export class JqueryWranglerCanvasNodeBackground extends JqueryWrangler{
     private findElement(tag_name:string|null):JQuery<HTMLElement>|null{
 		if (!tag_name) return null;
 
-		const regex = new RegExp(`#${tag_name}`, 'i');
-
 		return $(`div.canvas-node > div.canvas-node-container:has(a.tag)`).filter((_, el) => {
-			const href = $(el).find('a.tag').attr('href');
-			if (href === undefined) return false;
-
-			return regex.test(href);
+			return $(el).find('a.tag').toArray().some((tag) => {
+				const href = $(tag).attr('href');
+				return href !== undefined && tagMatchesPattern(tag_name, href);
+			});
 		});
 	}
 

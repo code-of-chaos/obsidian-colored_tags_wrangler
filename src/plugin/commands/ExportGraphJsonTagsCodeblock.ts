@@ -3,17 +3,17 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
 import {Editor, MarkdownFileInfo, MarkdownView} from "obsidian";
-import {get_tags} from "src/api/tags";
+import {get_tags, tagNameToSearchQuery} from "src/api/tags";
 import {IColorGroup} from "src/api/graph";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 export async function ExportGraphJsonTagsCodeblock(editor: Editor, _: MarkdownView | MarkdownFileInfo, plugin: IColoredTagWrangler){
-    const color_groups = get_tags(plugin.settings.TagColors.ColorPicker, plugin.settings?.TagColors.EnableMultipleTags)
+    const color_groups = get_tags(plugin.settings.TagColors.ColorPicker, plugin.settings?.TagColors.EnableMultipleTags, false)
         .map(({tag_name, color}) => {
             return {
-                "query": `tag:#${tag_name}`,
+                "query": tagNameToSearchQuery(tag_name),
                 "color": {
                     "a": 1,
                     "rgb": Number.parseInt(`${(color.r << 16) + (color.g << 8) + color.b}`)

@@ -4,6 +4,7 @@
 import {JqueryWrangler} from "./JqueryWrangler";
 import $ from "jquery";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
+import {tagMatchesPattern} from "src/api/tags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -21,7 +22,11 @@ export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
     private findElement(tag_name:string):JQuery<HTMLElement>{
         // noinspection TypeScriptValidateJSTypes
         return $('div[data-property-key="tags"]')
-            .find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
+            .find('div.multi-select-pill')
+            .filter((_, element) => tagMatchesPattern(
+                tag_name,
+                $(element).find('span').first().text()
+            ))
     }
 
     assembleStyling(): void {

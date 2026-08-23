@@ -41,7 +41,7 @@ export class EventHandlerMetadataChange extends EventHandler{
 		// Create new links based on tags
 		const newLinks = tags
 			.map(tag => tag.replace("#", ""))
-			.filter(tag => processTagColors(this.plugin, tag))
+			.filter(tag => processTagColors(this.plugin, tag) !== null)
 			.map(tag => ({
 				tag_name: tag as string,
 				folder_path: folder_path

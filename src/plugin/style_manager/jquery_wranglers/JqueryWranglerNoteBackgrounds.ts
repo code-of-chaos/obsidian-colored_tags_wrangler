@@ -4,6 +4,7 @@
 import {JqueryWrangler} from "src/plugin/style_manager/jquery_wranglers/JqueryWrangler";
 import $ from "jquery";
 import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
+import {tagMatchesPattern} from "src/api/tags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -22,14 +23,15 @@ export class JqueryWranglerNoteBackgrounds extends JqueryWrangler{
         // noinspection TypeScriptValidateJSTypes
         const page = $('div.workspace-leaf-content[data-type="markdown"] div.view-content');
         const tag = tag_name !== null
-            ? page.find($(`div.multi-select-pill:has(span:contains("${tag_name}"))`))
+            ? page.find('div.multi-select-pill').filter((_, element) =>
+                tagMatchesPattern(tag_name, $(element).find('span').first().text()))
             : null;
 
         return [page,tag]
     }
 
     assembleStyling(): void {
-        this.getTags().map(
+        this.getTags(false).map(
             ({tag_name, background_color}) =>{
                 const [page, tag]  = this.findElement(tag_name);
                 // noinspection JSUnresolvedReference
@@ -41,7 +43,7 @@ export class JqueryWranglerNoteBackgrounds extends JqueryWrangler{
         )
     }
     removeStyling(): void {
-        const [page, _]  = this.findElement(null);
+        const [page]  = this.findElement(null);
         page.removeAttr("style");
     }
 }

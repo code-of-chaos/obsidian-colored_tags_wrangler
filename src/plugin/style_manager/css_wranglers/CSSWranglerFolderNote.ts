@@ -7,6 +7,7 @@ import ColoredTagWranglerPlugin
 	from "src/main";
 import {RGB}
 	from "obsidian";
+import {tagMatchesPattern} from "src/api/tags";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -22,15 +23,15 @@ export class CSSWranglerFolderNote extends CSSWrangler {
 	// -----------------------------------------------------------------------------------------------------------------
 	assembleCss(theme:string) {
 		const important: string = this.getImportant();
-		let all_tags = this.getTags();
-		let border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
-		let padding = this.plugin.settings.FolderNote.Values.Padding
+		const all_tags = this.getTags(false);
+		const border_radius = this.plugin.settings.FolderNote.Values.BorderRadius
+		const padding = this.plugin.settings.FolderNote.Values.Padding
 
 		return this.plugin.settings.FolderNote.FolderTagLinks
 			.map(
 				({folder_path, tag_name: folder_tag_name}) => {
 					return all_tags
-						.filter(({tag_name: known_tag}) => known_tag === folder_tag_name)
+						.filter(({tag_name: known_tag}) => tagMatchesPattern(known_tag, folder_tag_name))
 						.map(({color, background_color}) => this.createCss(
 							theme,
 							folder_path,
