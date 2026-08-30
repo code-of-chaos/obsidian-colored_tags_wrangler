@@ -2,7 +2,9 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {TFile} from "obsidian";
+import {reSplit} from "./tags";
 import {IColoredTagWrangler} from "../plugin/IColoredTagWrangler";
+import {IColorPicker} from "./interfaces/IColorPicker";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -16,14 +18,15 @@ export function getParentFolderName(filePath: string): string {
 // ---------------------------------------------------------------------------------------------------------------------
 export async function processTagColors(plugin:IColoredTagWrangler, tag_to_find: string): Promise<string | null> {
     const colorPickerArray = plugin.settings.TagColors.ColorPicker;
+    const clean_tag_to_find = tag_to_find.trim().replace(/^#+/, "");
 
-    const matchingKey = colorPickerArray.findIndex((data) => {
+    const matchingKey = colorPickerArray.findIndex((data: IColorPicker) => {
         if (plugin.settings.TagColors.EnableMultipleTags) {
             return (
-                data.tag_name.split(";").find((tag) => tag === tag_to_find) !== undefined
+                data.tag_name.split(reSplit).map((t: string) => t.trim().replace(/^#+/, "")).find((tag: string) => tag === clean_tag_to_find) !== undefined
             );
         } else {
-            return data.tag_name === tag_to_find;
+            return data.tag_name.trim().replace(/^#+/, "") === clean_tag_to_find;
         }
     });
 

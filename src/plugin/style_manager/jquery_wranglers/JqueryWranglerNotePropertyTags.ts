@@ -20,8 +20,9 @@ export class JqueryWranglerNotePropertyTags extends JqueryWrangler{
     // -----------------------------------------------------------------------------------------------------------------
     private findElement(tag_name:string):JQuery<HTMLElement>{
         // noinspection TypeScriptValidateJSTypes
+        const cleanTag = tag_name.replace(/"/g, '\\"');
         return $('div[data-property-key="tags"]')
-            .find(`div.multi-select-pill:has(span:contains("${tag_name}"))`)
+            .find(`div.multi-select-pill:has(span:contains("${cleanTag}"))`);
     }
 
     assembleStyling(): void {
