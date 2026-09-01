@@ -14,7 +14,7 @@ import {arrayMove} from "src/api/ArrayUtils"
 // ---------------------------------------------------------------------------------------------------------------------
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
-const _NEW_TAG_NAME:string = "new-tag";
+const _NEW_TAG_NAME = "new-tag";
 const _NEW_DEFAULT_COLOR:RGB = { r: 255, g: 255, b: 255 };
 const _NEW_DEFAULT_BACKGROUND_COLOR:RGB = { r: 100, g: 100, b: 100 };
 
@@ -27,9 +27,9 @@ export class ComponentTags extends SettingsTabComponent{
 	// methods
 	// -----------------------------------------------------------------------------------------------------------------
 	public create_component(containerEL:HTMLElement): void {
-		let setting = new Setting(containerEL)
+		const setting = new Setting(containerEL)
 			.setName("Custom color tags")
-			.setDesc(`Define custom colors for tags.`)
+			.setDesc(`Define custom colors for tags. Use a trailing /* to match descendants; for example, project/* matches project/HR and project/Budget.`)
 			// Keep the button at the top for old times sake
 			.addButton((button) => this._add_new_tag_button(button));
 
@@ -91,8 +91,8 @@ export class ComponentTags extends SettingsTabComponent{
 			});
 	}
 	private _createTagColorSetting(tag_id: number, tag_content: {tag_name:string, color:RGB, background_color:RGB, luminance_offset:number}, containerEL:HTMLElement) {
-		let new_tag_id = tag_id;
-		let new_tag_content = tag_content;
+		const new_tag_id = tag_id;
+		const new_tag_content = tag_content;
 
 		const setting = new Setting(containerEL);
 		if (Platform.isMobileApp || Platform.isMobile){
@@ -183,6 +183,4 @@ export class ComponentTags extends SettingsTabComponent{
 		containerEL.appendChild(setting.settingEl);
 	}
 }
-
-
 

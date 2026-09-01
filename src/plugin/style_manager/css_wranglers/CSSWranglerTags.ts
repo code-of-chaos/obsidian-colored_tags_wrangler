@@ -6,6 +6,7 @@ import {CSSWrangler}
 import ColoredTagWranglerPlugin
 	from "src/main";
 import {RGB} from "obsidian";
+import {isWildcardTagName} from "src/api/tags";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,8 +21,8 @@ export class CSSWranglerTags extends CSSWrangler {
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
 	private _assembleCss(theme:string, selector:string, important:string, color:RGB, background_color:RGB):string {
-		return ` 
-				${theme} ${selector} { 
+		return `
+				${theme} ${selector} {
 					color: ${this.getForegroundString(color)} ${important};
 					background-color: ${this.getBackgroundWithOpacityString(background_color)} ${important};
 				}`
@@ -33,6 +34,7 @@ export class CSSWranglerTags extends CSSWrangler {
 			(v) => {
 				const tag = v.tag_name;
 				const lowerTag = tag.toLowerCase();
+				const wildcard = isWildcardTagName(tag);
 
 				const encodedTag = encodeURIComponent(tag);
 				const encodedLowerTag = encodeURIComponent(lowerTag);
@@ -59,15 +61,30 @@ export class CSSWranglerTags extends CSSWrangler {
 				const normalizedTag = tag.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w-]/g, "");
 				const normalizedLowerTag = lowerTag.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w-]/g, "");
 
+				// Build href selectors with wildcard support
+				const tagPrefix = wildcard ? tag.slice(0, -1) : tag;
+				const lowerTagPrefix = wildcard ? lowerTag.slice(0, -1) : lowerTag;
+				const hrefOperator = wildcard ? "^" : "";
+				const uriPrefix = wildcard ? encodeURI("#" + tagPrefix) : uriTag;
+				const uriLowerPrefix = wildcard ? encodeURI("#" + lowerTagPrefix) : uriLowerTag;
+				const encodedPrefix = wildcard ? encodeURIComponent(tagPrefix) : encodedTag;
+				const encodedLowerPrefix = wildcard ? encodeURIComponent(lowerTagPrefix) : encodedLowerTag;
+
+				// Build class selectors with wildcard support
+				const cmTagBase = wildcard ? tagPrefix.replace(/\//g, "") : tag.replace(/\//g, "");
+				const cmLowerBase = wildcard ? lowerTagPrefix.replace(/\//g, "") : lowerTag.replace(/\//g, "");
+				const strippedBase = wildcard ? strippedTagNoSlash : strippedTag;
+				const strippedLowerBase = wildcard ? strippedLowerTagNoSlash : strippedLowerTag;
+				const normalizedBase = wildcard ? tagPrefix.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w-]/g, "") : normalizedTag;
+				const normalizedLowerBase = wildcard ? lowerTagPrefix.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w-]/g, "") : normalizedLowerTag;
+
 				const cmClassSelectors = [
 					// Stripped non-ASCII (Obsidian CM6 behavior)
-					...(strippedTag ? [`.cm-tag-${strippedTag}`, `[class~="cm-tag-${strippedTag}"]`, `[class*="cm-tag-${strippedTag}"]`] : []),
-					...(strippedLowerTag ? [`.cm-tag-${strippedLowerTag}`, `[class~="cm-tag-${strippedLowerTag}"]`, `[class*="cm-tag-${strippedLowerTag}"]`] : []),
-					...(strippedTagNoSlash ? [`.cm-tag-${strippedTagNoSlash}`, `[class~="cm-tag-${strippedTagNoSlash}"]`] : []),
-					...(strippedLowerTagNoSlash ? [`.cm-tag-${strippedLowerTagNoSlash}`, `[class~="cm-tag-${strippedLowerTagNoSlash}"]`] : []),
+					...(strippedBase ? [`.cm-tag-${strippedBase}`, `[class~="cm-tag-${strippedBase}"]`, `[class*="cm-tag-${strippedBase}"]`] : []),
+					...(strippedLowerBase ? [`.cm-tag-${strippedLowerBase}`, `[class~="cm-tag-${strippedLowerBase}"]`, `[class*="cm-tag-${strippedLowerBase}"]`] : []),
 					// Normalized NFD
-					...(normalizedTag ? [`.cm-tag-${normalizedTag}`, `[class~="cm-tag-${normalizedTag}"]`] : []),
-					...(normalizedLowerTag ? [`.cm-tag-${normalizedLowerTag}`, `[class~="cm-tag-${normalizedLowerTag}"]`] : []),
+					...(normalizedBase ? [`.cm-tag-${normalizedBase}`, `[class~="cm-tag-${normalizedBase}"]`] : []),
+					...(normalizedLowerBase ? [`.cm-tag-${normalizedLowerBase}`, `[class~="cm-tag-${normalizedLowerBase}"]`] : []),
 					// Direct & Escaped UTF-8
 					`.cm-tag-${escapedTag}`,
 					`.cm-tag-${escapedLowerTag}`,
@@ -93,11 +110,11 @@ export class CSSWranglerTags extends CSSWrangler {
 
 				const selectors = Array.from(new Set([
 					// Reading view & HTML rendered tags
-					`.tag[href="#${tag}" i]`,
-					`.tag[href="${uriTag}" i]`,
-					`.tag[href="#${encodedTag}" i]`,
-					`.tag[href="${uriLowerTag}" i]`,
-					`.tag[href="#${encodedLowerTag}" i]`,
+					`.tag[href${hrefOperator}="#${tag}" i]`,
+					`.tag[href${hrefOperator}="${uriPrefix}" i]`,
+					`.tag[href${hrefOperator}="#${encodedPrefix}" i]`,
+					`.tag[href${hrefOperator}="${uriLowerPrefix}" i]`,
+					`.tag[href${hrefOperator}="#${encodedLowerPrefix}" i]`,
 					`a.tag[href*="${encodedTag}" i]`,
 					`a.tag[href*="${encodedLowerTag}" i]`,
 					`a.tag[data-tag="${tag}" i]`,

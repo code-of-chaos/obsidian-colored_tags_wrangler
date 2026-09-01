@@ -2,9 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 import {TFile} from "obsidian";
-import {reSplit} from "./tags";
 import {IColoredTagWrangler} from "../plugin/IColoredTagWrangler";
-import {IColorPicker} from "./interfaces/IColorPicker";
+import {get_tags, tagMatchesPattern} from "src/api/tags";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -16,19 +15,14 @@ export function getParentFolderName(filePath: string): string {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-export async function processTagColors(plugin:IColoredTagWrangler, tag_to_find: string): Promise<string | null> {
+export function processTagColors(plugin:IColoredTagWrangler, tag_to_find: string): string | null {
     const colorPickerArray = plugin.settings.TagColors.ColorPicker;
-    const clean_tag_to_find = tag_to_find.trim().replace(/^#+/, "");
 
-    const matchingKey = colorPickerArray.findIndex((data: IColorPicker) => {
-        if (plugin.settings.TagColors.EnableMultipleTags) {
-            return (
-                data.tag_name.split(reSplit).map((t: string) => t.trim().replace(/^#+/, "")).find((tag: string) => tag === clean_tag_to_find) !== undefined
-            );
-        } else {
-            return data.tag_name.trim().replace(/^#+/, "") === clean_tag_to_find;
-        }
-    });
+    const matchingKey = colorPickerArray.findIndex((data) => get_tags(
+        [data],
+        plugin.settings.TagColors.EnableMultipleTags,
+        false
+    ).some(({tag_name}) => tagMatchesPattern(tag_name, tag_to_find)));
 
     return matchingKey !== -1 ? matchingKey.toString() : null;
 
@@ -48,9 +42,9 @@ export async function detect_all_links(plugin:IColoredTagWrangler): Promise<{ ta
             markdownFiles
                 .filter(file => file_is_folderNote(file) )
                 .map(async file => {
-                    let tags = plugin.app.metadataCache.getFileCache(file)?.frontmatter?.tags as string[] ?? [];
+                    const tags = plugin.app.metadataCache.getFileCache(file)?.frontmatter?.tags as string[] ?? [];
                     return tags
-                        .filter(async tag => await processTagColors(plugin, tag))
+                        .filter(tag => processTagColors(plugin, tag) !== null)
                         .map(tag => ({
                             tag_name: tag as string,
                             folder_path: file.path.replace(`/${file.name}`, "")

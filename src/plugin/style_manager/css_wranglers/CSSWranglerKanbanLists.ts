@@ -5,6 +5,7 @@ import {CSSWrangler}
 	from "src/plugin/style_manager/css_wranglers/CSSWrangler";
 import ColoredTagWranglerPlugin
 	from "src/main";
+import {isWildcardTagName} from "src/api/tags";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -22,10 +23,19 @@ export class CSSWranglerKanbanLists extends CSSWrangler {
 		const important:string = this.getImportant();
 		return this.getTags(false)
 			.map(({tag_name, color, background_color}) => {
+				const wildcard = isWildcardTagName(tag_name);
+				const tagPrefix = wildcard ? tag_name.slice(0, -1) : tag_name;
+				const hrefOperator = wildcard ? "^" : "";
+
 				const hrefSelectors = Array.from(new Set([
-					`a[href="#${tag_name}" i]`,
-					`a[href="${encodeURI("#" + tag_name)}" i]`,
-					`a[href="#${encodeURIComponent(tag_name)}" i]`
+					`a[href${hrefOperator}="#${tag_name}" i]`,
+					`a[href${hrefOperator}="${encodeURI("#" + tag_name)}" i]`,
+					`a[href${hrefOperator}="#${encodeURIComponent(tag_name)}" i]`,
+					...(wildcard ? [
+						`a[href${hrefOperator}="#${tagPrefix}" i]`,
+						`a[href${hrefOperator}="${encodeURI("#" + tagPrefix)}" i]`,
+						`a[href${hrefOperator}="#${encodeURIComponent(tagPrefix)}" i]`,
+					] : [])
 				])).join(", ");
 
 				return `
