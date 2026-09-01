@@ -14,13 +14,13 @@ const tags = await import(`data:text/javascript;base64,${Buffer.from(javascript)
 
 // ---------- normalizeTagName ----------
 
-test("normalizeTagName strips leading hash and trims whitespace", () => {
+test("normalizeTagName strips leading hashes and trims whitespace", () => {
     assert.equal(tags.normalizeTagName("#project/HR"), "project/HR");
     assert.equal(tags.normalizeTagName("  #tag  "), "tag");
     assert.equal(tags.normalizeTagName("tag"), "tag");
     assert.equal(tags.normalizeTagName("#"), "");
     assert.equal(tags.normalizeTagName(""), "");
-    assert.equal(tags.normalizeTagName("##double"), "#double");
+    assert.equal(tags.normalizeTagName("##double"), "double");
 });
 
 // ---------- isWildcardTagName ----------
@@ -283,4 +283,59 @@ test("get_tags with remove_slash=false preserves wildcard slashes", () => {
     const data = [{tag_name: "a/b/*", color, background_color: color, luminance_offset: 0}];
     const result = tags.get_tags(data, false, false);
     assert.deepEqual(result.map(t => t.tag_name), ["a/b/*"]);
+});
+
+// ---------- wildcard + special character intersection ----------
+
+test("wildcard matches accented tags", () => {
+    assert.equal(tags.tagMatchesPattern("café/*", "café/HR"), true);
+    assert.equal(tags.tagMatchesPattern("café/*", "café"), false);
+    assert.equal(tags.tagMatchesPattern("café/*", "cafe/HR"), false);
+    assert.equal(tags.tagMatchesPattern("café/*", "café/HR/2026"), true);
+});
+
+test("wildcard matches tags with spaces", () => {
+    assert.equal(tags.tagMatchesPattern("my project/*", "my project/sub"), true);
+    assert.equal(tags.tagMatchesPattern("my project/*", "my project"), false);
+});
+
+test("wildcard matches tags with special characters", () => {
+    assert.equal(tags.tagMatchesPattern("tag-test/*", "tag-test/sub"), true);
+    assert.equal(tags.tagMatchesPattern("tag.test/*", "tag.test/sub"), true);
+    assert.equal(tags.tagMatchesPattern("tag+test/*", "tag+test/sub"), true);
+});
+
+test("get_tags handles accented wildcard tags", () => {
+    const color = {r: 1, g: 2, b: 3};
+    const data = [{tag_name: "café/*", color, background_color: color, luminance_offset: 0}];
+    const result = tags.get_tags(data, false, false);
+    assert.deepEqual(result.map(t => t.tag_name), ["café/*"]);
+});
+
+test("tagNameToHrefSelector handles accented wildcards", () => {
+    const selector = tags.tagNameToHrefSelector("café/*");
+    assert.ok(selector.includes("café"), "should contain accented characters");
+    assert.ok(selector.includes("^"), "should use prefix operator for wildcard");
+});
+
+test("tagNameToClassSelector handles accented wildcards", () => {
+    const selector = tags.tagNameToClassSelector("café/*", "cm-tag-");
+    assert.ok(selector.includes("class*"), "should use contains for wildcard");
+    assert.ok(selector.includes(":not("), "should exclude parent tag");
+});
+
+test("tagNameToSearchQuery handles accented wildcards", () => {
+    const query = tags.tagNameToSearchQuery("café/*");
+    assert.ok(query.includes("café"), "should contain accented characters");
+    assert.ok(query.includes(".+"), "should use regex for wildcard");
+});
+
+test("normalizeTagName strips hashes from accented tags", () => {
+    assert.equal(tags.normalizeTagName("#café/*"), "café/*");
+    assert.equal(tags.normalizeTagName("##café"), "café");
+});
+
+test("isWildcardTagName works with accented tags", () => {
+    assert.equal(tags.isWildcardTagName("café/*"), true);
+    assert.equal(tags.isWildcardTagName("café"), false);
 });

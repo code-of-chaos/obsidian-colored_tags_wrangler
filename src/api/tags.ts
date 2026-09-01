@@ -7,7 +7,7 @@ import {IColorPicker} from "src/api/interfaces/IColorPicker";
 // Support Code
 // ---------------------------------------------------------------------------------------------------------------------
 const reSLASH = /\//g;
-const reSplit = /[\n;]/; // for organization, I added \n
+export const reSplit = /[\n;]/; // for organization, I added \n
 const wildcardSuffix = "/*";
 
 const escapeCssAttributeValue = (value: string): string => value
@@ -36,7 +36,7 @@ export function get_tags(data: Array<IColorPicker>, enable_multiple_tags: boolea
 
 // ---------------------------------------------------------------------------------------------------------------------
 export function normalizeTagName(tag_name: string): string {
-    return tag_name.trim().replace(/^#/, "");
+    return tag_name.trim().replace(/^#+/, "");
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

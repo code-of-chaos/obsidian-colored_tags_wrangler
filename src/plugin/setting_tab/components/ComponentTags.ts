@@ -85,12 +85,22 @@ export class ComponentTags extends SettingsTabComponent{
 			.setPlaceholder(_NEW_TAG_NAME)
 			.setValue(new_tag_content.tag_name)
 			.onChange(async (value) => {
-				// Add the updated tag and color
-				new_tag_content.tag_name = value
-					.replace("#", "")
-					// .toLowerCase() // Currently this has been disabled. Maybe a future setting?
-					.trim()
-				;
+				const trimmed = value.trim();
+				// Validate wildcard syntax: /* must be at the end and have a non-empty prefix
+				const wildcardIndex = trimmed.indexOf("/*");
+				if (wildcardIndex !== -1) {
+					if (wildcardIndex !== trimmed.length - 2) {
+						// /* is not at the end - strip it from the middle
+						new_tag_content.tag_name = trimmed.replace(/\/\*/g, "");
+					} else if (wildcardIndex === 0) {
+						// /* is at the start with no prefix - strip it
+						new_tag_content.tag_name = trimmed.slice(2);
+					} else {
+						new_tag_content.tag_name = trimmed;
+					}
+				} else {
+					new_tag_content.tag_name = trimmed;
+				}
 				this.plugin.settings.TagColors.ColorPicker[tag_id] = new_tag_content;
 				await this.plugin.saveSettings();
 			});
