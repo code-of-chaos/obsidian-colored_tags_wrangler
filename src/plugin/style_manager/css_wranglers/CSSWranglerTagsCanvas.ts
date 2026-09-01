@@ -23,18 +23,14 @@ export class CSSWranglerTagsCanvas extends CSSWrangler {
 		return this.getTags(false)
 			.map(({tag_name, color, background_color}) => {
 				const wildcard = isWildcardTagName(tag_name);
-				const tagPrefix = wildcard ? tag_name.slice(0, -1) : tag_name;
+				// For wildcards, use the prefix (without /*); for exact, use the tag as-is
+				const tagValue = wildcard ? tag_name.slice(0, -1) : tag_name;
 				const hrefOperator = wildcard ? "^" : "";
 
 				const hrefSelectors = Array.from(new Set([
-					`a[href${hrefOperator}="#${tag_name}" i]`,
-					`a[href${hrefOperator}="${encodeURI("#" + tag_name)}" i]`,
-					`a[href${hrefOperator}="#${encodeURIComponent(tag_name)}" i]`,
-					...(wildcard ? [
-						`a[href${hrefOperator}="#${tagPrefix}" i]`,
-						`a[href${hrefOperator}="${encodeURI("#" + tagPrefix)}" i]`,
-						`a[href${hrefOperator}="#${encodeURIComponent(tagPrefix)}" i]`,
-					] : [])
+					`a[href${hrefOperator}="#${tagValue}" i]`,
+					`a[href${hrefOperator}="${encodeURI("#" + tagValue)}" i]`,
+					`a[href${hrefOperator}="#${encodeURIComponent(tagValue)}" i]`,
 				])).join(", ");
 
 				return `

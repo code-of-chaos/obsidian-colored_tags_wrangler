@@ -25,16 +25,16 @@ export class CSSWranglerKanbanCards extends CSSWrangler {
 			.map(
 				({tag_name, color, background_color}) => {
 					const wildcard = isWildcardTagName(tag_name);
-					const tagPrefix = wildcard ? tag_name.slice(0, -1) : tag_name;
-					const escapedTag = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(tag_name) : tag_name;
-					const escapedPrefix = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(tagPrefix) : tagPrefix;
+					// For wildcards, use the prefix (without /*); for exact, use the tag as-is
+					const tagValue = wildcard ? tag_name.slice(0, -1) : tag_name;
+					const escapedTag = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(tagValue) : tagValue;
 
 					const cardSelectors = Array.from(new Set([
 						wildcard
-							? `div.kanban-plugin__item[class*="has-tag-${escapedPrefix}"]:where(:not([class~="has-tag-${escapedPrefix}"]))`
+							? `div.kanban-plugin__item[class*="has-tag-${escapedTag}"]:where(:not([class~="has-tag-${escapedTag}"]))`
 							: `div.kanban-plugin__item.has-tag-${escapedTag}`,
 						wildcard
-							? `div.kanban-plugin__item[class*="has-tag-${tagPrefix}"]:where(:not([class~="has-tag-${tagPrefix}"]))`
+							? `div.kanban-plugin__item[class*="has-tag-${tagValue}"]:where(:not([class~="has-tag-${tagValue}"]))`
 							: `div.kanban-plugin__item.has-tag-${tag_name}`
 					])).join(", ");
 
