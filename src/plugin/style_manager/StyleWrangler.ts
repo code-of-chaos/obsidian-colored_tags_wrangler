@@ -18,7 +18,7 @@ export interface IStyleWrangler{
 	getForegroundString(color:RGB):string;
 
 	getImportant():string;
-	getTags(remove_slash:boolean):IColorPicker[];
+	getTags(remove_slash?:boolean):IColorPicker[];
 }
 
 // TODO rewrite into something more descriptive for the actual settings to use
@@ -48,7 +48,7 @@ export abstract class StyleWrangler implements IStyleWrangler{
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------------------------------------------------------
-	getTags(remove_slash:boolean=true):IColorPicker[]{
+	getTags(remove_slash:boolean=false):IColorPicker[]{
 		return get_tags(
 			this.plugin.settings.TagColors.ColorPicker,
 			this.plugin.settings.TagColors.EnableMultipleTags,

@@ -21,7 +21,7 @@ const escapeRegex = (value: string): string => value
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-export function get_tags(data: Array<IColorPicker>, enable_multiple_tags: boolean, remove_slash=true): Array<IColorPicker> {
+export function get_tags(data: Array<IColorPicker>, enable_multiple_tags: boolean, remove_slash=false): Array<IColorPicker> {
     return data
         .flatMap(({ tag_name, color, background_color, luminance_offset }) => {
             const tagNames = enable_multiple_tags ? tag_name.split(reSplit) : [tag_name];
@@ -57,7 +57,8 @@ export function tagMatchesPattern(tag_pattern: string, tag_name: string): boolea
 
     // Remove only the wildcard. Keeping the slash makes project/* match project/HR,
     // but not project itself or unrelated tags such as projectile/HR.
-    return normalizedTag.startsWith(normalizedPattern.slice(0, -1));
+    const prefix = normalizedPattern.slice(0, -1);
+    return normalizedTag.startsWith(prefix) && normalizedTag.length > prefix.length;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
