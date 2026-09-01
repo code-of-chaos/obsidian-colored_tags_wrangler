@@ -1,0 +1,24 @@
+import { ICssWrangler } from "src/types/extensions";
+import { IColoredTagRecord, ICoreSettings } from "src/types/settings";
+import { tagMatchesPattern } from "src/lib/tag-utils";
+import { rgbToString, rgbaToString } from "src/lib/color-converters";
+
+export class CssWranglerStyling implements ICssWrangler {
+    constructor(
+        private records: IColoredTagRecord[],
+        private settings: ICoreSettings
+    ) {}
+
+    getRules(): Record<string, Record<string, string>> {
+        const rules: Record<string, Record<string, string>> = {};
+
+        // Tags no-wrap
+        if (this.settings.tagsNoWrap) {
+            rules["a.tag"] = {
+                "white-space": this.settings.tagsNoWrapText,
+            };
+        }
+
+        return rules;
+    }
+}

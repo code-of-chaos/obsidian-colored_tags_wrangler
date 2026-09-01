@@ -1,0 +1,74 @@
+{
+    "TagColors": {
+        "ColorPicker": [
+            {
+                "tag_name": "project/*",
+                "color": { "r": 255, "g": 0, "b": 0 },
+                "background_color": { "r": 0, "g": 0, "b": 0 },
+                "luminance_offset": 0.15
+            },
+            {
+                "tag_name": "meeting",
+                "color": { "r": 0, "g": 255, "b": 0 },
+                "background_color": { "r": 255, "g": 255, "b": 255 },
+                "luminance_offset": 0.1
+            }
+        ],
+        "EnableMultipleTags": true,
+        "EnableSeparateBackground": true,
+        "EnableBackgroundOpacity": false,
+        "Values": {
+            "BackgroundOpacity": 0.45,
+            "LuminanceOffset": 0.15
+        }
+    },
+    "CSS": {
+        "NoteTags": true,
+        "NoteProperties": true,
+        "NoteBackgrounds": false,
+        "TagsNoWrap": true,
+        "TagsNoWrapText": "pre"
+    },
+    "FolderNote": {
+        "Enable": false,
+        "FolderTagLinks": [],
+        "EnableAutoDetect": true,
+        "EnableBackgroundOpacity": false,
+        "Values": {
+            "BackgroundOpacity": 0.45,
+            "ForceImportant": true,
+            "BorderRadius": "12px",
+            "Padding": "5px"
+        }
+    },
+    "Kanban": {
+        "Enable": true,
+        "EnableCards": false,
+        "EnableLists": false,
+        "HideHashtags": false,
+        "EnableBackgroundOpacity": false,
+        "Values": {
+            "BackgroundOpacity": 0.45,
+            "CardBackgroundOpacity": 0.2,
+            "CardBorderOpacity": 0.3,
+            "ListBackgroundOpacity": 0.2,
+            "ListBorderOpacity": 0.3
+        }
+    },
+    "Canvas": {
+        "Enable": false,
+        "EnableBackgroundOpacity": false,
+        "Values": {
+            "BackgroundOpacity": 0.45,
+            "CardBorderOpacity": 0.3,
+            "CardBackgroundLuminanceOffset": 0.15
+        }
+    },
+    "Debug": {
+        "Enable": false,
+        "EnableExperimentalCommands": false
+    },
+    "Info": {
+        "SettingsVersion": 14
+    }
+}

@@ -1,14 +1,50 @@
-/* Text area for Multi Tags */
-.cwt-settings-tab .setting-item:has(textarea)>.setting-item-info {
-    display: none;
-}
-.cwt-settings-tab textarea {
-	width: 100%;
+.cwt-tag-table {
+    margin-top: 16px;
 }
 
-.cwt-setting-tags .setting-item-control:nth-child(-n+4) {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
+.cwt-tag-table-header {
+    margin-bottom: 8px;
+}
+
+.cwt-tag-table-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cwt-tag-table-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+}
+
+.cwt-tag-input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.cwt-tag-color {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cwt-color-label {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.cwt-tag-table-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.cwt-extension-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+    margin-bottom: 16px;
 }

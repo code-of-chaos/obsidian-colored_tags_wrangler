@@ -1,89 +1,161 @@
-// ---------------------------------------------------------------------------------------------------------------------
-// Imports
-// ---------------------------------------------------------------------------------------------------------------------
-import {Platform, Plugin } from "obsidian";
-import {Migrate} from "src/plugin/settings/Migrate";
-import {EventHandlerMetadataChange} from "src/plugin/event_handlers/MetadataChange";
-import {IColoredTagWrangler} from "src/plugin/IColoredTagWrangler";
-import {DefaultSettings} from "src/plugin/settings/DefaultSettings";
-import {ISettings} from "./plugin/settings/ISettings";
-import {StyleManager} from "src/plugin/style_manager/StyleManager";
-import {SettingTab} from "src/plugin/setting_tab/SettingTab";
-import {EventHandlerFileOpen} from "src/plugin/event_handlers/FileOpen";
-import * as experimental from "src/plugin/commands/experimental"
-import * as commands from "src/plugin/commands"
-import {EventHandlerActiveLeafChange} from "src/plugin/event_handlers/ActiveLeafChange";
+import { Plugin } from "obsidian";
+import { IPluginSettings } from "src/types/settings";
+import { migrateSettings } from "src/services/migrator";
+import { StyleManager } from "src/services/StyleManager";
+import { TagRecordsService } from "src/services/TagRecordsService";
+import { CoreExtension } from "src/extensions/core/ExtensionCore";
+import { CanvasExtension } from "src/extensions/canvas/ExtensionCanvas";
+import { KanbanExtension } from "src/extensions/kanban/ExtensionKanban";
+import { FolderNoteExtension } from "src/extensions/folder-note/ExtensionFolderNote";
+import { PropertiesExtension } from "src/extensions/properties/ExtensionProperties";
+import { StylingExtension } from "src/extensions/styling/ExtensionStyling";
+import { SettingTab } from "src/ui/SettingTab";
+import { exportTagsToGraphCodeblock } from "src/commands/ExportGraphJsonTagsCodeblock";
 
-// ---------------------------------------------------------------------------------------------------------------------
-// Code
-// ---------------------------------------------------------------------------------------------------------------------
-export default class ColoredTagWrangler extends Plugin implements IColoredTagWrangler {
-	settings: ISettings;
-	style_manager:StyleManager;
+const DEFAULT_SETTINGS: IPluginSettings = {
+    version: 15,
+    enabledExtensions: ["core"],
+    tagRecords: [],
+    extensionSettings: {
+        core: {
+            enableMultipleTags: true,
+            enableSeparateBackground: true,
+            enableBackgroundOpacity: false,
+            backgroundOpacity: 0.45,
+            luminanceOffset: 0.15,
+            noteTags: true,
+            noteProperties: true,
+            noteBackgrounds: false,
+            tagsNoWrap: true,
+            tagsNoWrapText: "pre",
+        },
+        canvas: {
+            enableBackgroundOpacity: false,
+            backgroundOpacity: 0.45,
+            cardBorderOpacity: 0.3,
+            cardBackgroundLuminanceOffset: 0.15,
+        },
+        kanban: {
+            enableCards: false,
+            enableLists: false,
+            hideHashtags: false,
+            enableBackgroundOpacity: false,
+            backgroundOpacity: 0.45,
+            cardBackgroundOpacity: 0.2,
+            cardBorderOpacity: 0.3,
+            listBackgroundOpacity: 0.2,
+            listBorderOpacity: 0.3,
+        },
+        "folder-note": {
+            enable: false,
+            folderTagLinks: [],
+            enableAutoDetect: true,
+            enableBackgroundOpacity: false,
+            backgroundOpacity: 0.45,
+            forceImportant: true,
+            borderRadius: "12px",
+            padding: "5px",
+        },
+        debug: {
+            enableExperimentalCommands: false,
+        },
+    },
+};
 
-	// -----------------------------------------------------------------------------------------------------------------
-	// Methods
-	// -----------------------------------------------------------------------------------------------------------------
-	async onload() {
-		await this.loadSettings();
+export default class ColoredTagWranglerPlugin extends Plugin {
+    settings: IPluginSettings = DEFAULT_SETTINGS;
+    styleManager: StyleManager = new StyleManager();
+    tagRecordsService!: TagRecordsService;
 
-		this.style_manager = new StyleManager(this);
-		this.addSettingTab(new SettingTab(this));
+    async onload() {
+        await this.loadSettings();
 
-		// maybe store this somewhere?
-		await new EventHandlerMetadataChange(this).register();
-		await new EventHandlerFileOpen(this).register();
-		await new EventHandlerActiveLeafChange(this).register();
+        // Initialize services
+        this.tagRecordsService = new TagRecordsService(this.settings.tagRecords);
 
-		// Load the styles
-		this.app.workspace.onLayoutReady(() => {
-			this.style_manager.switchAllStyles();
+        // Initialize extensions
+        this.initializeExtensions();
+
+        // Register commands
+        this.addCommand({
+            id: "export-tags-to-graph-codeblock",
+            name: "Export tags to graph.json codeblock",
+            editorCallback: (editor, view) => {
+                exportTagsToGraphCodeblock(editor, view, this.settings);
+            },
         });
 
-		// Commands
-		this.addCommand({
-			id:"export-tags-to-graph-codeblock",
-			name:"Creates a code block at caret of color groups, which you can manually copy into the graph.json file.",
-			editorCallback: async (editor, ctx) => await commands.ExportGraphJsonTagsCodeblock(editor, ctx, this)
-		})
+        // Register settings tab
+        this.addSettingTab(new SettingTab(this.app, this));
+    }
 
-		// Experimental Commands
-		if (Platform.isDesktopApp && this.settings.Debug.EnableExperimentalCommands){
-			this.addCommand({
-				id:"export-tags-to-graph",
-				name:"EXPERIMENTAL : export tags to graph.json. This overwrites your current graph.json. Use at own risk!",
-				callback: async () => await experimental.exportGraphJsonTags(this)
-			})
-			this.addCommand({
-				id:"export-FOLDER-to-graph",
-				name:"EXPERIMENTAL : export TAGS LINKED TO FOLDER NOTES to graph.json. This overwrites your current graph.json. Use at own risk!",
-				callback: async () => await experimental.exportGraphJsonFolderNotes(this)
-			})
-			this.addCommand({
-				id:"export-css-to-codeblock",
-				name:"EXPERIMENTAL : CSS Styling to code block.",
-				editorCallback: async (editor, ctx) => await experimental.ExportToCSS(editor, ctx, this)
-			})
-		}
-	}
+    onunload() {
+        this.styleManager.cleanup();
+    }
 
-	// -----------------------------------------------------------------------------------------------------------------
-	onunload() {
-		this.style_manager.removeStyles();
-	}
+    async loadSettings() {
+        const data = await this.loadData();
 
-	// -----------------------------------------------------------------------------------------------------------------
-	async loadSettings() {
-		// Retrieve setting_tab from stored data.json file
-		this.settings = Object.assign({}, DefaultSettings, Migrate(await this.loadData()));
-		await this.saveData(this.settings);
-	}
+        // Run migration if needed
+        if (data) {
+            const result = await migrateSettings(data, this.app.vault);
+            if (result.success && result.data) {
+                this.settings = result.data;
+                await this.saveSettings();
+            } else if (!result.data) {
+                this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
+            }
+        } else {
+            this.settings = Object.assign({}, DEFAULT_SETTINGS);
+        }
+    }
 
-	// -----------------------------------------------------------------------------------------------------------------
-	async saveSettings() {
-		await this.saveData(this.settings);
-		// whenever setting_tab are saved, also run this.
-		//		This way we know it is always run when needed
-		this.style_manager.switchAllStyles();
-	}
+    async saveSettings() {
+        await this.saveData(this.settings);
+        this.updateExtensions();
+    }
+
+    private initializeExtensions() {
+        const records = this.settings.tagRecords;
+
+        if (this.settings.enabledExtensions.includes("core")) {
+            const ext = new CoreExtension(records, this.settings.extensionSettings.core);
+            this.styleManager.registerExtension(ext);
+        }
+
+        if (this.settings.enabledExtensions.includes("canvas")) {
+            const ext = new CanvasExtension(records, this.settings.extensionSettings.canvas);
+            this.styleManager.registerExtension(ext);
+        }
+
+        if (this.settings.enabledExtensions.includes("kanban")) {
+            const ext = new KanbanExtension(records, this.settings.extensionSettings.kanban);
+            this.styleManager.registerExtension(ext);
+        }
+
+        if (this.settings.enabledExtensions.includes("folder-note")) {
+            const ext = new FolderNoteExtension(records, this.settings.extensionSettings["folder-note"]);
+            this.styleManager.registerExtension(ext);
+        }
+
+        if (this.settings.enabledExtensions.includes("properties")) {
+            const ext = new PropertiesExtension(records, this.settings.extensionSettings.core);
+            this.styleManager.registerExtension(ext);
+            ext.eventHandler?.register();
+        }
+
+        if (this.settings.enabledExtensions.includes("styling")) {
+            const ext = new StylingExtension(records, this.settings.extensionSettings.core);
+            this.styleManager.registerExtension(ext);
+        }
+
+        this.styleManager.updateStyles();
+    }
+
+    private updateExtensions() {
+        // Re-initialize extensions with updated settings
+        this.styleManager.cleanup();
+        this.styleManager = new StyleManager();
+        this.initializeExtensions();
+    }
 }
