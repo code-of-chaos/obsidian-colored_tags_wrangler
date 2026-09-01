@@ -14,13 +14,13 @@ const tags = await import(`data:text/javascript;base64,${Buffer.from(javascript)
 
 // ---------- normalizeTagName ----------
 
-test("normalizeTagName strips leading hash and trims whitespace", () => {
+test("normalizeTagName strips leading hashes and trims whitespace", () => {
     assert.equal(tags.normalizeTagName("#project/HR"), "project/HR");
     assert.equal(tags.normalizeTagName("  #tag  "), "tag");
     assert.equal(tags.normalizeTagName("tag"), "tag");
     assert.equal(tags.normalizeTagName("#"), "");
     assert.equal(tags.normalizeTagName(""), "");
-    assert.equal(tags.normalizeTagName("##double"), "#double");
+    assert.equal(tags.normalizeTagName("##double"), "double");
 });
 
 // ---------- isWildcardTagName ----------
