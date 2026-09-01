@@ -27,6 +27,11 @@ export class StyleManager {
     updateStyles(): void {
         if (!this.styleElement) return;
 
+        const css = this.getCss();
+        this.styleElement.textContent = css;
+    }
+
+    getCss(): string {
         const rules: Record<string, Record<string, string>> = {};
 
         for (const extension of this.extensions) {
@@ -36,7 +41,7 @@ export class StyleManager {
             Object.assign(rules, extensionRules);
         }
 
-        const css = Object.entries(rules)
+        return Object.entries(rules)
             .map(([selector, properties]) => {
                 const props = Object.entries(properties)
                     .map(([prop, value]) => `  ${prop}: ${value};`)
@@ -44,8 +49,6 @@ export class StyleManager {
                 return `${selector} {\n${props}\n}`;
             })
             .join("\n\n");
-
-        this.styleElement.textContent = css;
     }
 
     cleanup(): void {

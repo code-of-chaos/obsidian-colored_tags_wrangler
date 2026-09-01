@@ -1,4 +1,4 @@
-import { Plugin } from "obsidian";
+import { Plugin, Notice, Platform } from "obsidian";
 import { IPluginSettings } from "src/types/settings";
 import { migrateSettings } from "src/services/migrator";
 import { StyleManager } from "src/services/StyleManager";
@@ -9,8 +9,13 @@ import { KanbanExtension } from "src/extensions/kanban/ExtensionKanban";
 import { FolderNoteExtension } from "src/extensions/folder-note/ExtensionFolderNote";
 import { PropertiesExtension } from "src/extensions/properties/ExtensionProperties";
 import { StylingExtension } from "src/extensions/styling/ExtensionStyling";
+import { EventHandlerNoteBackgrounds } from "src/extensions/properties/EventHandlerNoteBackgrounds";
 import { SettingTab } from "src/ui/SettingTab";
-import { exportTagsToGraphCodeblock } from "src/commands/ExportGraphJsonTagsCodeblock";
+import {
+    exportTagsToGraphCodeblock,
+    exportGraphJsonTags,
+    exportGraphJsonFolderNotes,
+} from "src/commands/ExportCommands";
 
 const DEFAULT_SETTINGS: IPluginSettings = {
     version: 15,
@@ -66,6 +71,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
     settings: IPluginSettings = DEFAULT_SETTINGS;
     styleManager: StyleManager = new StyleManager();
     tagRecordsService!: TagRecordsService;
+    private noteBackgroundsHandler: EventHandlerNoteBackgrounds | null = null;
 
     async onload() {
         await this.loadSettings();
@@ -85,11 +91,48 @@ export default class ColoredTagWranglerPlugin extends Plugin {
             },
         });
 
+        // Experimental commands (desktop only)
+        if (Platform.isDesktopApp) {
+            this.addCommand({
+                id: "export-tags-to-graph",
+                name: "Export tags to graph.json (experimental, desktop only)",
+                callback: async () => {
+                    if (this.settings.extensionSettings.debug.enableExperimentalCommands) {
+                        const success = await exportGraphJsonTags(this.settings, this.app.vault);
+                        new Notice(success ? "Graph.json updated" : "Failed to update graph.json");
+                    }
+                },
+            });
+
+            this.addCommand({
+                id: "export-folder-notes-to-graph",
+                name: "Export folder notes to graph.json (experimental, desktop only)",
+                callback: async () => {
+                    if (this.settings.extensionSettings.debug.enableExperimentalCommands) {
+                        const success = await exportGraphJsonFolderNotes(this.settings, this.app.vault);
+                        new Notice(success ? "Graph.json updated" : "Failed to update graph.json");
+                    }
+                },
+            });
+
+            this.addCommand({
+                id: "export-css-to-codeblock",
+                name: "Export CSS to codeblock (experimental, desktop only)",
+                editorCallback: (editor) => {
+                    if (this.settings.extensionSettings.debug.enableExperimentalCommands) {
+                        const css = this.styleManager.getCss();
+                        editor.replaceSelection(`\`\`\`css\n${css}\n\`\`\``);
+                    }
+                },
+            });
+        }
+
         // Register settings tab
         this.addSettingTab(new SettingTab(this.app, this));
     }
 
     onunload() {
+        this.noteBackgroundsHandler?.unregister();
         this.styleManager.cleanup();
     }
 
@@ -134,8 +177,15 @@ export default class ColoredTagWranglerPlugin extends Plugin {
         }
 
         if (this.settings.enabledExtensions.includes("folder-note")) {
-            const ext = new FolderNoteExtension(records, this.settings.extensionSettings["folder-note"]);
+            const ext = new FolderNoteExtension(
+                records,
+                this.settings.extensionSettings["folder-note"],
+                this.app.vault,
+                this.app.metadataCache,
+                () => this.saveSettings()
+            );
             this.styleManager.registerExtension(ext);
+            ext.eventHandler?.register();
         }
 
         if (this.settings.enabledExtensions.includes("properties")) {
@@ -149,11 +199,21 @@ export default class ColoredTagWranglerPlugin extends Plugin {
             this.styleManager.registerExtension(ext);
         }
 
+        // Note backgrounds handler
+        if (this.settings.extensionSettings.core.noteBackgrounds) {
+            this.noteBackgroundsHandler = new EventHandlerNoteBackgrounds(
+                records,
+                this.settings.extensionSettings.core
+            );
+            this.noteBackgroundsHandler.register();
+        }
+
         this.styleManager.updateStyles();
     }
 
     private updateExtensions() {
         // Re-initialize extensions with updated settings
+        this.noteBackgroundsHandler?.unregister();
         this.styleManager.cleanup();
         this.styleManager = new StyleManager();
         this.initializeExtensions();

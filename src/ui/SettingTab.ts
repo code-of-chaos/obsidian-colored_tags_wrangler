@@ -1,7 +1,8 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
+import { App, PluginSettingTab } from "obsidian";
 import ColoredTagWranglerPlugin from "src/main";
 import { SettingTagTable } from "./components/SettingTagTable";
 import { SettingExtensionSelector } from "./components/SettingExtensionSelector";
+import { SettingDebugSection } from "./components/SettingDebugSection";
 
 export class SettingTab extends PluginSettingTab {
     plugin: ColoredTagWranglerPlugin;
@@ -22,5 +23,8 @@ export class SettingTab extends PluginSettingTab {
 
         // Tag table
         new SettingTagTable(containerEl, this.plugin);
+
+        // Debug section
+        new SettingDebugSection(containerEl, this.plugin);
     }
 }

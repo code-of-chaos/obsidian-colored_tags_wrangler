@@ -3,7 +3,7 @@ import { IColoredTagRecord, ICoreSettings } from "src/types/settings";
 import { tagMatchesPattern } from "src/lib/tag-utils";
 import { rgbToString, rgbaToString } from "src/lib/color-converters";
 
-export class EventHandlerProperties implements IEventHandler {
+export class EventHandlerNoteBackgrounds implements IEventHandler {
     private observer: MutationObserver | null = null;
 
     constructor(
@@ -12,7 +12,7 @@ export class EventHandlerProperties implements IEventHandler {
     ) {}
 
     register(): void {
-        if (!this.settings.noteProperties) return;
+        if (!this.settings.noteBackgrounds) return;
 
         this.observer = new MutationObserver(() => {
             this.applyStyles();
@@ -33,10 +33,13 @@ export class EventHandlerProperties implements IEventHandler {
     }
 
     private applyStyles(): void {
-        const pills = document.querySelectorAll('div[data-property-key="tags"] div.multi-select-pill');
-        pills.forEach((pill) => {
+        const page = document.querySelector('div.workspace-leaf-content[data-type="markdown"] div.view-content');
+        if (!page) return;
+
+        const pills = page.querySelectorAll("div.multi-select-pill");
+        for (const pill of Array.from(pills)) {
             const span = pill.querySelector("span");
-            if (!span) return;
+            if (!span) continue;
 
             const tagText = span.textContent ?? "";
             const matchingRecord = this.records.find((r) =>
@@ -44,32 +47,21 @@ export class EventHandlerProperties implements IEventHandler {
             );
 
             if (matchingRecord) {
-                const pillEl = pill as HTMLElement;
-                pillEl.style.backgroundColor = this.settings.enableBackgroundOpacity
+                const pageEl = page as HTMLElement;
+                pageEl.style.backgroundColor = this.settings.enableBackgroundOpacity
                     ? rgbaToString({ ...matchingRecord.background_color, a: this.settings.backgroundOpacity })
                     : rgbToString(matchingRecord.background_color);
-                pillEl.style.color = rgbToString(matchingRecord.color);
-
-                // Color the SVG "X" close button
-                const svg = pill.querySelector("svg");
-                if (svg) {
-                    (svg as SVGElement).style.stroke = rgbToString(matchingRecord.color);
-                }
+                return;
             }
-        });
+        }
+
+        this.removeStyles();
     }
 
     private removeStyles(): void {
-        const pills = document.querySelectorAll('div[data-property-key="tags"] div.multi-select-pill');
-        pills.forEach((pill) => {
-            const pillEl = pill as HTMLElement;
-            pillEl.style.removeProperty("background-color");
-            pillEl.style.removeProperty("color");
-
-            const svg = pill.querySelector("svg");
-            if (svg) {
-                (svg as SVGElement).style.removeProperty("stroke");
-            }
-        });
+        const page = document.querySelector('div.workspace-leaf-content[data-type="markdown"] div.view-content');
+        if (page) {
+            (page as HTMLElement).style.removeProperty("background-color");
+        }
     }
 }

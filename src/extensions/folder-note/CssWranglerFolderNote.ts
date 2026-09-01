@@ -29,16 +29,35 @@ export class CssWranglerFolderNote implements ICssWrangler {
             const important = this.settings.forceImportant ? " !important" : "";
 
             for (const theme of themes) {
-                const folderKey = `${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-title`;
-                rules[folderKey] = {
+                // Dropdown triangle SVG stroke
+                rules[`${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-title svg.svg-icon.right-triangle`] = {
+                    stroke: `${rgbToString(color)}${important}`,
+                };
+
+                // Folder title color + text-decoration
+                rules[`${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-title-content`] = {
+                    color: `${rgbToString(color)}${important}`,
+                    "text-decoration-color": `${rgbToString(color)}${important}`,
+                    "text-decoration-thickness": "2px",
+                };
+
+                // File title color
+                rules[`${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-file-title-content`] = {
                     color: `${rgbToString(color)}${important}`,
                 };
 
-                const bgKey = `${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-title`;
-                rules[bgKey] = {
+                // Sidebar border-left
+                rules[`${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-children`] = {
+                    "border-left": `2px solid ${rgbToString(color)}${important}`,
+                };
+
+                // Folder background + border-radius + padding
+                rules[`${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-title`] = {
                     "background-color": `${opacity < 1
                         ? rgbaToString({ ...bgColor, a: opacity })
                         : rgbToString(bgColor)}${important}`,
+                    "border-radius": `${this.settings.borderRadius}${important}`,
+                    padding: `${this.settings.padding}${important}`,
                 };
             }
         }

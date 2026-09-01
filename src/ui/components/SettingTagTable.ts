@@ -2,6 +2,7 @@ import { Setting, TextComponent, ButtonComponent } from "obsidian";
 import ColoredTagWranglerPlugin from "src/main";
 import { SettingTagRecordColorComponent } from "./SettingTagRecordColorComponent";
 import { SettingTagRecordTextInput } from "./SettingTagRecordTextInput";
+import { arrayMove } from "src/lib/array-utils";
 
 export class SettingTagTable {
     private containerEl: HTMLElement;
@@ -23,7 +24,7 @@ export class SettingTagTable {
 
         // Header
         const headerEl = this.tableEl.createDiv({ cls: "cwt-tag-table-header" });
-        new Setting(headerEl)
+        const headerSetting = new Setting(headerEl)
             .setName("Tag colors")
             .setDesc("Define custom colors for tags.")
             .addButton((btn) =>
@@ -43,10 +44,24 @@ export class SettingTagTable {
                     })
             );
 
+        // Clear all button (debug only)
+        if (this.plugin.settings.extensionSettings.debug.enableExperimentalCommands) {
+            headerSetting.addButton((btn) =>
+                btn
+                    .setButtonText("Clear all")
+                    .setClass("mod-warning")
+                    .onClick(() => {
+                        this.plugin.settings.tagRecords = [];
+                        this.plugin.saveSettings();
+                        this.render();
+                    })
+            );
+        }
+
         // Table body
         const bodyEl = this.tableEl.createDiv({ cls: "cwt-tag-table-body" });
 
-        for (const record of this.plugin.settings.tagRecords) {
+        for (const [index, record] of this.plugin.settings.tagRecords.entries()) {
             const rowEl = bodyEl.createDiv({ cls: "cwt-tag-table-row" });
 
             // Tag name input
@@ -58,16 +73,36 @@ export class SettingTagTable {
             // Actions
             const actionsEl = rowEl.createDiv({ cls: "cwt-tag-table-actions" });
 
+            // Move up
+            new ButtonComponent(actionsEl)
+                .setIcon("up-chevron-glyph")
+                .setTooltip("Move up")
+                .setDisabled(index === 0)
+                .onClick(() => {
+                    arrayMove(this.plugin.settings.tagRecords, index, index - 1);
+                    this.plugin.saveSettings();
+                    this.render();
+                });
+
+            // Move down
+            new ButtonComponent(actionsEl)
+                .setIcon("down-chevron-glyph")
+                .setTooltip("Move down")
+                .setDisabled(index === this.plugin.settings.tagRecords.length - 1)
+                .onClick(() => {
+                    arrayMove(this.plugin.settings.tagRecords, index, index + 1);
+                    this.plugin.saveSettings();
+                    this.render();
+                });
+
+            // Delete
             new ButtonComponent(actionsEl)
                 .setIcon("trash")
                 .setTooltip("Delete")
                 .onClick(() => {
-                    const index = this.plugin.settings.tagRecords.findIndex((r) => r.id === record.id);
-                    if (index !== -1) {
-                        this.plugin.settings.tagRecords.splice(index, 1);
-                        this.plugin.saveSettings();
-                        this.render();
-                    }
+                    this.plugin.settings.tagRecords.splice(index, 1);
+                    this.plugin.saveSettings();
+                    this.render();
                 });
         }
     }
