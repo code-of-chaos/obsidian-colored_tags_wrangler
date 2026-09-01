@@ -5,6 +5,7 @@ The tags are applied in the "Settings Tab" of the plugin.
 ## Features
 - The ability to define a tag with a unique color by a Color Picker
   - You can also enable the option to decouple text- and background color and choose two different colors for one tag.
+  - Add `/*` after a parent tag to color all its descendants. For example, `project/*` matches `project/HR` and `project/Budget`, but not `project`.
 - Integration with Canvas cards.
   - Setting to apply a tag color to a Canvas card which has that tag.
 - Integration with the [Kanban](https://github.com/mgmeyers/obsidian-kanban) plugin.

@@ -6,6 +6,7 @@ import {CSSWrangler}
 import ColoredTagWranglerPlugin
 	from "src/main";
 import {RGB} from "obsidian";
+import {tagNameToClassSelector, tagNameToHrefSelector} from "src/api/tags";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -32,11 +33,11 @@ export class CSSWranglerTags extends CSSWrangler {
 		return [
 			...this.getTags(false).map(
 				(v) => this._assembleCss(
-					theme, `.tag[href="#${v.tag_name}" i]`, important, v.color, v.background_color)
+					theme, `.tag${tagNameToHrefSelector(v.tag_name)}`, important, v.color, v.background_color)
 			),
-			...this.getTags().map(
+			...this.getTags(false).map(
 				(v) => this._assembleCss(
-					theme, `.cm-tag-${v.tag_name}`,important, v.color, v.background_color)
+					theme, `:where(.cm-hashtag)${tagNameToClassSelector(v.tag_name, "cm-tag-")}`,important, v.color, v.background_color)
 			)]
 	}
 
