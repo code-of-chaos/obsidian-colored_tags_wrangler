@@ -11,14 +11,14 @@ jobs:
 
         steps:
             -   name: Checkout development branch
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: development  # Ensures we build from the development branch
 
             -   name: Use Node.js
-                uses: actions/setup-node@v3
+                uses: actions/setup-node@v4
                 with:
-                    node-version: "18.x"
+                    node-version: "20.x"
 
             -   name: Build plugin
                 run: |

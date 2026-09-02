@@ -1,6 +1,5 @@
 import { Editor, MarkdownView, MarkdownFileInfo } from "obsidian";
 import { IPluginSettings } from "src/types/settings";
-import { tagMatchesPattern, getTags } from "src/lib/tag-utils";
 import { tagNameToSearchQuery } from "src/lib/css-selectors";
 
 export function exportTagsToGraphCodeblock(

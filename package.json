@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Assign colors to tags. Has integrations with other plugins, like Kanban.",
     "main": "main.js",
+    "type": "module",
     "scripts": {
         "dev": "node esbuild.config.mjs",
         "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
@@ -16,17 +17,18 @@
     "author": "AnnaSasDev",
     "license": "GPL-3.0",
     "devDependencies": {
-        "@types/jquery": "^3.5.29",
-        "@types/node": "^18.0.0",
-        "@typescript-eslint/eslint-plugin": "^5.29.0",
-        "@typescript-eslint/parser": "^5.29.0",
+        "@eslint/js": "^9.39.4",
+        "@types/node": "^22.15.17",
         "@vitest/coverage-v8": "^1.0.0",
         "builtin-modules": "^3.3.0",
-        "esbuild": "^0.28.1",
-        "obsidian": "latest",
-        "tslib": "^2.4.0",
-        "typescript": "^5.0.0",
+        "esbuild": "0.25.5",
+        "eslint": "^9.39.4",
+        "eslint-plugin-obsidianmd": "^0.4.0",
+        "globals": "^17.6.0",
+        "jiti": "^2.6.1",
+        "obsidian": "^1.13.0",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.59.1",
         "vitest": "^1.0.0"
-    },
-    "dependencies": {}
+    }
 }

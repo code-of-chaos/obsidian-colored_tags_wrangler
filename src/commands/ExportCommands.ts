@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, MarkdownFileInfo, Platform } from "obsidian";
+import { Editor, MarkdownView, MarkdownFileInfo } from "obsidian";
 import { IPluginSettings } from "src/types/settings";
 import { tagMatchesPattern } from "src/lib/tag-utils";
 import { tagNameToSearchQuery } from "src/lib/css-selectors";
@@ -23,10 +23,10 @@ export function exportTagsToGraphCodeblock(
 
 export async function exportGraphJsonTags(
     settings: IPluginSettings,
-    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> } }
+    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> }; configDir: string }
 ): Promise<boolean> {
     try {
-        const data = await vault.adapter.read(".obsidian/graph.json");
+        const data = await vault.adapter.read(`${vault.configDir}/graph.json`);
         const graph = JSON.parse(data) as { colorGroups: unknown[] };
 
         graph.colorGroups = settings.tagRecords.map((record) => ({
@@ -37,7 +37,7 @@ export async function exportGraphJsonTags(
             },
         }));
 
-        await vault.adapter.write(".obsidian/graph.json", JSON.stringify(graph, null, 2));
+        await vault.adapter.write(`${vault.configDir}/graph.json`, JSON.stringify(graph, null, 2));
         return true;
     } catch (e) {
         console.error("Failed to export graph.json:", e);
@@ -47,10 +47,10 @@ export async function exportGraphJsonTags(
 
 export async function exportGraphJsonFolderNotes(
     settings: IPluginSettings,
-    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> } }
+    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> }; configDir: string }
 ): Promise<boolean> {
     try {
-        const data = await vault.adapter.read(".obsidian/graph.json");
+        const data = await vault.adapter.read(`${vault.configDir}/graph.json`);
         const graph = JSON.parse(data) as { colorGroups: unknown[] };
 
         const folderNoteLinks = settings.extensionSettings["folder-note"].folderTagLinks;
@@ -75,7 +75,7 @@ export async function exportGraphJsonFolderNotes(
             })
             .filter((g): g is { query: string; color: { a: number; rgb: number } } => g !== null);
 
-        await vault.adapter.write(".obsidian/graph.json", JSON.stringify(graph, null, 2));
+        await vault.adapter.write(`${vault.configDir}/graph.json`, JSON.stringify(graph, null, 2));
         return true;
     } catch (e) {
         console.error("Failed to export folder notes to graph.json:", e);

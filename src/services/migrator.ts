@@ -13,7 +13,7 @@ export interface MigrationResult {
 
 export async function migrateSettings(
     data: Record<string, unknown> | null,
-    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> } }
+    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> }; configDir: string }
 ): Promise<MigrationResult> {
     if (!data) {
         return { success: true, data: null };
@@ -32,7 +32,7 @@ export async function migrateSettings(
 
     // Create backup
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const backupPath = `.obsidian/plugins/colored-tags-wrangler/data-backup-${timestamp}.json`;
+    const backupPath = `${vault.configDir}/plugins/colored-tags-wrangler/data-backup-${timestamp}.json`;
     try {
         await vault.adapter.write(backupPath, JSON.stringify(data, null, 2));
     } catch (e) {
@@ -44,21 +44,21 @@ export async function migrateSettings(
     for (let version = currentVersion; version < 14; version++) {
         const migration = migrations[version];
         if (!migration) {
-            return { success: false, data: null, error: `No migration found for version ${version}` };
+            return { success: false, data: null, error: `No migration found for version ${String(version)}` };
         }
         try {
             currentData = migration(currentData);
         } catch (e) {
-            return { success: false, data: null, error: `Migration ${version} failed: ${e}` };
+            return { success: false, data: null, error: `Migration ${String(version)} failed: ${String(e)}` };
         }
     }
 
     // Run final migration v14 -> v15
     try {
         const result = migrate14to15(currentData as unknown as Parameters<typeof migrate14to15>[0]);
-        new Notice("Colored Tags Wrangler settings have been updated.");
+        new Notice("Colored tags wrangler settings have been updated.");
         return { success: true, data: result };
     } catch (e) {
-        return { success: false, data: null, error: `Migration 14->15 failed: ${e}` };
+        return { success: false, data: null, error: `Migration 14->15 failed: ${String(e)}` };
     }
 }

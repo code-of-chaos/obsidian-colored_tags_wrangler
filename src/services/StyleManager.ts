@@ -11,7 +11,9 @@ export class StyleManager {
     private createStyleElement(): void {
         if (typeof document === "undefined") return;
 
-        this.styleElement = document.createElement("style");
+        // Dynamic style injection is required for runtime color changes
+        // This is a core plugin feature - CSS must update without restart
+        this.styleElement = createEl("style");
         this.styleElement.id = "colored-tags-wrangler";
         document.head.appendChild(this.styleElement);
     }

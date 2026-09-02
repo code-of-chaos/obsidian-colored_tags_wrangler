@@ -13,11 +13,11 @@ interface GraphJSON {
 
 export async function exportGraphJsonTags(
     settings: IPluginSettings,
-    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> } }
+    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> }; configDir: string }
 ): Promise<boolean> {
     try {
-        const data = await vault.adapter.read(".obsidian/graph.json");
-        const graph: GraphJSON = JSON.parse(data);
+        const data = await vault.adapter.read(`${vault.configDir}/graph.json`);
+        const graph = JSON.parse(data) as GraphJSON;
 
         graph.colorGroups = settings.tagRecords.map((record) => ({
             query: tagNameToSearchQuery(record.tag_name),
@@ -27,7 +27,7 @@ export async function exportGraphJsonTags(
             },
         }));
 
-        await vault.adapter.write(".obsidian/graph.json", JSON.stringify(graph, null, 2));
+        await vault.adapter.write(`${vault.configDir}/graph.json`, JSON.stringify(graph, null, 2));
         return true;
     } catch (e) {
         console.error("Failed to export graph.json:", e);
@@ -37,11 +37,11 @@ export async function exportGraphJsonTags(
 
 export async function exportGraphJsonFolderNotes(
     settings: IPluginSettings,
-    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> } }
+    vault: { adapter: { read: (path: string) => Promise<string>; write: (path: string, data: string) => Promise<void> }; configDir: string }
 ): Promise<boolean> {
     try {
-        const data = await vault.adapter.read(".obsidian/graph.json");
-        const graph: GraphJSON = JSON.parse(data);
+        const data = await vault.adapter.read(`${vault.configDir}/graph.json`);
+        const graph = JSON.parse(data) as GraphJSON;
 
         const folderNoteLinks = settings.extensionSettings["folder-note"].folderTagLinks;
         const records = settings.tagRecords;
@@ -65,7 +65,7 @@ export async function exportGraphJsonFolderNotes(
             })
             .filter((g): g is ColorGroup => g !== null);
 
-        await vault.adapter.write(".obsidian/graph.json", JSON.stringify(graph, null, 2));
+        await vault.adapter.write(`${vault.configDir}/graph.json`, JSON.stringify(graph, null, 2));
         return true;
     } catch (e) {
         console.error("Failed to export folder notes to graph.json:", e);

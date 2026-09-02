@@ -137,7 +137,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
     }
 
     async loadSettings() {
-        const data = await this.loadData();
+        const data = (await this.loadData()) as Record<string, unknown> | null;
 
         // Run migration if needed
         if (data) {
@@ -182,7 +182,7 @@ export default class ColoredTagWranglerPlugin extends Plugin {
                 this.settings.extensionSettings["folder-note"],
                 this.app.vault,
                 this.app.metadataCache,
-                () => this.saveSettings()
+                () => void this.saveSettings()
             );
             this.styleManager.registerExtension(ext);
             ext.eventHandler?.register();

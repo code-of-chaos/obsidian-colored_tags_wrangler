@@ -1,5 +1,3 @@
-import { RGB } from "obsidian";
-
 export interface ICssWrangler {
     getRules(): Record<string, Record<string, string>>;
 }
