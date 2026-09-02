@@ -27,3 +27,4 @@ data.json
 .obsidian/appearance.json
 .obsidian/app.json
 /coverage
+tests/obsidian/ColoredTagsWrangler-TestVault/.obsidian/workspace.json

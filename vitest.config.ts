@@ -9,7 +9,7 @@ export default defineConfig({
     test: {
         globals: true,
         environment: "node",
-        include: ["tests/**/*.test.ts"],
+        include: ["tests/ts/**/*.test.ts"],
         coverage: {
             provider: "v8",
             reporter: ["text", "json", "html"],
@@ -17,12 +17,12 @@ export default defineConfig({
             exclude: ["src/main.ts"],
         },
         alias: {
-            obsidian: new URL("./tests/__mocks__/obsidian.ts", import.meta.url).pathname,
+            obsidian: new URL("./tests/ts/__mocks__/obsidian.ts", import.meta.url).pathname,
             "src": path.resolve(__dirname, "src"),
         },
         environmentMatchGlobs: [
-            ["tests/unit/extensions/properties.test.ts", "jsdom"],
-            ["tests/unit/extensions/folder-note-auto-detect.test.ts", "jsdom"],
+            ["tests/ts/unit/extensions/properties.test.ts", "jsdom"],
+            ["tests/ts/unit/extensions/folder-note-auto-detect.test.ts", "jsdom"],
         ],
     },
     resolve: {
