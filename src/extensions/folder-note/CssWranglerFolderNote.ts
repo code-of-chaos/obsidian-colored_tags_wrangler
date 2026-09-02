@@ -34,10 +34,10 @@ export class CssWranglerFolderNote implements ICssWrangler {
                     stroke: `${rgbToString(color)}${important}`,
                 };
 
-                // Folder title color + text-decoration
+                // Folder title color + text-decoration (60% opacity for decoration)
                 rules[`${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-title-content`] = {
                     color: `${rgbToString(color)}${important}`,
-                    "text-decoration-color": `${rgbToString(color)}${important}`,
+                    "text-decoration-color": `${rgbaToString({ ...color, a: 0.6 })}${important}`,
                     "text-decoration-thickness": "2px",
                 };
 
@@ -46,18 +46,19 @@ export class CssWranglerFolderNote implements ICssWrangler {
                     color: `${rgbToString(color)}${important}`,
                 };
 
-                // Sidebar border-left
+                // Sidebar border-left (20% opacity)
                 rules[`${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-children`] = {
-                    "border-left": `2px solid ${rgbToString(color)}${important}`,
+                    "border-left": `2px solid ${rgbaToString({ ...color, a: 0.2 })}${important}`,
                 };
 
-                // Folder background + border-radius + padding
+                // Folder background + border-radius + padding + margin-bottom
                 rules[`${theme} .nav-folder:has([data-path="${link.folder_path}"]) .nav-folder-title`] = {
                     "background-color": `${opacity < 1
                         ? rgbaToString({ ...bgColor, a: opacity })
                         : rgbToString(bgColor)}${important}`,
                     "border-radius": `${this.settings.borderRadius}${important}`,
                     padding: `${this.settings.padding}${important}`,
+                    "margin-bottom": `${this.settings.padding}${important}`,
                 };
             }
         }

@@ -1,6 +1,7 @@
 import { ICssWrangler } from "src/types/extensions";
 import { IColoredTagRecord, IKanbanSettings } from "src/types/settings";
-import { tagNameToHrefSelectors, tagNameToClassSelectors } from "src/lib/css-selectors";
+import { isWildcardTagName, normalizeTagName, escapeCssAttributeValue, REGEX } from "src/lib/string-utils";
+import { tagNameToHrefSelectors } from "src/lib/css-selectors";
 import { rgbToString, rgbaToString } from "src/lib/color-converters";
 
 export class CssWranglerKanban implements ICssWrangler {
@@ -23,52 +24,14 @@ export class CssWranglerKanban implements ICssWrangler {
             for (const theme of themes) {
                 // Kanban cards
                 if (record.kanban_cards_enabled && this.settings.enableCards) {
-                    const cmSelectors = tagNameToClassSelectors(record.tag_name, "has-tag-");
-                    const selectorList = cmSelectors
-                        .map((s) => `div.kanban-plugin__item${s}`)
-                        .join(", ");
-
-                    rules[`${theme} ${selectorList}`] = {
-                        background: opacity < 1
-                            ? rgbaToString({ ...bgColor, a: opacity })
-                            : rgbToString(bgColor),
-                        "border-color": rgbaToString({ ...color, a: this.settings.cardBorderOpacity }),
-                    };
-
-                    // Title wrapper background
-                    const titleSelectors = cmSelectors
-                        .map((s) => `div.kanban-plugin__item${s} div.kanban-plugin__item-title-wrapper`)
-                        .join(", ");
-
-                    rules[`${theme} ${titleSelectors}`] = {
-                        background: opacity < 1
-                            ? rgbaToString({ ...bgColor, a: opacity })
-                            : rgbToString(bgColor),
-                    };
+                    const cardRules = this.getCardRules(record.tag_name, color, bgColor, opacity, theme);
+                    Object.assign(rules, cardRules);
                 }
 
                 // Kanban lists
                 if (record.kanban_lists_enabled && this.settings.enableLists) {
-                    const hrefSelectors = tagNameToHrefSelectors(record.tag_name);
-                    const laneSelectors = hrefSelectors
-                        .map((s) => `div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a${s})`)
-                        .join(", ");
-
-                    rules[`${theme} ${laneSelectors}`] = {
-                        background: opacity < 1
-                            ? rgbaToString({ ...bgColor, a: opacity })
-                            : rgbToString(bgColor),
-                        "border-color": rgbaToString({ ...color, a: this.settings.listBorderOpacity }),
-                    };
-
-                    // Lane header border
-                    const headerSelectors = hrefSelectors
-                        .map((s) => `div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a${s})`)
-                        .join(", ");
-
-                    rules[`${theme} ${headerSelectors}`] = {
-                        "border-color": rgbaToString({ ...color, a: this.settings.listBorderOpacity }),
-                    };
+                    const listRules = this.getListRules(record.tag_name, color, bgColor, opacity, theme);
+                    Object.assign(rules, listRules);
                 }
 
                 // Kanban hide hashtags
@@ -84,6 +47,86 @@ export class CssWranglerKanban implements ICssWrangler {
                 }
             }
         }
+
+        return rules;
+    }
+
+    private getCardRules(
+        tagName: string,
+        color: { r: number; g: number; b: number },
+        bgColor: { r: number; g: number; b: number },
+        opacity: number,
+        theme: string
+    ): Record<string, Record<string, string>> {
+        const rules: Record<string, Record<string, string>> = {};
+        const normalizedTag = normalizeTagName(tagName);
+        const wildcard = isWildcardTagName(normalizedTag);
+        const tagPrefix = wildcard ? normalizedTag.slice(0, -1) : normalizedTag;
+        const noSlash = tagPrefix.replace(REGEX.SLASH, "");
+        const escapedTag = escapeCssAttributeValue(noSlash);
+
+        const cardSelectors: string[] = [];
+        if (wildcard) {
+            // Wildcard: use [class*="has-tag-X"]:where(:not([class~="has-tag-X"]))
+            cardSelectors.push(`div.kanban-plugin__item[class*="has-tag-${escapedTag}"]:where(:not([class~="has-tag-${escapedTag}"]))`);
+            cardSelectors.push(`div.kanban-plugin__item[class*="has-tag-${noSlash}"]:where(:not([class~="has-tag-${noSlash}"]))`);
+        } else {
+            // Exact: use .has-tag-X
+            cardSelectors.push(`div.kanban-plugin__item.has-tag-${escapedTag}`);
+            cardSelectors.push(`div.kanban-plugin__item.has-tag-${noSlash}`);
+        }
+
+        const selectorList = cardSelectors.join(", ");
+        const styles = {
+            background: opacity < 1
+                ? rgbaToString({ ...bgColor, a: opacity })
+                : rgbToString(bgColor),
+            "border-color": `${rgbaToString({ ...color, a: this.settings.cardBorderOpacity })} !important`,
+        };
+
+        // Title wrapper background
+        const titleSelectors = cardSelectors
+            .map((s) => `${s} div.kanban-plugin__item-title-wrapper`)
+            .join(", ");
+
+        rules[`${theme} ${selectorList}`] = styles;
+        rules[`${theme} ${titleSelectors}`] = {
+            background: opacity < 1
+                ? rgbaToString({ ...bgColor, a: opacity })
+                : rgbToString(bgColor),
+        };
+
+        return rules;
+    }
+
+    private getListRules(
+        tagName: string,
+        color: { r: number; g: number; b: number },
+        bgColor: { r: number; g: number; b: number },
+        opacity: number,
+        theme: string
+    ): Record<string, Record<string, string>> {
+        const rules: Record<string, Record<string, string>> = {};
+        const hrefSelectors = tagNameToHrefSelectors(tagName);
+
+        const laneSelectors = hrefSelectors
+            .map((s) => `div.kanban-plugin__lane:has(div.kanban-plugin__lane-title-text a${s})`)
+            .join(", ");
+
+        const headerSelectors = hrefSelectors
+            .map((s) => `div.kanban-plugin__lane-header-wrapper:has(div.kanban-plugin__lane-title-text a${s})`)
+            .join(", ");
+
+        rules[`${theme} ${laneSelectors}`] = {
+            background: opacity < 1
+                ? rgbaToString({ ...bgColor, a: opacity })
+                : rgbToString(bgColor),
+            "border-color": `${rgbaToString({ ...color, a: this.settings.listBorderOpacity })} !important`,
+        };
+
+        rules[`${theme} ${headerSelectors}`] = {
+            "border-color": `${rgbaToString({ ...color, a: this.settings.listBorderOpacity })} !important`,
+        };
 
         return rules;
     }

@@ -1,15 +1,9 @@
 import { Notice } from "obsidian";
-import { ISettingsV14 } from "src/types/settings-v14";
 import { IPluginSettings } from "src/types/settings";
 import { migrate14to15 } from "src/types/migrations/migrate-14-to-15";
+import { migrations } from "src/types/migrations/migrate-00-to-14";
 
 const CURRENT_VERSION = 15;
-
-type MigrationFunction = (data: unknown) => unknown;
-
-const migrations: Record<number, MigrationFunction> = {
-    14: (data) => migrate14to15(data as ISettingsV14),
-};
 
 export interface MigrationResult {
     success: boolean;
@@ -45,9 +39,9 @@ export async function migrateSettings(
         console.error("Failed to create backup:", e);
     }
 
-    // Run migrations
-    let currentData: unknown = data;
-    for (let version = currentVersion; version < CURRENT_VERSION; version++) {
+    // Run migrations v0-v14
+    let currentData: Record<string, unknown> = data;
+    for (let version = currentVersion; version < 14; version++) {
         const migration = migrations[version];
         if (!migration) {
             return { success: false, data: null, error: `No migration found for version ${version}` };
@@ -59,6 +53,12 @@ export async function migrateSettings(
         }
     }
 
-    new Notice("Colored Tags Wrangler settings have been updated.");
-    return { success: true, data: currentData as IPluginSettings };
+    // Run final migration v14 -> v15
+    try {
+        const result = migrate14to15(currentData as unknown as Parameters<typeof migrate14to15>[0]);
+        new Notice("Colored Tags Wrangler settings have been updated.");
+        return { success: true, data: result };
+    } catch (e) {
+        return { success: false, data: null, error: `Migration 14->15 failed: ${e}` };
+    }
 }
