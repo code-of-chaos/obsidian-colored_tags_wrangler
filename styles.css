@@ -23,18 +23,30 @@
 
 .cwt-tag-input {
     flex: 1;
-    min-width: 150px;
+    min-width: 120px;
 }
 
 .cwt-tag-color {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .cwt-color-label {
     font-size: 12px;
     color: var(--text-muted);
+}
+
+.cwt-tag-preview {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 60px;
+    text-align: center;
+    border: 1px solid transparent;
 }
 
 .cwt-tag-table-actions {

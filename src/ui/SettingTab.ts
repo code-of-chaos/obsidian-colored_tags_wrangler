@@ -1,7 +1,7 @@
 import { App, PluginSettingTab, Setting, SettingDefinitionItem, ColorComponent, TextComponent, TFile } from "obsidian";
 import ColoredTagWranglerPlugin from "src/main";
 import { IColoredTagRecord } from "src/types/settings";
-import { rgbToHex, hexToRgb } from "src/lib/color-converters";
+import { rgbToHex, hexToRgb, rgbToString } from "src/lib/color-converters";
 import { arrayMove } from "src/lib/array-utils";
 import { tagMatchesPattern } from "src/lib/tag-utils";
 
@@ -578,6 +578,12 @@ export class SettingTab extends PluginSettingTab {
                 await this.plugin.saveSettings();
                 this.update();
             });
+
+        // Live preview
+        const previewEl = rowEl.createSpan({ cls: "cwt-tag-preview" });
+        previewEl.textContent = record.tag_name || "tag";
+        previewEl.style.color = rgbToString(record.color);
+        previewEl.style.backgroundColor = rgbToString(record.background_color);
     }
 
     getControlValue(key: string): unknown {
