@@ -27,7 +27,7 @@ export function tagNameToHrefSelector(tagName: string): string {
     return tagNameToHrefSelectors(tagName)[0] ?? '[href="#tag" i]';
 }
 
-export function tagNameToClassSelectors(tagName: string, classPrefix: string): string[] {
+export function tagNameToClassSelectors(tagName: string): string[] {
     const normalizedTag = normalizeTagName(tagName);
     const wildcard = isWildcardTagName(normalizedTag);
     const tagValue = wildcard
@@ -85,7 +85,7 @@ export function tagNameToClassSelectors(tagName: string, classPrefix: string): s
 }
 
 export function tagNameToClassSelector(tagName: string, classPrefix: string): string {
-    const selectors = tagNameToClassSelectors(tagName, classPrefix);
+    const selectors = tagNameToClassSelectors(tagName);
     if (selectors.length === 0) return `[class~="${classPrefix}tag" i]`;
 
     const normalizedTag = normalizeTagName(tagName);

@@ -1,5 +1,5 @@
-import { IColorPicker } from "src/types/color-picker";
 import { normalizeTagName, isWildcardTagName, REGEX } from "./string-utils";
+import { IColorPicker } from "src/types/color-picker";
 
 export function getTags(
     data: Array<IColorPicker>,

@@ -1,9 +1,6 @@
 import { ISettingsV14 } from "../settings-v14";
 import { IPluginSettings, IColoredTagRecord } from "../settings";
-
-function generateId(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-}
+import { generateId } from "src/lib/string-utils";
 
 export function migrate14to15(old: ISettingsV14): IPluginSettings {
     const tagRecords: IColoredTagRecord[] = old.TagColors.ColorPicker.map((picker) => ({

@@ -3,7 +3,7 @@ import { IColoredTagRecord, ICoreSettings } from "src/types/settings";
 
 export class CssWranglerStyling implements ICssWrangler {
     constructor(
-        private records: IColoredTagRecord[],
+        _records: IColoredTagRecord[],
         private settings: ICoreSettings
     ) {}
 

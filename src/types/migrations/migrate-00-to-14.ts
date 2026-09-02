@@ -1,9 +1,7 @@
 // Simplified migration types - each version is Record<string, unknown>
 // for flexibility during migration chain
 
-export function generateId(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-}
+import { generateId } from "src/lib/string-utils";
 
 // v0 -> v1: Convert flat Record<string, RGB> to UUID-keyed records
 export function migrate00to01(data: Record<string, unknown>): Record<string, unknown> {

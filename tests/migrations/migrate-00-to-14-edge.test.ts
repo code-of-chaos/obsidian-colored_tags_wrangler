@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { generateId } from "../../src/lib/string-utils";
 import {
-    generateId,
     migrate00to01,
     migrate01to02,
     migrate02to03,

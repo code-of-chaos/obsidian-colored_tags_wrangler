@@ -33,7 +33,7 @@ export class CssWranglerCore implements ICssWrangler {
             const hrefSelectorList = hrefSelectors.map((s) => `.tag${s}`).join(", ");
 
             // Get all CM6 class selectors (direct, stripped, normalized)
-            const cmSelectors = tagNameToClassSelectors(record.tag_name, "cm-tag-");
+            const cmSelectors = tagNameToClassSelectors(record.tag_name);
             const cmBeginSelectors = cmSelectors.map((s) => `.cm-hashtag-begin:has(+ ${s})`);
             const cmSelectorList = [...cmSelectors, ...cmBeginSelectors]
                 .map((s) => `:where(.cm-hashtag)${s}`)

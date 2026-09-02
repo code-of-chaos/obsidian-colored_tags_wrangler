@@ -2,7 +2,6 @@ import { Plugin, Notice, Platform } from "obsidian";
 import { IPluginSettings } from "src/types/settings";
 import { migrateSettings } from "src/services/migrator";
 import { StyleManager } from "src/services/StyleManager";
-import { TagRecordsService } from "src/services/TagRecordsService";
 import { CoreExtension } from "src/extensions/core/ExtensionCore";
 import { CanvasExtension } from "src/extensions/canvas/ExtensionCanvas";
 import { KanbanExtension } from "src/extensions/kanban/ExtensionKanban";
@@ -70,14 +69,10 @@ const DEFAULT_SETTINGS: IPluginSettings = {
 export default class ColoredTagWranglerPlugin extends Plugin {
     settings: IPluginSettings = DEFAULT_SETTINGS;
     styleManager: StyleManager = new StyleManager();
-    tagRecordsService!: TagRecordsService;
     private noteBackgroundsHandler: EventHandlerNoteBackgrounds | null = null;
 
     async onload() {
         await this.loadSettings();
-
-        // Initialize services
-        this.tagRecordsService = new TagRecordsService(this.settings.tagRecords);
 
         // Initialize extensions
         this.initializeExtensions();

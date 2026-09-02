@@ -1,5 +1,6 @@
 import { IColoredTagRecord } from "src/types/settings";
 import { RGB } from "obsidian";
+import { generateId } from "src/lib/string-utils";
 
 export class TagRecordsService {
     private records: IColoredTagRecord[] = [];
@@ -23,7 +24,7 @@ export class TagRecordsService {
     add(record: Omit<IColoredTagRecord, "id">): IColoredTagRecord {
         const newRecord: IColoredTagRecord = {
             ...record,
-            id: this.generateId(),
+            id: generateId(),
         };
         this.records.push(newRecord);
         return newRecord;
@@ -76,9 +77,5 @@ export class TagRecordsService {
             background_color: defaultBgColor,
             luminance_offset: 0.15,
         });
-    }
-
-    private generateId(): string {
-        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
 }
