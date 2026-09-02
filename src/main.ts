@@ -18,7 +18,7 @@ import {
 
 const DEFAULT_SETTINGS: IPluginSettings = {
     version: 15,
-    enabledExtensions: ["core"],
+    enabledExtensions: ["core", "kanban"],
     tagRecords: [],
     extensionSettings: {
         core: {

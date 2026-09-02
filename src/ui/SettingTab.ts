@@ -37,6 +37,301 @@ export class SettingTab extends PluginSettingTab {
                 })),
             },
             {
+                type: "group",
+                heading: "Core settings",
+                visible: () => this.plugin.settings.enabledExtensions.includes("core"),
+                items: [
+                    {
+                        name: "Enable multiple tags",
+                        desc: "Allow multiple tags per entry (separated by semicolons or newlines).",
+                        control: {
+                            type: "toggle",
+                            key: "core.enableMultipleTags",
+                        },
+                    },
+                    {
+                        name: "Enable separate background",
+                        desc: "Use separate background color for tags.",
+                        control: {
+                            type: "toggle",
+                            key: "core.enableSeparateBackground",
+                        },
+                    },
+                    {
+                        name: "Enable background opacity",
+                        desc: "Apply opacity to tag backgrounds.",
+                        control: {
+                            type: "toggle",
+                            key: "core.enableBackgroundOpacity",
+                        },
+                    },
+                    {
+                        name: "Background opacity",
+                        desc: "Opacity value for tag backgrounds (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "core.backgroundOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "Luminance offset",
+                        desc: "Adjust text color brightness based on background.",
+                        control: {
+                            type: "slider",
+                            key: "core.luminanceOffset",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "Note tags",
+                        desc: "Color tags in note content.",
+                        control: {
+                            type: "toggle",
+                            key: "core.noteTags",
+                        },
+                    },
+                    {
+                        name: "Note properties",
+                        desc: "Color tags in note properties panel.",
+                        control: {
+                            type: "toggle",
+                            key: "core.noteProperties",
+                        },
+                    },
+                    {
+                        name: "Note backgrounds",
+                        desc: "Set page background based on tag.",
+                        control: {
+                            type: "toggle",
+                            key: "core.noteBackgrounds",
+                        },
+                    },
+                    {
+                        name: "Tags no-wrap",
+                        desc: "Prevent tags from wrapping to multiple lines.",
+                        control: {
+                            type: "toggle",
+                            key: "core.tagsNoWrap",
+                        },
+                    },
+                ],
+            },
+            {
+                type: "group",
+                heading: "Canvas settings",
+                visible: () => this.plugin.settings.enabledExtensions.includes("canvas"),
+                items: [
+                    {
+                        name: "Enable background opacity",
+                        desc: "Apply opacity to canvas node backgrounds.",
+                        control: {
+                            type: "toggle",
+                            key: "canvas.enableBackgroundOpacity",
+                        },
+                    },
+                    {
+                        name: "Background opacity",
+                        desc: "Opacity value for canvas node backgrounds (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "canvas.backgroundOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "Card border opacity",
+                        desc: "Opacity for canvas card borders (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "canvas.cardBorderOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "Card background luminance offset",
+                        desc: "Adjust canvas card text brightness.",
+                        control: {
+                            type: "slider",
+                            key: "canvas.cardBackgroundLuminanceOffset",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                ],
+            },
+            {
+                type: "group",
+                heading: "Kanban settings",
+                visible: () => this.plugin.settings.enabledExtensions.includes("kanban"),
+                items: [
+                    {
+                        name: "Enable cards",
+                        desc: "Color kanban cards.",
+                        control: {
+                            type: "toggle",
+                            key: "kanban.enableCards",
+                        },
+                    },
+                    {
+                        name: "Enable lists",
+                        desc: "Color kanban list backgrounds.",
+                        control: {
+                            type: "toggle",
+                            key: "kanban.enableLists",
+                        },
+                    },
+                    {
+                        name: "Hide hashtags",
+                        desc: "Hide hashtags in kanban cards.",
+                        control: {
+                            type: "toggle",
+                            key: "kanban.hideHashtags",
+                        },
+                    },
+                    {
+                        name: "Enable background opacity",
+                        desc: "Apply opacity to kanban backgrounds.",
+                        control: {
+                            type: "toggle",
+                            key: "kanban.enableBackgroundOpacity",
+                        },
+                    },
+                    {
+                        name: "Background opacity",
+                        desc: "Opacity value for kanban backgrounds (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "kanban.backgroundOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "Card background opacity",
+                        desc: "Opacity for kanban card backgrounds (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "kanban.cardBackgroundOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "Card border opacity",
+                        desc: "Opacity for kanban card borders (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "kanban.cardBorderOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "List background opacity",
+                        desc: "Opacity for kanban list backgrounds (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "kanban.listBackgroundOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "List border opacity",
+                        desc: "Opacity for kanban list borders (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "kanban.listBorderOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                ],
+            },
+            {
+                type: "group",
+                heading: "Folder note settings",
+                visible: () => this.plugin.settings.enabledExtensions.includes("folder-note"),
+                items: [
+                    {
+                        name: "Enable folder notes",
+                        desc: "Color folder titles in the file explorer.",
+                        control: {
+                            type: "toggle",
+                            key: "folder-note.enable",
+                        },
+                    },
+                    {
+                        name: "Auto-detect folder notes",
+                        desc: "Automatically detect folder notes from frontmatter.",
+                        control: {
+                            type: "toggle",
+                            key: "folder-note.enableAutoDetect",
+                        },
+                    },
+                    {
+                        name: "Enable background opacity",
+                        desc: "Apply opacity to folder note backgrounds.",
+                        control: {
+                            type: "toggle",
+                            key: "folder-note.enableBackgroundOpacity",
+                        },
+                    },
+                    {
+                        name: "Background opacity",
+                        desc: "Opacity value for folder note backgrounds (0-1).",
+                        control: {
+                            type: "slider",
+                            key: "folder-note.backgroundOpacity",
+                            min: 0,
+                            max: 1,
+                            step: 0.05,
+                        },
+                    },
+                    {
+                        name: "Force important",
+                        desc: "Use !important for folder note styles.",
+                        control: {
+                            type: "toggle",
+                            key: "folder-note.forceImportant",
+                        },
+                    },
+                    {
+                        name: "Border radius",
+                        desc: "Border radius for folder note elements.",
+                        control: {
+                            type: "text",
+                            key: "folder-note.borderRadius",
+                            placeholder: "12px",
+                        },
+                    },
+                    {
+                        name: "Padding",
+                        desc: "Padding for folder note elements.",
+                        control: {
+                            type: "text",
+                            key: "folder-note.padding",
+                            placeholder: "5px",
+                        },
+                    },
+                ],
+            },
+            {
                 type: "list",
                 heading: "Tag colors",
                 emptyState: "No tag colors defined. Click + to add one.",
@@ -150,17 +445,39 @@ export class SettingTab extends PluginSettingTab {
     }
 
     getControlValue(key: string): unknown {
+        // Extension toggles
         if (key.startsWith("ext:")) {
             const extName = key.slice(4);
             return this.plugin.settings.enabledExtensions.includes(extName);
         }
-        if (key === "debug.enableExperimentalCommands") {
-            return this.plugin.settings.extensionSettings.debug.enableExperimentalCommands;
+
+        // Parse nested key: "section.setting"
+        const parts = key.split(".");
+        if (parts.length === 2) {
+            const [section, setting] = parts as [string, string];
+            const extSettings = this.plugin.settings.extensionSettings;
+            if (section === "core" && setting in extSettings.core) {
+                return (extSettings.core as unknown as Record<string, unknown>)[setting];
+            }
+            if (section === "canvas" && setting in extSettings.canvas) {
+                return (extSettings.canvas as unknown as Record<string, unknown>)[setting];
+            }
+            if (section === "kanban" && setting in extSettings.kanban) {
+                return (extSettings.kanban as unknown as Record<string, unknown>)[setting];
+            }
+            if (section === "folder-note" && setting in extSettings["folder-note"]) {
+                return (extSettings["folder-note"] as unknown as Record<string, unknown>)[setting];
+            }
+            if (section === "debug" && setting in extSettings.debug) {
+                return (extSettings.debug as unknown as Record<string, unknown>)[setting];
+            }
         }
+
         return undefined;
     }
 
     setControlValue(key: string, value: unknown): void | Promise<void> {
+        // Extension toggles
         if (key.startsWith("ext:")) {
             const extName = key.slice(4);
             if (value) {
@@ -175,9 +492,32 @@ export class SettingTab extends PluginSettingTab {
             }
             return this.plugin.saveSettings();
         }
-        if (key === "debug.enableExperimentalCommands") {
-            this.plugin.settings.extensionSettings.debug.enableExperimentalCommands = value as boolean;
-            return this.plugin.saveSettings();
+
+        // Parse nested key: "section.setting"
+        const parts = key.split(".");
+        if (parts.length === 2) {
+            const [section, setting] = parts as [string, string];
+            const extSettings = this.plugin.settings.extensionSettings;
+            if (section === "core") {
+                (extSettings.core as unknown as Record<string, unknown>)[setting] = value;
+                return this.plugin.saveSettings();
+            }
+            if (section === "canvas") {
+                (extSettings.canvas as unknown as Record<string, unknown>)[setting] = value;
+                return this.plugin.saveSettings();
+            }
+            if (section === "kanban") {
+                (extSettings.kanban as unknown as Record<string, unknown>)[setting] = value;
+                return this.plugin.saveSettings();
+            }
+            if (section === "folder-note") {
+                (extSettings["folder-note"] as unknown as Record<string, unknown>)[setting] = value;
+                return this.plugin.saveSettings();
+            }
+            if (section === "debug") {
+                (extSettings.debug as unknown as Record<string, unknown>)[setting] = value;
+                return this.plugin.saveSettings();
+            }
         }
     }
 }
