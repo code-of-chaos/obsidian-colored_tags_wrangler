@@ -61,6 +61,7 @@ const DEFAULT_SETTINGS: IPluginSettings = {
             padding: "5px",
         },
         debug: {
+            enable: false,
             enableExperimentalCommands: false,
         },
     },

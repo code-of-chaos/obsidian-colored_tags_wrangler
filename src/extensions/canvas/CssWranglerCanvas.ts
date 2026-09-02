@@ -1,6 +1,6 @@
 import { ICssWrangler } from "src/types/extensions";
 import { IColoredTagRecord, ICanvasSettings } from "src/types/settings";
-import { tagNameToHrefSelector } from "src/lib/css-selectors";
+import { tagNameToHrefSelectors } from "src/lib/css-selectors";
 import { rgbToString, rgbaToString } from "src/lib/color-converters";
 
 export class CssWranglerCanvas implements ICssWrangler {
@@ -23,14 +23,15 @@ export class CssWranglerCanvas implements ICssWrangler {
                 : 1;
 
             for (const theme of themes) {
-                const hrefSelector = tagNameToHrefSelector(record.tag_name);
-                const key = `${theme} div.canvas-node-container:has(div.markdown-embed-content a${hrefSelector})`;
+                const hrefSelectors = tagNameToHrefSelectors(record.tag_name);
+                const selectorList = hrefSelectors.map((s) => `a${s}`).join(", ");
+                const key = `${theme} div.canvas-node-container:has(div.markdown-embed-content :is(${selectorList}))`;
                 rules[key] = {
                     "--canvas-color": `${color.r}, ${color.g}, ${color.b}`,
-                    background: opacity < 1
+                    background: `${opacity < 1
                         ? rgbaToString({ ...bgColor, a: opacity })
-                        : rgbToString(bgColor),
-                    "border-color": rgbToString(color),
+                        : rgbToString(bgColor)} !important`,
+                    "border-color": `${rgbToString(color)} !important`,
                 };
             }
         }

@@ -56,6 +56,7 @@ export interface IFolderNoteSettings {
 }
 
 export interface IDebugSettings {
+    enable: boolean;
     enableExperimentalCommands: boolean;
 }
 

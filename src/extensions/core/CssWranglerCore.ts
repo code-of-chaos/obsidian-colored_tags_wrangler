@@ -22,10 +22,10 @@ export class CssWranglerCore implements ICssWrangler {
                 ? this.settings.backgroundOpacity
                 : 1;
             const styles = {
-                color: rgbToString(color),
-                "background-color": opacity < 1
+                color: `${rgbToString(color)} !important`,
+                "background-color": `${opacity < 1
                     ? rgbaToString({ ...bgColor, a: opacity })
-                    : rgbToString(bgColor),
+                    : rgbToString(bgColor)} !important`,
             };
 
             // Get all href selectors (raw, encoded, URI-encoded, lowercase)

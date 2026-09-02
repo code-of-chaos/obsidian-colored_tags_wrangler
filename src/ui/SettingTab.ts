@@ -1,8 +1,9 @@
-import { App, PluginSettingTab, Setting, SettingDefinitionItem, ColorComponent, TextComponent } from "obsidian";
+import { App, PluginSettingTab, Setting, SettingDefinitionItem, ColorComponent, TextComponent, TFile } from "obsidian";
 import ColoredTagWranglerPlugin from "src/main";
 import { IColoredTagRecord } from "src/types/settings";
 import { rgbToHex, hexToRgb } from "src/lib/color-converters";
 import { arrayMove } from "src/lib/array-utils";
+import { tagMatchesPattern } from "src/lib/tag-utils";
 
 const EXTENSIONS = [
     { name: "core", label: "Core", description: "Basic tag coloring" },
@@ -329,7 +330,64 @@ export class SettingTab extends PluginSettingTab {
                             placeholder: "5px",
                         },
                     },
+                    {
+                        name: "Detect folder notes manually",
+                        desc: "Scan vault for folder notes and add their tag links.",
+                        action: () => {
+                            void this.detectAllLinks().then((links) => {
+                                const existing = this.plugin.settings.extensionSettings["folder-note"].folderTagLinks;
+                                for (const link of links) {
+                                    const exists = existing.some(
+                                        (e) => e.folder_path === link.folder_path && e.tag_name === link.tag_name
+                                    );
+                                    if (!exists) {
+                                        existing.push(link);
+                                    }
+                                }
+                                void this.plugin.saveSettings();
+                                this.update();
+                            });
+                        },
+                    },
                 ],
+            },
+            {
+                type: "list",
+                heading: "Folder tag links",
+                visible: () => this.plugin.settings.enabledExtensions.includes("folder-note"),
+                emptyState: "No folder tag links defined. Use Detect manually or add one.",
+                items: this.plugin.settings.extensionSettings["folder-note"].folderTagLinks.map((link, index) => ({
+                    name: link.folder_path,
+                    desc: `Tag: ${link.tag_name}`,
+                    render: (setting: Setting) => {
+                        this.renderFolderTagLink(setting, link, index);
+                    },
+                })),
+                addItem: {
+                    name: "Add folder tag link",
+                    action: () => {
+                        this.plugin.settings.extensionSettings["folder-note"].folderTagLinks.push({
+                            folder_path: "",
+                            tag_name: "",
+                        });
+                        void this.plugin.saveSettings();
+                        this.update();
+                    },
+                },
+                onDelete: (index: number) => {
+                    this.plugin.settings.extensionSettings["folder-note"].folderTagLinks.splice(index, 1);
+                    void this.plugin.saveSettings();
+                    this.update();
+                },
+                onReorder: (oldIndex: number, newIndex: number) => {
+                    arrayMove(
+                        this.plugin.settings.extensionSettings["folder-note"].folderTagLinks,
+                        oldIndex,
+                        newIndex
+                    );
+                    void this.plugin.saveSettings();
+                    this.update();
+                },
             },
             {
                 type: "list",
@@ -370,6 +428,7 @@ export class SettingTab extends PluginSettingTab {
             {
                 type: "group",
                 heading: "Debug",
+                visible: () => this.plugin.settings.extensionSettings.debug.enable,
                 items: [
                     {
                         name: "Experimental commands",
@@ -389,6 +448,83 @@ export class SettingTab extends PluginSettingTab {
                 ],
             },
         ];
+    }
+
+    private renderFolderTagLink(
+        setting: Setting,
+        link: { folder_path: string; tag_name: string },
+        index: number
+    ): void {
+        const { settingEl } = setting;
+        settingEl.empty();
+
+        const rowEl = settingEl.createDiv({ cls: "cwt-folder-tag-link-row" });
+
+        // Folder path input
+        const folderEl = rowEl.createDiv({ cls: "cwt-folder-tag-input" });
+        new TextComponent(folderEl)
+            .setPlaceholder("Folder path")
+            .setValue(link.folder_path)
+            .onChange(async (value) => {
+                link.folder_path = value.trim();
+                await this.plugin.saveSettings();
+                this.update();
+            });
+
+        // Tag name input
+        const tagEl = rowEl.createDiv({ cls: "cwt-folder-tag-input" });
+        new TextComponent(tagEl)
+            .setPlaceholder("Tag name")
+            .setValue(link.tag_name)
+            .onChange(async (value) => {
+                link.tag_name = value.trim();
+                await this.plugin.saveSettings();
+                this.update();
+            });
+    }
+
+    private async detectAllLinks(): Promise<Array<{ folder_path: string; tag_name: string }>> {
+        const links: Array<{ folder_path: string; tag_name: string }> = [];
+        const records = this.plugin.settings.tagRecords;
+        const enableMultipleTags = this.plugin.settings.extensionSettings.core.enableMultipleTags;
+
+        const markdownFiles = this.app.vault.getMarkdownFiles();
+
+        for (const file of markdownFiles) {
+            if (!this.fileIsFolderNote(file)) continue;
+
+            const cache = this.app.metadataCache.getFileCache(file);
+            const frontmatterTags = cache?.frontmatter?.tags as string[] | string | undefined;
+            if (!frontmatterTags) continue;
+
+            const tagArray: string[] = Array.isArray(frontmatterTags)
+                ? frontmatterTags
+                : enableMultipleTags
+                    ? frontmatterTags.split(/[\n;]/)
+                    : [frontmatterTags];
+
+            for (const tag of tagArray) {
+                const trimmed = tag.trim().replace(/^#+/, "");
+                if (!trimmed) continue;
+
+                const matchingRecord = records.find((r) => tagMatchesPattern(r.tag_name, trimmed));
+                if (matchingRecord) {
+                    links.push({
+                        folder_path: file.path.replace(/\/[^/]+$/, ""),
+                        tag_name: trimmed,
+                    });
+                }
+            }
+        }
+
+        return links;
+    }
+
+    private fileIsFolderNote(file: TFile): boolean {
+        const pathParts = file.path.split("/");
+        const parentFolder = pathParts[pathParts.length - 2];
+        const fileName = file.name.replace(/\.md$/, "");
+        return fileName === parentFolder;
     }
 
     private renderTagRecord(setting: Setting, record: IColoredTagRecord, index: number): void {

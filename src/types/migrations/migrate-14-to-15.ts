@@ -65,6 +65,7 @@ export function migrate14to15(old: ISettingsV14): IPluginSettings {
                 padding: old.FolderNote.Values.Padding,
             },
             debug: {
+                enable: old.Debug.Enable ?? false,
                 enableExperimentalCommands: old.Debug.EnableExperimentalCommands,
             },
         },

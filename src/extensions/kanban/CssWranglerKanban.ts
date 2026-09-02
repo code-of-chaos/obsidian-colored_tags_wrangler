@@ -44,6 +44,14 @@ export class CssWranglerKanban implements ICssWrangler {
                         visibility: "hidden",
                         position: "absolute",
                     };
+                    rules[`${theme} div[data-type="kanban"] .cm-hashtag-begin`] = {
+                        visibility: "hidden",
+                        position: "absolute",
+                    };
+                    rules[`${theme} div.kanban-plugin .cm-hashtag-begin`] = {
+                        visibility: "hidden",
+                        position: "absolute",
+                    };
                 }
             }
         }
@@ -78,9 +86,9 @@ export class CssWranglerKanban implements ICssWrangler {
 
         const selectorList = cardSelectors.join(", ");
         const styles = {
-            background: opacity < 1
+            background: `${opacity < 1
                 ? rgbaToString({ ...bgColor, a: opacity })
-                : rgbToString(bgColor),
+                : rgbToString(bgColor)} !important`,
             "border-color": `${rgbaToString({ ...color, a: this.settings.cardBorderOpacity })} !important`,
         };
 
@@ -91,9 +99,9 @@ export class CssWranglerKanban implements ICssWrangler {
 
         rules[`${theme} ${selectorList}`] = styles;
         rules[`${theme} ${titleSelectors}`] = {
-            background: opacity < 1
+            background: `${opacity < 1
                 ? rgbaToString({ ...bgColor, a: opacity })
-                : rgbToString(bgColor),
+                : rgbToString(bgColor)} !important`,
         };
 
         return rules;
@@ -118,9 +126,9 @@ export class CssWranglerKanban implements ICssWrangler {
             .join(", ");
 
         rules[`${theme} ${laneSelectors}`] = {
-            background: opacity < 1
+            background: `${opacity < 1
                 ? rgbaToString({ ...bgColor, a: opacity })
-                : rgbToString(bgColor),
+                : rgbToString(bgColor)} !important`,
             "border-color": `${rgbaToString({ ...color, a: this.settings.listBorderOpacity })} !important`,
         };
 
