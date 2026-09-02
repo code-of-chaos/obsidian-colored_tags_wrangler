@@ -2,26 +2,22 @@ import { describe, it, expect } from "vitest";
 import { CanvasExtension } from "../../../src/extensions/canvas/ExtensionCanvas";
 import { CssWranglerCanvas } from "../../../src/extensions/canvas/CssWranglerCanvas";
 import { IColoredTagRecord, ICanvasSettings } from "../../../src/types/settings";
-import { RGB } from "obsidian";
 
 describe("CanvasExtension", () => {
-    const color: RGB = { r: 255, g: 0, b: 0 };
-    const bgColor: RGB = { r: 0, g: 0, b: 0 };
-
     const records: IColoredTagRecord[] = [
         {
             id: "1",
             tag_name: "project/*",
-            color,
-            background_color: bgColor,
+            color: { r: 255, g: 0, b: 0 },
+            background_color: { r: 0, g: 0, b: 0 },
             luminance_offset: 0.15,
             canvas_enabled: true,
         },
         {
             id: "2",
             tag_name: "meeting",
-            color,
-            background_color: bgColor,
+            color: { r: 0, g: 255, b: 0 },
+            background_color: { r: 0, g: 0, b: 0 },
             luminance_offset: 0.15,
             canvas_enabled: false,
         },
@@ -81,5 +77,44 @@ describe("CanvasExtension", () => {
         const darkKeys = Object.keys(rules).filter((k) => k.includes("theme-dark"));
         expect(lightKeys.length).toBeGreaterThan(0);
         expect(darkKeys.length).toBeGreaterThan(0);
+    });
+
+    it("includes !important on background and border-color", () => {
+        const wrangler = new CssWranglerCanvas(records, settings);
+        const rules = wrangler.getRules();
+        const values = Object.values(rules);
+        for (const rule of values) {
+            expect(rule.background).toContain("!important");
+            expect(rule["border-color"]).toContain("!important");
+        }
+    });
+
+    it("uses :is() selector with all href variants", () => {
+        const wrangler = new CssWranglerCanvas(records, settings);
+        const rules = wrangler.getRules();
+        const keys = Object.keys(rules);
+        const hasIsSelector = keys.some((k) => k.includes(":is("));
+        expect(hasIsSelector).toBe(true);
+    });
+
+    it("generates rules for multiple canvas-enabled records", () => {
+        const multiRecords: IColoredTagRecord[] = [
+            { id: "1", tag_name: "project/*", color: { r: 255, g: 0, b: 0 }, background_color: { r: 0, g: 0, b: 0 }, luminance_offset: 0.15, canvas_enabled: true },
+            { id: "2", tag_name: "meeting", color: { r: 0, g: 255, b: 0 }, background_color: { r: 0, g: 0, b: 0 }, luminance_offset: 0.15, canvas_enabled: true },
+        ];
+        const wrangler = new CssWranglerCanvas(multiRecords, settings);
+        const rules = wrangler.getRules();
+        const ruleCount = Object.keys(rules).length;
+        expect(ruleCount).toBe(4);
+    });
+
+    it("uses rgb when background opacity is disabled", () => {
+        const wrangler = new CssWranglerCanvas(records, settings);
+        const rules = wrangler.getRules();
+        const values = Object.values(rules);
+        for (const rule of values) {
+            expect(rule.background).toContain("rgb");
+            expect(rule.background).not.toContain("rgba");
+        }
     });
 });

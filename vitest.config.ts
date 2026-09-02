@@ -11,5 +11,12 @@ export default defineConfig({
             include: ["src/**/*.ts"],
             exclude: ["src/main.ts"],
         },
+        alias: {
+            obsidian: new URL("./tests/__mocks__/obsidian.ts", import.meta.url).pathname,
+        },
+        environmentMatchGlobs: [
+            ["tests/unit/extensions/properties.test.ts", "jsdom"],
+            ["tests/unit/extensions/folder-note-auto-detect.test.ts", "jsdom"],
+        ],
     },
 });

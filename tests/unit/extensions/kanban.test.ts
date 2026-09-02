@@ -2,18 +2,14 @@ import { describe, it, expect } from "vitest";
 import { KanbanExtension } from "../../../src/extensions/kanban/ExtensionKanban";
 import { CssWranglerKanban } from "../../../src/extensions/kanban/CssWranglerKanban";
 import { IColoredTagRecord, IKanbanSettings } from "../../../src/types/settings";
-import { RGB } from "obsidian";
 
 describe("KanbanExtension", () => {
-    const color: RGB = { r: 255, g: 0, b: 0 };
-    const bgColor: RGB = { r: 0, g: 0, b: 0 };
-
     const records: IColoredTagRecord[] = [
         {
             id: "1",
             tag_name: "project/*",
-            color,
-            background_color: bgColor,
+            color: { r: 255, g: 0, b: 0 },
+            background_color: { r: 0, g: 0, b: 0 },
             luminance_offset: 0.15,
             kanban_cards_enabled: true,
             kanban_lists_enabled: true,
@@ -81,7 +77,6 @@ describe("KanbanExtension", () => {
     it("generates wildcard card selectors with class*", () => {
         const wrangler = new CssWranglerKanban(records, settings);
         const rules = wrangler.getRules();
-        // Check if any selector contains the wildcard pattern
         const hasWildcard = Object.keys(rules).some((k) => 
             k.includes('[class*="has-tag-"]') || k.includes('kanban-plugin__item[class*=')
         );
@@ -110,5 +105,67 @@ describe("KanbanExtension", () => {
         const rules = wrangler.getRules();
         const bgRule = Object.values(rules).find((r) => r["background"]?.includes("rgba"));
         expect(bgRule).toBeDefined();
+    });
+
+    it("includes !important on card background", () => {
+        const wrangler = new CssWranglerKanban(records, settings);
+        const rules = wrangler.getRules();
+        const cardRule = Object.values(rules).find((r) => r["background"]?.includes("!important"));
+        expect(cardRule).toBeDefined();
+    });
+
+    it("generates title wrapper background rule", () => {
+        const wrangler = new CssWranglerKanban(records, settings);
+        const rules = wrangler.getRules();
+        const titleKeys = Object.keys(rules).filter((k) => k.includes("kanban-plugin__item-title-wrapper"));
+        expect(titleKeys.length).toBeGreaterThan(0);
+    });
+
+    it("generates list border-color with !important", () => {
+        const wrangler = new CssWranglerKanban(records, settings);
+        const rules = wrangler.getRules();
+        const listRule = Object.values(rules).find((r) => 
+            r["border-color"]?.includes("!important") && r["background"]
+        );
+        expect(listRule).toBeDefined();
+    });
+
+    it("generates cm-hashtag-begin hide rules", () => {
+        const hideSettings = { ...settings, hideHashtags: true };
+        const wrangler = new CssWranglerKanban(records, hideSettings);
+        const rules = wrangler.getRules();
+        const beginKeys = Object.keys(rules).filter((k) => k.includes("cm-hashtag-begin"));
+        expect(beginKeys.length).toBeGreaterThan(0);
+    });
+
+    it("generates hide rules for both data-type and kanban-plugin divs", () => {
+        const hideSettings = { ...settings, hideHashtags: true };
+        const wrangler = new CssWranglerKanban(records, hideSettings);
+        const rules = wrangler.getRules();
+        const dataTypeKeys = Object.keys(rules).filter((k) => k.includes('data-type="kanban"'));
+        const pluginKeys = Object.keys(rules).filter((k) => k.includes("kanban-plugin"));
+        expect(dataTypeKeys.length).toBeGreaterThan(0);
+        expect(pluginKeys.length).toBeGreaterThan(0);
+    });
+
+    it("generates rules for exact (non-wildcard) tags", () => {
+        const exactRecords: IColoredTagRecord[] = [
+            { id: "1", tag_name: "meeting", color: { r: 255, g: 0, b: 0 }, background_color: { r: 0, g: 0, b: 0 }, luminance_offset: 0.15, kanban_cards_enabled: true },
+        ];
+        const wrangler = new CssWranglerKanban(exactRecords, settings);
+        const rules = wrangler.getRules();
+        const cardSelector = Object.keys(rules).find((k) => k.includes("has-tag-meeting"));
+        expect(cardSelector).toBeDefined();
+    });
+
+    it("generates rules for multiple records", () => {
+        const multiRecords: IColoredTagRecord[] = [
+            { id: "1", tag_name: "project/*", color: { r: 255, g: 0, b: 0 }, background_color: { r: 0, g: 0, b: 0 }, luminance_offset: 0.15, kanban_cards_enabled: true, kanban_lists_enabled: true },
+            { id: "2", tag_name: "meeting", color: { r: 0, g: 255, b: 0 }, background_color: { r: 0, g: 0, b: 0 }, luminance_offset: 0.15, kanban_cards_enabled: true, kanban_lists_enabled: true },
+        ];
+        const wrangler = new CssWranglerKanban(multiRecords, settings);
+        const rules = wrangler.getRules();
+        const ruleCount = Object.keys(rules).length;
+        expect(ruleCount).toBeGreaterThan(10);
     });
 });

@@ -2,18 +2,14 @@ import { describe, it, expect } from "vitest";
 import { FolderNoteExtension } from "../../../src/extensions/folder-note/ExtensionFolderNote";
 import { CssWranglerFolderNote } from "../../../src/extensions/folder-note/CssWranglerFolderNote";
 import { IColoredTagRecord, IFolderNoteSettings } from "../../../src/types/settings";
-import { RGB } from "obsidian";
 
 describe("FolderNoteExtension", () => {
-    const color: RGB = { r: 255, g: 0, b: 0 };
-    const bgColor: RGB = { r: 0, g: 0, b: 0 };
-
     const records: IColoredTagRecord[] = [
         {
             id: "1",
             tag_name: "project/*",
-            color,
-            background_color: bgColor,
+            color: { r: 255, g: 0, b: 0 },
+            background_color: { r: 0, g: 0, b: 0 },
             luminance_offset: 0.15,
         },
     ];
@@ -88,7 +84,6 @@ describe("FolderNoteExtension", () => {
     it("generates folder background rule", () => {
         const wrangler = new CssWranglerFolderNote(records, settings);
         const rules = wrangler.getRules();
-        // The background rule is on nav-folder-title which also contains content
         const bgKey = Object.keys(rules).find((k) => k.includes("nav-folder-title") && rules[k]["background-color"]);
         expect(bgKey).toBeDefined();
         expect(rules[bgKey!]["background-color"]).toBeDefined();
@@ -133,10 +128,62 @@ describe("FolderNoteExtension", () => {
 
     it("does not generate rules for non-matching tags", () => {
         const noMatchRecords: IColoredTagRecord[] = [
-            { id: "1", tag_name: "nomatch", color, background_color: bgColor, luminance_offset: 0.15 },
+            { id: "1", tag_name: "nomatch", color: { r: 255, g: 0, b: 0 }, background_color: { r: 0, g: 0, b: 0 }, luminance_offset: 0.15 },
         ];
         const wrangler = new CssWranglerFolderNote(noMatchRecords, settings);
         const rules = wrangler.getRules();
         expect(Object.keys(rules).length).toBe(0);
+    });
+
+    it("generates ALX folder note selector variant", () => {
+        const wrangler = new CssWranglerFolderNote(records, settings);
+        const rules = wrangler.getRules();
+        const alxKeys = Object.keys(rules).filter((k) => k.includes("alx-folder-with-note"));
+        expect(alxKeys.length).toBeGreaterThan(0);
+    });
+
+    it("does not apply !important when forceImportant is false", () => {
+        const noImportantSettings = { ...settings, forceImportant: false };
+        const wrangler = new CssWranglerFolderNote(records, noImportantSettings);
+        const rules = wrangler.getRules();
+        const values = Object.values(rules);
+        for (const rule of values) {
+            if (rule["border-radius"]) {
+                expect(rule["border-radius"]).not.toContain("!important");
+            }
+            if (rule["padding"]) {
+                expect(rule["padding"]).not.toContain("!important");
+            }
+        }
+    });
+
+    it("generates rules for multiple folderTagLinks", () => {
+        const multiLinkSettings: IFolderNoteSettings = {
+            ...settings,
+            folderTagLinks: [
+                { folder_path: "folder1", tag_name: "project/*" },
+                { folder_path: "folder2", tag_name: "project/*" },
+            ],
+        };
+        const wrangler = new CssWranglerFolderNote(records, multiLinkSettings);
+        const rules = wrangler.getRules();
+        const ruleCount = Object.keys(rules).length;
+        expect(ruleCount).toBeGreaterThan(10);
+    });
+
+    it("applies text-decoration-thickness 2px", () => {
+        const wrangler = new CssWranglerFolderNote(records, settings);
+        const rules = wrangler.getRules();
+        const titleKey = Object.keys(rules).find((k) => k.includes("nav-folder-title-content"));
+        expect(rules[titleKey!]["text-decoration-thickness"]).toBe("2px");
+    });
+
+    it("generates rules for both themes", () => {
+        const wrangler = new CssWranglerFolderNote(records, settings);
+        const rules = wrangler.getRules();
+        const lightKeys = Object.keys(rules).filter((k) => k.includes("theme-light"));
+        const darkKeys = Object.keys(rules).filter((k) => k.includes("theme-dark"));
+        expect(lightKeys.length).toBeGreaterThan(0);
+        expect(darkKeys.length).toBeGreaterThan(0);
     });
 });
