@@ -1,4 +1,9 @@
 import { defineConfig } from "vitest/config";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig({
     test: {
@@ -13,10 +18,16 @@ export default defineConfig({
         },
         alias: {
             obsidian: new URL("./tests/__mocks__/obsidian.ts", import.meta.url).pathname,
+            "src": path.resolve(__dirname, "src"),
         },
         environmentMatchGlobs: [
             ["tests/unit/extensions/properties.test.ts", "jsdom"],
             ["tests/unit/extensions/folder-note-auto-detect.test.ts", "jsdom"],
         ],
+    },
+    resolve: {
+        alias: {
+            "src": path.resolve(__dirname, "src"),
+        },
     },
 });
